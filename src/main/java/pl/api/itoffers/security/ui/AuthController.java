@@ -11,7 +11,7 @@ public class AuthController {
     @GetMapping("/auth")
     public ResponseEntity<AuthResponse> auth()
     {
-        var authResponse = new AuthResponse("token1234");
+        var authResponse = new AuthResponse("token");
         return new ResponseEntity<>(authResponse, HttpStatus.CREATED);
     }
 }
