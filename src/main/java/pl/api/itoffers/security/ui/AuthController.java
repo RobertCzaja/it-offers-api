@@ -1,5 +1,7 @@
 package pl.api.itoffers.security.ui;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -7,8 +9,9 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthController {
 
     @GetMapping("/auth")
-    public String auth()
+    public ResponseEntity<AuthResponse> auth()
     {
-        return "authorized2";
+        var authResponse = new AuthResponse("token1234");
+        return new ResponseEntity<>(authResponse, HttpStatus.CREATED);
     }
 }
