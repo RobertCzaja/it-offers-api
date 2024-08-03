@@ -39,8 +39,6 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
             HttpServletResponse response,
             FilterChain filterChain
     ) throws ServletException, IOException {
-        Map<String, Object> errorDetails = new HashMap<>();
-
         try {
             String accessToken = jwtService.resolveToken(request);
 
@@ -58,13 +56,18 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
                 );
             }
         } catch (Exception e) {
-            errorDetails.put("message", "Authentication Error");
-            errorDetails.put("details",e.getMessage());
-            response.setStatus(HttpStatus.FORBIDDEN.value());
-            response.setContentType(MediaType.APPLICATION_JSON_VALUE);
-
-            mapper.writeValue(response.getWriter(), errorDetails);
+            handleException(e, response);
         }
         filterChain.doFilter(request, response);
+    }
+
+    private void handleException(Exception e, HttpServletResponse response) throws IOException {
+        Map<String, Object> errorDetails = new HashMap<>();
+        errorDetails.put("message", "Authentication Error");
+        errorDetails.put("details",e.getMessage());
+        response.setStatus(HttpStatus.FORBIDDEN.value());
+        response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+
+        mapper.writeValue(response.getWriter(), errorDetails);
     }
 }
