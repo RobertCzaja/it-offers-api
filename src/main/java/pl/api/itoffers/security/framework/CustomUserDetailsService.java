@@ -1,4 +1,4 @@
-package pl.api.itoffers.security.application;
+package pl.api.itoffers.security.framework;
 
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

@@ -7,6 +7,8 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.core.annotation.Order;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
@@ -16,6 +18,7 @@ import pl.api.itoffers.security.application.service.JwtService;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Component
@@ -30,9 +33,6 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
         this.mapper = mapper;
     }
 
-    /**
-     * todo it should not be executed on /auth endpoint calling
-     */
     @Override
     protected void doFilterInternal(
             HttpServletRequest request,
@@ -54,16 +54,17 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
             if (null != claims & jwtService.validateClaims(claims)) {
                 String email = claims.getSubject();
                 SecurityContextHolder.getContext().setAuthentication(
-                    new UsernamePasswordAuthenticationToken(email, new ArrayList<>())
+                        new UsernamePasswordAuthenticationToken(email, "", new ArrayList<>())
                 );
             }
         } catch (Exception e) {
-            // todo
+            errorDetails.put("message", "Authentication Error");
+            errorDetails.put("details",e.getMessage());
+            response.setStatus(HttpStatus.FORBIDDEN.value());
+            response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+
+            mapper.writeValue(response.getWriter(), errorDetails);
         }
         filterChain.doFilter(request, response);
-
-
-        // todo !
-
     }
 }
