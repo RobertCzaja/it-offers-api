@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import pl.api.itoffers.security.application.JwtUtil;
 import pl.api.itoffers.security.application.User;
-import pl.api.itoffers.security.infrastructure.UserInMemoryRepository;
+import pl.api.itoffers.security.application.repository.UserRepository;
 
 @RestController
 public class AuthController {
@@ -15,9 +15,9 @@ public class AuthController {
     public final static String GET_TOKEN_PATH = "/auth";
 
     private final JwtUtil jwtUtil;
-    private final UserInMemoryRepository userRepository;
+    private final UserRepository userRepository;
 
-    public AuthController(JwtUtil jwtUtil, UserInMemoryRepository userRepository) {
+    public AuthController(JwtUtil jwtUtil, UserRepository userRepository) {
         this.jwtUtil = jwtUtil;
         this.userRepository = userRepository;
     }
