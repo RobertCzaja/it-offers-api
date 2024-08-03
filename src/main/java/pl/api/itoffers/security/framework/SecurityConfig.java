@@ -1,4 +1,4 @@
-package pl.api.itoffers.security.infrastructure;
+package pl.api.itoffers.security.framework;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

@@ -1,4 +1,4 @@
-package pl.api.itoffers.security.application;
+package pl.api.itoffers.security.framework;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

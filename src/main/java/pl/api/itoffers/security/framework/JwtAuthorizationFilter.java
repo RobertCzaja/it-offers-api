@@ -1,4 +1,4 @@
-package pl.api.itoffers.security.application.filter;
+package pl.api.itoffers.security.framework;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.Claims;
@@ -8,8 +8,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -32,14 +30,15 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
         this.mapper = mapper;
     }
 
+    /**
+     * todo it should not be executed on /auth endpoint calling
+     */
     @Override
     protected void doFilterInternal(
             HttpServletRequest request,
             HttpServletResponse response,
             FilterChain filterChain
     ) throws ServletException, IOException {
-
-        // todo it should not be executed on /auth endpoint calling
         Map<String, Object> errorDetails = new HashMap<>();
 
         try {
@@ -61,6 +60,7 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
         } catch (Exception e) {
             // todo
         }
+        filterChain.doFilter(request, response);
 
 
         // todo !

@@ -65,10 +65,10 @@ public class JwtService {
     public String resolveToken(HttpServletRequest request) {
 
         String bearerToken = request.getHeader(TOKEN_HEADER);
-        if (bearerToken != null && bearerToken.startsWith(TOKEN_PREFIX)) {
-            return bearerToken.substring(TOKEN_PREFIX.length());
-        }
-        return null;
+
+        return (bearerToken != null && bearerToken.startsWith(TOKEN_PREFIX))
+            ? bearerToken.substring(TOKEN_PREFIX.length())
+            : null;
     }
 
     public boolean validateClaims(Claims claims) throws AuthenticationException {
