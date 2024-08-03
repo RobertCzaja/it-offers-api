@@ -11,6 +11,7 @@ import pl.api.itoffers.security.application.User;
 public class AuthController {
 
     public final static String GET_TOKEN_PATH = "/auth";
+
     private final JwtUtil jwtUtil;
 
     public AuthController(JwtUtil jwtUtil) {
