@@ -14,13 +14,11 @@ public class JwtUtil {
     private final String secret_key = "mysecretkey";
     private long accessTokenValidity = 60*60*1000;
 
-    private final JwtParser jwtParser;
-
     private final String TOKEN_HEADER = "Authorization";
     private final String TOKEN_PREFIX = "Bearer ";
 
     public JwtUtil(){
-        this.jwtParser = Jwts.parser().setSigningKey(secret_key).build();
+
     }
 
     public String createToken(User user) {
@@ -37,7 +35,10 @@ public class JwtUtil {
     }
 
     private Claims parseJwtClaims(String token) {
-        return jwtParser.parseClaimsJws(token).getBody();
+
+        JwtParser jwtLocalParser = Jwts.parser().setSigningKey(secret_key).build();
+
+        return jwtLocalParser.parseClaimsJws(token).getBody();
     }
 
     public Claims resolveClaims(HttpServletRequest req) {

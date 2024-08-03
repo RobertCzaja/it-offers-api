@@ -11,6 +11,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import pl.api.itoffers.security.ui.AuthController;
 
 @Configuration
 @EnableWebSecurity
@@ -35,7 +36,7 @@ public class SecurityConfig {
 
         http.csrf(Customizer.withDefaults())
                 .authorizeRequests()
-                .requestMatchers("/rest/auth/**")
+                .requestMatchers(AuthController.GET_TOKEN_PATH+"/**")
                 .permitAll()
                 .anyRequest()
                 .authenticated()

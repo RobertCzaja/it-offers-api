@@ -8,10 +8,18 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class AuthController {
 
-    @GetMapping("/auth")
+    public final static String GET_TOKEN_PATH = "/auth";
+
+    @GetMapping(AuthController.GET_TOKEN_PATH)
     public ResponseEntity<AuthResponse> auth()
     {
         var authResponse = new AuthResponse("token");
         return new ResponseEntity<>(authResponse, HttpStatus.CREATED);
+    }
+
+    @GetMapping("/test")
+    public String testingEndpoint()
+    {
+        return "Secret information";
     }
 }
