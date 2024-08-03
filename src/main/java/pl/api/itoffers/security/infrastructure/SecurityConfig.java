@@ -11,7 +11,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import pl.api.itoffers.security.application.CustomUserDetailsService;
-import pl.api.itoffers.security.ui.AuthController;
+import pl.api.itoffers.security.ui.controller.AuthController;
 
 @Configuration
 @EnableWebSecurity

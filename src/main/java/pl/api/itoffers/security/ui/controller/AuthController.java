@@ -1,11 +1,11 @@
-package pl.api.itoffers.security.ui;
+package pl.api.itoffers.security.ui.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import pl.api.itoffers.security.application.JwtUtil;
+import pl.api.itoffers.security.application.service.JwtService;
 import pl.api.itoffers.security.domain.User;
 import pl.api.itoffers.security.application.repository.UserRepository;
 import pl.api.itoffers.security.ui.response.AuthResponse;
@@ -15,11 +15,11 @@ public class AuthController {
 
     public final static String GET_TOKEN_PATH = "/auth";
 
-    private final JwtUtil jwtUtil;
+    private final JwtService jwtService;
     private final UserRepository userRepository;
 
-    public AuthController(JwtUtil jwtUtil, UserRepository userRepository) {
-        this.jwtUtil = jwtUtil;
+    public AuthController(JwtService jwtService, UserRepository userRepository) {
+        this.jwtService = jwtService;
         this.userRepository = userRepository;
     }
 
@@ -30,9 +30,11 @@ public class AuthController {
             throw new RuntimeException("Email must be provided");
         }
 
+
+
         User user = userRepository.findUserByEmail(email);
 
-        var authResponse = new AuthResponse(jwtUtil.createToken(user));
+        var authResponse = new AuthResponse(jwtService.createToken(user));
         return new ResponseEntity<>(authResponse, HttpStatus.CREATED);
     }
 

@@ -1,4 +1,4 @@
-package pl.api.itoffers.security.application;
+package pl.api.itoffers.security.application.service;
 
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
@@ -14,14 +14,14 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 @Component
-public class JwtUtil {
+public class JwtService {
     private final String secret_key = "2D4A614E645267556B58703273357638792F423F4428472B4B6250655368566D";
     private long accessTokenValidity = 60*60*1000;
 
     private final String TOKEN_HEADER = "Authorization";
     private final String TOKEN_PREFIX = "Bearer ";
 
-    public JwtUtil(){}
+    public JwtService(){}
 
     public String createToken(User user) {
         Date tokenCreateTime = new Date();
