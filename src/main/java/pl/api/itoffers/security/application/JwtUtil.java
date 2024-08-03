@@ -1,43 +1,49 @@
 package pl.api.itoffers.security.application;
 
 import io.jsonwebtoken.*;
+import io.jsonwebtoken.io.Decoders;
+import io.jsonwebtoken.security.Keys;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.stereotype.Component;
 
+import javax.crypto.SecretKey;
+import javax.security.auth.kerberos.EncryptionKey;
+import java.security.Key;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 @Component
 public class JwtUtil {
-    private final String secret_key = "mysecretkey";
+    private final String secret_key = "2D4A614E645267556B58703273357638792F423F4428472B4B6250655368566D";
     private long accessTokenValidity = 60*60*1000;
 
     private final String TOKEN_HEADER = "Authorization";
     private final String TOKEN_PREFIX = "Bearer ";
 
-    public JwtUtil(){
-
-    }
+    public JwtUtil(){}
 
     public String createToken(User user) {
-        Claims claims = Jwts.claims().setSubject(user.getEmail()).build();
-        claims.put("firstName",user.getFirstName());
-        claims.put("lastName",user.getLastName());
         Date tokenCreateTime = new Date();
         Date tokenValidity = new Date(tokenCreateTime.getTime() + TimeUnit.MINUTES.toMillis(accessTokenValidity));
         return Jwts.builder()
-                .setClaims(claims)
+                .subject(user.getEmail())
+                .claim("firstName",user.getFirstName())
+                .claim("lastName",user.getLastName())
                 .setExpiration(tokenValidity)
-                .signWith(SignatureAlgorithm.HS256, secret_key)
+                .signWith(SignatureAlgorithm.HS256, getSignInKey())
                 .compact();
+    }
+
+    private Key getSignInKey() {
+        byte[] keyBytes = Decoders.BASE64.decode(secret_key);
+        return Keys.hmacShaKeyFor(keyBytes);
     }
 
     private Claims parseJwtClaims(String token) {
 
         JwtParser jwtLocalParser = Jwts.parser().setSigningKey(secret_key).build();
-
         return jwtLocalParser.parseClaimsJws(token).getBody();
     }
 
