@@ -24,7 +24,8 @@ public class AuthController {
     @GetMapping(AuthController.GET_TOKEN_PATH)
     public ResponseEntity<AuthResponse> auth()
     {
-        User user = userRepository.findUserByEmail("user@email.com"); // get from request
+        // TODO get user email from request
+        User user = userRepository.findUserByEmail("user@email.com");
 
         var authResponse = new AuthResponse(jwtUtil.createToken(user));
         return new ResponseEntity<>(authResponse, HttpStatus.CREATED);
