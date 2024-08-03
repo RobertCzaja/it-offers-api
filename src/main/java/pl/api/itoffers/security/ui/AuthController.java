@@ -6,8 +6,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import pl.api.itoffers.security.application.JwtUtil;
-import pl.api.itoffers.security.application.User;
+import pl.api.itoffers.security.domain.User;
 import pl.api.itoffers.security.application.repository.UserRepository;
+import pl.api.itoffers.security.ui.response.AuthResponse;
 
 @RestController
 public class AuthController {

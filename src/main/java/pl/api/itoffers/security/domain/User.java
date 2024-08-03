@@ -1,4 +1,4 @@
-package pl.api.itoffers.security.application;
+package pl.api.itoffers.security.domain;
 
 public class User {
     private String email;

@@ -6,9 +6,8 @@ import io.jsonwebtoken.security.Keys;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.stereotype.Component;
+import pl.api.itoffers.security.domain.User;
 
-import javax.crypto.SecretKey;
-import javax.security.auth.kerberos.EncryptionKey;
 import java.security.Key;
 import java.util.Date;
 import java.util.List;

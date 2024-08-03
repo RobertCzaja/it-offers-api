@@ -1,4 +1,4 @@
-package pl.api.itoffers.security.ui;
+package pl.api.itoffers.security.ui.response;
 
 public class AuthResponse {
     private String token = "some token";

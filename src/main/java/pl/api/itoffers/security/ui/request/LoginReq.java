@@ -1,4 +1,4 @@
-package pl.api.itoffers.security.application;
+package pl.api.itoffers.security.ui.request;
 
 public class LoginReq {
     private String email;

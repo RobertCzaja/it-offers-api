@@ -1,4 +1,4 @@
-package pl.api.itoffers.security.application;
+package pl.api.itoffers.security.ui.response;
 
 import org.springframework.http.HttpStatus;
 

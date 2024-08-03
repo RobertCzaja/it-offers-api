@@ -1,7 +1,7 @@
 package pl.api.itoffers.security.infrastructure;
 
 import org.springframework.stereotype.Repository;
-import pl.api.itoffers.security.application.User;
+import pl.api.itoffers.security.domain.User;
 import pl.api.itoffers.security.application.repository.UserRepository;
 
 import java.util.ArrayList;
