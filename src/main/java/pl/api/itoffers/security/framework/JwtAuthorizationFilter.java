@@ -39,14 +39,14 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
             FilterChain filterChain
     ) throws ServletException, IOException {
         try {
-            String accessToken = jwtService.resolveToken(request);
+            String accessToken = jwtService.extractToken(request);
 
             if (null == accessToken) {
                 filterChain.doFilter(request, response);
                 return;
             }
 
-            Claims claims = jwtService.resolveClaims(request);
+            Claims claims = jwtService.resolveClaims(request, accessToken);
 
             if (null != claims & jwtService.validateClaims(claims)) {
                 String email = claims.getSubject();

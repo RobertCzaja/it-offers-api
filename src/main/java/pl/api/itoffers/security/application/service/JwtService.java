@@ -19,8 +19,6 @@ public class JwtService {
     @Value("${jwt.token.secret}")
     private String secret;
 
-    public JwtService(){}
-
     public String createToken(User user) {
         Date tokenCreateTime = new Date();
         Date tokenValidity = new Date(tokenCreateTime.getTime() + TimeUnit.MINUTES.toMillis(60*60*1000));
@@ -39,18 +37,24 @@ public class JwtService {
     }
 
     private Claims parseJwtClaims(String token) {
-
-        JwtParser jwtLocalParser = Jwts.parser().setSigningKey(secret).build();
-        return jwtLocalParser.parseClaimsJws(token).getBody();
+        return Jwts
+                .parser()
+                .setSigningKey(JwtService.getSignInKey(secret))
+                .build()
+                .parseClaimsJws(token)
+                .getBody();
     }
 
-    public Claims resolveClaims(HttpServletRequest req) {
+    public String extractToken(HttpServletRequest request) {
+        String bearerToken = request.getHeader("Authorization");
+        return (bearerToken != null && bearerToken.startsWith("Bearer "))
+                ? bearerToken.substring("Bearer ".length())
+                : null;
+    }
+
+    public Claims resolveClaims(HttpServletRequest req, String token) {
         try {
-            String token = resolveToken(req);
-            if (token != null) {
-                return parseJwtClaims(token);
-            }
-            return null;
+            return parseJwtClaims(token);
         } catch (ExpiredJwtException ex) {
             req.setAttribute("expired", ex.getMessage());
             throw ex;
@@ -58,15 +62,6 @@ public class JwtService {
             req.setAttribute("invalid", ex.getMessage());
             throw ex;
         }
-    }
-
-    public String resolveToken(HttpServletRequest request) {
-
-        String bearerToken = request.getHeader("Authorization");
-
-        return (bearerToken != null && bearerToken.startsWith("Bearer "))
-            ? bearerToken.substring("Bearer ".length())
-            : null;
     }
 
     public boolean validateClaims(Claims claims) throws AuthenticationException {
