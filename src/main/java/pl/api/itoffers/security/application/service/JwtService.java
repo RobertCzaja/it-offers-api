@@ -4,6 +4,7 @@ import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.stereotype.Component;
 import pl.api.itoffers.security.domain.User;
@@ -15,34 +16,31 @@ import java.util.concurrent.TimeUnit;
 
 @Component
 public class JwtService {
-    private final String secret_key = "2D4A614E645267556B58703273357638792F423F4428472B4B6250655368566D";
-    private long accessTokenValidity = 60*60*1000;
-
-    private final String TOKEN_HEADER = "Authorization";
-    private final String TOKEN_PREFIX = "Bearer ";
+    @Value("${jwt.token.secret}")
+    private String secret;
 
     public JwtService(){}
 
     public String createToken(User user) {
         Date tokenCreateTime = new Date();
-        Date tokenValidity = new Date(tokenCreateTime.getTime() + TimeUnit.MINUTES.toMillis(accessTokenValidity));
+        Date tokenValidity = new Date(tokenCreateTime.getTime() + TimeUnit.MINUTES.toMillis(60*60*1000));
         return Jwts.builder()
                 .subject(user.getEmail())
                 .claim("firstName",user.getFirstName())
                 .claim("lastName",user.getLastName())
                 .setExpiration(tokenValidity)
-                .signWith(SignatureAlgorithm.HS256, getSignInKey())
+                .signWith(SignatureAlgorithm.HS256, JwtService.getSignInKey(secret))
                 .compact();
     }
 
-    private Key getSignInKey() {
-        byte[] keyBytes = Decoders.BASE64.decode(secret_key);
+    private static Key getSignInKey(String secret) {
+        byte[] keyBytes = Decoders.BASE64.decode(secret);
         return Keys.hmacShaKeyFor(keyBytes);
     }
 
     private Claims parseJwtClaims(String token) {
 
-        JwtParser jwtLocalParser = Jwts.parser().setSigningKey(secret_key).build();
+        JwtParser jwtLocalParser = Jwts.parser().setSigningKey(secret).build();
         return jwtLocalParser.parseClaimsJws(token).getBody();
     }
 
@@ -64,10 +62,10 @@ public class JwtService {
 
     public String resolveToken(HttpServletRequest request) {
 
-        String bearerToken = request.getHeader(TOKEN_HEADER);
+        String bearerToken = request.getHeader("Authorization");
 
-        return (bearerToken != null && bearerToken.startsWith(TOKEN_PREFIX))
-            ? bearerToken.substring(TOKEN_PREFIX.length())
+        return (bearerToken != null && bearerToken.startsWith("Bearer "))
+            ? bearerToken.substring("Bearer ".length())
             : null;
     }
 
