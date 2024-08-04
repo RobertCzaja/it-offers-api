@@ -43,7 +43,7 @@ public class SecurityConfig {
 
         http.csrf(Customizer.withDefaults())
                 .authorizeRequests()
-                .requestMatchers(AuthController.GET_TOKEN_PATH+"/**")
+                .requestMatchers(AuthController.GET_TOKEN_PATH)
                 .permitAll()
                 .anyRequest()
                 .authenticated()

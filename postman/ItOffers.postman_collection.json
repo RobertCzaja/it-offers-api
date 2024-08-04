@@ -1,0 +1,52 @@
+{
+	"info": {
+		"_postman_id": "d0e36030-098d-4b64-838f-e3f718eef05a",
+		"name": "ItOffers",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "28309502"
+	},
+	"item": [
+		{
+			"name": "Authorization",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{apiUrl}}/auth?email={{userEmail}}",
+					"host": [
+						"{{apiUrl}}"
+					],
+					"path": [
+						"auth"
+					],
+					"query": [
+						{
+							"key": "email",
+							"value": "{{userEmail}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Test",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/test",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"test"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
