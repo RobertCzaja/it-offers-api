@@ -25,7 +25,7 @@ public class AuthController {
     }
 
     @GetMapping(AuthController.GET_TOKEN_PATH)
-    public ResponseEntity<AuthResponse> auth(@RequestParam(required = false) String email)
+    public AuthResponse auth(@RequestParam(required = false) String email)
     {
         if (null == email) {
             throw ValidationException.ofInvalidProperty("email");
@@ -33,7 +33,7 @@ public class AuthController {
 
         User user = userRepository.findUserByEmail(email);
 
-        return ResponseEntity.ok(new AuthResponse(jwtService.createToken(user)));
+        return new AuthResponse(jwtService.createToken(user));
     }
 
     @GetMapping("/test")

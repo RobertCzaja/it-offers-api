@@ -1,7 +1,7 @@
 package pl.api.itoffers.security.ui.response;
 
 public class AuthResponse {
-    private String token = "some token";
+    private String token;
 
     public AuthResponse(String token) {
         this.token = token;
