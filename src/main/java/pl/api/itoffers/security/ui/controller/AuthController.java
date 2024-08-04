@@ -26,16 +26,13 @@ public class AuthController {
     @GetMapping(AuthController.GET_TOKEN_PATH)
     public ResponseEntity<AuthResponse> auth(@RequestParam(required = false) String email)
     {
-        if (null == email) {
+        if (null == email) { /*TODO must return 404 error*/
             throw new RuntimeException("Email must be provided");
         }
 
-
-
         User user = userRepository.findUserByEmail(email);
 
-        var authResponse = new AuthResponse(jwtService.createToken(user));
-        return new ResponseEntity<>(authResponse, HttpStatus.CREATED);
+        return ResponseEntity.ok(new AuthResponse(jwtService.createToken(user)));
     }
 
     @GetMapping("/test")
