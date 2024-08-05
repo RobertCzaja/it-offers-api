@@ -1,2 +1,2 @@
-/Users/robertczaja/Desktop/it-offers/src/test/java/com/example/springboot/HelloControllerITest.java
-/Users/robertczaja/Desktop/it-offers/src/test/java/com/example/springboot/HelloControllerTest.java
+/Users/robertczaja/Desktop/it-offers/src/test/java/pl/api/itoffers/HelloControllerTest.java
+/Users/robertczaja/Desktop/it-offers/src/test/java/pl/api/itoffers/security/AuthControllerITest.java
