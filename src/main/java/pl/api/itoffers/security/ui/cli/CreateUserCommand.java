@@ -6,8 +6,14 @@ import org.springframework.shell.standard.ShellMethod;
 @ShellComponent
 public class CreateUserCommand {
 
-    @ShellMethod(value="Create user that can authenticate")
-    public String create() {
-        return "User created";
+    public CreateUserCommand() {
+    }
+
+    @ShellMethod(key="create-user", value="Create user that can authenticate")
+    public String create(
+            String email,
+            String password
+    ) {
+        return String.format("User %s created (%s)", email, password);
     }
 }
