@@ -3,6 +3,7 @@ services:
   database:
     image: 'postgres:15.2'
     container_name: it-offers-postgresql
+    restart: always
     ports:
       - "5432:5432"
     volumes:
