@@ -19,6 +19,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
             HttpStatusCode status,
             WebRequest request
     ) {
+        // TODO that error message could contains exact Validation Error (linked to specific Request Body field)
         return new ResponseEntity<>(ErrorResponse.create(), HttpStatus.BAD_REQUEST);
     }
 
