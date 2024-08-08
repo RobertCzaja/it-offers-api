@@ -1,7 +1,12 @@
 package pl.api.itoffers.security.ui.controller;
 
+import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import pl.api.itoffers.security.ui.request.CreateUserRequest;
 
 @RestController
 public class UserController {
@@ -11,10 +16,9 @@ public class UserController {
     public UserController() {
     }
 
-    /** TODO Return type change for specific Response object */
     @PostMapping(UserController.PATH)
-    public String create()
+    public ResponseEntity<String> create(@Valid @RequestBody CreateUserRequest request)
     {
-        return "User Created";
+        return new ResponseEntity<String>(request.toString(), HttpStatus.CREATED);
     }
 }

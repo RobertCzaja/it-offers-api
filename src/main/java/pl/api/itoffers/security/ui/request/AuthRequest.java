@@ -1,10 +1,10 @@
 package pl.api.itoffers.security.ui.request;
 
-public class LoginReq {
+public class AuthRequest {
     private String email;
     private String password;
 
-    public LoginReq(String email, String password) {
+    public AuthRequest(String email, String password) {
         this.email = email;
         this.password = password;
     }
