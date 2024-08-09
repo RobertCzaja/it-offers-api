@@ -6,7 +6,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import pl.api.itoffers.security.domain.User;
 import pl.api.itoffers.security.application.repository.UserRepository;
-import pl.api.itoffers.security.infrastructure.UserInMemoryRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +15,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     private final UserRepository userRepository;
 
-    public CustomUserDetailsService(UserInMemoryRepository userRepository /*todo switch to interface*/) {
+    public CustomUserDetailsService(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 
