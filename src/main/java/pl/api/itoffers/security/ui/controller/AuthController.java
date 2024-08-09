@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 import pl.api.itoffers.security.application.service.JwtService;
 import pl.api.itoffers.security.domain.User;
 import pl.api.itoffers.security.application.repository.UserRepository;
+import pl.api.itoffers.security.infrastructure.UserInMemoryRepository;
 import pl.api.itoffers.security.ui.response.AuthResponse;
 import pl.api.itoffers.shared.http.exception.ValidationException;
 
@@ -19,7 +20,7 @@ public class AuthController {
     private final JwtService jwtService;
     private final UserRepository userRepository;
 
-    public AuthController(JwtService jwtService, UserRepository userRepository) {
+    public AuthController(JwtService jwtService, UserInMemoryRepository userRepository /*todo switch to interface*/) {
         this.jwtService = jwtService;
         this.userRepository = userRepository;
     }

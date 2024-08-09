@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Data
 @Entity
@@ -16,5 +17,7 @@ public class UserEntity {
 
     private String email;
 
-    private LocalDate date;
+    private String password;
+
+    private LocalDateTime date;
 }

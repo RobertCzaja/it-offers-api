@@ -8,6 +8,7 @@ import org.springframework.shell.standard.ShellMethod;
 import pl.api.itoffers.security.domain.model.UserEntity;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Transactional
 @ShellComponent
@@ -26,7 +27,7 @@ public class CreateUserCommand {
     ) {
         UserEntity user = new UserEntity();
         user.setEmail(email);
-        user.setDate(LocalDate.now());
+        user.setDate(LocalDateTime.now());
 
         entityManager.persist(user);
         entityManager.flush();
