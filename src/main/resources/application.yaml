@@ -1,0 +1,26 @@
+spring:
+  datasource:
+    driver-class: com.cj.jdbc.Driver
+    hikari:
+      connection-timeout: '20000   '
+      idle-timeout: '300000  '
+      maximum-pool-size: '12  '
+      max-lifetime: '1200000  '
+      auto-commit: 'true'
+      minimum-idle: '5'
+    password: ${POSTGRES_PASSWORD}
+    username: ${POSTGRES_USER}
+    url: jdbc:postgresql://localhost:5432/${POSTGRES_DB}
+  config:
+    import: optional:file:.env[.properties]
+  shell:
+    script:
+      enabled: 'true'
+    interactive:
+      enabled: 'true'
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+jwt:
+  token:
+    secret: ${JWT_SECRET}

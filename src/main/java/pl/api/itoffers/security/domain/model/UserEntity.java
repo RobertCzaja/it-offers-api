@@ -2,9 +2,6 @@ package pl.api.itoffers.security.domain.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
-import lombok.Setter;
-
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Data
