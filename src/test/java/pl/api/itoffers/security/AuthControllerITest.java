@@ -6,6 +6,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import pl.api.itoffers.security.ui.controller.AuthController;
 
@@ -16,7 +18,10 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@SpringBootTest(
+        webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
+        properties = {"spring.shell.interactive.enabled=false"}
+)
 public class AuthControllerITest {
 
     @Autowired
@@ -34,13 +39,13 @@ public class AuthControllerITest {
 
         Map<String, Object> responseMap = new ObjectMapper().readValue(response.getBody(), HashMap.class);
 
-        Assert.notNull(responseMap.get("token"));
-        assertThat(response.getStatusCode().is2xxSuccessful());
+        assertThat(responseMap.get("token")).isNotNull();
+        assertThat(response.getStatusCode().is2xxSuccessful()).isTrue();
     }
 
     @Test
-    public void shouldGetErrorResponseOnLackOfEmail() throws Exception {
+    public void shouldGetErrorResponseOnLackOfEmail() {
         ResponseEntity<String> response = template.getForEntity(AuthController.GET_TOKEN_PATH, String.class);
-        assertThat(response.getStatusCode().isError());
+        assertThat(response.getStatusCode().isError()).isTrue();
     }
 }
