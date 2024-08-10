@@ -3,3 +3,4 @@
 .env
 target/
 /spring-shell.log
+/keystore.jks

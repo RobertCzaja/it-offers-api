@@ -1,3 +1,9 @@
+server:
+  port: 8443
+  ssl:
+    key-store: keystore.jks
+    key-store-password: ${SSL_PASSWORD}
+    key-password: ${SSL_PASSWORD}
 spring:
   datasource:
     driver-class: com.cj.jdbc.Driver
