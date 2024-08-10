@@ -1,12 +1,7 @@
-server:
-  port: 8443
-  ssl:
-    key-store: keystore.jks
-    key-store-password: ${SSL_PASSWORD}
-    key-password: ${SSL_PASSWORD}
+
 spring:
   datasource:
-    driver-class: com.cj.jdbc.Driver
+    driver-class-name: org.postgresql.Driver
     hikari:
       connection-timeout: 20000
       idle-timeout: 300000
@@ -31,3 +26,15 @@ jwt:
   token:
     secret: ${JWT_SECRET}
     lifetime: 3600
+
+---
+spring:
+  config:
+      activate:
+        on-profile: dev
+server:
+  port: 8443
+  ssl:
+    key-store: keystore.jks
+    key-store-password: ${SSL_PASSWORD}
+    key-password: ${SSL_PASSWORD}
