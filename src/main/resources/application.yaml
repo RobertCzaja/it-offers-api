@@ -30,3 +30,4 @@ spring:
 jwt:
   token:
     secret: ${JWT_SECRET}
+    lifetime: 3600

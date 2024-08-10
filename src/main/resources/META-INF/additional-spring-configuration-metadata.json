@@ -1,0 +1,7 @@
+{
+  "properties": [{
+    "name": "jwt.toke.lifetime",
+    "type": "java.lang.Integer",
+    "deprecation": "Time in seconds to token expiration"
+  }]
+}

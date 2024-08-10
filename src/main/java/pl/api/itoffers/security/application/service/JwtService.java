@@ -4,9 +4,11 @@ import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.stereotype.Component;
+import pl.api.itoffers.security.application.dto.JwtParamsDto;
 import pl.api.itoffers.security.domain.User;
 
 import java.security.Key;
@@ -16,18 +18,18 @@ import java.util.concurrent.TimeUnit;
 
 @Component
 public class JwtService {
-    @Value("${jwt.token.secret}")
-    private String secret;
+    @Autowired
+    private JwtParamsDto jwtParamsDto;
 
     public String createToken(User user) {
         Date tokenCreateTime = new Date();
-        Date tokenValidity = new Date(tokenCreateTime.getTime() + TimeUnit.MINUTES.toMillis(60*60*1000));
+        Date tokenValidity = new Date(tokenCreateTime.getTime() + TimeUnit.MINUTES.toMillis(jwtParamsDto.getLifetime()*1000));
         return Jwts.builder()
                 .subject(user.getEmail())
                 .claim("firstName",user.getFirstName())
                 .claim("lastName",user.getLastName())
                 .setExpiration(tokenValidity)
-                .signWith(SignatureAlgorithm.HS256, JwtService.getSignInKey(secret))
+                .signWith(SignatureAlgorithm.HS256, JwtService.getSignInKey(jwtParamsDto.getSecret()))
                 .compact();
     }
 
@@ -39,7 +41,7 @@ public class JwtService {
     private Claims parseJwtClaims(String token) {
         return Jwts
                 .parser()
-                .setSigningKey(JwtService.getSignInKey(secret))
+                .setSigningKey(JwtService.getSignInKey(jwtParamsDto.getSecret()))
                 .build()
                 .parseClaimsJws(token)
                 .getBody();
