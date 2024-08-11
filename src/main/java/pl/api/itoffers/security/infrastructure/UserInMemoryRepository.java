@@ -8,6 +8,7 @@ import pl.api.itoffers.security.domain.model.UserEntity;
 import java.util.ArrayList;
 import java.util.Objects;
 
+@Deprecated
 @Repository
 public class UserInMemoryRepository implements UserRepository {
 

@@ -2,6 +2,8 @@ package pl.api.itoffers.security.domain.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import pl.api.itoffers.security.domain.User;
+
 import java.time.LocalDateTime;
 
 @Data
@@ -12,9 +14,18 @@ public class UserEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
 
+    /**
+     * TODO must be unique in DB
+     */
     private String email;
 
     private String password;
 
     private LocalDateTime date;
+
+    @Deprecated
+    public User castToUser()
+    {
+        return new User(email, password, "", "");
+    }
 }

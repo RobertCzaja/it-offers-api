@@ -3,6 +3,7 @@ package pl.api.itoffers.security.domain;
 /**
  * TODO name to change, is it a model only for JWT?
  */
+@Deprecated
 public class User {
     private String email;
     private String password;

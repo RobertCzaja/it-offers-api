@@ -14,10 +14,13 @@ public class UserPostgresRepository implements UserRepository {
 
     @Autowired
     private EntityManager entityManager;
+    @Autowired
+    private UserJapRepository userJapRepository;
 
     @Override
     public User findUserByEmail(String email) {
-        throw new RuntimeException("Not implemented yet");
+        UserEntity userEntity = userJapRepository.findByEmail(email);
+        return userEntity.castToUser();
     }
 
     @Override
