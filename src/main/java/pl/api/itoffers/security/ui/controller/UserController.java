@@ -8,8 +8,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import pl.api.itoffers.security.application.service.UserService;
+import pl.api.itoffers.security.domain.exception.CouldNotCreateUser;
 import pl.api.itoffers.security.ui.request.CreateUserRequest;
 import pl.api.itoffers.security.ui.response.UserCreated;
+import pl.api.itoffers.shared.http.exception.ErrorResponse;
 
 @RestController
 public class UserController {
@@ -20,11 +22,14 @@ public class UserController {
     private UserService userService;
 
     @PostMapping(UserController.PATH)
-    public ResponseEntity<UserCreated> create(@Valid @RequestBody CreateUserRequest request)
-    {
-        return new ResponseEntity<>(
-                new UserCreated(userService.create(request)),
-                HttpStatus.CREATED
-        );
+    public ResponseEntity create(@Valid @RequestBody CreateUserRequest request) throws CouldNotCreateUser {
+        try {
+            return new ResponseEntity<>(
+                    new UserCreated(userService.create(request)),
+                    HttpStatus.CREATED
+            );
+        } catch (CouldNotCreateUser e) {
+            return new ResponseEntity<>(new ErrorResponse(e.getMessage()), HttpStatus.CONFLICT);
+        }
     }
 }

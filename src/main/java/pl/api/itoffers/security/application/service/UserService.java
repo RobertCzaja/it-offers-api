@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 import pl.api.itoffers.security.application.repository.UserRepository;
+import pl.api.itoffers.security.domain.exception.CouldNotCreateUser;
 import pl.api.itoffers.security.domain.model.UserEntity;
 import pl.api.itoffers.security.ui.request.CreateUserRequest;
 
@@ -19,9 +20,7 @@ public class UserService {
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
 
-    /* TODO create Functional Test */
-    public Long create(CreateUserRequest request)
-    {
+    public Long create(CreateUserRequest request) throws CouldNotCreateUser {
         UserEntity user = new UserEntity();
         user.setEmail(request.getEmail());
         user.setPassword(passwordEncoder.encode(request.getPassword()));

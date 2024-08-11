@@ -41,5 +41,8 @@ public class UserControllerITest {
         assertThat(response.getBody()).contains("User created");
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.CREATED);
         assertThat(userRepository.findUserByEmail(requestBody.getEmail())).isNotNull();
+
+        ResponseEntity<String> responseForDuplicatedRequest = template.postForEntity(UserController.PATH, request, String.class);
+        assertThat(responseForDuplicatedRequest.getStatusCode()).isEqualTo(HttpStatus.CONFLICT);
     }
 }

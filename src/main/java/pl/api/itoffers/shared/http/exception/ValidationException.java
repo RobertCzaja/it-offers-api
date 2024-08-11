@@ -3,7 +3,7 @@ package pl.api.itoffers.shared.http.exception;
 import org.springframework.http.HttpStatus;
 
 public class ValidationException extends RuntimeException {
-;
+
     private int httpStatusCode;
 
     public ValidationException(int httpStatusCode, String message) {

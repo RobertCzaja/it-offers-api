@@ -14,9 +14,7 @@ public class UserEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
 
-    /**
-     * TODO must be unique in DB
-     */
+    @Column(unique=true)
     private String email;
 
     private String password;
