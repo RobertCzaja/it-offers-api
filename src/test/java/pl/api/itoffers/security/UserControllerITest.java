@@ -47,4 +47,15 @@ public class UserControllerITest {
         ResponseEntity<String> responseForDuplicatedRequest = template.postForEntity(UserController.PATH, request, String.class);
         assertThat(responseForDuplicatedRequest.getStatusCode()).isEqualTo(HttpStatus.CONFLICT);
     }
+
+    @Test
+    public void shouldNotCreateUserDueToInvalidEmail() throws Exception {
+
+        CreateUserRequest requestBody = UserFactory.createUserRequest("someInvalidEmail");
+        HttpEntity<CreateUserRequest> request = new HttpEntity<>(requestBody, apiAuthorizationHelper.getHeaders());
+
+        ResponseEntity<UserCreated> response = template.postForEntity(UserController.PATH, request, UserCreated.class);
+
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
+    }
 }
