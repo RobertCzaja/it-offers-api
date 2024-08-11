@@ -13,11 +13,6 @@ spring:
     url: jdbc:postgresql://localhost:5432/${POSTGRES_DB}
   config:
     import: optional:file:.env[.properties]
-  shell:
-    script:
-      enabled: true
-    interactive:
-      enabled: true
   jpa:
     hibernate:
       ddl-auto: update
@@ -33,8 +28,13 @@ jwt:
 ---
 spring:
   config:
-      activate:
-        on-profile: dev
+    activate:
+      on-profile: dev
+  shell:
+    script:
+      enabled: true
+    interactive:
+      enabled: true
 server:
   port: 8443
   ssl:

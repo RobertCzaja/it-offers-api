@@ -1,4 +1,4 @@
-package pl.api.itoffers.security;
+package pl.api.itoffers.helper;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
