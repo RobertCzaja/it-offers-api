@@ -4,10 +4,6 @@ import lombok.Data;
 
 @Data
 public class UserCreated {
-    private final Long userId;
-    private final String message = "User created";
-
-    public UserCreated(Long userId) {
-        this.userId = userId;
-    }
+    private Long userId;
+    private String message = "User created";
 }

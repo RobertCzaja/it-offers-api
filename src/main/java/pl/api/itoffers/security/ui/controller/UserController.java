@@ -24,10 +24,9 @@ public class UserController {
     @PostMapping(UserController.PATH)
     public ResponseEntity create(@Valid @RequestBody CreateUserRequest request) throws CouldNotCreateUser {
         try {
-            return new ResponseEntity<>(
-                    new UserCreated(userService.create(request)),
-                    HttpStatus.CREATED
-            );
+            UserCreated response = new UserCreated();
+            response.setUserId(userService.create(request));
+            return new ResponseEntity<>(response, HttpStatus.CREATED);
         } catch (CouldNotCreateUser e) {
             return new ResponseEntity<>(new ErrorResponse(e.getMessage()), HttpStatus.CONFLICT);
         }

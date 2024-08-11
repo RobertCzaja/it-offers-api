@@ -31,7 +31,10 @@ public class AuthController {
 
         User user = userRepository.findUserByEmail(email);
 
-        return new AuthResponse(jwtService.createToken(user));
+        AuthResponse response = new AuthResponse();
+        response.setToken(jwtService.createToken(user));
+
+        return response;
     }
 
     @GetMapping("/test")

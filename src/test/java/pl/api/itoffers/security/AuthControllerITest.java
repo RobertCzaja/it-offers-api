@@ -13,6 +13,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.net.URI;
 import org.springframework.web.util.UriComponentsBuilder;
+import pl.api.itoffers.security.ui.response.AuthResponse;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -30,17 +31,15 @@ public class AuthControllerITest {
                 .build()
                 .toUri();
 
-        ResponseEntity<String> response = template.getForEntity(uri, String.class);
+        ResponseEntity<AuthResponse> response = template.getForEntity(uri, AuthResponse.class);
 
-        Map<String, Object> responseMap = new ObjectMapper().readValue(response.getBody(), HashMap.class);
-
-        assertThat(responseMap.get("token")).isNotNull();
+        assertThat(response.getBody().getToken()).isNotNull();
         assertThat(response.getStatusCode().is2xxSuccessful()).isTrue();
     }
 
     @Test
     public void shouldGetErrorResponseOnLackOfEmail() {
-        ResponseEntity<String> response = template.getForEntity(AuthController.GET_TOKEN_PATH, String.class);
+        ResponseEntity<AuthResponse> response = template.getForEntity(AuthController.GET_TOKEN_PATH, AuthResponse.class);
         assertThat(response.getStatusCode().isError()).isTrue();
     }
 }

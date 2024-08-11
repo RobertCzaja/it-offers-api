@@ -15,6 +15,8 @@ import pl.api.itoffers.helper.UserFactory;
 import pl.api.itoffers.security.application.repository.UserRepository;
 import pl.api.itoffers.security.ui.controller.UserController;
 import pl.api.itoffers.security.ui.request.CreateUserRequest;
+import pl.api.itoffers.security.ui.response.UserCreated;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
@@ -36,9 +38,9 @@ public class UserControllerITest {
         CreateUserRequest requestBody = UserFactory.createUserRequest();
         HttpEntity<CreateUserRequest> request = new HttpEntity<>(requestBody, apiAuthorizationHelper.getHeaders());
 
-        ResponseEntity<String> response = template.postForEntity(UserController.PATH, request, String.class);
+        ResponseEntity<UserCreated> response = template.postForEntity(UserController.PATH, request, UserCreated.class);
 
-        assertThat(response.getBody()).contains("User created");
+        assertThat(response.getBody().getMessage()).contains("User created");
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.CREATED);
         assertThat(userRepository.findUserByEmail(requestBody.getEmail())).isNotNull();
 
