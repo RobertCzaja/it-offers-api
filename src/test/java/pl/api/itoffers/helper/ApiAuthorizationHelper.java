@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.util.UriComponentsBuilder;
 import pl.api.itoffers.security.ui.controller.AuthController;
+import pl.api.itoffers.security.ui.response.AuthResponse;
 
 import java.net.URI;
 import java.util.HashMap;
@@ -21,18 +22,10 @@ public class ApiAuthorizationHelper {
     private TestRestTemplate template;
 
     public HttpHeaders getHeaders() throws JsonProcessingException {
-        URI uri = UriComponentsBuilder
-                .fromUriString(AuthController.GET_TOKEN_PATH)
-                .queryParam("email", "a@a.pl")
-                .build()
-                .toUri();
-
-        ResponseEntity<String> authResponse = template.getForEntity(uri, String.class);
-
-        Map<String, Object> responseMap = new ObjectMapper().readValue(authResponse.getBody(), HashMap.class);
+        ResponseEntity<AuthResponse> response = template.postForEntity(AuthController.GET_TOKEN_PATH, AuthRequestBodyFactory.create(), AuthResponse.class);
 
         HttpHeaders headers = new HttpHeaders();
-        headers.add("Authorization", "Bearer "+responseMap.get("token"));
+        headers.add("Authorization", "Bearer "+response.getBody().getToken());
 
         return headers;
     }

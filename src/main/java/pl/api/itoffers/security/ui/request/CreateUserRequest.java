@@ -18,26 +18,32 @@ public class CreateUserRequest {
     @Valid
     private UserNameRequest name;
 
+    @Deprecated
     public String getEmail() {
         return email;
     }
 
+    @Deprecated
     public void setEmail(String email) {
         this.email = email;
     }
 
+    @Deprecated
     public String getPassword() {
         return password;
     }
 
+    @Deprecated
     public void setPassword(String password) {
         this.password = password;
     }
 
+    @Deprecated
     public UserNameRequest getName() {
         return name;
     }
 
+    @Deprecated
     public void setName(UserNameRequest name) {
         this.name = name;
     }
