@@ -28,6 +28,7 @@ public class JwtService {
                 .subject(user.getEmail())
                 .claim("firstName",user.getFirstName())
                 .claim("lastName",user.getLastName())
+                .claim("roles", user.getRoles())
                 .setExpiration(tokenValidity)
                 .signWith(SignatureAlgorithm.HS256, JwtService.getSignInKey(jwtParamsDto.getSecret()))
                 .compact();
@@ -74,6 +75,7 @@ public class JwtService {
         }
     }
 
+    @Deprecated
     public String getEmail(Claims claims) {
         return claims.getSubject();
     }

@@ -19,15 +19,16 @@ public class CustomUserDetailsService implements UserDetailsService {
         this.userRepository = userRepository;
     }
 
+    /* TODO https://github.com/RobertCzaja/it-offers/issues/8 */
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         User user = userRepository.findUserByEmail(email);
-        List<String> roles = new ArrayList<>();
-        roles.add("USER");
+        List<String> roles = new ArrayList<>(); // TODO ?
+        roles.add("USER"); // TODO ?
         return org.springframework.security.core.userdetails.User.builder()
                 .username(user.getEmail())
                 .password(user.getPassword())
-                .roles(roles.toArray(new String[0]))
+                .roles(roles.toArray(new String[0])) // TODO ?
                 .build();
     }
 }

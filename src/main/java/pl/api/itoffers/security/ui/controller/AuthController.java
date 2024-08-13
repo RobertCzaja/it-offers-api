@@ -28,7 +28,7 @@ public class AuthController {
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
 
-    /* TODO here must be used real User repository but in Tests it should be InMemory */
+    /* TODO https://github.com/RobertCzaja/it-offers/issues/8 */
     /* TODO to refactor: move that code to Application Service */
     @PostMapping(AuthController.GET_TOKEN_PATH)
     public ResponseEntity<AuthResponse> auth(@Valid @RequestBody AuthorizationRequest request)
