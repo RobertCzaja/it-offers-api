@@ -3,12 +3,12 @@ package pl.api.itoffers.security.infrastructure;
 import org.springframework.stereotype.Repository;
 import pl.api.itoffers.security.domain.User;
 import pl.api.itoffers.security.application.repository.UserRepository;
+import pl.api.itoffers.security.domain.exception.UserNotFound;
 import pl.api.itoffers.security.domain.model.UserEntity;
 
 import java.util.ArrayList;
 import java.util.Objects;
 
-@Deprecated
 @Repository
 public class UserInMemoryRepository implements UserRepository {
 
@@ -16,7 +16,7 @@ public class UserInMemoryRepository implements UserRepository {
 
     public UserInMemoryRepository() {
         this.users = new ArrayList<>();
-        this.users.add(new User("a@a.pl","admin", "John", "Doe"));
+        this.users.add(new User("a@a.pl","$2a$10$/ABBpyVoo3zbZ7Sx1ZXD9OhHD8vVhwJGpcRAUu9kl8k2DbQrCLoq6", "John", "Doe"));
     }
 
     public User findUserByEmail(String email){
@@ -26,7 +26,7 @@ public class UserInMemoryRepository implements UserRepository {
                 return user;
             }
         }
-        throw new RuntimeException("User with email "+email+" not exists");
+        throw new UserNotFound("User with email "+email+" not exists");
     }
 
     @Override

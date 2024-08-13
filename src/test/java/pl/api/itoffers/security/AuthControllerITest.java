@@ -28,6 +28,28 @@ public class AuthControllerITest {
     }
 
     @Test
+    public void shouldNotAuthorizeOnInvalidPassword() {
+        ResponseEntity<AuthResponse> response = template.postForEntity(
+                AuthController.GET_TOKEN_PATH,
+                AuthRequestBodyFactory.create(AuthRequestBodyFactory.EMAIL, "wrongPassword"),
+                AuthResponse.class
+        );
+
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.UNAUTHORIZED);
+    }
+
+    @Test
+    public void shouldNotAuthorizeOnInvalidEmail() {
+        ResponseEntity<AuthResponse> response = template.postForEntity(
+                AuthController.GET_TOKEN_PATH,
+                AuthRequestBodyFactory.create("wrong@email.com", AuthRequestBodyFactory.PASSWORD),
+                AuthResponse.class
+        );
+
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.UNAUTHORIZED);
+    }
+
+    @Test
     void shouldNotHandleInvalidEmail() {
         ResponseEntity<AuthResponse> response = template.postForEntity(
                 AuthController.GET_TOKEN_PATH,
