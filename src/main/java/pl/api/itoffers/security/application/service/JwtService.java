@@ -5,7 +5,6 @@ import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.stereotype.Component;
 import pl.api.itoffers.security.application.dto.JwtParamsDto;
@@ -18,6 +17,9 @@ import java.util.concurrent.TimeUnit;
 
 @Component
 public class JwtService {
+
+    private static final String AUTHORITIES_KEY = "roles";
+
     @Autowired
     private JwtParamsDto jwtParamsDto;
 
@@ -28,7 +30,7 @@ public class JwtService {
                 .subject(user.getEmail())
                 .claim("firstName",user.getFirstName())
                 .claim("lastName",user.getLastName())
-                .claim("roles", user.getRoles())
+                .claim(AUTHORITIES_KEY, user.getRoles())
                 .setExpiration(tokenValidity)
                 .signWith(SignatureAlgorithm.HS256, JwtService.getSignInKey(jwtParamsDto.getSecret()))
                 .compact();
@@ -75,12 +77,7 @@ public class JwtService {
         }
     }
 
-    @Deprecated
-    public String getEmail(Claims claims) {
-        return claims.getSubject();
-    }
-
-    private List<String> getRoles(Claims claims) {
-        return (List<String>) claims.get("roles");
+    public List<String> getAuthorities(Claims claims) {
+        return (List<String>) claims.get(AUTHORITIES_KEY);
     }
 }

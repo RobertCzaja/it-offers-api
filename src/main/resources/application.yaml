@@ -41,3 +41,8 @@ server:
     key-store: keystore.jks
     key-store-password: ${SSL_PASSWORD}
     key-password: ${SSL_PASSWORD}
+logging:
+  level:
+    org:
+      springframework:
+        security: DEBUG

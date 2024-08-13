@@ -7,6 +7,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -14,7 +15,8 @@ import pl.api.itoffers.security.application.service.JwtService;
 import pl.api.itoffers.shared.http.exception.HttpExceptionHandler;
 
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 @Component
 @Order(1)
@@ -45,14 +47,21 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
             Claims claims = jwtService.resolveClaims(request, accessToken);
 
             if (null != claims & jwtService.validateClaims(claims)) {
-                String email = claims.getSubject();
                 SecurityContextHolder.getContext().setAuthentication(
-                        new UsernamePasswordAuthenticationToken(email, "", new ArrayList<>())
+                    new UsernamePasswordAuthenticationToken(claims.getSubject(), "", getAuthorities(claims))
                 );
             }
         } catch (Exception e) {
             exceptionHandler.handle(e, response);
         }
         filterChain.doFilter(request, response);
+    }
+
+    private Set<SimpleGrantedAuthority> getAuthorities(Claims claims) {
+        Set<SimpleGrantedAuthority> authorities = new HashSet<>();
+        jwtService.getAuthorities(claims).forEach(role -> {
+            authorities.add(new SimpleGrantedAuthority(role));
+        });
+        return authorities;
     }
 }
