@@ -14,6 +14,7 @@ import pl.api.itoffers.security.ui.request.CreateUserRequest;
 import pl.api.itoffers.security.ui.response.UserCreated;
 import pl.api.itoffers.shared.http.exception.ErrorResponse;
 
+
 @RestController
 public class UserController {
 
@@ -22,7 +23,7 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    //@PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping(UserController.PATH)
     public ResponseEntity create(@Valid @RequestBody CreateUserRequest request) throws CouldNotCreateUser {
         try {

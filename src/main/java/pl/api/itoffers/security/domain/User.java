@@ -1,10 +1,6 @@
 package pl.api.itoffers.security.domain;
 
-import lombok.val;
 import pl.api.itoffers.security.domain.model.UserRole;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * TODO name to change, is it a model only for JWT?
@@ -25,7 +21,7 @@ public class User {
 
     // TODO get Roles from db
     public UserRole[] getRoles() {
-        return new UserRole[]{UserRole.USER};
+        return new UserRole[]{UserRole.ROLE_USER};
     }
 
     public String getEmail() {
