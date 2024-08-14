@@ -1,5 +1,6 @@
 package pl.api.itoffers.security.framework;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -19,16 +20,8 @@ import pl.api.itoffers.security.ui.controller.AuthController;
 @EnableMethodSecurity
 public class SecurityConfig {
 
-    private final CustomUserDetailsService userDetailsService;
-    private final JwtAuthorizationFilter jwtAuthorizationFilter;
-
-    public SecurityConfig(
-            CustomUserDetailsService customUserDetailsService,
-            JwtAuthorizationFilter jwtAuthorizationFilter
-    ) {
-        this.userDetailsService = customUserDetailsService;
-        this.jwtAuthorizationFilter = jwtAuthorizationFilter;
-    }
+    @Autowired
+    private JwtAuthorizationFilter jwtAuthorizationFilter;
 
     @Bean
     public AuthenticationManager authenticationManager(
@@ -36,7 +29,6 @@ public class SecurityConfig {
             BCryptPasswordEncoder passwordEncoder
     ) throws Exception {
         AuthenticationManagerBuilder authenticationManagerBuilder = http.getSharedObject(AuthenticationManagerBuilder.class);
-        authenticationManagerBuilder.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder);
         return authenticationManagerBuilder.build();
     }
 
