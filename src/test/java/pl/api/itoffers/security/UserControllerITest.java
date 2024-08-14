@@ -3,13 +3,11 @@ package pl.api.itoffers.security;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.test.annotation.DirtiesContext;
+import pl.api.itoffers.helper.AbstractITest;
 import pl.api.itoffers.helper.ApiAuthorizationHelper;
 import pl.api.itoffers.helper.AuthorizationCredentials;
 import pl.api.itoffers.helper.UserFactory;
@@ -20,10 +18,7 @@ import pl.api.itoffers.security.ui.response.UserCreated;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
-@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.ANY)
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class UserControllerITest {
+public class UserControllerITest extends AbstractITest {
 
     @Autowired
     private TestRestTemplate template;
