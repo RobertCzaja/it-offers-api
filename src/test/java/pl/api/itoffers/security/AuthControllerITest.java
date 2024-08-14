@@ -7,6 +7,7 @@ import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import pl.api.itoffers.helper.AuthRequestBodyFactory;
+import pl.api.itoffers.helper.AuthorizationCredentials;
 import pl.api.itoffers.security.ui.controller.AuthController;
 
 import pl.api.itoffers.security.ui.response.AuthResponse;
@@ -21,7 +22,7 @@ public class AuthControllerITest {
 
     @Test
     public void shouldGetAccessToken() {
-        ResponseEntity<AuthResponse> response = template.postForEntity(AuthController.GET_TOKEN_PATH, AuthRequestBodyFactory.create(), AuthResponse.class);
+        ResponseEntity<AuthResponse> response = template.postForEntity(AuthController.GET_TOKEN_PATH, AuthRequestBodyFactory.create(AuthorizationCredentials.USER), AuthResponse.class);
 
         assertThat(response.getBody().getToken()).isNotNull();
         assertThat(response.getStatusCode().is2xxSuccessful()).isTrue();

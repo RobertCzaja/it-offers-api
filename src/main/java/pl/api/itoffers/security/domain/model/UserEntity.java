@@ -21,9 +21,11 @@ public class UserEntity {
 
     private LocalDateTime date;
 
+    // TODO add roles
+
     @Deprecated
     public User castToUser()
     {
-        return new User(email, password, "", "");
+        return new User(email, password, "", "", new UserRole[]{UserRole.ROLE_USER} /*todo pass roles from Entity state*/);
     }
 }

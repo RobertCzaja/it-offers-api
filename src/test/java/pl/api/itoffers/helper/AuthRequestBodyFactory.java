@@ -1,15 +1,16 @@
 package pl.api.itoffers.helper;
 
 import org.springframework.http.HttpEntity;
+import pl.api.itoffers.security.infrastructure.UserInMemoryRepository;
 import pl.api.itoffers.security.ui.request.AuthorizationRequest;
 
 public class AuthRequestBodyFactory {
-    public static final String EMAIL = "a@a.pl";
-    public static final String PASSWORD = "admin1234";
+    public static final String EMAIL = UserInMemoryRepository.EMAIL_USER;
+    public static final String PASSWORD = UserInMemoryRepository.PASSWORD_USER;
 
-    public static HttpEntity<AuthorizationRequest> create()
+    public static HttpEntity<AuthorizationRequest> create(AuthorizationCredentials credentials)
     {
-        return create(EMAIL, PASSWORD);
+        return create(credentials.getEmail(), credentials.getPassword());
     }
 
     public static HttpEntity<AuthorizationRequest> create(String email, String password)
@@ -20,6 +21,4 @@ public class AuthRequestBodyFactory {
 
         return new HttpEntity<>(requestBody);
     }
-
-
 }

@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.annotation.DirtiesContext;
 import pl.api.itoffers.helper.ApiAuthorizationHelper;
+import pl.api.itoffers.helper.AuthorizationCredentials;
 import pl.api.itoffers.helper.UserFactory;
 import pl.api.itoffers.security.application.repository.UserRepository;
 import pl.api.itoffers.security.ui.controller.UserController;
@@ -36,7 +37,7 @@ public class UserControllerITest {
     public void shouldCreateUser() throws Exception {
 
         CreateUserRequest requestBody = UserFactory.createUserRequest();
-        HttpEntity<CreateUserRequest> request = new HttpEntity<>(requestBody, apiAuthorizationHelper.getHeaders());
+        HttpEntity<CreateUserRequest> request = new HttpEntity<>(requestBody, apiAuthorizationHelper.getHeaders(AuthorizationCredentials.ADMIN));
 
         ResponseEntity<UserCreated> response = template.postForEntity(UserController.PATH, request, UserCreated.class);
 
@@ -52,10 +53,21 @@ public class UserControllerITest {
     public void shouldNotCreateUserDueToInvalidEmail() throws Exception {
 
         CreateUserRequest requestBody = UserFactory.createUserRequest("someInvalidEmail");
-        HttpEntity<CreateUserRequest> request = new HttpEntity<>(requestBody, apiAuthorizationHelper.getHeaders());
+        HttpEntity<CreateUserRequest> request = new HttpEntity<>(requestBody, apiAuthorizationHelper.getHeaders(AuthorizationCredentials.ADMIN));
 
         ResponseEntity<UserCreated> response = template.postForEntity(UserController.PATH, request, UserCreated.class);
 
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
+    }
+
+    @Test
+    public void shouldNotAllowToCreateUserLoggedUserWithRoleUser() throws Exception {
+
+        CreateUserRequest requestBody = UserFactory.createUserRequest();
+        HttpEntity<CreateUserRequest> request = new HttpEntity<>(requestBody, apiAuthorizationHelper.getHeaders(AuthorizationCredentials.USER));
+
+        ResponseEntity<UserCreated> response = template.postForEntity(UserController.PATH, request, UserCreated.class);
+
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.FORBIDDEN);
     }
 }

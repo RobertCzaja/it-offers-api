@@ -21,8 +21,12 @@ public class ApiAuthorizationHelper {
     @Autowired
     private TestRestTemplate template;
 
-    public HttpHeaders getHeaders() throws JsonProcessingException {
-        ResponseEntity<AuthResponse> response = template.postForEntity(AuthController.GET_TOKEN_PATH, AuthRequestBodyFactory.create(), AuthResponse.class);
+    public HttpHeaders getHeaders(AuthorizationCredentials credentials) throws JsonProcessingException {
+        ResponseEntity<AuthResponse> response = template.postForEntity(
+                AuthController.GET_TOKEN_PATH,
+                AuthRequestBodyFactory.create(credentials),
+                AuthResponse.class
+        );
 
         HttpHeaders headers = new HttpHeaders();
         headers.add("Authorization", "Bearer "+response.getBody().getToken());
