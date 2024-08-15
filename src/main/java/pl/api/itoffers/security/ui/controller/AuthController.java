@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.function.EntityResponse;
+import pl.api.itoffers.security.application.service.AuthorizationService;
 import pl.api.itoffers.security.application.service.JwtService;
 import pl.api.itoffers.security.domain.User;
 import pl.api.itoffers.security.application.repository.UserRepository;
@@ -22,11 +23,7 @@ public class AuthController {
     public final static String GET_TOKEN_PATH = "/auth";
 
     @Autowired
-    private UserRepository userRepository;
-    @Autowired
-    private JwtService jwtService;
-    @Autowired
-    private BCryptPasswordEncoder passwordEncoder;
+    private AuthorizationService authorizationService;
 
     /* TODO https://github.com/RobertCzaja/it-offers/issues/8 */
     /* TODO to refactor: move that code to Application Service */
@@ -34,14 +31,14 @@ public class AuthController {
     public ResponseEntity<AuthResponse> auth(@Valid @RequestBody AuthorizationRequest request)
     {
         try {
-            User user = userRepository.findUserByEmail(request.getEmail());
+            String token = authorizationService.getToken(request.getEmail(), request.getPassword());
 
-            if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
+            if (null == token) {
                 return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
             }
 
             AuthResponse response = new AuthResponse();
-            response.setToken(jwtService.createToken(user));
+            response.setToken(token);
 
             return new ResponseEntity<>(response, HttpStatus.OK);
         } catch (UserNotFound e) {

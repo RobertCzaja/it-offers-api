@@ -20,8 +20,11 @@ public class JwtService {
 
     private static final String AUTHORITIES_KEY = "roles";
 
-    @Autowired
     private JwtParamsDto jwtParamsDto;
+
+    public JwtService(JwtParamsDto jwtParamsDto) {
+        this.jwtParamsDto = jwtParamsDto;
+    }
 
     public String createToken(User user) {
         Date tokenCreateTime = new Date();
