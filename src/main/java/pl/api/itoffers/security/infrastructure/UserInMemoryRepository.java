@@ -23,22 +23,22 @@ public class UserInMemoryRepository implements UserRepository {
     public UserInMemoryRepository() {
         this.users = new ArrayList<>();
         this.users.add(
-                new User(
-                        EMAIL_USER,
-                        "$2a$10$/ABBpyVoo3zbZ7Sx1ZXD9OhHD8vVhwJGpcRAUu9kl8k2DbQrCLoq6",
-                        "John",
-                        "Doe",
-                        new UserRole[]{UserRole.ROLE_USER}
-                )
+            new User(
+                EMAIL_USER,
+                "$2a$10$/ABBpyVoo3zbZ7Sx1ZXD9OhHD8vVhwJGpcRAUu9kl8k2DbQrCLoq6",
+                "John",
+                "Doe",
+                new UserRole[]{UserRole.ROLE_USER}
+            )
         );
         this.users.add(
-                new User(
-                        EMAIL_ADMIN,
-                        "$2a$10$/ABBpyVoo3zbZ7Sx1ZXD9OhHD8vVhwJGpcRAUu9kl8k2DbQrCLoq6",
-                        "Admin",
-                        "Smith",
-                        new UserRole[]{UserRole.ROLE_ADMIN}
-                )
+            new User(
+                EMAIL_ADMIN,
+                "$2a$10$/ABBpyVoo3zbZ7Sx1ZXD9OhHD8vVhwJGpcRAUu9kl8k2DbQrCLoq6",
+                "Admin",
+                "Smith",
+                new UserRole[]{UserRole.ROLE_ADMIN}
+            )
         );
     }
 
