@@ -1,9 +1,10 @@
 package pl.api.itoffers.security.domain;
 
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import pl.api.itoffers.security.domain.model.UserRole;
 
-import java.util.HashSet;
+import java.util.Arrays;
 
 /**
  * TODO name to change, is it a model only for JWT?

@@ -6,9 +6,12 @@ import org.springframework.shell.command.annotation.Option;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 import pl.api.itoffers.security.domain.model.UserEntity;
+import pl.api.itoffers.security.domain.model.UserRole;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+
+import static pl.api.itoffers.security.domain.model.UserRole.ROLE_USER;
 
 @Transactional
 @ShellComponent
@@ -27,7 +30,9 @@ public class CreateUserCommand {
     ) {
         UserEntity user = new UserEntity();
         user.setEmail(email);
+        user.setPassword(password);
         user.setDate(LocalDateTime.now());
+        user.setRoles(new String[]{UserRole.ROLE_ADMIN.toString()});
 
         entityManager.persist(user);
         entityManager.flush();

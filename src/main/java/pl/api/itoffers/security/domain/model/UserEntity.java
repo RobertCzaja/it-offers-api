@@ -1,6 +1,7 @@
 package pl.api.itoffers.security.domain.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import pl.api.itoffers.security.domain.User;
 
@@ -17,15 +18,20 @@ public class UserEntity {
     @Column(unique=true)
     private String email;
 
+    @NotNull
+    @Column(nullable = false)
     private String password;
 
+    @NotNull
+    @Column(nullable = false)
     private LocalDateTime date;
 
+    @Column(nullable = false)
     private String[] roles;
 
     @Deprecated
     public User castToUser()
     {
-        return new User(email, password, "", "", new UserRole[]{UserRole.ROLE_USER} /*todo pass roles from Entity state*/);
+        return new User(email, password, "", "", new UserRole[]{}/*todo*/);
     }
 }

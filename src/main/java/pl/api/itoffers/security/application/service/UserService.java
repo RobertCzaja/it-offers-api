@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 import pl.api.itoffers.security.application.repository.UserRepository;
 import pl.api.itoffers.security.domain.exception.CouldNotCreateUser;
 import pl.api.itoffers.security.domain.model.UserEntity;
+import pl.api.itoffers.security.domain.model.UserRole;
 import pl.api.itoffers.security.ui.request.CreateUserRequest;
 
 import java.time.LocalDateTime;
@@ -25,6 +26,7 @@ public class UserService {
         user.setEmail(request.getEmail());
         user.setPassword(passwordEncoder.encode(request.getPassword()));
         user.setDate(LocalDateTime.now());
+        user.setRoles(UserRole.getStandardRoles());
 
         repository.save(user);
 
