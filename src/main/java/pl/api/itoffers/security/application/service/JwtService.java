@@ -70,11 +70,7 @@ public class JwtService {
     }
 
     public boolean validateClaims(Claims claims) throws AuthenticationException {
-        try {
-            return claims.getExpiration().after(new Date());
-        } catch (Exception e) {
-            throw e;
-        }
+        return claims.getExpiration().after(new Date());
     }
 
     public List<String> getAuthorities(Claims claims) {

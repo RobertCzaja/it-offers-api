@@ -5,6 +5,7 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -22,13 +23,10 @@ import java.util.Set;
 @Order(1)
 public class JwtAuthorizationFilter extends OncePerRequestFilter {
 
-    private final JwtService jwtService;
-    private final HttpExceptionHandler exceptionHandler;
-
-    public JwtAuthorizationFilter(JwtService jwtService, HttpExceptionHandler exceptionHandler) {
-        this.jwtService = jwtService;
-        this.exceptionHandler = exceptionHandler;
-    }
+    @Autowired
+    private JwtService jwtService;
+    @Autowired
+    private HttpExceptionHandler exceptionHandler;
 
     @Override
     protected void doFilterInternal(

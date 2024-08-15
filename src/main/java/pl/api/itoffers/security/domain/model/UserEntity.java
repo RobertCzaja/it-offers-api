@@ -21,7 +21,7 @@ public class UserEntity {
 
     private LocalDateTime date;
 
-    // TODO add roles
+    private String[] roles;
 
     @Deprecated
     public User castToUser()
