@@ -6,6 +6,7 @@ import lombok.Data;
 import pl.api.itoffers.security.domain.User;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 
 @Data
 @Entity
@@ -32,6 +33,11 @@ public class UserEntity {
     @Deprecated
     public User castToUser()
     {
-        return new User(email, password, "", "", new UserRole[]{}/*todo*/);
+        ArrayList<UserRole> enumRoles = new ArrayList<>();
+        for (String role : roles) {
+            enumRoles.add(UserRole.valueOf(role));
+        }
+
+        return new User(email, password, "", "", enumRoles.toArray(new UserRole[0]));
     }
 }
