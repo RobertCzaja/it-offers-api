@@ -31,7 +31,7 @@ public class JwtService {
 
     public String createToken(User user) {
         Date tokenValidity = new Date(
-                clock.currentDate().getTime() + TimeUnit.MINUTES.toMillis(jwtParamsDto.getLifetime()*1000)
+                clock.currentDate().getTime() + TimeUnit.SECONDS.toMillis(jwtParamsDto.getLifetime())
         );
         return Jwts.builder()
                 .subject(user.getEmail())
