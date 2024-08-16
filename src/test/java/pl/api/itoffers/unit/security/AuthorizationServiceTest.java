@@ -3,6 +3,7 @@ package pl.api.itoffers.unit.security;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import pl.api.itoffers.helper.FrozenClock;
 import pl.api.itoffers.security.application.dto.JwtParamsDto;
 import pl.api.itoffers.security.application.service.AuthorizationService;
 import pl.api.itoffers.security.application.service.JwtService;
@@ -13,16 +14,18 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class AuthorizationServiceTest {
 
     private AuthorizationService service;
+    private FrozenClock frozenClock;
 
     @BeforeEach
     public void setup() {
+        this.frozenClock = new FrozenClock();
         JwtParamsDto jwtParams = new JwtParamsDto();
         jwtParams.setSecret("2D4A614E645267556B58703273357638792F423F4428472B4B6250655368566D");
         jwtParams.setLifetime(3600);
 
         this.service = new AuthorizationService(
                 new UserInMemoryRepository(),
-                new JwtService(jwtParams),
+                new JwtService(jwtParams, this.frozenClock),
                 new BCryptPasswordEncoder()
         );
     }

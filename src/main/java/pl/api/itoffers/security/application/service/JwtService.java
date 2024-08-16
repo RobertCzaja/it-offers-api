@@ -9,6 +9,7 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.stereotype.Component;
 import pl.api.itoffers.security.application.dto.JwtParamsDto;
 import pl.api.itoffers.security.domain.User;
+import pl.api.itoffers.shared.utils.clock.ClockInterface;
 
 import java.security.Key;
 import java.util.Date;
@@ -20,15 +21,18 @@ public class JwtService {
 
     private static final String AUTHORITIES_KEY = "roles";
 
-    private JwtParamsDto jwtParamsDto;
+    private final JwtParamsDto jwtParamsDto;
+    private final ClockInterface clock;
 
-    public JwtService(JwtParamsDto jwtParamsDto) {
+    public JwtService(JwtParamsDto jwtParamsDto, ClockInterface clock) {
         this.jwtParamsDto = jwtParamsDto;
+        this.clock = clock;
     }
 
     public String createToken(User user) {
-        Date tokenCreateTime = new Date();
-        Date tokenValidity = new Date(tokenCreateTime.getTime() + TimeUnit.MINUTES.toMillis(jwtParamsDto.getLifetime()*1000));
+        Date tokenValidity = new Date(
+                clock.currentDate().getTime() + TimeUnit.MINUTES.toMillis(jwtParamsDto.getLifetime()*1000)
+        );
         return Jwts.builder()
                 .subject(user.getEmail())
                 .claim("firstName",user.getFirstName())
@@ -73,7 +77,7 @@ public class JwtService {
     }
 
     public boolean validateClaims(Claims claims) throws AuthenticationException {
-        return claims.getExpiration().after(new Date());
+        return claims.getExpiration().after(clock.currentDate());
     }
 
     public List<String> getAuthorities(Claims claims) {
