@@ -1,5 +1,6 @@
 package pl.api.itoffers.security.framework;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -26,6 +27,8 @@ public class SecurityConfig {
 
     @Autowired
     private JwtAuthorizationFilter jwtAuthorizationFilter;
+    @Autowired
+    private CustomAccessDeniedHandler customAccessDeniedHandler;
 
     @Bean
     public AuthenticationManager authenticationManager(
@@ -47,7 +50,7 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(sess->sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .exceptionHandling(
-                    exceptionHandling -> exceptionHandling.accessDeniedHandler(new CustomAccessDeniedHandler())
+                    exceptionHandling -> exceptionHandling.accessDeniedHandler(customAccessDeniedHandler)
                 )
                 .addFilterBefore(jwtAuthorizationFilter, UsernamePasswordAuthenticationFilter.class);
 
