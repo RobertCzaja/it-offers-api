@@ -1,11 +1,14 @@
 package pl.api.itoffers.helper;
 
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 import pl.api.itoffers.security.application.service.AuthorizationService;
 import pl.api.itoffers.security.application.service.JwtService;
 import pl.api.itoffers.security.infrastructure.UserInMemoryRepository;
+
+import java.util.Arrays;
 
 
 @Component
@@ -26,6 +29,7 @@ public class ApiAuthorizationHelper {
 
         HttpHeaders headers = new HttpHeaders();
         headers.add("Authorization", "Bearer "+token);
+        headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
 
         return headers;
     }
