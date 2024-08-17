@@ -1,6 +1,7 @@
 package pl.api.itoffers.shared.http.exception;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -30,6 +31,10 @@ public class HttpExceptionHandler {
             httpStatusCode = validationException.getHttpStatusCode();
             errorMessage = "validation_error";
             errorDetail = validationException.getMessage();
+        } else if (e instanceof ExpiredJwtException) {
+            httpStatusCode = HttpStatus.UNAUTHORIZED.value();
+            errorMessage = "authorization_error";
+            errorDetail = "Invalid token";
         }
 
         errorDetails.put("code", errorMessage);

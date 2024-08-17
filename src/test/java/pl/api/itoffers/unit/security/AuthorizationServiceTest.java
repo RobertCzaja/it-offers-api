@@ -1,5 +1,6 @@
 package pl.api.itoffers.unit.security;
 
+import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.impl.DefaultClaimsBuilder;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -12,7 +13,6 @@ import pl.api.itoffers.security.infrastructure.UserInMemoryRepository;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -50,22 +50,5 @@ public class AuthorizationServiceTest {
 
         String token = service.getToken(UserInMemoryRepository.EMAIL_USER, "wrongPassword");
         assertThat(token).isNull();
-    }
-
-    /** TODO should be moved to JwtService unit test */
-    @Test
-    public void testShouldNotAcceptExpiredToken() throws ParseException {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        Date now = sdf.parse("2024-01-01 00:00:00");
-        frozenClock.setCurrentDate(now);
-
-        String token = service.getToken(UserInMemoryRepository.EMAIL_USER, UserInMemoryRepository.PASSWORD_USER);
-
-        Date oneSecondAfterTokenExpiration = sdf.parse("2024-01-01 00:01:01");
-
-        //new DefaultClaimsBuilder().
-        //jwtService.validateClaims()
-
-        assertThat(true).isTrue(); // todo to change
     }
 }

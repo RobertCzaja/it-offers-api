@@ -23,8 +23,7 @@ spring:
 jwt:
   token:
     secret: ${JWT_SECRET}
-    lifetime: 3600
-
+    lifetime: 60
 ---
 spring:
   config:
@@ -41,6 +40,9 @@ server:
     key-store: keystore.jks
     key-store-password: ${SSL_PASSWORD}
     key-password: ${SSL_PASSWORD}
+jwt:
+  token:
+    lifetime: 3600
 logging:
   level:
     org:
