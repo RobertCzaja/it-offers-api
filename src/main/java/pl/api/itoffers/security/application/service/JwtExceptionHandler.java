@@ -1,4 +1,4 @@
-package pl.api.itoffers.shared.http.exception;
+package pl.api.itoffers.security.application.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.ExpiredJwtException;
@@ -6,17 +6,18 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
+import pl.api.itoffers.shared.http.exception.ValidationException;
 
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
 @Component
-public class HttpExceptionHandler {
+public class JwtExceptionHandler {
 
     private final ObjectMapper mapper;
 
-    public HttpExceptionHandler(ObjectMapper mapper) {
+    public JwtExceptionHandler(ObjectMapper mapper) {
         this.mapper = mapper;
     }
 

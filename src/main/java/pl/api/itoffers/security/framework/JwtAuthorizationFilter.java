@@ -13,7 +13,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 import pl.api.itoffers.security.application.service.JwtService;
-import pl.api.itoffers.shared.http.exception.HttpExceptionHandler;
+import pl.api.itoffers.security.application.service.JwtExceptionHandler;
 
 import java.io.IOException;
 import java.util.HashSet;
@@ -26,7 +26,7 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
     @Autowired
     private JwtService jwtService;
     @Autowired
-    private HttpExceptionHandler exceptionHandler;
+    private JwtExceptionHandler jwtExceptionHandler;
 
     @Override
     protected void doFilterInternal(
@@ -50,7 +50,7 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
                 );
             }
         } catch (Exception e) {
-            exceptionHandler.handle(e, response);
+            jwtExceptionHandler.handle(e, response);
         }
         filterChain.doFilter(request, response);
     }
