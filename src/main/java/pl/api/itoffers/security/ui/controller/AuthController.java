@@ -26,7 +26,6 @@ public class AuthController {
     private AuthorizationService authorizationService;
 
     /* TODO https://github.com/RobertCzaja/it-offers/issues/8 */
-    /* TODO to refactor: move that code to Application Service */
     @PostMapping(AuthController.GET_TOKEN_PATH)
     public ResponseEntity<AuthResponse> auth(@Valid @RequestBody AuthorizationRequest request)
     {

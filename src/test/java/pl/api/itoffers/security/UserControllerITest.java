@@ -29,7 +29,7 @@ public class UserControllerITest extends AbstractITest {
     private UserRepository userRepository;
 
     @Test
-    public void shouldCreateUser() throws Exception {
+    public void shouldCreateUser() {
 
         CreateUserRequest requestBody = UserFactory.createUserRequest();
         HttpEntity<CreateUserRequest> request = new HttpEntity<>(requestBody, apiAuthorizationHelper.getHeaders(AuthorizationCredentials.ADMIN));
@@ -45,7 +45,7 @@ public class UserControllerITest extends AbstractITest {
     }
 
     @Test
-    public void shouldNotCreateUserDueToInvalidEmail() throws Exception {
+    public void shouldNotCreateUserDueToInvalidEmail() {
 
         CreateUserRequest requestBody = UserFactory.createUserRequest("someInvalidEmail");
         HttpEntity<CreateUserRequest> request = new HttpEntity<>(requestBody, apiAuthorizationHelper.getHeaders(AuthorizationCredentials.ADMIN));
@@ -56,7 +56,7 @@ public class UserControllerITest extends AbstractITest {
     }
 
     @Test
-    public void shouldNotAllowToCreateUserLoggedUserWithRoleUser() throws Exception {
+    public void shouldNotAllowToCreateUserLoggedUserWithRoleUser() {
 
         CreateUserRequest requestBody = UserFactory.createUserRequest();
         HttpEntity<CreateUserRequest> request = new HttpEntity<>(requestBody, apiAuthorizationHelper.getHeaders(AuthorizationCredentials.USER));
