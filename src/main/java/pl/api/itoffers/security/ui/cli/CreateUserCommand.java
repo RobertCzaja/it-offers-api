@@ -1,39 +1,27 @@
 package pl.api.itoffers.security.ui.cli;
 
-import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
-import pl.api.itoffers.security.domain.model.UserEntity;
+import pl.api.itoffers.security.application.service.UserService;
 import pl.api.itoffers.security.domain.model.UserRole;
 
-import java.time.LocalDateTime;
 
 
 @Transactional
 @ShellComponent
 public class CreateUserCommand {
 
-    private final EntityManager entityManager;
+    @Autowired
+    private UserService userService;
 
-    public CreateUserCommand(EntityManager entityManager) {
-        this.entityManager = entityManager;
-    }
-
-    @ShellMethod(key="create-user", value="Create user that can authenticate")
+    @ShellMethod(key="create-user", value="Create an admin User")
     public String create(
             String email,
             String password
     ) {
-        UserEntity user = new UserEntity();
-        user.setEmail(email);
-        user.setPassword(password);
-        user.setDate(LocalDateTime.now());
-        user.setRoles(new String[]{UserRole.ROLE_ADMIN.toString()});
-
-        entityManager.persist(user);
-        entityManager.flush();
-
-        return String.format("User %s created (%s)", email, password);
+        Long userId = userService.create(email, password, new String[]{UserRole.ROLE_ADMIN.toString()});
+        return String.format("User %s created (%s) with ID: %d", email, password, userId);
     }
 }

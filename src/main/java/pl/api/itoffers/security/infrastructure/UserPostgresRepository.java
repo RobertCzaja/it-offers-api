@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 import pl.api.itoffers.security.application.repository.UserRepository;
 import pl.api.itoffers.security.domain.User;
 import pl.api.itoffers.security.domain.exception.CouldNotCreateUser;
+import pl.api.itoffers.security.domain.exception.UserNotFound;
 import pl.api.itoffers.security.domain.model.UserEntity;
 
 @Transactional
@@ -22,6 +23,11 @@ public class UserPostgresRepository implements UserRepository {
     @Override
     public User findUserByEmail(String email) {
         UserEntity userEntity = userJapRepository.findByEmail(email);
+
+        if (null == userEntity ) {
+            throw UserNotFound.with(email);
+        }
+
         return userEntity.castToUser();
     }
 

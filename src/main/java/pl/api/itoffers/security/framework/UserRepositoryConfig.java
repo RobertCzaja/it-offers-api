@@ -16,13 +16,13 @@ public class UserRepositoryConfig {
     private UserPostgresRepository userPostgresRepository;
 
     @Bean
-    @Primary
     public UserInMemoryRepository inMemory()
     {
         return userInMemoryRepository;
     }
 
     @Bean
+    @Primary
     public UserPostgresRepository postgreSQL()
     {
         return userPostgresRepository;

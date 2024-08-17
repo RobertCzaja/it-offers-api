@@ -22,11 +22,19 @@ public class UserService {
     private BCryptPasswordEncoder passwordEncoder;
 
     public Long create(CreateUserRequest request) throws CouldNotCreateUser {
+        return create(
+                request.getEmail(),
+                request.getPassword(),
+                UserRole.getStandardRoles()
+        );
+    }
+
+    public Long create(String email, String password, String[] roles)  throws CouldNotCreateUser {
         UserEntity user = new UserEntity();
-        user.setEmail(request.getEmail());
-        user.setPassword(passwordEncoder.encode(request.getPassword()));
+        user.setEmail(email);
+        user.setPassword(passwordEncoder.encode(password));
         user.setDate(LocalDateTime.now());
-        user.setRoles(UserRole.getStandardRoles());
+        user.setRoles(roles);
 
         repository.save(user);
 

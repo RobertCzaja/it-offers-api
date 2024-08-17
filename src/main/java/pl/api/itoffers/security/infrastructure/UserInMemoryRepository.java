@@ -49,7 +49,7 @@ public class UserInMemoryRepository implements UserRepository {
                 return user;
             }
         }
-        throw new UserNotFound("User with email "+email+" not exists");
+        throw UserNotFound.with(email);
     }
 
     @Override
