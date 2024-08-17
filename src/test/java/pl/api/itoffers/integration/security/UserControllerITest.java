@@ -64,5 +64,6 @@ public class UserControllerITest extends AbstractITest {
         ResponseEntity<UserCreated> response = template.postForEntity(UserController.PATH, request, UserCreated.class);
 
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.FORBIDDEN);
+        assertThat(response.getBody().getMessage()).isEqualTo("Access denied");
     }
 }

@@ -26,8 +26,6 @@ public class CustomAccessDeniedHandler implements AccessDeniedHandler {
     ) throws IOException {
         response.setContentType("application/json");
 
-        // todo check in one test if response contains correct message
-
         String serialized = objectMapper.writeValueAsString(new AccessDeniedResponse());
 
         response.getWriter().write(serialized);
