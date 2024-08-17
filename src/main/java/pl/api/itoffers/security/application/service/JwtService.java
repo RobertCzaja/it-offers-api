@@ -48,7 +48,7 @@ public class JwtService {
         return Keys.hmacShaKeyFor(keyBytes);
     }
 
-    private Claims parseJwtClaims(String token) {
+    public Claims parseJwtClaims(String token) {
         return Jwts
                 .parser()
                 .setSigningKey(JwtService.getSignInKey(jwtParamsDto.getSecret()))
