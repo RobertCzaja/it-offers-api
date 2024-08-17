@@ -1,4 +1,4 @@
-package pl.api.itoffers.security;
+package pl.api.itoffers.integration.security;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
