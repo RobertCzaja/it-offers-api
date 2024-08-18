@@ -1,0 +1,20 @@
+spring:
+  shell:
+    script:
+      enabled: true
+    interactive:
+      enabled: true
+server:
+  port: 8443
+  ssl:
+    key-store: keystore.jks
+    key-store-password: ${SSL_PASSWORD}
+    key-password: ${SSL_PASSWORD}
+jwt:
+  token:
+    lifetime: 3600
+logging:
+  level:
+    org:
+      springframework:
+        security: DEBUG
