@@ -4,3 +4,8 @@ spring:
       ddl-auto: update
   flyway:
     enabled: false
+logging:
+  level:
+    org:
+      springframework:
+        security: DEBUG
