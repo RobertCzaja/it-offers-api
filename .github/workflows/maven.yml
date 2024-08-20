@@ -5,9 +5,6 @@ on:
   pull_request:
     branches: [ "master" ]
 
-env:
-  JWT_SECRET: 2D4A614E645267556B58703273357638792F423F4428472B4B6250655368566D
-
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -61,3 +58,5 @@ jobs:
 
     - name: Build and test with Maven
       run: mvn clean install
+      env:
+        JWT_SECRET: 2D4A614E645267556B58703273357638792F423F4428472B4B6250655368566D
