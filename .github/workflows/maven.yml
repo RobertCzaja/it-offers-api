@@ -46,7 +46,7 @@ jobs:
 
     - name: Start MongoDB
       id: start-mongodb
-      run: docker run --rm -d -p 27017:27017 --name mongodb mongodb/mongodb-community-server:latest
+      run: docker run --rm -d -p 27017:27017 --name mongodb mongodb/mongodb-community-server:6.0
 
 
 
