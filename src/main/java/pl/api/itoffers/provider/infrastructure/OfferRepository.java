@@ -5,5 +5,5 @@ import org.springframework.stereotype.Repository;
 import pl.api.itoffers.provider.Offer;
 
 @Repository
-public interface OfferRepository /*extends MongoRepository<Offer, String>*/ {
+public interface OfferRepository extends MongoRepository<Offer, String> {
 }
