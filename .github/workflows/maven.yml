@@ -52,6 +52,10 @@ jobs:
       uses: supercharge/mongodb-github-action@1.11.0
       with:
         mongodb-version: '6.0'
+        mongodb-replica-set: test-rs
+        mongodb-username: admin
+        mongodb-password: admin
+        mongodb-db: it-offers
 
       # TODO step below is rather to remove
     - name: Some random step that can be removed
