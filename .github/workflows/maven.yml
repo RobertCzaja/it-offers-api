@@ -8,59 +8,17 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-#    services:
-#      mongo:
-#        image: mongodb/mongodb-community-server:latest
-#        env:
-#          MONGO_INITDB_ROOT_USERNAME: root
-#          MONGO_INITDB_ROOT_PASSWORD: example
-#          MONGO_INITDB_DATABASE: it-offers
-#        ports:
-#          - 27017:27017
-#        options: >-
-#          --health-cmd "mongosh --eval 'db.runCommand(\"ping\")'"
-#          --health-interval 10s
-#          --health-timeout 5s
-#          --health-retries 5
 
     steps:
     - uses: actions/checkout@v4
-
-#    - name: Install mongosh
-#      run: |
-#        sudo apt-get install gnupg
-#        wget -qO- https://www.mongodb.org/static/pgp/server-7.0.asc | sudo tee /etc/apt/trusted.gpg.d/server-7.0.asc
-#        echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu focal/mongodb-org/7.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-7.0.list
-#        sudo apt-get update
-#        sudo apt-get install -y mongodb-mongosh
-#        mongosh --version
-#
-#    - name: Initalize MongoDB
-#      run: |
-#        mongosh --host localhost:27017 -u admin -p admin --authenticationDatabase admin <<EOF
-#          db = db.getSiblingDB('APP-DB');
-#          db.createUser({ user: 'APP-USERNAME', pwd: 'APP-PASSWORD', roles: [{ role: 'readWrite', db: 'APP-DB' }] })
-#          db.createCollection('APP-COLLECTION');
-#        EOF
-#        # Do whatever you like in here
-
-#    - name: Start MongoDB
-#      id: start-mongodb
-#      run: docker run --rm -d -p 27017:27017 --name mongodb mongodb/mongodb-community-server:latest
 
     - name: Start MongoDB
       uses: supercharge/mongodb-github-action@1.11.0
       with:
         mongodb-version: '6.0'
-        mongodb-replica-set: test-rs
         mongodb-username: supercharge
         mongodb-password: secret
         mongodb-db: supercharge
-
-      # TODO step below is rather to remove
-    - name: Some random step that can be removed
-      run: |
-        echo "Another random step that can be removed"  
 
     - name: Set up JDK 17
       uses: actions/setup-java@v4
