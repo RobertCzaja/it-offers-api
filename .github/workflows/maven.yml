@@ -53,8 +53,8 @@ jobs:
       with:
         mongodb-version: '6.0'
         mongodb-replica-set: test-rs
-        mongodb-username: admin5678
-        mongodb-password: admin
+#        mongodb-username: admin5678
+#        mongodb-password: admin
         mongodb-db: it-offers
 
       # TODO step below is rather to remove
