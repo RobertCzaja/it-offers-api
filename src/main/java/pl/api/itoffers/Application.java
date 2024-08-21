@@ -13,7 +13,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.shell.Shell;
 import org.springframework.shell.jline.NonInteractiveShellRunner;
 
-@SpringBootApplication(exclude = {MongoAutoConfiguration.class, MongoDataAutoConfiguration.class})
+@SpringBootApplication()
 public class Application {
 
 	public static void main(String[] args) {
