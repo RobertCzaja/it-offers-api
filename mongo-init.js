@@ -1,3 +1,15 @@
+db.createUser(
+    {
+        user: "admin",
+        pwd: "admin",
+        roles: [
+            {
+                role: "readWrite",
+                db: "it-offers"
+            }
+        ]
+    }
+);
 db = db.getSiblingDB('it-offers-dev');
 db.createUser(
     {
