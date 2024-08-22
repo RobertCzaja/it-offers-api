@@ -15,6 +15,9 @@ jobs:
       uses: supercharge/mongodb-github-action@1.11.0
       with:
         mongodb-version: '6.0'
+        mongodb-replica-set: test-rs
+        mongodb-username: admin
+        mongodb-password: admin
         mongodb-db: it-offers
 
     - name: Set up JDK 17
@@ -28,4 +31,5 @@ jobs:
       run: mvn clean install
       env:
         JWT_SECRET: 2D4A614E645267556B58703273357638792F423F4428472B4B6250655368566D
+        MONGO_DB_NAME: it-offers
         MONGODB_URI: mongodb://localhost:27017/it-offers
