@@ -1,7 +1,7 @@
 spring:
   data:
     mongodb:
-      uri: mongodb://localhost:27017/it-offers
+      uri: ${MONGODB_URI}
   jpa:
     hibernate:
       ddl-auto: update
