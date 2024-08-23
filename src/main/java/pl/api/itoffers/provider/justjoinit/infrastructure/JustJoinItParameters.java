@@ -17,7 +17,7 @@ public class JustJoinItParameters {
          try {
              return new URL(origin);
          } catch (MalformedURLException e) {
-             throw new RuntimeException(e); // todo do something with it
+             throw new RuntimeException(e);
          }
      }
 }
