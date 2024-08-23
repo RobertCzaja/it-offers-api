@@ -1,3 +1,4 @@
+[![it-offers ci/cd](https://github.com/RobertCzaja/it-offers/actions/workflows/maven.yml/badge.svg)](https://github.com/RobertCzaja/it-offers/actions/workflows/maven.yml)
 # Installation
 
 1. create SSL `jks` key in main catalog 
