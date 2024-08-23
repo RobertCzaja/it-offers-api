@@ -1,6 +1,7 @@
-package pl.api.itoffers.provider.justjoinit;
+package pl.api.itoffers.provider.justjoinit.infrastructure;
 
 import org.bson.Document;
+import pl.api.itoffers.provider.justjoinit.JustJoinItRepository;
 
 public class JustJoinItMongoRepository implements JustJoinItRepository {
 

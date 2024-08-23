@@ -1,6 +1,8 @@
-package pl.api.itoffers.provider.justjoinit;
+package pl.api.itoffers.provider.justjoinit.infrastructure;
 
 import org.jsoup.Jsoup;
+import pl.api.itoffers.provider.justjoinit.JustJoinItConnector;
+import pl.api.itoffers.provider.justjoinit.exception.JustJoinItException;
 
 import java.io.IOException;
 import java.net.URL;

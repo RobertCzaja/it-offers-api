@@ -1,6 +1,7 @@
 package pl.api.itoffers.provider.justjoinit;
 
 import org.bson.Document;
+import pl.api.itoffers.provider.justjoinit.service.JustJoinItPayloadExtractor;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;

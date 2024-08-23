@@ -1,9 +1,10 @@
-package pl.api.itoffers.provider.justjoinit;
+package pl.api.itoffers.provider.justjoinit.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import pl.api.itoffers.provider.justjoinit.exception.JustJoinItException;
 import pl.api.itoffers.shared.utils.fileManager.FileManager;
 
 import java.util.ArrayList;

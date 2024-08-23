@@ -1,4 +1,4 @@
-package pl.api.itoffers.provider.justjoinit;
+package pl.api.itoffers.provider.justjoinit.exception;
 
 public class JustJoinItException extends RuntimeException
 {

@@ -1,4 +1,4 @@
-package pl.api.itoffers.provider.justjoinit;
+package pl.api.itoffers.provider.justjoinit.model;
 
 import pl.api.itoffers.provider.common.domain.Salary;
 

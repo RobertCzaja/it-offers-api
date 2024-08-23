@@ -6,8 +6,8 @@ import org.springframework.shell.standard.ShellMethod;
 import pl.api.itoffers.provider.common.domain.Offer;
 import pl.api.itoffers.provider.common.application.OfferRepository;
 
-// TODO to remove, only for purpose of testing connection to local MongoDB
-//  or can be adjusted to script that once for a while fetch offers from external service
+// TODO it's only testing CLI to check MongoDB connection - it should be removed
+@Deprecated
 @ShellComponent
 public class CreateOfferCommand {
 
