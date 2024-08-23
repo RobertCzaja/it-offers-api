@@ -1,7 +1,7 @@
-package pl.api.itoffers.provider.infrastructure;
+package pl.api.itoffers.provider.common.infrastructure;
 
 
-import pl.api.itoffers.provider.application.TechnologyRepository;
+import pl.api.itoffers.provider.common.application.TechnologyRepository;
 
 import java.util.Arrays;
 import java.util.List;

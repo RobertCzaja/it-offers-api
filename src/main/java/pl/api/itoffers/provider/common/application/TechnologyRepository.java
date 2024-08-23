@@ -1,4 +1,4 @@
-package pl.api.itoffers.provider.application;
+package pl.api.itoffers.provider.common.application;
 
 import java.util.List;
 

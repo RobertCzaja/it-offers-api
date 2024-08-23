@@ -1,4 +1,6 @@
-package pl.api.itoffers.provider.application;
+package pl.api.itoffers.provider.justjoinit;
+
+import pl.api.itoffers.provider.common.domain.Salary;
 
 import java.time.Instant;
 import java.util.ArrayList;

@@ -1,4 +1,4 @@
-package pl.api.itoffers.provider.application;
+package pl.api.itoffers.provider.justjoinit;
 
 import org.bson.Document;
 

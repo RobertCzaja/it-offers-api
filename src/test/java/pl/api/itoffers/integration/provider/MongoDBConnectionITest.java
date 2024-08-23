@@ -3,8 +3,8 @@ package pl.api.itoffers.integration.provider;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import pl.api.itoffers.helper.AbstractITest;
-import pl.api.itoffers.provider.Offer;
-import pl.api.itoffers.provider.infrastructure.OfferRepository;
+import pl.api.itoffers.provider.common.domain.Offer;
+import pl.api.itoffers.provider.common.application.OfferRepository;
 
 import java.util.Optional;
 import java.util.UUID;

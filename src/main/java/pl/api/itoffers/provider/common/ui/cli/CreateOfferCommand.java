@@ -1,10 +1,10 @@
-package pl.api.itoffers.provider.ui.cli;
+package pl.api.itoffers.provider.common.ui.cli;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
-import pl.api.itoffers.provider.Offer;
-import pl.api.itoffers.provider.infrastructure.OfferRepository;
+import pl.api.itoffers.provider.common.domain.Offer;
+import pl.api.itoffers.provider.common.application.OfferRepository;
 
 // TODO to remove, only for purpose of testing connection to local MongoDB
 //  or can be adjusted to script that once for a while fetch offers from external service
