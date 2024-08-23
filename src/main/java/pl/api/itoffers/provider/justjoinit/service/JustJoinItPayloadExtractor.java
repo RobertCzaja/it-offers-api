@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.stereotype.Service;
 import pl.api.itoffers.provider.justjoinit.exception.JustJoinItException;
 import pl.api.itoffers.shared.utils.fileManager.FileManager;
 
@@ -11,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Map;
 
+@Service
 public class JustJoinItPayloadExtractor {
 
     private ObjectMapper mapper = new ObjectMapper();

@@ -33,3 +33,7 @@ jwt:
   token:
     secret: ${JWT_SECRET}
     lifetime: 60
+application:
+  provider:
+    just-join-it:
+      origin: https://justjoin.it

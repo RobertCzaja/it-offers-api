@@ -1,6 +1,9 @@
 package pl.api.itoffers.provider.justjoinit.infrastructure;
 
+import lombok.SneakyThrows;
 import org.jsoup.Jsoup;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import pl.api.itoffers.provider.justjoinit.JustJoinItConnector;
 import pl.api.itoffers.provider.justjoinit.exception.JustJoinItException;
 
@@ -9,14 +12,13 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.Scanner;
 
+@Service
 public final class JustJoinItHttpConnector implements JustJoinItConnector
 {
     private static final String PATH = "/all-locations/";
-    private final URL origin;
 
-    public JustJoinItHttpConnector(URL origin) {
-        this.origin = origin;
-    }
+    @Autowired
+    private JustJoinItParameters parameters;
 
     public String fetchStringifyJsonPayload(String technology) {
 
@@ -32,7 +34,7 @@ public final class JustJoinItHttpConnector implements JustJoinItConnector
     }
 
     private String fetchSourceHtml(String technology) throws IOException {
-        URLConnection connection =  new URL(origin.toString()+PATH+technology).openConnection();
+        URLConnection connection =  new URL(parameters.getOrigin().toString()+PATH+technology).openConnection();
         Scanner scanner = new Scanner(connection.getInputStream());
         scanner.useDelimiter("\\Z");
         String htmlSource = scanner.next();

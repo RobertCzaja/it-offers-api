@@ -1,13 +1,15 @@
 package pl.api.itoffers.provider.justjoinit;
 
 import org.bson.Document;
+import org.springframework.stereotype.Service;
 import pl.api.itoffers.provider.justjoinit.service.JustJoinItPayloadExtractor;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.UUID;
 
+// TODO add auto testing
+@Service
 public class JustJoinItProvider {
 
     private final JustJoinItConnector connector;
@@ -29,16 +31,16 @@ public class JustJoinItProvider {
         String stringifyJsonPayload = connector.fetchStringifyJsonPayload(technology);
         ArrayList<Map<String, Object>> offers = payloadExtractor.extract(stringifyJsonPayload);
 
-        for (Map<String, Object> offer : offers) {
-            repository.save(
-                    new Document()
-                            .append("offer", offer)
-                            .append("createdAt", LocalDateTime.now())
-                            .append("technology", technology)
-                            .append("scrapingId", scrapingId.toString()
-                    )
-            );
-        }
+//        for (Map<String, Object> offer : offers) {
+//            repository.save(
+//                    new Document()
+//                            .append("offer", offer)
+//                            .append("createdAt", LocalDateTime.now())
+//                            .append("technology", technology)
+//                            .append("scrapingId", scrapingId.toString()
+//                    )
+//            );
+//        }
     }
 
 }
