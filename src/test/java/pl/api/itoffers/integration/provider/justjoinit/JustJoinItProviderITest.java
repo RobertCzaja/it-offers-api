@@ -24,10 +24,10 @@ public class JustJoinItProviderITest extends AbstractITest {
 
     @BeforeEach
     public void setUp() {
+        super.setUp();
         repository.deleteAll();
     }
 
-    /* TODO this test does not involve Postgres at all - think about then introduce new AbstractClass than the current one */
     @Test
     void shouldFetchAndSaveOffersFromExternalService() {
 

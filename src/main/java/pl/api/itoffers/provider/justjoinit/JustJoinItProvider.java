@@ -31,16 +31,7 @@ public class JustJoinItProvider {
     {
         String stringifyJsonPayload = connector.fetchStringifyJsonPayload(technology);
         ArrayList<Map<String, Object>> offers = payloadExtractor.extract(stringifyJsonPayload);
-
-        for (Map<String, Object> offer : offers) {
-            JustJoinItRawOffer entity = new JustJoinItRawOffer();
-            entity.setScrapingId(scrapingId);
-            entity.setTechnology(technology);
-            entity.setOffer(offer);
-            entity.setCreatedAt(LocalDateTime.now());
-
-            repository.save(entity);
-        }
+        offers.forEach(offer -> repository.save(new JustJoinItRawOffer(scrapingId,technology,offer,LocalDateTime.now())));
     }
 
 }
