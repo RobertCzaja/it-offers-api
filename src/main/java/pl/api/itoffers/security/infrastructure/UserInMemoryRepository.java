@@ -56,4 +56,7 @@ public class UserInMemoryRepository implements UserRepository {
     public void save(UserEntity user) {
         throw new RuntimeException("Not implemented yet");
     }
+
+    @Override
+    public void deleteAll() { throw new RuntimeException("Not implemented yet"); }
 }

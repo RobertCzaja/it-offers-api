@@ -8,4 +8,6 @@ public interface UserRepository {
     User findUserByEmail(String email);
 
     void save(UserEntity user) throws CouldNotCreateUser;
+
+    void deleteAll();
 }

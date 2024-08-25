@@ -40,4 +40,9 @@ public class UserPostgresRepository implements UserRepository {
             throw CouldNotCreateUser.becauseEmailIsAlreadyRegistered(user.getEmail());
         }
     }
+
+    @Override
+    public void deleteAll() {
+        userJapRepository.deleteAll();
+    }
 }
