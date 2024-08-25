@@ -12,6 +12,8 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
+/* TODO to remove, it's not used */
+@Deprecated
 public class JustJoinItOfferFactory {
 
     public List<JustJoinItOffer> createFromRawPayload(@NotNull Iterator<JsonNode> offersNodes) {

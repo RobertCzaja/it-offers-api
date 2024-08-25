@@ -4,6 +4,7 @@ import jakarta.validation.Payload;
 import org.apache.commons.io.IOUtils;
 import org.junit.Test;
 import org.testcontainers.shaded.org.apache.commons.io.FileUtils;
+import pl.api.itoffers.integration.provider.justjoinit.payload.JustJoinItParams;
 import pl.api.itoffers.provider.justjoinit.service.JustJoinItPayloadExtractor;
 import pl.api.itoffers.shared.utils.fileManager.FileManager;
 
@@ -15,12 +16,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class JustJoinItPayloadExtractorTest {
 
-    private final static String JUST_JOIN_IT_PAYLOAD_PATH = "src/test/java/pl/api/itoffers/integration/provider/justjoinit/payload/allLocationsPhp.json";
-
     @Test
     public void shouldExtractOffersFromValidPayload() throws IOException {
 
-        String justJoinItPayload = FileManager.readFile(JUST_JOIN_IT_PAYLOAD_PATH);
+        String justJoinItPayload = FileManager.readFile(JustJoinItParams.ALL_LOCATIONS_PAYLOAD_PATH);
 
         ArrayList<Map<String, Object>> offers =  new JustJoinItPayloadExtractor().extract(justJoinItPayload);
 

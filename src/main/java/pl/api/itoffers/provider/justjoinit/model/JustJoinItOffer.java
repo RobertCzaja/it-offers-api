@@ -5,6 +5,8 @@ import pl.api.itoffers.offer.domain.Salary;
 import java.time.Instant;
 import java.util.ArrayList;
 
+/* TODO to remove - it's used only in the Factory which is gonna be removed */
+@Deprecated
 public class JustJoinItOffer {
 
     private final String slug;
