@@ -1,9 +1,8 @@
 package pl.api.itoffers.shared.utils.fileManager;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import org.apache.commons.io.IOUtils;
+
+import java.io.*;
 
 public class FileManager {
     public void saveFile(String rawJsonPayload, String extension) {
@@ -22,5 +21,10 @@ public class FileManager {
         } catch (IOException e) {
             throw new RuntimeException("Error on saving invalid JSON from provider", e);
         }
+    }
+
+    public static String readFile(String path) throws IOException {
+        FileInputStream fis = new FileInputStream(path);
+        return IOUtils.toString(fis, "UTF-8");
     }
 }
