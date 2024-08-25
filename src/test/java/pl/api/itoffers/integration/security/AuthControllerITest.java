@@ -1,5 +1,7 @@
 package pl.api.itoffers.integration.security;
 
+import io.restassured.RestAssured;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.web.client.TestRestTemplate;
@@ -8,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import pl.api.itoffers.helper.AbstractITest;
 import pl.api.itoffers.helper.AuthRequestBodyFactory;
 import pl.api.itoffers.helper.AuthorizationCredentials;
+import pl.api.itoffers.security.application.repository.UserRepository;
 import pl.api.itoffers.security.application.service.UserService;
 import pl.api.itoffers.security.domain.model.UserRole;
 import pl.api.itoffers.security.ui.controller.AuthController;
@@ -22,6 +25,14 @@ public class AuthControllerITest extends AbstractITest {
     private TestRestTemplate template;
     @Autowired
     private UserService userService;
+    @Autowired
+    private UserRepository userRepository;
+
+    @BeforeEach
+    public void setUp() {
+        userRepository.deleteAll();
+        super.setUp();
+    }
 
     @Test
     public void shouldGetAccessToken() {

@@ -1,21 +1,13 @@
 package pl.api.itoffers.integration.security;
 
-import io.restassured.RestAssured;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
-import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.DynamicPropertySource;
-import org.testcontainers.containers.PostgreSQLContainer;
 import pl.api.itoffers.helper.AbstractITest;
 import pl.api.itoffers.helper.ApiAuthorizationHelper;
 import pl.api.itoffers.helper.AuthorizationCredentials;
@@ -24,12 +16,9 @@ import pl.api.itoffers.security.application.repository.UserRepository;
 import pl.api.itoffers.security.ui.controller.UserController;
 import pl.api.itoffers.security.ui.request.CreateUserRequest;
 import pl.api.itoffers.security.ui.response.UserCreated;
-import org.springframework.test.context.DynamicPropertyRegistry;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@ActiveProfiles(profiles = "test")
 public class UserControllerITest extends AbstractITest {
 
     @Autowired
@@ -37,8 +26,13 @@ public class UserControllerITest extends AbstractITest {
     @Autowired
     private ApiAuthorizationHelper apiAuthorizationHelper;
     @Autowired
-    @Qualifier("postgreSQL")
     private UserRepository userRepository;
+
+    @BeforeEach
+    public void setUp() {
+        userRepository.deleteAll();
+        super.setUp();
+    }
 
     @Test
     public void shouldCreateUser() {
