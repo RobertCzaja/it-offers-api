@@ -1,4 +1,4 @@
-package pl.api.itoffers.provider.common.domain;
+package pl.api.itoffers.offer.domain;
 
 import org.javamoney.moneta.Money;
 

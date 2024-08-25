@@ -1,6 +1,6 @@
 package pl.api.itoffers.provider.justjoinit.model;
 
-import pl.api.itoffers.provider.common.domain.Salary;
+import pl.api.itoffers.offer.domain.Salary;
 
 import java.time.Instant;
 import java.util.ArrayList;

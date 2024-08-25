@@ -1,4 +1,4 @@
-package pl.api.itoffers.provider.common.domain;
+package pl.api.itoffers.offer.domain;
 
 import jakarta.persistence.Id;
 import lombok.Data;

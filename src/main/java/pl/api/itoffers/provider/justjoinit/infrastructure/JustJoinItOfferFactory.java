@@ -2,7 +2,7 @@ package pl.api.itoffers.provider.justjoinit.infrastructure;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import org.jetbrains.annotations.NotNull;
-import pl.api.itoffers.provider.common.domain.Salary;
+import pl.api.itoffers.offer.domain.Salary;
 import pl.api.itoffers.provider.justjoinit.exception.JustJoinItException;
 import pl.api.itoffers.provider.justjoinit.model.JustJoinItOffer;
 

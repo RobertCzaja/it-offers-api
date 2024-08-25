@@ -1,8 +1,8 @@
-package pl.api.itoffers.provider.common.infrastructure;
+package pl.api.itoffers.offer.infrastructure;
 
 
 import org.springframework.stereotype.Repository;
-import pl.api.itoffers.provider.common.application.TechnologyRepository;
+import pl.api.itoffers.offer.application.TechnologyRepository;
 
 import java.util.Arrays;
 import java.util.List;

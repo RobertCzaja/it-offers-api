@@ -1,10 +1,10 @@
-package pl.api.itoffers.provider.common.ui.cli;
+package pl.api.itoffers.offer.ui.cli;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
-import pl.api.itoffers.provider.common.domain.Offer;
-import pl.api.itoffers.provider.common.application.OfferRepository;
+import pl.api.itoffers.offer.application.OfferRepository;
+import pl.api.itoffers.offer.domain.Offer;
 
 // TODO it's only testing CLI to check MongoDB connection - it should be removed
 @Deprecated
