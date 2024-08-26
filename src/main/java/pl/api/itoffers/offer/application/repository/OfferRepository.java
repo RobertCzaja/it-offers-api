@@ -1,4 +1,4 @@
-package pl.api.itoffers.offer.application;
+package pl.api.itoffers.offer.application.repository;
 
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;

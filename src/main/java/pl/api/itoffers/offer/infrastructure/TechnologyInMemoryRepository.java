@@ -2,7 +2,7 @@ package pl.api.itoffers.offer.infrastructure;
 
 
 import org.springframework.stereotype.Repository;
-import pl.api.itoffers.offer.application.TechnologyRepository;
+import pl.api.itoffers.offer.application.repository.TechnologyRepository;
 
 import java.util.Arrays;
 import java.util.List;

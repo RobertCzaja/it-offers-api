@@ -1,4 +1,4 @@
-package pl.api.itoffers.offer.application;
+package pl.api.itoffers.offer.application.repository;
 
 import org.springframework.stereotype.Repository;
 

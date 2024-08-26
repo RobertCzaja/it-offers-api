@@ -2,13 +2,12 @@ package pl.api.itoffers.integration.offer;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import pl.api.itoffers.helper.AbstractITest;
-import pl.api.itoffers.offer.application.OfferRepository;
-import pl.api.itoffers.offer.application.service.OfferService;
+import pl.api.itoffers.offer.application.repository.CategoryRepository;
+import pl.api.itoffers.offer.application.repository.OfferRepository;
+import pl.api.itoffers.offer.domain.Category;
 import pl.api.itoffers.offer.domain.Offer;
 
-import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -16,11 +15,20 @@ public class OfferModelITest extends AbstractITest {
 
     @Autowired
     private OfferRepository offerRepository;
+    @Autowired
+    private CategoryRepository categoryRepository;
 
     @Test
     public void shouldSaveOfferEntity() {
 
-        Offer offer = new Offer("some-slug");
+        categoryRepository.save(new Category("php"));
+        categoryRepository.save(new Category("mysql"));
+        categoryRepository.save(new Category("git"));
+
+        Offer offer = new Offer(
+                "remitly-software-development-engineer-krakow-go-5fbdbda0",
+                "Software Development Engineer"
+        );
 
         offerRepository.save(offer);
 
