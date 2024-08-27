@@ -7,7 +7,6 @@ import pl.api.itoffers.helper.AbstractITest;
 import pl.api.itoffers.helper.JustJoinItProviderFactory;
 import pl.api.itoffers.provider.justjoinit.JustJoinItProvider;
 import pl.api.itoffers.provider.justjoinit.JustJoinItRepository;
-import pl.api.itoffers.provider.justjoinit.service.JustJoinItPayloadExtractor;
 
 import java.util.UUID;
 
@@ -15,8 +14,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class JustJoinItProviderITest extends AbstractITest {
 
-    @Autowired
-    private JustJoinItPayloadExtractor payloadExtractor;
     @Autowired
     private JustJoinItRepository repository;
     @Autowired

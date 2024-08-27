@@ -6,7 +6,6 @@ import pl.api.itoffers.integration.provider.justjoinit.inmemory.JustJoinItInMemo
 import pl.api.itoffers.provider.justjoinit.JustJoinItProvider;
 import pl.api.itoffers.provider.justjoinit.JustJoinItRepository;
 import pl.api.itoffers.provider.justjoinit.service.JustJoinItPayloadExtractor;
-import pl.api.itoffers.shared.utils.fileManager.FileManager;
 
 @Service
 public class JustJoinItProviderFactory {
@@ -17,10 +16,10 @@ public class JustJoinItProviderFactory {
     private JustJoinItRepository repository;
 
     public JustJoinItProvider create() {
-        return new JustJoinItProvider(
-                new JustJoinItInMemoryConnector(new FileManager()),
-                payloadExtractor,
-                repository
-        );
+        return new JustJoinItProvider(JustJoinItInMemoryConnector.create(), payloadExtractor, repository);
+    }
+
+    public JustJoinItProvider create(JustJoinItInMemoryConnector connector) {
+        return new JustJoinItProvider(connector, payloadExtractor, repository);
     }
 }

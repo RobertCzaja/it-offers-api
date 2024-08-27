@@ -15,6 +15,10 @@ public class JustJoinItInMemoryConnector implements JustJoinItConnector {
         this.fileManager = fileManager;
     }
 
+    public static JustJoinItInMemoryConnector create() {
+        return new JustJoinItInMemoryConnector(new FileManager());
+    }
+
     @Override
     public String fetchStringifyJsonPayload(String technology) {
         try {
