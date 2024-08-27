@@ -8,7 +8,6 @@ public class OfferServiceITest extends AbstractITest {
 
     @Test
     public void ______() {
-
         /*
         fetch and save in MongoDB first set of JJIT Offers (UUID: A, all new offers)
         fetch and save in MongoDb second set of JJIT Offers (UUID: B, some new offers, some duplicated)
@@ -16,8 +15,6 @@ public class OfferServiceITest extends AbstractITest {
         Assertions:
         check for unique: Offers/Categories/Companies
         */
-
-
 
         assertThat("").isNotNull();
     }

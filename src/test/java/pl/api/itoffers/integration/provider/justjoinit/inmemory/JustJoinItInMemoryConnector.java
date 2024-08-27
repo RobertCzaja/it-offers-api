@@ -9,6 +9,7 @@ import java.io.IOException;
 public class JustJoinItInMemoryConnector implements JustJoinItConnector {
 
     private final FileManager fileManager;
+    public String payloadPath = JustJoinItParams.ALL_LOCATIONS_PAYLOAD_PATH;
 
     public JustJoinItInMemoryConnector(FileManager fileManager) {
         this.fileManager = fileManager;
@@ -17,7 +18,7 @@ public class JustJoinItInMemoryConnector implements JustJoinItConnector {
     @Override
     public String fetchStringifyJsonPayload(String technology) {
         try {
-            return this.fileManager.readFile(JustJoinItParams.ALL_LOCATIONS_PAYLOAD_PATH);
+            return this.fileManager.readFile(payloadPath);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
