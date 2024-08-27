@@ -21,9 +21,7 @@ public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
-
     private final String name;
-
     @CreationTimestamp
     private LocalDateTime createdAt;
 }

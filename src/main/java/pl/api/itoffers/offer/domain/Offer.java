@@ -5,7 +5,10 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
 
+import java.time.LocalDateTime;
+import java.util.Set;
 import java.util.UUID;
 
 @Entity
@@ -16,7 +19,11 @@ public class Offer {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
-
     private final String slug;
     private final String title;
+    @OneToMany()
+    private final Set<Category> categories;
+    private final LocalDateTime publishedAt;
+    @CreationTimestamp
+    private LocalDateTime createdAt;
 }
