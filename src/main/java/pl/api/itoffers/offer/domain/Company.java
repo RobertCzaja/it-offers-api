@@ -19,6 +19,7 @@ public class Company {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
+    @Getter
     private final String name;
     private final String city;
     private final String street;

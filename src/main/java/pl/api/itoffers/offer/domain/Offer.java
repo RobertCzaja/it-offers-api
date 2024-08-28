@@ -21,7 +21,7 @@ public class Offer {
     private UUID id;
     private final String slug;
     private final String title;
-    @OneToMany
+    @ManyToMany
     private final Set<Category> categories;
     @ManyToOne
     private final Company company;

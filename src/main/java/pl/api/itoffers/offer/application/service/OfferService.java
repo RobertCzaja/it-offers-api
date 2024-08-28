@@ -37,16 +37,28 @@ public class OfferService {
 
             List<String> requiredSkills = (List<String>) rawOffer.getOffer().get("requiredSkills");
             Set<Category> categories = new HashSet<Category>();
+            Set<Category> categoriesToSave = new HashSet<Category>();
 
             for (String requiredSkill : requiredSkills) {
-                categories.add(new Category(requiredSkill));
+                Category category = categoryRepository.findByName(requiredSkill);
+
+                if (null == category) {
+                    category = new Category(requiredSkill);
+                    categoriesToSave.add(category);
+                }
+                categories.add(category);
             }
 
-            Company company = new Company(
-                    (String) rawOffer.getOffer().get("companyName"),
-                    (String) rawOffer.getOffer().get("city"),
-                    (String) rawOffer.getOffer().get("street")
-            );
+            String companyName = (String) rawOffer.getOffer().get("companyName");
+
+            Company company = companyRepository.findByName(companyName);
+            if (null == company) {
+                 company = new Company(
+                        (String) rawOffer.getOffer().get("companyName"),
+                        (String) rawOffer.getOffer().get("city"),
+                        (String) rawOffer.getOffer().get("street")
+                );
+            }
 
             Offer offer = new Offer(
                     (String) rawOffer.getOffer().get("slug"),
@@ -58,10 +70,9 @@ public class OfferService {
                     ).value
             );
 
-            // todo does not allow to companies/categories duplications
-
+            // todo check if offer is not duplicated before saving new Company or Categories
             companyRepository.save(company);
-            categoryRepository.saveAll(categories);
+            categoryRepository.saveAll(categoriesToSave);
             offerRepository.save(offer);
         }
     }
