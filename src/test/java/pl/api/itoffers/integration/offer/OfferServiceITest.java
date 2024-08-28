@@ -7,6 +7,7 @@ import pl.api.itoffers.helper.AbstractITest;
 import pl.api.itoffers.helper.JustJoinItProviderFactory;
 import pl.api.itoffers.integration.provider.justjoinit.inmemory.JustJoinItInMemoryConnector;
 import pl.api.itoffers.integration.provider.justjoinit.payload.JustJoinItParams;
+import pl.api.itoffers.offer.application.repository.OfferRepository;
 import pl.api.itoffers.offer.application.service.OfferService;
 import pl.api.itoffers.provider.justjoinit.JustJoinItProvider;
 import pl.api.itoffers.provider.justjoinit.JustJoinItRepository;
@@ -22,9 +23,11 @@ public class OfferServiceITest extends AbstractITest {
     @Autowired
     private OfferService offerService;
     @Autowired
+    private OfferRepository offerRepository;
+    @Autowired
     private JustJoinItProviderFactory justJoinItProviderFactory;
     @Autowired
-    private JustJoinItRepository jjitRawOffersRepository; // todo to remove - needed only for creating this Integration Test
+    private JustJoinItRepository jjitRawOffersRepository;
     private JustJoinItInMemoryConnector jjitConnector;
     private JustJoinItProvider jjitProvider;
 
@@ -32,6 +35,8 @@ public class OfferServiceITest extends AbstractITest {
     public void setUp() {
         super.setUp();
         jjitRawOffersRepository.deleteAll();
+        offerRepository.deleteAll();
+        // todo truncate all rows from Postgres offers/categories/companies
         this.jjitConnector = JustJoinItInMemoryConnector.create();
         this.jjitProvider = justJoinItProviderFactory.create(jjitConnector);
     }
@@ -49,7 +54,7 @@ public class OfferServiceITest extends AbstractITest {
         offerService.processOffersFromExternalService(scrappingId2);
 
         /* TODO Assertions: check for unique: Offers/Categories/Companies */
-        assertThat("").isNotNull();
+        assertThat(offerRepository.findAll()).hasSize(9/*todo needs to be changed to 7*/);
     }
 
     private void fetchOffersFromExternalService(UUID scrappingId, String returnedPayload) {
