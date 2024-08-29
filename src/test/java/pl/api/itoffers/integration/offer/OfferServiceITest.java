@@ -65,11 +65,11 @@ public class OfferServiceITest extends AbstractITest {
 
         assertThat(offerRepository.findAll()).hasSize(7);
 
-        Set<String> categoryNames = new HashSet<String>();
+        Set<String> categoryNames = new HashSet<>();
         categoryRepository.findAll().forEach((category) -> categoryNames.add(category.getName()));
         assertThat(categoryNames).hasSize(25);
 
-        Set<String> companyNames = new HashSet<String>();
+        Set<String> companyNames = new HashSet<>();
         companyRepository.findAll().forEach((company) -> companyNames.add(company.getName()));
         assertThat(companyNames).hasSize(7);
     }

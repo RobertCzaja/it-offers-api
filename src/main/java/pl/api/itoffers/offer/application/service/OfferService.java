@@ -13,10 +13,7 @@ import pl.api.itoffers.provider.justjoinit.JustJoinItRepository;
 import pl.api.itoffers.provider.justjoinit.model.JustJoinItDateTime;
 import pl.api.itoffers.provider.justjoinit.model.JustJoinItRawOffer;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 @Slf4j
 @Service
@@ -37,47 +34,11 @@ public class OfferService {
 
         for (JustJoinItRawOffer rawOffer : rawOffers) {
 
-            List<String> requiredSkills = (List<String>) rawOffer.getOffer().get("requiredSkills");
-            Set<Category> categories = new HashSet<Category>();
-            Set<Category> categoriesToSave = new HashSet<Category>();
+            Map<String, Set<Category>> categories = createCategories(rawOffer);
+            Company company = createCompany(rawOffer);
+            Offer offer = createOffer(rawOffer, categories.get("forEntity"), company);
 
-            for (String requiredSkill : requiredSkills) {
-                Category category = categoryRepository.findByName(requiredSkill);
-
-                if (null == category) {
-                    category = new Category(requiredSkill);
-                    categoriesToSave.add(category);
-                }
-                categories.add(category);
-            }
-
-            String companyName = (String) rawOffer.getOffer().get("companyName");
-
-            Company company = companyRepository.findByName(companyName);
-            if (null == company) {
-                 company = new Company(
-                        (String) rawOffer.getOffer().get("companyName"),
-                        (String) rawOffer.getOffer().get("city"),
-                        (String) rawOffer.getOffer().get("street")
-                );
-            }
-
-            Offer offer = new Offer(
-                    (String) rawOffer.getOffer().get("slug"),
-                    (String) rawOffer.getOffer().get("title"),
-                    categories,
-                    company,
-                    JustJoinItDateTime.createFrom(
-                            (String) rawOffer.getOffer().get("publishedAt")
-                    ).value
-            );
-
-            Offer alreadyStoredOffer = offerRepository.findByDifferentOffer(
-                    offer.getSlug(),
-                    offer.getTitle(),
-                    offer.getCompany().getName(),
-                    offer.getPublishedAt()
-            );
+            Offer alreadyStoredOffer = findAlreadyStoredOffer(offer);
 
             if (null != alreadyStoredOffer) {
                 log.info(String.format("[just-join-it][migration] duplicated offer %s", offer));
@@ -85,8 +46,64 @@ public class OfferService {
             }
 
             companyRepository.save(company);
-            categoryRepository.saveAll(categoriesToSave);
+            categoryRepository.saveAll(categories.get("toSave"));
             offerRepository.save(offer);
         }
+    }
+
+    private Offer findAlreadyStoredOffer(Offer offer) {
+        return offerRepository.findByDifferentOffer(
+                offer.getSlug(),
+                offer.getTitle(),
+                offer.getCompany().getName(),
+                offer.getPublishedAt()
+        );
+    }
+
+    private Offer createOffer(JustJoinItRawOffer rawOffer, Set<Category> categories, Company company) {
+        return new Offer(
+                (String) rawOffer.getOffer().get("slug"),
+                (String) rawOffer.getOffer().get("title"),
+                categories,
+                company,
+                JustJoinItDateTime.createFrom(
+                        (String) rawOffer.getOffer().get("publishedAt")
+                ).value
+        );
+    }
+
+    private Map<String, Set<Category>> createCategories(JustJoinItRawOffer rawOffer) {
+        List<String> requiredSkills = (List<String>) rawOffer.getOffer().get("requiredSkills");
+        Map<String, Set<Category>> result = new HashMap<String, Set<Category>>();
+        Set<Category> categories = new HashSet<Category>();
+        Set<Category> categoriesToSave = new HashSet<Category>();
+
+        for (String requiredSkill : requiredSkills) {
+            Category category = categoryRepository.findByName(requiredSkill);
+
+            if (null == category) {
+                category = new Category(requiredSkill);
+                categoriesToSave.add(category);
+            }
+            categories.add(category);
+        }
+        result.put("forEntity", categories);
+        result.put("toSave", categoriesToSave);
+        return result;
+    }
+
+    private Company createCompany(JustJoinItRawOffer rawOffer) {
+        String companyName = (String) rawOffer.getOffer().get("companyName");
+
+        Company company = companyRepository.findByName(companyName);
+        if (null == company) {
+            company = new Company(
+                    companyName,
+                    (String) rawOffer.getOffer().get("city"),
+                    (String) rawOffer.getOffer().get("street")
+            );
+        }
+
+        return company;
     }
 }
