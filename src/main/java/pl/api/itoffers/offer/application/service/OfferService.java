@@ -1,5 +1,6 @@
 package pl.api.itoffers.offer.application.service;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.api.itoffers.offer.application.repository.CategoryRepository;
@@ -17,6 +18,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
+@Slf4j
 @Service
 public class OfferService {
 
@@ -78,7 +80,7 @@ public class OfferService {
             );
 
             if (null != alreadyStoredOffer) {
-                // todo log
+                log.info(String.format("[just-join-it][migration] duplicated offer %s", offer));
                 continue;
             }
 

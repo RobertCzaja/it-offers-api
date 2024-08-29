@@ -32,4 +32,9 @@ public class Offer {
     private final LocalDateTime publishedAt;
     @CreationTimestamp
     private LocalDateTime createdAt;
+
+    @Override
+    public String toString() {
+        return title + " (" + slug + ") " + company.getName() + " publishedAt: " + publishedAt;
+    }
 }
