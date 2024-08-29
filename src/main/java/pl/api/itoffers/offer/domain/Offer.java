@@ -19,12 +19,16 @@ public class Offer {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
+    @Getter
     private final String slug;
+    @Getter
     private final String title;
     @ManyToMany
     private final Set<Category> categories;
+    @Getter
     @ManyToOne
     private final Company company;
+    @Getter
     private final LocalDateTime publishedAt;
     @CreationTimestamp
     private LocalDateTime createdAt;

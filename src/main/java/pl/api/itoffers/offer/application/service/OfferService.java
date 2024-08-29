@@ -70,7 +70,18 @@ public class OfferService {
                     ).value
             );
 
-            // todo check if offer is not duplicated before saving new Company or Categories
+            Offer alreadyStoredOffer = offerRepository.findByDifferentOffer(
+                    offer.getSlug(),
+                    offer.getTitle(),
+                    offer.getCompany().getName(),
+                    offer.getPublishedAt()
+            );
+
+            if (null != alreadyStoredOffer) {
+                // todo log
+                continue;
+            }
+
             companyRepository.save(company);
             categoryRepository.saveAll(categoriesToSave);
             offerRepository.save(offer);

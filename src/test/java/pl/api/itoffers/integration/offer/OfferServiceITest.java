@@ -63,8 +63,7 @@ public class OfferServiceITest extends AbstractITest {
         offerService.processOffersFromExternalService(scrappingId1);
         offerService.processOffersFromExternalService(scrappingId2);
 
-        /* TODO Assertions: check for unique: Offers */
-        assertThat(offerRepository.findAll()).hasSize(9/*todo needs to be changed to 7*/);
+        assertThat(offerRepository.findAll()).hasSize(7);
 
         Set<String> categoryNames = new HashSet<String>();
         categoryRepository.findAll().forEach((category) -> categoryNames.add(category.getName()));
