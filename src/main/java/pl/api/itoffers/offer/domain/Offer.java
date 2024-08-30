@@ -23,6 +23,7 @@ public class Offer {
     private final String slug;
     @Getter
     private final String title;
+    private final String seniority;
     @ManyToMany
     private final Set<Category> categories;
     @Getter

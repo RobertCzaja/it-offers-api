@@ -41,13 +41,13 @@ public class OfferService {
             Offer alreadyStoredOffer = findAlreadyStoredOffer(offer);
 
             if (null != alreadyStoredOffer) {
-                log.info(String.format("[just-join-it][migration] duplicated offer %s", offer));
                 continue;
             }
 
             companyRepository.save(company);
             categoryRepository.saveAll(categories.get("toSave"));
             offerRepository.save(offer);
+            log.info(String.format("[just-join-it][migration] new offer %s", offer));
         }
     }
 
@@ -64,6 +64,7 @@ public class OfferService {
         return new Offer(
                 (String) rawOffer.getOffer().get("slug"),
                 (String) rawOffer.getOffer().get("title"),
+                (String) rawOffer.getOffer().get("experienceLevel"),
                 categories,
                 company,
                 JustJoinItDateTime.createFrom(

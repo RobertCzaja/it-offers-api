@@ -36,6 +36,7 @@ public class OfferModelITest extends AbstractITest {
         Offer offer = new Offer(
                 "remitly-software-development-engineer-krakow-go-5fbdbda0",
                 "Software Development Engineer",
+                "mid",
                 categories,
                 company,
                 publishedAt
