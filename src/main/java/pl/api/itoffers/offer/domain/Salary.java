@@ -10,7 +10,7 @@ import org.javamoney.moneta.Money;
 
 @Data
 @Embeddable
-@NoArgsConstructor(access = AccessLevel.PROTECTED, force = true)
+@NoArgsConstructor(access = AccessLevel.PUBLIC, force = true)
 @RequiredArgsConstructor
 public class Salary {
 

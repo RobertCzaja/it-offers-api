@@ -1,5 +1,6 @@
 package pl.api.itoffers.offer.application.service;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -37,7 +38,8 @@ public class OfferService {
 
             Map<String, Set<Category>> categories = createCategories(rawOffer);
             Company company = createCompany(rawOffer);
-            Offer offer = createOffer(rawOffer, categories.get("forEntity"), company);
+            Salary salary = createSalary(rawOffer);
+            Offer offer = createOffer(rawOffer, salary, categories.get("forEntity"), company);
 
             Offer alreadyStoredOffer = findAlreadyStoredOffer(offer);
 
@@ -61,18 +63,37 @@ public class OfferService {
         );
     }
 
-    private Offer createOffer(JustJoinItRawOffer rawOffer, Set<Category> categories, Company company) {
+    private Offer createOffer(
+            JustJoinItRawOffer rawOffer,
+            Salary salary,
+            Set<Category> categories,
+            Company company
+    ) {
+
         return new Offer(
                 (String) rawOffer.getOffer().get("slug"),
                 (String) rawOffer.getOffer().get("title"),
                 (String) rawOffer.getOffer().get("experienceLevel"),
-                new Salary(Double.valueOf(14000),Double.valueOf(18000), "PLN", "b2b"), // todo change to real one
+                salary,
                 categories,
                 company,
                 JustJoinItDateTime.createFrom(
                         (String) rawOffer.getOffer().get("publishedAt")
                 ).value
         );
+    }
+
+    private Salary createSalary(JustJoinItRawOffer rawOffer) {
+        ArrayList<HashMap<String, Object>> employmentTypes = (ArrayList<HashMap<String, Object>>) rawOffer.getOffer().get("employmentTypes");
+        HashMap<String, Object> employmentType = employmentTypes.get(0);
+        return null != employmentType.get("from")
+                ? new Salary(
+                    Double.valueOf((Integer)employmentType.get("from")),
+                    Double.valueOf((Integer)employmentType.get("to")),
+                    (String) employmentType.get("currency"),
+                    (String) employmentType.get("type")
+                )
+                : new Salary();
     }
 
     private Map<String, Set<Category>> createCategories(JustJoinItRawOffer rawOffer) {

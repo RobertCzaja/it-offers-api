@@ -38,7 +38,7 @@ public class OfferModelITest extends AbstractITest {
                 "remitly-software-development-engineer-krakow-go-5fbdbda0",
                 "Software Development Engineer",
                 "mid",
-                new Salary(Double.valueOf(14000),Double.valueOf(18000), "PLN", "b2b"), // todo change to real one
+                new Salary(Double.valueOf(14000),Double.valueOf(18000), "PLN", "b2b"),
                 categories,
                 company,
                 publishedAt
