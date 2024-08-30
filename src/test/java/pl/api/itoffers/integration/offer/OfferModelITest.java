@@ -9,6 +9,7 @@ import pl.api.itoffers.offer.application.repository.OfferRepository;
 import pl.api.itoffers.offer.domain.Category;
 import pl.api.itoffers.offer.domain.Company;
 import pl.api.itoffers.offer.domain.Offer;
+import pl.api.itoffers.offer.domain.Salary;
 import pl.api.itoffers.provider.justjoinit.model.JustJoinItDateTime;
 
 
@@ -37,6 +38,7 @@ public class OfferModelITest extends AbstractITest {
                 "remitly-software-development-engineer-krakow-go-5fbdbda0",
                 "Software Development Engineer",
                 "mid",
+                new Salary(Double.valueOf(14000),Double.valueOf(18000), "PLN", "b2b"), // todo change to real one
                 categories,
                 company,
                 publishedAt

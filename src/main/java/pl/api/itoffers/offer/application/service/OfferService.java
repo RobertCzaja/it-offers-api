@@ -9,6 +9,7 @@ import pl.api.itoffers.offer.application.repository.OfferRepository;
 import pl.api.itoffers.offer.domain.Category;
 import pl.api.itoffers.offer.domain.Company;
 import pl.api.itoffers.offer.domain.Offer;
+import pl.api.itoffers.offer.domain.Salary;
 import pl.api.itoffers.provider.justjoinit.JustJoinItRepository;
 import pl.api.itoffers.provider.justjoinit.model.JustJoinItDateTime;
 import pl.api.itoffers.provider.justjoinit.model.JustJoinItRawOffer;
@@ -65,6 +66,7 @@ public class OfferService {
                 (String) rawOffer.getOffer().get("slug"),
                 (String) rawOffer.getOffer().get("title"),
                 (String) rawOffer.getOffer().get("experienceLevel"),
+                new Salary(Double.valueOf(14000),Double.valueOf(18000), "PLN", "b2b"), // todo change to real one
                 categories,
                 company,
                 JustJoinItDateTime.createFrom(

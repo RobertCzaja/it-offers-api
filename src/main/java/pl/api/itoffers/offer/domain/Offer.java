@@ -24,6 +24,8 @@ public class Offer {
     @Getter
     private final String title;
     private final String seniority;
+    @Embedded
+    private final Salary salary;
     @ManyToMany
     private final Set<Category> categories;
     @Getter

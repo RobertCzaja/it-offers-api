@@ -59,9 +59,10 @@ public class JustJoinItOfferFactory {
         while (employmentTypesNode.hasNext()) {
             JsonNode employmentType = employmentTypesNode.next();
             salaries.add(new Salary(
-                    employmentType.path("from").asLong(),
-                    employmentType.path("to").asLong(),
-                    employmentType.path("currency").asText().toUpperCase() //todo add TYPE (b2b or something different)
+                    employmentType.path("from").asDouble(),
+                    employmentType.path("to").asDouble(),
+                    employmentType.path("currency").asText().toUpperCase(),
+                    employmentType.path("type").asText()
             ));
         }
         return salaries;
