@@ -6,10 +6,7 @@ import pl.api.itoffers.helper.AbstractITest;
 import pl.api.itoffers.offer.application.repository.CategoryRepository;
 import pl.api.itoffers.offer.application.repository.CompanyRepository;
 import pl.api.itoffers.offer.application.repository.OfferRepository;
-import pl.api.itoffers.offer.domain.Category;
-import pl.api.itoffers.offer.domain.Company;
-import pl.api.itoffers.offer.domain.Offer;
-import pl.api.itoffers.offer.domain.Salary;
+import pl.api.itoffers.offer.domain.*;
 import pl.api.itoffers.provider.justjoinit.model.JustJoinItDateTime;
 
 
@@ -39,6 +36,7 @@ public class OfferModelITest extends AbstractITest {
                 "Software Development Engineer",
                 "mid",
                 new Salary(Double.valueOf(14000),Double.valueOf(18000), "PLN", "b2b"),
+                new Characteristics("hybrid","full_time", true),
                 categories,
                 company,
                 publishedAt

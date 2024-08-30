@@ -6,8 +6,8 @@ import lombok.AccessLevel;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
-import org.javamoney.moneta.Money;
 
+/* TODO change to Integer or Money VO */
 @Data
 @Embeddable
 @NoArgsConstructor(access = AccessLevel.PUBLIC, force = true)
