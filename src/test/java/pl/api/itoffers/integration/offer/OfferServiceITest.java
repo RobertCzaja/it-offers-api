@@ -72,6 +72,7 @@ public class OfferServiceITest extends AbstractITest {
         Set<String> companyNames = new HashSet<>();
         companyRepository.findAll().forEach((company) -> companyNames.add(company.getName()));
         assertThat(companyNames).hasSize(7);
+        // TODO add detailed checking for first saved Offer
     }
 
     private void fetchOffersFromExternalService(UUID scrappingId, String returnedPayload) {

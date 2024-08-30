@@ -36,7 +36,8 @@ public class OfferService {
             Map<String, Set<Category>> categories = createCategories(rawOffer);
             Company company = createCompany(rawOffer);
             Salary salary = createSalary(rawOffer);
-            Offer offer = createOffer(rawOffer, salary, categories.get("forEntity"), company);
+            Characteristics characteristics = createCharacteristics(rawOffer);
+            Offer offer = createOffer(rawOffer, salary, characteristics, categories.get("forEntity"), company);
 
             Offer alreadyStoredOffer = findAlreadyStoredOffer(offer);
 
@@ -63,6 +64,7 @@ public class OfferService {
     private Offer createOffer(
             JustJoinItRawOffer rawOffer,
             Salary salary,
+            Characteristics characteristics,
             Set<Category> categories,
             Company company
     ) {
@@ -72,12 +74,20 @@ public class OfferService {
                 (String) rawOffer.getOffer().get("title"),
                 (String) rawOffer.getOffer().get("experienceLevel"),
                 salary,
-                new Characteristics("hybrid","full_time", true),
+                characteristics,
                 categories,
                 company,
                 JustJoinItDateTime.createFrom(
                         (String) rawOffer.getOffer().get("publishedAt")
                 ).value
+        );
+    }
+
+    private Characteristics createCharacteristics(JustJoinItRawOffer rawOffer) {
+        return new Characteristics(
+                (String) rawOffer.getOffer().get("workplaceType"),
+                (String) rawOffer.getOffer().get("workingTime"),
+                (Boolean) rawOffer.getOffer().get("remoteInterview")
         );
     }
 
