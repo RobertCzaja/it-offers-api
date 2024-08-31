@@ -20,16 +20,13 @@ public abstract class AbstractITest {
     @LocalServerPort
     private Integer port;
 
-    //public static PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>("postgres:15.2");
-
     public static PostgreSQLContainer<?> postgres;
 
     static {
         postgres = new PostgreSQLContainer<>("postgres:15.2")
                 .withUsername("admin")
                 .withPassword("admin")
-                .withDatabaseName("it-offers")
-        ;
+                .withDatabaseName("it-offers");
     }
 
     @BeforeAll
@@ -39,7 +36,6 @@ public abstract class AbstractITest {
 
     @BeforeEach
     public void setUp() {
-        //RestAssured.baseURI = "jdbc:tc:postgresql:15.2:///" + port;
         RestAssured.baseURI = "http://localhost:" + port;
     }
 

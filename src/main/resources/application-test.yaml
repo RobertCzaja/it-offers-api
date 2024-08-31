@@ -5,11 +5,6 @@ spring:
   jpa:
     hibernate:
       ddl-auto: validate
-#  datasource:
-#    url: jdbc:tc:postgresql:15.2://localhost/it-offers?user=myappUser&password=myappPass
-#    driver-class-name: org.testcontainers.jdbc.ContainerDatabaseDrive
-#    username: myappUser
-#    password: myappPass
   flyway:
     baseline-on-migrate: true
     enabled: true
