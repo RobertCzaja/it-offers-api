@@ -33,6 +33,7 @@ create table "offer" (
 
 create table "offer_categories" (
     offer_id uuid not null,
+    categories_id uuid not null,
     primary key (offer_id, categories_id)
 );
 
