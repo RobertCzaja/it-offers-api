@@ -12,10 +12,14 @@ import pl.api.itoffers.offer.application.repository.CategoryRepository;
 import pl.api.itoffers.offer.application.repository.CompanyRepository;
 import pl.api.itoffers.offer.application.repository.OfferRepository;
 import pl.api.itoffers.offer.application.service.OfferService;
+import pl.api.itoffers.offer.domain.Company;
+import pl.api.itoffers.offer.domain.Offer;
 import pl.api.itoffers.provider.justjoinit.JustJoinItProvider;
 import pl.api.itoffers.provider.justjoinit.JustJoinItRepository;
+import pl.api.itoffers.provider.justjoinit.model.JustJoinItDateTime;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
@@ -63,7 +67,8 @@ public class OfferServiceITest extends AbstractITest {
         offerService.processOffersFromExternalService(scrappingId1);
         offerService.processOffersFromExternalService(scrappingId2);
 
-        assertThat(offerRepository.findAll()).hasSize(7);
+        List<Offer> offers = offerRepository.findAll();
+        assertThat(offers).hasSize(7);
 
         Set<String> categoryNames = new HashSet<>();
         categoryRepository.findAll().forEach((category) -> categoryNames.add(category.getName()));
@@ -72,7 +77,12 @@ public class OfferServiceITest extends AbstractITest {
         Set<String> companyNames = new HashSet<>();
         companyRepository.findAll().forEach((company) -> companyNames.add(company.getName()));
         assertThat(companyNames).hasSize(7);
-        // TODO add detailed checking for first saved Offer
+
+        Offer offer =offers.get(0);
+        assertThat(offer.getTitle()).isEqualTo("Senior Full Stack Developer (React & PHP)");
+        assertThat(offer.getSlug()).isEqualTo("iteamly-senior-full-stack-developer-react-php--krakow-php");
+        assertThat(offer.getCompany().getName()).isEqualTo("iTeamly");
+        assertThat(offer.getPublishedAt()).isEqualTo(JustJoinItDateTime.createFrom("2024-07-27T15:00:38.890").value);
     }
 
     private void fetchOffersFromExternalService(UUID scrappingId, String returnedPayload) {
