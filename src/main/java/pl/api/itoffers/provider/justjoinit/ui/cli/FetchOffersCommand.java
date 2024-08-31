@@ -7,6 +7,7 @@ import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 import org.springframework.shell.standard.ShellOption;
 import pl.api.itoffers.offer.application.repository.TechnologyRepository;
+import pl.api.itoffers.offer.application.service.OfferService;
 import pl.api.itoffers.provider.justjoinit.JustJoinItProvider;
 
 import java.util.Arrays;
@@ -20,6 +21,8 @@ public class FetchOffersCommand {
     private TechnologyRepository technologyRepository;
     @Autowired
     private JustJoinItProvider justJoinItProvider;
+    @Autowired
+    private OfferService offerService;
     Logger logger = LoggerFactory.getLogger(FetchOffersCommand.class);
 
     @ShellMethod(key="fetch")
@@ -36,6 +39,8 @@ public class FetchOffersCommand {
             logger.info(String.format("[just-join-it] fetching offers from technology: %s", technology));
             justJoinItProvider.fetch(technology, scrapingId);
         }
+
+        offerService.processOffersFromExternalService(scrapingId);
 
         return "Fetched";
     }
