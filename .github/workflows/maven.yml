@@ -30,5 +30,6 @@ jobs:
     - name: Build and test with Maven
       run: mvn clean install
       env:
+        POSTGRES_DB: it-offers
         JWT_SECRET: 2D4A614E645267556B58703273357638792F423F4428472B4B6250655368566D
         MONGO_DB_URI: mongodb://localhost:27017

@@ -7,6 +7,8 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.DynamicPropertyRegistry;
+import org.springframework.test.context.DynamicPropertySource;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
@@ -18,9 +20,17 @@ public abstract class AbstractITest {
     @LocalServerPort
     private Integer port;
 
-    public static PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>(
-            "postgres:15.2"
-    );
+    //public static PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>("postgres:15.2");
+
+    public static PostgreSQLContainer<?> postgres;
+
+    static {
+        postgres = new PostgreSQLContainer<>("postgres:15.2")
+                .withUsername("admin")
+                .withPassword("admin")
+                .withDatabaseName("it-offers")
+        ;
+    }
 
     @BeforeAll
     public static void beforeAll() {
@@ -29,6 +39,14 @@ public abstract class AbstractITest {
 
     @BeforeEach
     public void setUp() {
-        RestAssured.baseURI = "http://test1234:" + port;
+        //RestAssured.baseURI = "jdbc:tc:postgresql:15.2:///" + port;
+        RestAssured.baseURI = "http://localhost:" + port;
+    }
+
+    @DynamicPropertySource
+    public static void containersProperties(DynamicPropertyRegistry registry) {
+        registry.add("spring.datasource.username", postgres::getUsername);
+        registry.add("spring.datasource.password", postgres::getPassword);
+        registry.add("spring.datasource.url", postgres::getJdbcUrl);
     }
 }

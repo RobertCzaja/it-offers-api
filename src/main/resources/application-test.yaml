@@ -4,7 +4,19 @@ spring:
       uri: "${MONGO_DB_URI}/it-offers-integration-tests"
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: validate
+#  datasource:
+#    url: jdbc:tc:postgresql:15.2://localhost/it-offers?user=myappUser&password=myappPass
+#    driver-class-name: org.testcontainers.jdbc.ContainerDatabaseDrive
+#    username: myappUser
+#    password: myappPass
+  flyway:
+    baseline-on-migrate: true
+    enabled: true
+    password: admin
+    user: admin
+    baseline-description: "init"
+    baseline-version: 0
 logging:
   level:
     org:
