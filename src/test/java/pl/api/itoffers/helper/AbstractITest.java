@@ -1,6 +1,7 @@
 package pl.api.itoffers.helper;
 
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
@@ -23,5 +24,9 @@ public abstract class AbstractITest {
     @BeforeAll
     public static void beforeAll() {
         postgres.start();
+    }
+
+    @BeforeEach
+    public void setUp() {
     }
 }
