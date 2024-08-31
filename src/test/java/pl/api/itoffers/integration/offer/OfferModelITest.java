@@ -1,5 +1,6 @@
 package pl.api.itoffers.integration.offer;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import pl.api.itoffers.helper.AbstractITest;
@@ -23,6 +24,14 @@ public class OfferModelITest extends AbstractITest {
     private CategoryRepository categoryRepository;
     @Autowired
     private CompanyRepository companyRepository;
+
+    @BeforeEach
+    public void setUp() {
+        super.setUp();
+        offerRepository.deleteAll();
+        categoryRepository.deleteAll();
+        companyRepository.deleteAll();
+    }
 
     @Test
     public void shouldSaveOfferEntity() {
