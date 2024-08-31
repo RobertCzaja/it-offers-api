@@ -1,5 +1,6 @@
 package pl.api.itoffers.helper;
 
+import io.restassured.RestAssured;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
@@ -28,5 +29,6 @@ public abstract class AbstractITest {
 
     @BeforeEach
     public void setUp() {
+        RestAssured.baseURI = "http://test1234:" + port;
     }
 }
