@@ -20,6 +20,8 @@ public class Offer {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
     @Getter
+    private final String technology;
+    @Getter
     private final String slug;
     @Getter
     private final String title;

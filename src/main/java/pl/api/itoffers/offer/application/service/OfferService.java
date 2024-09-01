@@ -70,6 +70,7 @@ public class OfferService {
     ) {
 
         return new Offer(
+                rawOffer.getTechnology(),
                 (String) rawOffer.getOffer().get("slug"),
                 (String) rawOffer.getOffer().get("title"),
                 (String) rawOffer.getOffer().get("experienceLevel"),

@@ -41,6 +41,7 @@ public class OfferModelITest extends AbstractITest {
         Company company = saveAndGetCompany();
 
         Offer offer = new Offer(
+                "php",
                 "remitly-software-development-engineer-krakow-go-5fbdbda0",
                 "Software Development Engineer",
                 "mid",

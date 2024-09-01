@@ -27,7 +27,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class OfferServiceITest extends AbstractITest {
 
-    private static final String TECHNOLOGY = "thatTechnologyDoesntMatterInThatTest";
+    private static final String TECHNOLOGY = "php";
 
     @Autowired
     private OfferService offerService;
@@ -79,6 +79,7 @@ public class OfferServiceITest extends AbstractITest {
         assertThat(companyNames).hasSize(7);
 
         Offer offer =offers.get(0);
+        assertThat(offer.getTechnology()).isEqualTo("php");
         assertThat(offer.getTitle()).isEqualTo("Senior Full Stack Developer (React & PHP)");
         assertThat(offer.getSlug()).isEqualTo("iteamly-senior-full-stack-developer-react-php--krakow-php");
         assertThat(offer.getCompany().getName()).isEqualTo("iTeamly");

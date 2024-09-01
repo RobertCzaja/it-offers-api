@@ -15,6 +15,7 @@ create table "company" (
 
 create table "offer" (
     id uuid not null,
+    technology varchar(255),
     remote_interview boolean,
     time varchar(255),
     workplace varchar(255),
