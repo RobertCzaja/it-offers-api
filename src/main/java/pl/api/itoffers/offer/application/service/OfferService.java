@@ -1,6 +1,5 @@
 package pl.api.itoffers.offer.application.service;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,6 +25,8 @@ public class OfferService {
     private CompanyRepository companyRepository;
     @Autowired
     private OfferRepository offerRepository;
+    @Autowired
+    private OfferFactory offerFactory;
 
     public void processOffersFromExternalService(UUID scrappingId)
     {
@@ -34,8 +35,8 @@ public class OfferService {
         for (JustJoinItRawOffer rawOffer : rawOffers) {
 
             Map<String, Set<Category>> categories = createCategories(rawOffer);
-            Company company = createCompany(rawOffer);
-            Salary salary = createSalary(rawOffer);
+            Company company = offerFactory.createCompany(rawOffer);
+            Salary salary = offerFactory.createSalary(rawOffer);
             Characteristics characteristics = createCharacteristics(rawOffer);
             Offer offer = createOffer(rawOffer, salary, characteristics, categories.get("forEntity"), company);
 
@@ -92,19 +93,6 @@ public class OfferService {
         );
     }
 
-    private Salary createSalary(JustJoinItRawOffer rawOffer) {
-        ArrayList<HashMap<String, Object>> employmentTypes = (ArrayList<HashMap<String, Object>>) rawOffer.getOffer().get("employmentTypes");
-        HashMap<String, Object> employmentType = employmentTypes.get(0);
-        return null != employmentType.get("from")
-                ? new Salary(
-                    Double.valueOf((Integer)employmentType.get("from")),
-                    Double.valueOf((Integer)employmentType.get("to")),
-                    (String) employmentType.get("currency"),
-                    (String) employmentType.get("type")
-                )
-                : new Salary();
-    }
-
     private Map<String, Set<Category>> createCategories(JustJoinItRawOffer rawOffer) {
         List<String> requiredSkills = (List<String>) rawOffer.getOffer().get("requiredSkills");
         Map<String, Set<Category>> result = new HashMap<String, Set<Category>>();
@@ -123,20 +111,5 @@ public class OfferService {
         result.put("forEntity", categories);
         result.put("toSave", categoriesToSave);
         return result;
-    }
-
-    private Company createCompany(JustJoinItRawOffer rawOffer) {
-        String companyName = (String) rawOffer.getOffer().get("companyName");
-
-        Company company = companyRepository.findByName(companyName);
-        if (null == company) {
-            company = new Company(
-                    companyName,
-                    (String) rawOffer.getOffer().get("city"),
-                    (String) rawOffer.getOffer().get("street")
-            );
-        }
-
-        return company;
     }
 }
