@@ -2,18 +2,61 @@ package pl.api.itoffers.offer.application.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import pl.api.itoffers.offer.application.repository.CategoryRepository;
 import pl.api.itoffers.offer.application.repository.CompanyRepository;
-import pl.api.itoffers.offer.domain.Company;
-import pl.api.itoffers.offer.domain.Salary;
+import pl.api.itoffers.offer.domain.*;
+import pl.api.itoffers.provider.justjoinit.model.JustJoinItDateTime;
 import pl.api.itoffers.provider.justjoinit.model.JustJoinItRawOffer;
 
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.*;
 
 @Service
 public class OfferFactory {
     @Autowired
     private CompanyRepository companyRepository;
+    @Autowired
+    private CategoryRepository categoryRepository;
+
+    public Offer createOffer(
+            JustJoinItRawOffer rawOffer,
+            Set<Category> categories,
+            Company company
+    ) {
+
+        return new Offer(
+                rawOffer.getTechnology(),
+                (String) rawOffer.getOffer().get("slug"),
+                (String) rawOffer.getOffer().get("title"),
+                (String) rawOffer.getOffer().get("experienceLevel"),
+                createSalary(rawOffer),
+                createCharacteristics(rawOffer),
+                categories,
+                company,
+                JustJoinItDateTime.createFrom(
+                        (String) rawOffer.getOffer().get("publishedAt")
+                ).value
+        );
+    }
+
+    public Map<String, Set<Category>> createCategories(JustJoinItRawOffer rawOffer) {
+        List<String> requiredSkills = (List<String>) rawOffer.getOffer().get("requiredSkills");
+        Map<String, Set<Category>> result = new HashMap<String, Set<Category>>();
+        Set<Category> categories = new HashSet<Category>();
+        Set<Category> categoriesToSave = new HashSet<Category>();
+
+        for (String requiredSkill : requiredSkills) {
+            Category category = categoryRepository.findByName(requiredSkill);
+
+            if (null == category) {
+                category = new Category(requiredSkill);
+                categoriesToSave.add(category);
+            }
+            categories.add(category);
+        }
+        result.put("forEntity", categories);
+        result.put("toSave", categoriesToSave);
+        return result;
+    }
 
     public Company createCompany(JustJoinItRawOffer rawOffer) {
         String companyName = (String) rawOffer.getOffer().get("companyName");
@@ -30,7 +73,7 @@ public class OfferFactory {
         return company;
     }
 
-    public Salary createSalary(JustJoinItRawOffer rawOffer) {
+    private Salary createSalary(JustJoinItRawOffer rawOffer) {
         ArrayList<HashMap<String, Object>> employmentTypes = (ArrayList<HashMap<String, Object>>) rawOffer.getOffer().get("employmentTypes");
         HashMap<String, Object> employmentType = employmentTypes.get(0);
         return null != employmentType.get("from")
@@ -41,5 +84,13 @@ public class OfferFactory {
                 (String) employmentType.get("type")
         )
                 : new Salary();
+    }
+
+    private Characteristics createCharacteristics(JustJoinItRawOffer rawOffer) {
+        return new Characteristics(
+                (String) rawOffer.getOffer().get("workplaceType"),
+                (String) rawOffer.getOffer().get("workingTime"),
+                (Boolean) rawOffer.getOffer().get("remoteInterview")
+        );
     }
 }
