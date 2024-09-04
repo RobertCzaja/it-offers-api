@@ -28,7 +28,10 @@ jobs:
         cache: maven
 
     - name: Build and test with Maven
-      run: mvn clean install
+      run: |
+        mvn clean install
+        mkdir artifacts && cp target/*.jar artifacts
+        cd artifacts && ls
       env:
         POSTGRES_DB: it-offers
         JWT_SECRET: 2D4A614E645267556B58703273357638792F423F4428472B4B6250655368566D
