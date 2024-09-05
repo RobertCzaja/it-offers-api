@@ -5,3 +5,4 @@ target/
 /spring-shell.log
 /keystore.jks
 /it-offers.log
+/it-offers.pem
