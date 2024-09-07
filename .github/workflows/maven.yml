@@ -33,6 +33,7 @@ jobs:
         mkdir artifacts && cp target/*.jar artifacts
         cd artifacts && ls
       env:
+        POSTGRES_HOST: localhost
         POSTGRES_DB: it-offers
         JWT_SECRET: 2D4A614E645267556B58703273357638792F423F4428472B4B6250655368566D
         MONGO_DB_URI: mongodb://localhost:27017
