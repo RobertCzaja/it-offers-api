@@ -142,6 +142,11 @@
 			<artifactId>rest-assured</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>io.awspring.cloud</groupId>
+			<artifactId>spring-cloud-aws-starter-secrets-manager</artifactId>
+			<version>3.0.1</version>
+		</dependency>
 	</dependencies>
 
 	<dependencyManagement>
