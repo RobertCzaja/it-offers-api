@@ -1,6 +1,9 @@
 spring:
   application:
     name: it-offers
+  data:
+    mongodb:
+      uri: ${MONGO_DB_URI}
   datasource:
     driver-class-name: org.postgresql.Driver
     hikari:

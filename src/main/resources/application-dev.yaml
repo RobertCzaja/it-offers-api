@@ -1,7 +1,7 @@
 spring:
   data:
     mongodb:
-      uri: "${MONGO_DB_URI}/it-offers-dev"
+      uri: ${MONGO_DB_URI}/it-offers-dev
   shell:
     script:
       enabled: true
