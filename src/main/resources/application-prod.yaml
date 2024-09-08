@@ -1,4 +1,4 @@
 spring:
   config:
     import:
-    - aws-secretsmanager:staging/it-offers/envs
+    - aws-secretsmanager:staging/it-offers/envs-2
