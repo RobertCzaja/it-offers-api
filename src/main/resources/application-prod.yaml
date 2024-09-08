@@ -3,4 +3,4 @@ spring:
     mongodb:
       uri: "${MONGO_DB_URI}/it-offers-dev"
   config:
-    import: staging/it-offers/envs
+    import: aws-secretsmanager:staging/it-offers/envs
