@@ -1,4 +1,11 @@
 spring:
+  jpa:
+    show-sql: false
+  shell:
+    script:
+      enabled: true
+    interactive:
+      enabled: true
   config:
     import:
     - aws-secretsmanager:staging/it-offers/envs-2
