@@ -39,7 +39,7 @@ jobs:
         MONGO_DB_URI: mongodb://localhost:27017
 
     - name: Save artifact
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3
       with:
         name: github-action-artifact
         path: artifacts
