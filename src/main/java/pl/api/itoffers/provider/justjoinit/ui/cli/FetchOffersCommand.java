@@ -9,6 +9,7 @@ import org.springframework.shell.standard.ShellOption;
 import pl.api.itoffers.offer.application.repository.TechnologyRepository;
 import pl.api.itoffers.offer.application.service.OfferService;
 import pl.api.itoffers.provider.justjoinit.JustJoinItProvider;
+import pl.api.itoffers.provider.justjoinit.service.FetchJustJoinItOffersService;
 
 import java.util.Arrays;
 import java.util.List;
@@ -16,32 +17,14 @@ import java.util.UUID;
 
 @ShellComponent
 public class FetchOffersCommand {
-
     @Autowired
-    private TechnologyRepository technologyRepository;
-    @Autowired
-    private JustJoinItProvider justJoinItProvider;
-    @Autowired
-    private OfferService offerService;
-    Logger logger = LoggerFactory.getLogger(FetchOffersCommand.class);
+    private FetchJustJoinItOffersService fetchJustJoinItOffersService;
 
     @ShellMethod(key="fetch")
     public String fetchJustJoinIt(
             @ShellOption(value = "-t", defaultValue = "") String requestedTechnology
     ) {
-        List<String> technologies = requestedTechnology.isEmpty()
-            ? technologyRepository.allActive()
-            : Arrays.asList(requestedTechnology);
-
-        UUID scrapingId = UUID.randomUUID();
-
-        for (String technology : technologies) {
-            logger.info(String.format("[just-join-it] fetching offers from technology: %s", technology));
-            justJoinItProvider.fetch(technology, scrapingId);
-        }
-
-        offerService.processOffersFromExternalService(scrapingId);
-
+        fetchJustJoinItOffersService.fetch(requestedTechnology);
         return "Fetched";
     }
 }
