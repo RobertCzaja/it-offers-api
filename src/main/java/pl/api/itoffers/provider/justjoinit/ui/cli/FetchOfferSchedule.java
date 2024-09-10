@@ -14,9 +14,9 @@ public class FetchOfferSchedule {
     @Autowired
     private FetchJustJoinItOffersService fetchJustJoinItOffersService;
 
-    @Scheduled(cron="*/2 * * * * ?")
+    @Scheduled(cron="0 9 * * *")
     public void fetchJustJoinIt() {
-        System.out.println("Execute");
-        //fetchJustJoinItOffersService.fetch(null);
+        log.info("[just-join-it][cron] Start fetching scheduled job");
+        fetchJustJoinItOffersService.fetch(null);
     }
 }
