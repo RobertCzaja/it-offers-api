@@ -10,13 +10,14 @@ import pl.api.itoffers.provider.justjoinit.service.FetchJustJoinItOffersService;
 @Slf4j
 @EnableScheduling
 @Service
-public class FetchOfferSchedule {
+public class FetchOfferScheduledJob {
     @Autowired
     private FetchJustJoinItOffersService fetchJustJoinItOffersService;
 
     @Scheduled(cron="0 9 * * *")
     public void fetchJustJoinIt() {
-        log.info("[just-join-it][cron] Start fetching scheduled job");
+        log.info("[just-join-it][cron][start] fetching JustJoinIt offers");
         fetchJustJoinItOffersService.fetch(null);
+        log.info("[just-join-it][cron][finish] fetching JustJoinIt offers");
     }
 }
