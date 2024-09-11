@@ -61,13 +61,11 @@ jobs:
         push: true
         tags: ${{ secrets.DOCKERHUB_USERNAME }}/it-offers:latest
 
-#  deploy:
-#    needs: build
-#    runs-on: [ aws-ec2 ]
-#    steps:
-#      - name: Pull Image from docker hub
-#        run: sudo docker pull ${{ secrets.DOCKERHUB_USERNAME }}/it-offers:latest
-#      - name: Delete old container
-#        run: sudo docker rm -f it-offers
-#      - name: Run Docker Image
-#        run: sudo docker run -d -p 8080:8080 --name it-offers-container ${{ secrets.DOCKERHUB_USERNAME }}/it-offers
+  deploy:
+    needs: build
+    runs-on: self-hosted
+    steps:
+      - name: Pull image from docker hub
+        run: docker pull ${{ secrets.DOCKERHUB_USERNAME }}/it-offers:latest
+      - name: Run docker container
+        run: docker run -d -p 8080:8080 --name it_offers_container ${{ secrets.DOCKERHUB_USERNAME }}/it-offers
