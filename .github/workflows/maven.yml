@@ -68,5 +68,8 @@ jobs:
       - name: Pull image from docker hub
         run: docker pull ${{ secrets.DOCKERHUB_USERNAME }}/it-offers:latest
 
+      - name: Remove docker container
+        run: docker rm -f it_offers_container
+
       - name: Run docker container
         run: docker run -d -p 8080:8080 --name it_offers_container ${{ secrets.DOCKERHUB_USERNAME }}/it-offers
