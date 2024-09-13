@@ -17,7 +17,8 @@ public class TechnologyInMemoryRepository implements TechnologyRepository {
                 "javascript",
                 "net",
                 "devops",
-                "go"
+                "go",
+                "admin"
         );
     }
 }
