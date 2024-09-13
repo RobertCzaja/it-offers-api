@@ -71,7 +71,7 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: Testing Docker step #TODO ro remove!
-        run: docker ps #TODO ro remove!
+        run: sudo docker ps #TODO ro remove!
 
       - name: Pull image from docker hub
         run: docker pull ${{ secrets.DOCKERHUB_USERNAME }}/it-offers:latest
