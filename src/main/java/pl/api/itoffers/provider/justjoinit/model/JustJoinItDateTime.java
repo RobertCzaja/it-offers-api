@@ -11,6 +11,7 @@ public class JustJoinItDateTime {
         this.value = value;
     }
 
+    /** TODO remove method argument */
     public static JustJoinItDateTime createFrom(String rawDateTime) {
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSX");
         return new JustJoinItDateTime(
