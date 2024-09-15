@@ -12,24 +12,32 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class OfferCalculationITest {
 
-    private OfferBuilder offerBuilder;
+    private OfferInMemoryRepository offerRepository;
+    private OfferBuilder builder;
 
     @BeforeEach
     public void setUp() {
-        this.offerBuilder = new OfferBuilder();
+        this.offerRepository = new OfferInMemoryRepository();
+        this.builder = new OfferBuilder();
     }
 
     /*
      *  TODO use DataProvider
-     *  TODO move to unit directory
-     *   TODO under the development
+     *  TODO under the development
      */
     @Test
     public void shouldReturnExpectedStatistics() {
 
         List<Offer> offers = new ArrayList<>();
-        offers.add(offerBuilder.job("php").skills("php", "mysql", "docker").build());
-        offers.add(offerBuilder.job("java").skills("java", "postgres", "maven").build());
+        offers.add(builder.job("php").skills("php", "mysql", "docker").build());
+        offers.add(builder.job("php").skills("php", "docker").build());
+        offers.add(builder.job("php").skills("php 8.2", "kubernetes").build());
+        offers.add(builder.job("php").skills("php", "mysql").build());
+        offers.add(builder.job("php").skills("php", "postgres", "phpunit", "ci/cd").build());
+        offers.add(builder.job("java").skills("java", "postgres", "maven").build());
+        offers.add(builder.job("java").skills("java", "no sql", "gradle", "AWS").build());
+        offers.add(builder.job("java").skills("java 17", "hibernate").build());
+        offerRepository.offers = offers;
 
         assertThat("").isNotNull();
     }
