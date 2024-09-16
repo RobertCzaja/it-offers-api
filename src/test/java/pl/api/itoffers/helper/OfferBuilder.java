@@ -22,6 +22,7 @@ public class OfferBuilder {
     }
 
     public OfferBuilder skills(String cat1, String cat2) {
+        // TODO Category object needs to be created with id
         categories.add(new Category(cat1));
         categories.add(new Category(cat2));
         return this;

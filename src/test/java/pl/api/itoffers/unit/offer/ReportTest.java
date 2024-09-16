@@ -39,8 +39,9 @@ public class ReportTest {
         offers.add(builder.job("php").skills("php", "mysql").build());
         offers.add(builder.job("php").skills("php", "postgres", "phpunit", "ci/cd").build());
         offers.add(builder.job("java").skills("java", "postgres", "maven").build());
-        offers.add(builder.job("java").skills("java", "no sql", "gradle", "AWS").build());
-        offers.add(builder.job("java").skills("java 17", "hibernate").build());
+        offers.add(builder.job("java").skills("java", "postgres").build());
+        offers.add(builder.job("java").skills("java", "hibernate").build());
+        offers.add(builder.job("java").skills("java", "postgres", "hibernate").build());
         offerRepository.offers = offers;
 
         CategoriesStatisticsDto dto = reportService.computeCategoriesStatistics(null, null);

@@ -30,6 +30,7 @@ public class Offer {
     private final Salary salary;
     @Embedded
     private final Characteristics characteristics;
+    @Getter
     @ManyToMany
     private final Set<Category> categories;
     @Getter
