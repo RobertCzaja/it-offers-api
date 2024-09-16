@@ -5,6 +5,7 @@ import pl.api.itoffers.provider.justjoinit.model.JustJoinItDateTime;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.UUID;
 
 public class OfferBuilder {
 
@@ -21,25 +22,30 @@ public class OfferBuilder {
         if (null == technology) throw new NotCompletedException("technology");
     }
 
+    private Category createCategory(String name) {
+        Category category = new Category(name);
+        category.setId(UUID.randomUUID());
+        return category;
+    }
+
     public OfferBuilder skills(String cat1, String cat2) {
-        // TODO Category object needs to be created with id
-        categories.add(new Category(cat1));
-        categories.add(new Category(cat2));
+        categories.add(createCategory(cat1));
+        categories.add(createCategory(cat2));
         return this;
     }
 
     public OfferBuilder skills(String cat1, String cat2, String cat3) {
-        categories.add(new Category(cat1));
-        categories.add(new Category(cat2));
-        categories.add(new Category(cat3));
+        categories.add(createCategory(cat1));
+        categories.add(createCategory(cat2));
+        categories.add(createCategory(cat3));
         return this;
     }
 
     public OfferBuilder skills(String cat1, String cat2, String cat3, String cat4) {
-        categories.add(new Category(cat1));
-        categories.add(new Category(cat2));
-        categories.add(new Category(cat3));
-        categories.add(new Category(cat4));
+        categories.add(createCategory(cat1));
+        categories.add(createCategory(cat2));
+        categories.add(createCategory(cat3));
+        categories.add(createCategory(cat4));
         return this;
     }
 

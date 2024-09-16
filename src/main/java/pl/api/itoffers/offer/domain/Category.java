@@ -2,10 +2,7 @@ package pl.api.itoffers.offer.domain;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
@@ -16,6 +13,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class Category {
     @Getter
+    @Setter
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
