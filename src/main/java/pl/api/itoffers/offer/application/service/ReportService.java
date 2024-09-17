@@ -1,6 +1,7 @@
 package pl.api.itoffers.offer.application.service;
 
 import org.springframework.data.util.Pair;
+import org.springframework.stereotype.Service;
 import pl.api.itoffers.offer.application.dto.CategoriesDto;
 import pl.api.itoffers.offer.application.dto.CategoriesStatisticsDto;
 import pl.api.itoffers.offer.application.dto.CategoryDto;
@@ -12,6 +13,7 @@ import pl.api.itoffers.offer.domain.Offer;
 import java.time.LocalDateTime;
 import java.util.*;
 
+@Service
 public class ReportService {
     private final OfferRepository offerRepository;
 

@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "7416c56b-2599-4f67-b3b9-ee3b485f3c89",
+		"_postman_id": "858f9469-02ce-4fa5-86be-df338f0502b2",
 		"name": "ItOffers",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "28309502"
@@ -62,7 +62,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"email\": \"b@b.com\",\n    \"password\": \"admin1234\",\n    \"name\": {\n        \"first\": \"John\",\n        \"last\": \"Doe\"\n    }\n}",
+					"raw": "{\n    \"email\": \"b@test.com\",\n    \"password\": \"admin1234\",\n    \"name\": {\n        \"first\": \"John\",\n        \"last\": \"Doe\"\n    }\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -76,6 +76,34 @@
 					],
 					"path": [
 						"user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Report Categories",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{apiToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{apiUrl}}/report/categories",
+					"host": [
+						"{{apiUrl}}"
+					],
+					"path": [
+						"report",
+						"categories"
 					]
 				}
 			},

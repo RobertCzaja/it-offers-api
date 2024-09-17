@@ -1,4 +1,4 @@
-[![it-offers ci/cd](https://github.com/RobertCzaja/it-offers/actions/workflows/maven.yml/badge.svg)](https://github.com/RobertCzaja/it-offers/actions/workflows/maven.yml)
+[![it-offers ci/cd](https://github.com/RobertCzaja/it-offers/actions/workflows/cicd.yml/badge.svg)](https://github.com/RobertCzaja/it-offers/actions/workflows/cicd.yml)
 # Installation
 
 1. set GitHub token `git remote set-url origin https://RobertCzaja:<<TOKEN>>@github.com/RobertCzaja/it-offers.git`
