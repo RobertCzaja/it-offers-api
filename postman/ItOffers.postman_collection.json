@@ -97,13 +97,28 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{apiUrl}}/report/categories",
+					"raw": "{{apiUrl}}/report/categories?technologies=php,java&dateFrom=2024-09-01",
 					"host": [
 						"{{apiUrl}}"
 					],
 					"path": [
 						"report",
 						"categories"
+					],
+					"query": [
+						{
+							"key": "technologies",
+							"value": "php,java"
+						},
+						{
+							"key": "dateFrom",
+							"value": "2024-09-01"
+						},
+						{
+							"key": "dateTo",
+							"value": "2024-10-01",
+							"disabled": true
+						}
 					]
 				}
 			},

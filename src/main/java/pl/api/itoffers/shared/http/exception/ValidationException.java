@@ -16,6 +16,11 @@ public class ValidationException extends RuntimeException {
         return new ValidationException(HttpStatus.BAD_REQUEST.value(), "Invalid "+propertyName);
     }
 
+    public static final ValidationException becauseOf(String message)
+    {
+        return new ValidationException(HttpStatus.BAD_REQUEST.value(), message);
+    }
+
     public int getHttpStatusCode() {
         return httpStatusCode;
     }
