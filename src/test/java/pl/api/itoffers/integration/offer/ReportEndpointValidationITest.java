@@ -33,26 +33,33 @@ public class ReportEndpointValidationITest extends AbstractITest  {
 
     @Test
     public void shouldReturnErrorResponseOnInvalidDatesRange() {
-
-        URI uri = UriComponentsBuilder
-            .fromUriString(ReportController.PATH_CATEGORY)
-            .queryParam("dateFrom", "2024-09-01")
-            .queryParam("dateTo", "2024-08-01")
-            .build()
-            .toUri();
-
-        ResponseEntity<String> response = template.exchange(
-            uri,
-            HttpMethod.GET,
-            new HttpEntity<>(apiAuthorizationHelper.getHeaders(AuthorizationCredentials.ADMIN)),
-            String.class
-        );
+        ResponseEntity<String> response = makeRequest("2024-09-01", "2024-08-01");
 
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
         assertThat(response.getBody()).contains("dateFrom cannot be greater thant dateTo");
     }
 
-    // TODO move template.exchange method to some private method to reduce code lines
+    private ResponseEntity<String> makeRequest(String dateFrom, String dateTo) {
+        UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(ReportController.PATH_CATEGORY);
+
+        if (null != dateFrom) {
+            builder = builder.queryParam("dateFrom", dateFrom);
+        }
+
+        if (null != dateTo) {
+            builder = builder.queryParam("dateTo", dateTo);
+        }
+
+        URI uri = builder.build().toUri();
+
+        return template.exchange(
+            uri,
+            HttpMethod.GET,
+            new HttpEntity<>(apiAuthorizationHelper.getHeaders(AuthorizationCredentials.ADMIN)),
+            String.class
+        );
+    }
+
     // TODO test-scenario: only user with ADMIN role can pass
     // TODO test-scenario: user doesn't pass dateTo but dateFrom provided by User will be greater than today
 }
