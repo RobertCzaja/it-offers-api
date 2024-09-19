@@ -39,6 +39,19 @@ public class ReportEndpointValidationITest extends AbstractITest  {
         assertThat(response.getBody()).contains("dateFrom cannot be greater thant dateTo");
     }
 
+    @Test
+    public void shouldUserDifferentThanAdminIsNotAllowToGetCategoriesReport() {
+        ResponseEntity<String> response = template.exchange(
+                ReportController.PATH_CATEGORY,
+                HttpMethod.GET,
+                new HttpEntity<>(apiAuthorizationHelper.getHeaders(AuthorizationCredentials.USER)),
+                String.class
+        );
+
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.FORBIDDEN);
+        assertThat(response.getBody()).contains("Access denied");
+    }
+
     private ResponseEntity<String> makeRequest(String dateFrom, String dateTo) {
         UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(ReportController.PATH_CATEGORY);
 
@@ -59,6 +72,8 @@ public class ReportEndpointValidationITest extends AbstractITest  {
             String.class
         );
     }
+
+
 
     // TODO test-scenario: only user with ADMIN role can pass
     // TODO test-scenario: user doesn't pass dateTo but dateFrom provided by User will be greater than today
