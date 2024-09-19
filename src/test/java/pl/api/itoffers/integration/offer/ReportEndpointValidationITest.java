@@ -26,7 +26,6 @@ public class ReportEndpointValidationITest extends AbstractITest  {
     @Autowired
     private ApiAuthorizationHelper apiAuthorizationHelper;
 
-
     @BeforeEach
     public void setUp() {
         super.setUp();
@@ -36,23 +35,24 @@ public class ReportEndpointValidationITest extends AbstractITest  {
     public void shouldReturnErrorResponseOnInvalidDatesRange() {
 
         URI uri = UriComponentsBuilder
-                .fromUriString(ReportController.PATH_CATEGORY)
-                .queryParam("dateFrom", "2024-09-01")
-                .queryParam("dateTo", "2024-08-01")
-                .build()
-                .toUri();
+            .fromUriString(ReportController.PATH_CATEGORY)
+            .queryParam("dateFrom", "2024-09-01")
+            .queryParam("dateTo", "2024-08-01")
+            .build()
+            .toUri();
 
         ResponseEntity<String> response = template.exchange(
-                uri,
-                HttpMethod.GET,
-                new HttpEntity<>(apiAuthorizationHelper.getHeaders(AuthorizationCredentials.ADMIN)),
-                String.class//CategoriesStatisticsDto.class
+            uri,
+            HttpMethod.GET,
+            new HttpEntity<>(apiAuthorizationHelper.getHeaders(AuthorizationCredentials.ADMIN)),
+            String.class
         );
 
-        // TODO: type hint must be set from String to CategoriesStatisticsDto.class
-        // TODO move template.exchange method to some private method to reduce code lines
-        // TODO on error it cannot returns HTTP 403 - 400 instead
-
-        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.FORBIDDEN);
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
+        assertThat(response.getBody()).contains("dateFrom cannot be greater thant dateTo");
     }
+
+    // TODO move template.exchange method to some private method to reduce code lines
+    // TODO test-scenario: only user with ADMIN role can pass
+    // TODO test-scenario: user doesn't pass dateTo but dateFrom provided by User will be greater than today
 }

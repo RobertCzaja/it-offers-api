@@ -29,7 +29,7 @@ public class JwtExceptionHandler {
         String errorDetail =  e.getMessage();
         if (e.getCause() instanceof ValidationException) {
             ValidationException validationException = (ValidationException) e.getCause();
-            httpStatusCode = validationException.getHttpStatusCode();
+            httpStatusCode = validationException.getHttpStatus().value();
             errorMessage = "validation_error";
             errorDetail = validationException.getMessage();
         } else if (e instanceof ExpiredJwtException) {

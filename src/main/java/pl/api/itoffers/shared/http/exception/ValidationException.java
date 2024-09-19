@@ -4,24 +4,24 @@ import org.springframework.http.HttpStatus;
 
 public class ValidationException extends RuntimeException {
 
-    private int httpStatusCode;
+    private HttpStatus httpStatus;
 
-    public ValidationException(int httpStatusCode, String message) {
+    public ValidationException(HttpStatus httpStatus, String message) {
         super(message);
-        this.httpStatusCode = httpStatusCode;
+        this.httpStatus = httpStatus;
     }
 
     public static final ValidationException ofInvalidProperty(String propertyName)
     {
-        return new ValidationException(HttpStatus.BAD_REQUEST.value(), "Invalid "+propertyName);
+        return new ValidationException(HttpStatus.BAD_REQUEST, "Invalid "+propertyName);
     }
 
     public static final ValidationException becauseOf(String message)
     {
-        return new ValidationException(HttpStatus.BAD_REQUEST.value(), message);
+        return new ValidationException(HttpStatus.BAD_REQUEST, message);
     }
 
-    public int getHttpStatusCode() {
-        return httpStatusCode;
+    public HttpStatus getHttpStatus() {
+        return httpStatus;
     }
 }
