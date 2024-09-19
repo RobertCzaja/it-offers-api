@@ -6,9 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import pl.api.itoffers.helper.AbstractITest;
+import pl.api.itoffers.integration.offer.helper.ReportAssert;
 import pl.api.itoffers.integration.offer.helper.ReportEndpointCaller;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 public class ReportEndpointValidationITest extends AbstractITest  {
     @Autowired
@@ -23,23 +22,20 @@ public class ReportEndpointValidationITest extends AbstractITest  {
     public void shouldReturnErrorResponseOnInvalidDatesRange() {
         ResponseEntity<String> response = reportEndpointCaller.makeRequest("2024-09-01", "2024-08-01");
 
-        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
-        assertThat(response.getBody()).contains("dateFrom cannot be greater thant dateTo");
+        ReportAssert.responseIs(response, HttpStatus.BAD_REQUEST, "dateFrom cannot be greater thant dateTo");
     }
 
     @Test
     public void shouldUserDifferentThanAdminIsNotAllowToGetCategoriesReport() {
         ResponseEntity<String> response = reportEndpointCaller.makeRequestAsUser();
 
-        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.FORBIDDEN);
-        assertThat(response.getBody()).contains("Access denied");
+        ReportAssert.responseIs(response, HttpStatus.FORBIDDEN, "Access denied");
     }
 
     @Test
     public void shouldNotAllowToPassMadeUpDateFrom() {
         ResponseEntity<String> response = reportEndpointCaller.makeRequest("2026-01-01", null);
 
-        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
-        assertThat(response.getBody()).contains("dateFrom cannot be greater thant dateTo");
+        ReportAssert.responseIs(response, HttpStatus.BAD_REQUEST, "dateFrom cannot be greater thant dateTo");
     }
 }
