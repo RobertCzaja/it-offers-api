@@ -52,6 +52,14 @@ public class ReportEndpointValidationITest extends AbstractITest  {
         assertThat(response.getBody()).contains("Access denied");
     }
 
+    @Test
+    public void shouldNotAllowToPassMadeUpDateFrom() {
+        ResponseEntity<String> response = makeRequest("2026-01-01", null);
+
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
+        assertThat(response.getBody()).contains("dateFrom cannot be greater thant dateTo");
+    }
+
     private ResponseEntity<String> makeRequest(String dateFrom, String dateTo) {
         UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(ReportController.PATH_CATEGORY);
 
@@ -72,9 +80,4 @@ public class ReportEndpointValidationITest extends AbstractITest  {
             String.class
         );
     }
-
-
-
-    // TODO test-scenario: only user with ADMIN role can pass
-    // TODO test-scenario: user doesn't pass dateTo but dateFrom provided by User will be greater than today
 }
