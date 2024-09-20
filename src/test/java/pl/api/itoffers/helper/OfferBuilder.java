@@ -14,6 +14,7 @@ public class OfferBuilder {
     private String technology;
     private Set<Category> categories = new HashSet<Category>();
     public boolean generateId = true;
+    private Company company = new Company("creativestyle", "Kraków", "Zabłocie 25/1");
 
     private CategoryRepository categoryRepository;
     private CompanyRepository companyRepository;
@@ -97,7 +98,7 @@ public class OfferBuilder {
         checkIfStateIsNotEmpty();
         Offer offer = createOffer(
             technology,
-            new Company("creativestyle", "Kraków", "Zabłocie 25/1"),
+            company,
             categories
         );
         clearState();
@@ -117,13 +118,12 @@ public class OfferBuilder {
     }
 
     private Company saveCompany() {
-        String companyName = "creativestyle";
-        Company company = companyRepository.findByName(companyName);
-        if (null == company) {
-            company = new Company("creativestyle", "Kraków", "Zabłocie 25/1");
+        Company companyToSave = companyRepository.findByName(company.getName());
+        if (null == companyToSave) {
+            companyToSave = new Company("creativestyle", "Kraków", "Zabłocie 25/1");
         }
-        companyRepository.save(company);
-        return company;
+        companyRepository.save(companyToSave);
+        return companyToSave;
     }
 
     private Set<Category> saveCategories() {
