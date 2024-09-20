@@ -40,6 +40,7 @@ public class OfferBuilder {
     private void checkIfStateIsNotEmpty() {
         if (categories.isEmpty()) throw new NotCompletedException("categories");
         if (null == technology) throw new NotCompletedException("technology");
+        if (null == company) throw new NotCompletedException("company");
     }
 
     private Category createCategory(String name) {
