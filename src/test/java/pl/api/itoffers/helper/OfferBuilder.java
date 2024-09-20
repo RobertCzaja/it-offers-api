@@ -11,6 +11,7 @@ public class OfferBuilder {
 
     private String technology;
     private Set<Category> categories = new HashSet<Category>();
+    public boolean generateId = true;
 
     private void clearState() {
         categories = new HashSet<Category>();
@@ -24,7 +25,9 @@ public class OfferBuilder {
 
     private Category createCategory(String name) {
         Category category = new Category(name);
-        category.setId(UUID.randomUUID());
+        if (generateId) {
+            category.setId(UUID.randomUUID());
+        }
         return category;
     }
 
