@@ -120,7 +120,7 @@ public class OfferBuilder {
     private Company saveCompany() {
         Company companyToSave = companyRepository.findByName(company.getName());
         if (null == companyToSave) {
-            companyToSave = new Company("creativestyle", "Kraków", "Zabłocie 25/1");
+            companyToSave = company;
         }
         companyRepository.save(companyToSave);
         return companyToSave;
