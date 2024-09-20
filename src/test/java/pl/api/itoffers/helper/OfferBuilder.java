@@ -75,18 +75,30 @@ public class OfferBuilder {
         return this;
     }
 
+    private static Offer createOffer(
+        String technology,
+        Company company,
+        Set<Category> categories
+    ) {
+        return new Offer(
+            technology,
+            "remitly-software-development-engineer-krakow-go-5fbdbda0",
+            "Software Development Engineer",
+            "mid",
+            new Salary(Double.valueOf(14000),Double.valueOf(18000), "PLN", "b2b"),
+            new Characteristics("hybrid","full_time", true),
+            categories,
+            company,
+            JustJoinItDateTime.createFrom("yyyy-MM-dd'T'HH:mm:ss.SSSX").value
+        );
+    }
+
     public Offer build() {
         checkIfStateIsNotEmpty();
-        Offer offer = new Offer(
-                technology,
-                "remitly-software-development-engineer-krakow-go-5fbdbda0",
-                "Software Development Engineer",
-                "mid",
-                new Salary(Double.valueOf(14000),Double.valueOf(18000), "PLN", "b2b"),
-                new Characteristics("hybrid","full_time", true),
-                categories,
-                new Company("creativestyle", "Kraków", "Zabłocie 25/1"),
-                JustJoinItDateTime.createFrom("yyyy-MM-dd'T'HH:mm:ss.SSSX").value
+        Offer offer = createOffer(
+            technology,
+            new Company("creativestyle", "Kraków", "Zabłocie 25/1"),
+            categories
         );
         clearState();
         return offer;
@@ -94,17 +106,11 @@ public class OfferBuilder {
 
     public void save() {
         checkIfStateIsNotEmpty();
-
         offerRepository.save(
-            new Offer(
+            createOffer(
                 technology,
-                "remitly-software-development-engineer-krakow-go-5fbdbda0",
-                "Software Development Engineer",
-                "mid",
-                new Salary(Double.valueOf(14000),Double.valueOf(18000), "PLN", "b2b"),
-                new Characteristics("hybrid","full_time", true), saveCategories(),
                 saveCompany(),
-                JustJoinItDateTime.createFrom("yyyy-MM-dd'T'HH:mm:ss.SSSX").value
+                saveCategories()
             )
         );
         clearState();

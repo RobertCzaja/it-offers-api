@@ -3,7 +3,6 @@ package pl.api.itoffers.integration.offer;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.testcontainers.shaded.org.checkerframework.checker.units.qual.A;
 import pl.api.itoffers.helper.AbstractITest;
 import pl.api.itoffers.helper.OfferBuilder;
 import pl.api.itoffers.integration.offer.helper.OfferTestManager;
@@ -11,10 +10,6 @@ import pl.api.itoffers.integration.offer.helper.ReportEndpointCaller;
 import pl.api.itoffers.offer.application.repository.CategoryRepository;
 import pl.api.itoffers.offer.application.repository.CompanyRepository;
 import pl.api.itoffers.offer.application.repository.OfferRepository;
-import pl.api.itoffers.offer.domain.Offer;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -45,8 +40,6 @@ public class ReportEndpointResultITest extends AbstractITest {
     public void ______________() {
         builder.job("php").skills("php", "mysql", "docker").save();
         builder.job("php").skills("php", "mysql", "docker").save();
-
-
         assertThat("").isNotNull();
     }
 }
