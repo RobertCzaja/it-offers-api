@@ -8,6 +8,7 @@ import pl.api.itoffers.offer.domain.*;
 import pl.api.itoffers.provider.justjoinit.model.JustJoinItDateTime;
 import pl.api.itoffers.provider.justjoinit.model.JustJoinItRawOffer;
 
+import java.time.LocalDateTime;
 import java.util.*;
 
 @Service
@@ -34,7 +35,8 @@ public class OfferFactory {
                 company,
                 JustJoinItDateTime.createFrom(
                         (String) rawOffer.getOffer().get("publishedAt")
-                ).value
+                ).value,
+                LocalDateTime.now()
         );
     }
 

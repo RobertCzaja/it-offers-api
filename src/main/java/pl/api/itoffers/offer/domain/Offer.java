@@ -38,8 +38,8 @@ public class Offer {
     private final Company company;
     @Getter
     private final LocalDateTime publishedAt;
-    @CreationTimestamp
-    private LocalDateTime createdAt;
+    @Getter
+    private final LocalDateTime createdAt;
 
     @Override
     public String toString() {

@@ -49,13 +49,14 @@ public class OfferModelITest extends AbstractITest {
                 new Characteristics("hybrid","full_time", true),
                 categories,
                 company,
-                publishedAt
+                publishedAt,
+                JustJoinItDateTime.createFrom().value
         );
 
         offerRepository.save(offer);
 
         Optional<Offer> fetchedOffer = offerRepository.findById(offer.getId());
-        assertThat(fetchedOffer.get()).isNotNull();
+        assertThat(fetchedOffer.get().getCreatedAt()).isEqualTo(JustJoinItDateTime.createFrom().value);
     }
 
     private Set<Category> saveAndGetCategories() {

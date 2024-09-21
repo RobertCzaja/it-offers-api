@@ -7,6 +7,7 @@ import pl.api.itoffers.offer.application.repository.OfferRepository;
 import pl.api.itoffers.offer.domain.*;
 import pl.api.itoffers.provider.justjoinit.model.JustJoinItDateTime;
 
+import java.time.LocalDateTime;
 import java.util.*;
 
 public class OfferBuilder {
@@ -91,7 +92,8 @@ public class OfferBuilder {
             new Characteristics("hybrid","full_time", true),
             categories,
             company,
-            JustJoinItDateTime.createFrom().value
+            JustJoinItDateTime.createFrom().value,
+            LocalDateTime.now()
         );
     }
 
