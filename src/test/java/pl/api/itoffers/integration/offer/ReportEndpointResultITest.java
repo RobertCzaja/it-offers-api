@@ -3,6 +3,7 @@ package pl.api.itoffers.integration.offer;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import pl.api.itoffers.helper.AbstractITest;
 import pl.api.itoffers.helper.OfferBuilder;
 import pl.api.itoffers.integration.offer.helper.OfferTestManager;
@@ -37,9 +38,17 @@ public class ReportEndpointResultITest extends AbstractITest {
 
     /* TODO needs to be implemented */
     @Test
-    public void ______________() {
-        builder.job("php").skills("php", "mysql", "docker").save();
-        builder.job("php").skills("php", "mysql", "docker").save();
+    public void shouldFilterOffersByDates() {
+        builder.job("php").at("08-30").skills("php", "docker").save();
+        builder.job("php").at("09-01").skills("php", "mysql", "docker").save();
+        builder.job("php").at("09-02").skills("php", "git").save();
+        builder.job("php").at("09-03").skills("php", "docker", "kubernetes").save();
+        builder.job("java").at("08-30").skills("java", "spring").save();
+        builder.job("java").at("09-01").skills("java", "maven").save();
+
+        // todo change to specific object type as generic type
+        ResponseEntity<String> response = reportEndpointCaller.makeRequest("2024-09-01", "2024-09-02");
+
         assertThat("").isNotNull();
     }
 }

@@ -22,11 +22,11 @@ public class ReportService {
         this.offerRepository = offerRepository;
     }
 
-    public CategoriesStatisticsDto computeCategoriesStatistics(Pair<LocalDateTime, LocalDateTime> period, Set<String> technologies) {
+    public CategoriesStatisticsDto computeCategoriesStatistics(LocalDateTime from, LocalDateTime to, String[] technologies) {
 
         HashMap<String, List<CategoryDto>> technologiesWithCategories = new HashMap<String, List<CategoryDto>>();
 
-        for (Offer offer : offerRepository.fetch(/*todo pass arguments here*/)) {
+        for (Offer offer : offerRepository.findByCreatedAtBetween(from, to)) {
             List<CategoryDto> technologyWithCategories = technologiesWithCategories.get(offer.getTechnology());
 
             if (null == technologyWithCategories) {
@@ -39,7 +39,7 @@ public class ReportService {
         }
 
         return new CategoriesStatisticsDto(
-            new FiltersDto(),
+            new FiltersDto(from, to, technologies),
             new CategoriesDto(technologiesWithCategories)
         );
     }

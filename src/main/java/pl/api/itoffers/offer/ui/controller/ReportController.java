@@ -14,9 +14,6 @@ import pl.api.itoffers.offer.application.service.ReportService;
 
 import java.util.Date;
 
-/**
- * TODO add integration tests
- */
 @RestController
 public class ReportController {
     public final static String PATH_CATEGORY = "/report/categories";
@@ -31,10 +28,10 @@ public class ReportController {
         @RequestParam(required = false) @DateTimeFormat(pattern="yyyy-MM-dd") Date dateFrom,
         @RequestParam(required = false) @DateTimeFormat(pattern="yyyy-MM-dd") Date dateTo
     ) {
-        CategoriesFilter filter = new CategoriesFilter(technologies, dateFrom, dateTo); // todo pass inside
+        CategoriesFilter filter = new CategoriesFilter(technologies, dateFrom, dateTo);
 
         return new ResponseEntity<CategoriesStatisticsDto>(
-            reportService.computeCategoriesStatistics(null, null),
+            reportService.computeCategoriesStatistics(filter.getFrom(), filter.getTo(), filter.getTechnologies()),
             HttpStatus.CREATED
         );
     }

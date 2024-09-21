@@ -14,8 +14,13 @@ public class OfferBuilder {
 
     private String technology;
     private Set<Category> categories = new HashSet<Category>();
+    /**
+     * If it's set to true it will generate for each Category entity random UUID. It's important to set it to false
+     * in integration testing because Category entity with already set UUID cannot be saved in DB.
+     */
     public boolean generateId = true;
     private Company company = new Company("creativestyle", "Kraków", "Zabłocie 25/1");
+    private LocalDateTime createdAt = LocalDateTime.now();
 
     private CategoryRepository categoryRepository;
     private CompanyRepository companyRepository;
@@ -36,12 +41,15 @@ public class OfferBuilder {
     private void clearState() {
         categories = new HashSet<Category>();
         technology = null;
+        company = new Company("creativestyle", "Kraków", "Zabłocie 25/1");
+        createdAt = LocalDateTime.now();
     }
 
     private void checkIfStateIsNotEmpty() {
         if (categories.isEmpty()) throw new NotCompletedException("categories");
         if (null == technology) throw new NotCompletedException("technology");
         if (null == company) throw new NotCompletedException("company");
+        if (null == createdAt) throw new NotCompletedException("createdAt");
     }
 
     private Category createCategory(String name) {
@@ -50,6 +58,12 @@ public class OfferBuilder {
             category.setId(UUID.randomUUID());
         }
         return category;
+    }
+
+    /** @param monthAndDay in format MM-dd  */
+    public OfferBuilder at(String monthAndDay) {
+        createdAt = JustJoinItDateTime.createFromDate("2024-"+monthAndDay).value;
+        return this;
     }
 
     public OfferBuilder skills(String cat1, String cat2) {
@@ -81,7 +95,8 @@ public class OfferBuilder {
     private static Offer createOffer(
         String technology,
         Company company,
-        Set<Category> categories
+        Set<Category> categories,
+        LocalDateTime createdAt
     ) {
         return new Offer(
             technology,
@@ -93,7 +108,7 @@ public class OfferBuilder {
             categories,
             company,
             JustJoinItDateTime.createFrom().value,
-            LocalDateTime.now()
+            createdAt
         );
     }
 
@@ -102,7 +117,8 @@ public class OfferBuilder {
         Offer offer = createOffer(
             technology,
             company,
-            categories
+            categories,
+            createdAt
         );
         clearState();
         return offer;
@@ -114,7 +130,8 @@ public class OfferBuilder {
             createOffer(
                 technology,
                 saveCompany(),
-                saveCategories()
+                saveCategories(),
+                createdAt
             )
         );
         clearState();

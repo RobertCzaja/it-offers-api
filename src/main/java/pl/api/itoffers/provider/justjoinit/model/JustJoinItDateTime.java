@@ -19,6 +19,11 @@ public class JustJoinItDateTime {
     public static JustJoinItDateTime createFrom() {
         return createFrom(DEFAULT_DATE_TIME);
     }
+    // todo only for automated tests
+    /** @param rawDate in format yyyy-MM-dd  */
+    public static JustJoinItDateTime createFromDate(@NotNull String rawDate) {
+        return createFrom(rawDate+"T12:00:01.001Z");
+    }
 
     public static JustJoinItDateTime createFrom(@NotNull String rawDateTime) {
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSX");

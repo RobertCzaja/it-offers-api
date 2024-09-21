@@ -1,13 +1,15 @@
 package pl.api.itoffers.offer.application.dto;
 
 import lombok.Data;
+import lombok.RequiredArgsConstructor;
 
 import java.time.LocalDateTime;
 import java.util.Set;
 
 @Data
+@RequiredArgsConstructor
 public class FiltersDto {
-    private LocalDateTime dateFrom;
-    private LocalDateTime dateTo;
-    private Set<String> technologies;
+    private final LocalDateTime dateFrom;
+    private final LocalDateTime dateTo;
+    private final String[] technologies;
 }

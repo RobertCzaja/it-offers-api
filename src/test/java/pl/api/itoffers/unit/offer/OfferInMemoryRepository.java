@@ -9,6 +9,7 @@ import pl.api.itoffers.offer.application.repository.OfferRepository;
 import pl.api.itoffers.offer.domain.Offer;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -20,6 +21,11 @@ public class OfferInMemoryRepository implements OfferRepository {
 
     @Override
     public List<Offer> fetch() {
+        return offers;
+    }
+
+    @Override
+    public List<Offer> findByCreatedAtBetween(LocalDateTime from, LocalDateTime to) {
         return offers;
     }
 

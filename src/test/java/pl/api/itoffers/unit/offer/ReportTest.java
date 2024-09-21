@@ -43,7 +43,7 @@ public class ReportTest {
         offers.add(builder.job("java").skills("java", "postgres", "hibernate").build());
         offerRepository.offers = offers;
 
-        CategoriesStatisticsDto dto = reportService.computeCategoriesStatistics(null, null);
+        CategoriesStatisticsDto dto = reportService.computeCategoriesStatistics(null, null, null);
 
         assertThat(dto.getResult().getList().get("java").size()).isEqualTo(4);
         assertThat(dto.getResult().getList().get("php").size()).isEqualTo(7);
