@@ -37,7 +37,7 @@ public class OfferModelITest extends AbstractITest {
     public void shouldSaveOfferEntity() {
 
         Set<Category> categories = saveAndGetCategories();
-        LocalDateTime publishedAt = JustJoinItDateTime.createFrom("yyyy-MM-dd'T'HH:mm:ss.SSSX").value;
+        LocalDateTime publishedAt = JustJoinItDateTime.createFrom().value;
         Company company = saveAndGetCompany();
 
         Offer offer = new Offer(

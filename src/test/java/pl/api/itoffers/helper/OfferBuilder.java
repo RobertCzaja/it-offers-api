@@ -91,7 +91,7 @@ public class OfferBuilder {
             new Characteristics("hybrid","full_time", true),
             categories,
             company,
-            JustJoinItDateTime.createFrom("yyyy-MM-dd'T'HH:mm:ss.SSSX").value
+            JustJoinItDateTime.createFrom().value
         );
     }
 

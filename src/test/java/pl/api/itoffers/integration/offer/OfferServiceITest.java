@@ -83,7 +83,7 @@ public class OfferServiceITest extends AbstractITest {
         assertThat(offer.getTitle()).isEqualTo("Senior Full Stack Developer (React & PHP)");
         assertThat(offer.getSlug()).isEqualTo("iteamly-senior-full-stack-developer-react-php--krakow-php");
         assertThat(offer.getCompany().getName()).isEqualTo("iTeamly");
-        assertThat(offer.getPublishedAt()).isEqualTo(JustJoinItDateTime.createFrom("2024-07-27T15:00:38.890").value);
+        assertThat(offer.getPublishedAt()).isEqualTo(JustJoinItDateTime.createFrom("2024-08-25T07:00:56.216Z").value);
     }
 
     private void fetchOffersFromExternalService(UUID scrappingId, String returnedPayload) {
