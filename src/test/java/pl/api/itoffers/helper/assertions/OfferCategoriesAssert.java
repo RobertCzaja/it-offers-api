@@ -9,6 +9,14 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class OfferCategoriesAssert {
 
+    public static void hasTechnology(String technologyName, CategoriesStatisticsDto dto) {
+        assertThat(dto.getResult().getList().get(technologyName)).isNotNull();
+    }
+
+    public static void hasNotTechnology(String technologyName, CategoriesStatisticsDto dto) {
+        assertThat(dto.getResult().getList().get(technologyName)).isNull();
+    }
+
     public static void hasExactCategories(
         String technologyName,
         CategoriesStatisticsDto dto,

@@ -13,6 +13,7 @@ import pl.api.itoffers.offer.application.dto.CategoriesStatisticsDto;
 import pl.api.itoffers.offer.ui.controller.ReportController;
 
 import java.net.URI;
+import java.util.List;
 
 @Service
 public class ReportEndpointCaller {
@@ -24,16 +25,20 @@ public class ReportEndpointCaller {
 
     public ResponseEntity<String> makeRequest(String dateFrom, String dateTo) {
         return template.exchange(
-            createUri(dateFrom, dateTo),
+            createUri(dateFrom, dateTo, null),
             HttpMethod.GET,
             new HttpEntity<>(apiAuthorizationHelper.getHeaders(AuthorizationCredentials.ADMIN)),
             String.class
         );
     }
 
-    public ResponseEntity<CategoriesStatisticsDto> makeRequestForObject(String dateFrom, String dateTo) {
+    public ResponseEntity<CategoriesStatisticsDto> makeRequestForObject(
+        String dateFrom,
+        String dateTo,
+        List<String> technologies
+    ) {
         return template.exchange(
-                createUri(dateFrom, dateTo),
+                createUri(dateFrom, dateTo, technologies),
                 HttpMethod.GET,
                 new HttpEntity<>(apiAuthorizationHelper.getHeaders(AuthorizationCredentials.ADMIN)),
                 CategoriesStatisticsDto.class
@@ -49,7 +54,7 @@ public class ReportEndpointCaller {
         );
     }
 
-    private static URI createUri(String dateFrom, String dateTo) {
+    private static URI createUri(String dateFrom, String dateTo, List<String> technologies) {
         UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(ReportController.PATH_CATEGORY);
 
         if (null != dateFrom) {
@@ -58,6 +63,10 @@ public class ReportEndpointCaller {
 
         if (null != dateTo) {
             builder = builder.queryParam("dateTo", dateTo);
+        }
+
+        if (null != technologies) {
+            builder = builder.queryParam("technologies", String.join(",", technologies));
         }
 
         return builder.build().toUri();

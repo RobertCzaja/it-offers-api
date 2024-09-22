@@ -20,12 +20,7 @@ public class OfferInMemoryRepository implements OfferRepository {
     public List<Offer> offers = List.of();
 
     @Override
-    public List<Offer> fetch() {
-        return offers;
-    }
-
-    @Override
-    public List<Offer> findByCreatedAtBetween(LocalDateTime from, LocalDateTime to) {
+    public List<Offer> findByCreatedAtBetween(LocalDateTime from, LocalDateTime to, String[] technologies) {
         return offers;
     }
 

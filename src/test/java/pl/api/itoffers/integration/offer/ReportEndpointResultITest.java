@@ -15,6 +15,8 @@ import pl.api.itoffers.offer.application.repository.CategoryRepository;
 import pl.api.itoffers.offer.application.repository.CompanyRepository;
 import pl.api.itoffers.offer.application.repository.OfferRepository;
 
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class ReportEndpointResultITest extends AbstractITest {
@@ -39,29 +41,36 @@ public class ReportEndpointResultITest extends AbstractITest {
     }
 
     @Test
-    public void shouldFilterOffersByDates() {
+    public void shouldFilterOffersByDatesAndTechnologies() {
         builder.job("php").at("08-30").skills("php", "docker").save();
         builder.job("php").at("09-01").skills("php", "mysql", "docker").save();
         builder.job("php").at("09-01").skills("php").save();
         builder.job("php").at("09-02").skills("php", "docker").save();
         builder.job("php").at("09-03").skills("php", "docker", "kubernetes").save();
         builder.job("java").at("08-30").skills("java", "spring").save();
-        builder.job("java").at("09-01").skills("java", "maven").save();
+        builder.job("java").at("09-01").skills("java").save();
+        builder.job("python").at("09-01").skills("python", "django").save();
 
-        ResponseEntity<CategoriesStatisticsDto> response = reportEndpointCaller.makeRequestForObject("2024-09-01", "2024-09-02");
+        ResponseEntity<CategoriesStatisticsDto> response = reportEndpointCaller.makeRequestForObject(
+    "2024-09-01",
+            "2024-09-02",
+            List.of("php", "java")
+        );
 
-        // TODO add assertion that "java" technology does not exists
         hasAppliedFilters(response.getBody());
         OfferCategoriesAssert.hasExactCategories("php", response.getBody(), new ExpectedCategories().
             add("php", 50.0, 3).
             add("docker", 33.333333333333336, 2).
             add("mysql", 16.666666666666668, 1)
         );
+        OfferCategoriesAssert.hasTechnology("java", response.getBody());
+        OfferCategoriesAssert.hasNotTechnology("python", response.getBody());
     }
 
     private static void hasAppliedFilters(CategoriesStatisticsDto dto) {
         assertThat(dto.getFilters().getDateFrom()).isNotNull();
         assertThat(dto.getFilters().getDateTo()).isNotNull();
-        assertThat(dto.getFilters().getTechnologies()).isNull();
+        String[] expectedTechnologies = {"php", "java"};
+        assertThat(dto.getFilters().getTechnologies()).isEqualTo(expectedTechnologies);
     }
 }

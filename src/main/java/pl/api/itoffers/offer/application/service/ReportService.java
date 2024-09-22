@@ -26,7 +26,7 @@ public class ReportService {
 
         HashMap<String, List<CategoryDto>> technologiesWithCategories = new HashMap<String, List<CategoryDto>>();
 
-        for (Offer offer : offerRepository.findByCreatedAtBetween(from, to)) {
+        for (Offer offer : offerRepository.findByCreatedAtBetween(from, to, technologies)) {
             List<CategoryDto> technologyWithCategories = technologiesWithCategories.get(offer.getTechnology());
 
             if (null == technologyWithCategories) {
