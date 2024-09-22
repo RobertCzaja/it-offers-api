@@ -66,6 +66,11 @@ public class OfferBuilder {
         return this;
     }
 
+    public OfferBuilder skills(String cat1) {
+        categories.add(createCategory(cat1));
+        return this;
+    }
+
     public OfferBuilder skills(String cat1, String cat2) {
         categories.add(createCategory(cat1));
         categories.add(createCategory(cat2));
