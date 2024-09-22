@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import pl.api.itoffers.helper.AbstractITest;
 import pl.api.itoffers.helper.JustJoinItProviderFactory;
+import pl.api.itoffers.integration.offer.helper.OfferTestManager;
 import pl.api.itoffers.integration.provider.justjoinit.inmemory.JustJoinItInMemoryConnector;
 import pl.api.itoffers.integration.provider.justjoinit.payload.JustJoinItParams;
 import pl.api.itoffers.offer.application.repository.CategoryRepository;
@@ -30,6 +31,8 @@ public class OfferServiceITest extends AbstractITest {
     private static final String TECHNOLOGY = "php";
 
     @Autowired
+    private OfferTestManager offerTestManager;
+    @Autowired
     private OfferService offerService;
     @Autowired
     private OfferRepository offerRepository;
@@ -48,9 +51,7 @@ public class OfferServiceITest extends AbstractITest {
     public void setUp() {
         super.setUp();
         jjitRawOffersRepository.deleteAll();
-        offerRepository.deleteAll();
-        categoryRepository.deleteAll();
-        companyRepository.deleteAll();
+        offerTestManager.clearAll();
         this.jjitConnector = JustJoinItInMemoryConnector.create();
         this.jjitProvider = justJoinItProviderFactory.create(jjitConnector);
     }

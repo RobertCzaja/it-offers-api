@@ -11,21 +11,12 @@ import pl.api.itoffers.helper.assertions.OfferCategoriesAssert;
 import pl.api.itoffers.integration.offer.helper.OfferTestManager;
 import pl.api.itoffers.integration.offer.helper.ReportEndpointCaller;
 import pl.api.itoffers.offer.application.dto.CategoriesStatisticsDto;
-import pl.api.itoffers.offer.application.repository.CategoryRepository;
-import pl.api.itoffers.offer.application.repository.CompanyRepository;
-import pl.api.itoffers.offer.application.repository.OfferRepository;
 
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class ReportEndpointResultITest extends AbstractITest {
-    @Autowired
-    private CategoryRepository categoryRepository;
-    @Autowired
-    private CompanyRepository companyRepository;
-    @Autowired
-    private OfferRepository offerRepository;
     @Autowired
     private OfferTestManager offerTestManager;
     @Autowired
@@ -35,7 +26,7 @@ public class ReportEndpointResultITest extends AbstractITest {
     @BeforeEach
     public void setUp() {
         super.setUp();
-        this.builder = new OfferBuilder(categoryRepository, companyRepository, offerRepository);
+        this.builder = offerTestManager.createOfferBuilder();
         this.builder.generateId = false;
         offerTestManager.clearAll();
     }
@@ -67,6 +58,7 @@ public class ReportEndpointResultITest extends AbstractITest {
         OfferCategoriesAssert.hasNotTechnology("python", response.getBody());
     }
 
+    /* TODO Move to some separate class like pl.api.itoffers.helper.assertions.OfferCategoriesAssert */
     private static void hasAppliedFilters(CategoriesStatisticsDto dto) {
         assertThat(dto.getFilters().getDateFrom()).isNotNull();
         assertThat(dto.getFilters().getDateTo()).isNotNull();

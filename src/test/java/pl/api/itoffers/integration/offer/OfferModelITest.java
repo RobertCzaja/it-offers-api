@@ -4,6 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import pl.api.itoffers.helper.AbstractITest;
+import pl.api.itoffers.integration.offer.helper.OfferTestManager;
 import pl.api.itoffers.offer.application.repository.CategoryRepository;
 import pl.api.itoffers.offer.application.repository.CompanyRepository;
 import pl.api.itoffers.offer.application.repository.OfferRepository;
@@ -19,6 +20,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class OfferModelITest extends AbstractITest {
 
     @Autowired
+    private OfferTestManager offerTestManager;
+    @Autowired
     private OfferRepository offerRepository;
     @Autowired
     private CategoryRepository categoryRepository;
@@ -28,9 +31,7 @@ public class OfferModelITest extends AbstractITest {
     @BeforeEach
     public void setUp() {
         super.setUp();
-        offerRepository.deleteAll();
-        categoryRepository.deleteAll();
-        companyRepository.deleteAll();
+        offerTestManager.clearAll();
     }
 
     @Test
