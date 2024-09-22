@@ -8,6 +8,7 @@ import pl.api.itoffers.helper.AbstractITest;
 import pl.api.itoffers.helper.OfferBuilder;
 import pl.api.itoffers.integration.offer.helper.OfferTestManager;
 import pl.api.itoffers.integration.offer.helper.ReportEndpointCaller;
+import pl.api.itoffers.offer.application.dto.CategoriesStatisticsDto;
 import pl.api.itoffers.offer.application.repository.CategoryRepository;
 import pl.api.itoffers.offer.application.repository.CompanyRepository;
 import pl.api.itoffers.offer.application.repository.OfferRepository;
@@ -15,7 +16,6 @@ import pl.api.itoffers.offer.application.repository.OfferRepository;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class ReportEndpointResultITest extends AbstractITest {
-
     @Autowired
     private CategoryRepository categoryRepository;
     @Autowired
@@ -36,7 +36,6 @@ public class ReportEndpointResultITest extends AbstractITest {
         offerTestManager.clearAll();
     }
 
-    /* TODO needs to be implemented */
     @Test
     public void shouldFilterOffersByDates() {
         builder.job("php").at("08-30").skills("php", "docker").save();
@@ -46,9 +45,9 @@ public class ReportEndpointResultITest extends AbstractITest {
         builder.job("java").at("08-30").skills("java", "spring").save();
         builder.job("java").at("09-01").skills("java", "maven").save();
 
-        // todo change to specific object type as generic type
-        ResponseEntity<String> response = reportEndpointCaller.makeRequest("2024-09-01", "2024-09-02");
+        ResponseEntity<CategoriesStatisticsDto> response = reportEndpointCaller.makeRequestForObject("2024-09-01", "2024-09-02");
 
+        // TODO add real assertions
         assertThat("").isNotNull();
     }
 }

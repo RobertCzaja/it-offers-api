@@ -12,7 +12,7 @@ import pl.api.itoffers.offer.application.dto.CategoriesStatisticsDto;
 import pl.api.itoffers.offer.application.dto.incoming.CategoriesFilter;
 import pl.api.itoffers.offer.application.service.ReportService;
 
-import java.util.Date;
+import java.util.*;
 
 @RestController
 public class ReportController {
@@ -32,8 +32,7 @@ public class ReportController {
 
         return new ResponseEntity<CategoriesStatisticsDto>(
             reportService.computeCategoriesStatistics(filter.getFrom(), filter.getTo(), filter.getTechnologies()),
-            HttpStatus.CREATED
+            HttpStatus.OK
         );
     }
-
 }

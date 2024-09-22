@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.util.UriComponentsBuilder;
 import pl.api.itoffers.helper.ApiAuthorizationHelper;
 import pl.api.itoffers.helper.AuthorizationCredentials;
+import pl.api.itoffers.offer.application.dto.CategoriesStatisticsDto;
 import pl.api.itoffers.offer.ui.controller.ReportController;
 
 import java.net.URI;
@@ -22,23 +23,20 @@ public class ReportEndpointCaller {
     private ApiAuthorizationHelper apiAuthorizationHelper;
 
     public ResponseEntity<String> makeRequest(String dateFrom, String dateTo) {
-        UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(ReportController.PATH_CATEGORY);
-
-        if (null != dateFrom) {
-            builder = builder.queryParam("dateFrom", dateFrom);
-        }
-
-        if (null != dateTo) {
-            builder = builder.queryParam("dateTo", dateTo);
-        }
-
-        URI uri = builder.build().toUri();
-
         return template.exchange(
-            uri,
+            createUri(dateFrom, dateTo),
             HttpMethod.GET,
             new HttpEntity<>(apiAuthorizationHelper.getHeaders(AuthorizationCredentials.ADMIN)),
             String.class
+        );
+    }
+
+    public ResponseEntity<CategoriesStatisticsDto> makeRequestForObject(String dateFrom, String dateTo) {
+        return template.exchange(
+                createUri(dateFrom, dateTo),
+                HttpMethod.GET,
+                new HttpEntity<>(apiAuthorizationHelper.getHeaders(AuthorizationCredentials.ADMIN)),
+                CategoriesStatisticsDto.class
         );
     }
 
@@ -49,5 +47,19 @@ public class ReportEndpointCaller {
             new HttpEntity<>(apiAuthorizationHelper.getHeaders(AuthorizationCredentials.USER)),
             String.class
         );
+    }
+
+    private static URI createUri(String dateFrom, String dateTo) {
+        UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(ReportController.PATH_CATEGORY);
+
+        if (null != dateFrom) {
+            builder = builder.queryParam("dateFrom", dateFrom);
+        }
+
+        if (null != dateTo) {
+            builder = builder.queryParam("dateTo", dateTo);
+        }
+
+        return builder.build().toUri();
     }
 }

@@ -1,12 +1,15 @@
 package pl.api.itoffers.offer.application.dto;
 
+import lombok.AccessLevel;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 
 import java.util.UUID;
 
 @Data
 @RequiredArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PRIVATE, force = true)
 public class CategoryDto {
     private final UUID categoryId;
     private final String categoryName;
