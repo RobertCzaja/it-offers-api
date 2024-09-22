@@ -12,12 +12,12 @@ public class OfferCategoriesAssert {
     public static void hasExactCategories(
         String technologyName,
         CategoriesStatisticsDto dto,
-        List<List> expectedCategories
+        ExpectedCategories expectedCategories
     ) {
-        assertThat(dto.getResult().getList().get(technologyName).size()).isEqualTo(expectedCategories.size());
-        for (int i = 0; i <= (expectedCategories.size() - 1); i++) {
+        assertThat(dto.getResult().getList().get(technologyName).size()).isEqualTo(expectedCategories.categories.size());
+        for (int i = 0; i <= (expectedCategories.categories.size() - 1); i++) {
             CategoryDto categoryDto = dto.getResult().getList().get(technologyName).get(i);
-            List expectedCategory = expectedCategories.get(i);
+            List expectedCategory = expectedCategories.categories.get(i);
             assertThat(categoryDto.getCategoryName()).isEqualTo(expectedCategory.get(0));
             assertThat(categoryDto.getPercentage()).isEqualTo(expectedCategory.get(1));
             assertThat(categoryDto.getCount()).isEqualTo(expectedCategory.get(2));

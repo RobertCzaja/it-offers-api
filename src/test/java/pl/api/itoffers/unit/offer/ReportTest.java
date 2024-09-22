@@ -3,6 +3,7 @@ package pl.api.itoffers.unit.offer;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import pl.api.itoffers.helper.OfferBuilder;
+import pl.api.itoffers.helper.assertions.ExpectedCategories;
 import pl.api.itoffers.helper.assertions.OfferCategoriesAssert;
 import pl.api.itoffers.offer.application.dto.CategoriesStatisticsDto;
 import pl.api.itoffers.offer.application.service.ReportService;
@@ -41,17 +42,17 @@ public class ReportTest {
 
         CategoriesStatisticsDto dto = reportService.computeCategoriesStatistics(null, null, null);
 
-        OfferCategoriesAssert.hasExactCategories("java", dto, List.of(
-            List.of("java", 40.0, 4),
-            List.of("postgres", 30.0, 3),
-            List.of("hibernate", 20.0, 2),
-            List.of("maven", 10.0, 1)
-        ));
-        OfferCategoriesAssert.hasExactCategories("php", dto, List.of(
-            List.of("php", 45.45454545454545, 5),
-            List.of("docker", 27.272727272727273, 3),
-            List.of("mysql", 18.181818181818183, 2),
-            List.of("kubernetes", 9.090909090909092, 1)
-        ));
+        OfferCategoriesAssert.hasExactCategories("java", dto, new ExpectedCategories().
+            add("java", 40.0, 4).
+            add("postgres", 30.0, 3).
+            add("hibernate", 20.0, 2).
+            add("maven", 10.0, 1)
+        );
+        OfferCategoriesAssert.hasExactCategories("php", dto, new ExpectedCategories().
+            add("php", 45.45454545454545, 5).
+            add("docker", 27.272727272727273, 3).
+            add("mysql", 18.181818181818183, 2).
+            add("kubernetes", 9.090909090909092, 1)
+        );
     }
 }
