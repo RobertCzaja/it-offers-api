@@ -28,7 +28,7 @@ public class ReportService {
             if (null == technologyWithCategories) {
                 technologiesWithCategories.put(offer.getTechnology(), CategoryDtoList.create(offer.getCategories()));
             } else {
-                updateExistingTechnologyCategories(offer.getCategories(), technologyWithCategories);
+                offer.getCategories().forEach(category -> addCategoryToTechnologyCategories(category, technologyWithCategories));
             }
 
             sort(technologiesWithCategories);
@@ -40,37 +40,17 @@ public class ReportService {
         );
     }
 
-    public static void updateExistingTechnologyCategories(
-        Set<Category> offerCategories,
-        List<CategoryDto> technologyWithCategories
-    ) {
-        for (Category category: offerCategories) {
-            CategoryDto alreadyAddedCategory = null;
-
-            for (CategoryDto technologyCategory : technologyWithCategories) {
-                if (null == alreadyAddedCategory && technologyCategory.getCategoryName().equals(category.getName())) {
-                    alreadyAddedCategory = technologyCategory;
-                }
-            }
-
-            if (null == alreadyAddedCategory) {
-                technologyWithCategories.add(
-                    new CategoryDto(
-                        category.getId(),
-                        category.getName(),
-                        technologyWithCategories.size() /*todo it's recalculated while sorting*/
-                    )
-                );
-            } else {
-                technologyWithCategories.remove(alreadyAddedCategory);
-                technologyWithCategories.add(alreadyAddedCategory.withAddedOccurrence(technologyWithCategories.size()/*todo it's recalculated while sorting*/));
+    /** todo percentage set here doesn't matter 'cause it's recalculated once again while sorting */
+    private static void addCategoryToTechnologyCategories(Category category, List<CategoryDto> technologyWithCategories) {
+        for (CategoryDto technologyCategory : technologyWithCategories) {
+            if (technologyCategory.getCategoryName().equals(category.getName())) {
+                technologyWithCategories.remove(technologyCategory);
+                technologyWithCategories.add(technologyCategory.withAddedOccurrence(technologyWithCategories.size()));
+                return;
             }
         }
+        technologyWithCategories.add(new CategoryDto(category.getId(), category.getName(), technologyWithCategories.size()));
     }
-
-//    private static void addToTechnologyCategories(Category category, List<CategoryDto> technologyWithCategories) {
-//
-//    }
 
     private static void sort(HashMap<String, List<CategoryDto>> technologiesWithCategories) {
         for (String technology : technologiesWithCategories.keySet()) {
