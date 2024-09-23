@@ -20,7 +20,7 @@ public class CategoryDto {
         this.categoryId = categoryId;
         this.categoryName = categoryName;
         this.count = 1;
-        this.percentage = (double) (this.count * 100 / totalCategoriesCount);
+        this.percentage = countPercentage(this.count, totalCategoriesCount);
     }
 
     public CategoryDto withAddedOccurrence(int totalCategoriesCount) {
@@ -28,17 +28,21 @@ public class CategoryDto {
         return new CategoryDto(
             categoryId,
             categoryName,
-            ((double) newCount * 100 / totalCategoriesCount),
+            countPercentage(newCount, totalCategoriesCount),
             newCount
         );
     }
 
     public CategoryDto withRecalculatedPercentage(int totalCategoriesCount) {
         return new CategoryDto(
-                categoryId,
-                categoryName,
-                ((double) count * 100 / totalCategoriesCount),
-                count
+            categoryId,
+            categoryName,
+            countPercentage(count, totalCategoriesCount),
+            count
         );
+    }
+
+    private static double countPercentage(int count, int totalCount) {
+        return (double) count * 100 / totalCount;
     }
 }
