@@ -46,16 +46,12 @@ public class ReportService {
     ) {
         for (Category category: offerCategories ) {
             CategoryDto alreadyAddedCategory = null;
-            Integer alreadyAddedDtoIndex = null;
             int technologyCategoriesCount = 0;
-            int index = -1;
 
             for (CategoryDto technologyCategory : technologyWithCategories) {
-                index++;
                 technologyCategoriesCount++;
                 if (null == alreadyAddedCategory && technologyCategory.getCategoryName().equals(category.getName())) {
                     alreadyAddedCategory = technologyCategory;
-                    alreadyAddedDtoIndex = index;
                 }
             }
 
@@ -68,7 +64,7 @@ public class ReportService {
                     )
                 );
             } else {
-                technologyWithCategories.remove(alreadyAddedDtoIndex.intValue());
+                technologyWithCategories.remove(alreadyAddedCategory);
                 technologyWithCategories.add(alreadyAddedCategory.withAddedOccurrence(technologyCategoriesCount));
             }
         }
