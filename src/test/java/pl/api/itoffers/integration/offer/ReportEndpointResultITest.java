@@ -10,7 +10,7 @@ import pl.api.itoffers.helper.assertions.ExpectedCategories;
 import pl.api.itoffers.helper.assertions.OfferCategoriesAssert;
 import pl.api.itoffers.integration.offer.helper.OfferTestManager;
 import pl.api.itoffers.integration.offer.helper.ReportEndpointCaller;
-import pl.api.itoffers.offer.application.dto.CategoriesStatisticsDto;
+import pl.api.itoffers.offer.application.dto.outgoing.CategoriesStatisticsDto;
 
 import java.util.List;
 

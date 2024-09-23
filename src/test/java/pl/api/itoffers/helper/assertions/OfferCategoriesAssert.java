@@ -1,7 +1,7 @@
 package pl.api.itoffers.helper.assertions;
 
-import pl.api.itoffers.offer.application.dto.CategoriesStatisticsDto;
-import pl.api.itoffers.offer.application.dto.CategoryDto;
+import pl.api.itoffers.offer.application.dto.outgoing.CategoriesStatisticsDto;
+import pl.api.itoffers.offer.application.dto.outgoing.CategoryDto;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package pl.api.itoffers.offer.application.dto;
+package pl.api.itoffers.offer.application.dto.outgoing;
 
 import lombok.Data;
 import lombok.RequiredArgsConstructor;

@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 import pl.api.itoffers.helper.OfferBuilder;
 import pl.api.itoffers.helper.assertions.ExpectedCategories;
 import pl.api.itoffers.helper.assertions.OfferCategoriesAssert;
-import pl.api.itoffers.offer.application.dto.CategoriesStatisticsDto;
+import pl.api.itoffers.offer.application.dto.outgoing.CategoriesStatisticsDto;
 import pl.api.itoffers.offer.application.service.ReportService;
 import pl.api.itoffers.offer.domain.Offer;
 
