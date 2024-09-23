@@ -44,12 +44,10 @@ public class ReportService {
         Set<Category> offerCategories,
         List<CategoryDto> technologyWithCategories
     ) {
-        for (Category category: offerCategories ) {
+        for (Category category: offerCategories) {
             CategoryDto alreadyAddedCategory = null;
-            int technologyCategoriesCount = 0;
 
             for (CategoryDto technologyCategory : technologyWithCategories) {
-                technologyCategoriesCount++;
                 if (null == alreadyAddedCategory && technologyCategory.getCategoryName().equals(category.getName())) {
                     alreadyAddedCategory = technologyCategory;
                 }
@@ -60,17 +58,21 @@ public class ReportService {
                     new CategoryDto(
                         category.getId(),
                         category.getName(),
-                        technologyCategoriesCount
+                        technologyWithCategories.size() /*todo it's recalculated while sorting*/
                     )
                 );
             } else {
                 technologyWithCategories.remove(alreadyAddedCategory);
-                technologyWithCategories.add(alreadyAddedCategory.withAddedOccurrence(technologyCategoriesCount));
+                technologyWithCategories.add(alreadyAddedCategory.withAddedOccurrence(technologyWithCategories.size()/*todo it's recalculated while sorting*/));
             }
         }
     }
 
-    public static void sort(HashMap<String, List<CategoryDto>> technologiesWithCategories) {
+//    private static void addToTechnologyCategories(Category category, List<CategoryDto> technologyWithCategories) {
+//
+//    }
+
+    private static void sort(HashMap<String, List<CategoryDto>> technologiesWithCategories) {
         for (String technology : technologiesWithCategories.keySet()) {
             List<CategoryDto> technologyCategories = technologiesWithCategories.get(technology);
             int totalCategoriesCount = 0;
