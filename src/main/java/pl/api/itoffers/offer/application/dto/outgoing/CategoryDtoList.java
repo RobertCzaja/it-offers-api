@@ -3,6 +3,7 @@ package pl.api.itoffers.offer.application.dto.outgoing;
 import pl.api.itoffers.offer.domain.Category;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
 
@@ -39,5 +40,14 @@ public class CategoryDtoList {
             recalculatedCategories.add(categoryDto.withRecalculatedPercentage(totalCategoriesCount));
         }
         return recalculatedCategories;
+    }
+
+    public static void sort(List<CategoryDto> technologyCategories) {
+        technologyCategories.sort(new Comparator<CategoryDto>() {
+            @Override
+            public int compare(CategoryDto dto1, CategoryDto dto2) {
+                return dto2.getCount().compareTo(dto1.getCount());
+            }
+        });
     }
 }

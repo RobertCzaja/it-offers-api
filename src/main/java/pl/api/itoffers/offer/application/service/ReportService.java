@@ -54,17 +54,11 @@ public class ReportService {
 
     private static void sort(HashMap<String, List<CategoryDto>> technologiesWithCategories) {
         for (String technology : technologiesWithCategories.keySet()) {
-
             List<CategoryDto> recalculatedCategories = CategoryDtoList.recalculatedCategories(
                 technologiesWithCategories.get(technology)
             );
 
-            recalculatedCategories.sort(new Comparator<CategoryDto>() {
-                @Override
-                public int compare(CategoryDto dto1, CategoryDto dto2) {
-                    return dto2.getCount().compareTo(dto1.getCount());
-                }
-            });
+            CategoryDtoList.sort(recalculatedCategories);
 
             technologiesWithCategories.put(technology, recalculatedCategories);
         }
