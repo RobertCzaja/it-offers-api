@@ -22,4 +22,12 @@ public class CategoryDtoList {
         }
         return categories;
     }
+
+    public static int countAllCategories(List<CategoryDto> technologyCategories) {
+        int totalCategoriesCount = 0;
+        for (CategoryDto categoryDto : technologyCategories) {
+            totalCategoriesCount += categoryDto.getCount();
+        }
+        return totalCategoriesCount;
+    }
 }

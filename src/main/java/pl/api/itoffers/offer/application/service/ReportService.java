@@ -55,10 +55,8 @@ public class ReportService {
     private static void sort(HashMap<String, List<CategoryDto>> technologiesWithCategories) {
         for (String technology : technologiesWithCategories.keySet()) {
             List<CategoryDto> technologyCategories = technologiesWithCategories.get(technology);
-            int totalCategoriesCount = 0;
-            for (CategoryDto categoryDto : technologyCategories) {
-                totalCategoriesCount += categoryDto.getCount();
-            }
+            int totalCategoriesCount = CategoryDtoList.countAllCategories(technologyCategories);
+
             List<CategoryDto> recalculatedCategories = new ArrayList<CategoryDto>();
             for (CategoryDto categoryDto : technologyCategories) {
                 recalculatedCategories.add(categoryDto.withRecalculatedPercentage(totalCategoriesCount));
