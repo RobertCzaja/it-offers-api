@@ -46,7 +46,11 @@ public class CategoryDtoList {
         technologyCategories.sort(new Comparator<CategoryDto>() {
             @Override
             public int compare(CategoryDto dto1, CategoryDto dto2) {
-                return dto2.getCount().compareTo(dto1.getCount());
+                int countCompare = dto2.getCount().compareTo(dto1.getCount());
+
+                return countCompare != 0
+                    ? countCompare
+                    : dto1.getCategoryName().compareTo(dto2.getCategoryName());
             }
         });
     }

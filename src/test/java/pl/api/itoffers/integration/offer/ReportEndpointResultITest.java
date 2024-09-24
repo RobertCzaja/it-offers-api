@@ -36,6 +36,8 @@ public class ReportEndpointResultITest extends AbstractITest {
         builder.job("php").at("08-30").skills("php", "docker").save();
         builder.job("php").at("09-01").skills("php", "mysql", "docker").save();
         builder.job("php").at("09-01").skills("php").save();
+        builder.job("php").at("09-01").skills("php","zabbix").save();
+        builder.job("php").at("09-01").skills("php","cypress").save();
         builder.job("php").at("09-02").skills("php", "docker").save();
         builder.job("php").at("09-03").skills("php", "docker", "kubernetes").save();
         builder.job("java").at("08-30").skills("java", "spring").save();
@@ -50,9 +52,11 @@ public class ReportEndpointResultITest extends AbstractITest {
 
         OfferCategoriesAssert.hasAppliedFilters(response.getBody(), new String[] {"php", "java"});
         OfferCategoriesAssert.hasExactCategories("php", response.getBody(), new ExpectedCategories().
-            add("php", 50.0, 3).
-            add("docker", 33.333333333333336, 2).
-            add("mysql", 16.666666666666668, 1)
+            add("php", 50.0, 5).
+            add("docker", 20.0, 2).
+            add("cypress", 10.0, 1).
+            add("mysql", 10.0, 1).
+            add("zabbix", 10.0, 1)
         );
         OfferCategoriesAssert.hasTechnology("java", response.getBody());
         OfferCategoriesAssert.hasNotTechnology("python", response.getBody());
