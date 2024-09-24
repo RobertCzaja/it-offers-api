@@ -54,13 +54,10 @@ public class ReportService {
 
     private static void sort(HashMap<String, List<CategoryDto>> technologiesWithCategories) {
         for (String technology : technologiesWithCategories.keySet()) {
-            List<CategoryDto> technologyCategories = technologiesWithCategories.get(technology);
-            int totalCategoriesCount = CategoryDtoList.countAllCategories(technologyCategories);
 
-            List<CategoryDto> recalculatedCategories = new ArrayList<CategoryDto>();
-            for (CategoryDto categoryDto : technologyCategories) {
-                recalculatedCategories.add(categoryDto.withRecalculatedPercentage(totalCategoriesCount));
-            }
+            List<CategoryDto> recalculatedCategories = CategoryDtoList.recalculatedCategories(
+                technologiesWithCategories.get(technology)
+            );
 
             recalculatedCategories.sort(new Comparator<CategoryDto>() {
                 @Override

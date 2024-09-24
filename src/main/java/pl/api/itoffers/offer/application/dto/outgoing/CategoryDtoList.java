@@ -23,11 +23,21 @@ public class CategoryDtoList {
         return categories;
     }
 
-    public static int countAllCategories(List<CategoryDto> technologyCategories) {
+    private static int countAllCategories(List<CategoryDto> technologyCategories) {
         int totalCategoriesCount = 0;
         for (CategoryDto categoryDto : technologyCategories) {
             totalCategoriesCount += categoryDto.getCount();
         }
         return totalCategoriesCount;
+    }
+
+    public static List<CategoryDto> recalculatedCategories(List<CategoryDto> technologyCategories) {
+        int totalCategoriesCount = CategoryDtoList.countAllCategories(technologyCategories);
+        List<CategoryDto> recalculatedCategories = new ArrayList<CategoryDto>();
+
+        for (CategoryDto categoryDto : technologyCategories) {
+            recalculatedCategories.add(categoryDto.withRecalculatedPercentage(totalCategoriesCount));
+        }
+        return recalculatedCategories;
     }
 }
