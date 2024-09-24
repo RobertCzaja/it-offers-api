@@ -61,4 +61,14 @@ public class ReportEndpointResultITest extends AbstractITest {
         OfferCategoriesAssert.hasTechnology("java", response.getBody());
         OfferCategoriesAssert.hasNotTechnology("python", response.getBody());
     }
+
+    @Test
+    public void whenTechnologiesAreNotProvidedReturnsNoResults() {
+        builder.job("php").at("08-30").skills("php", "docker").save();
+
+        ResponseEntity<CategoriesStatisticsDto> response = reportEndpointCaller.makeRequestForObject(null, null, null);
+
+        OfferCategoriesAssert.hasAppliedFilters(response.getBody(), null);
+        OfferCategoriesAssert.hasNoResults(response.getBody());
+    }
 }

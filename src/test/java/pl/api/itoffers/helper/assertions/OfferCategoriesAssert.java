@@ -15,6 +15,10 @@ public class OfferCategoriesAssert {
         assertThat(dto.getFilters().getTechnologies()).isEqualTo(expectedTechnologies);
     }
 
+    public static void hasNoResults(CategoriesStatisticsDto dto) {
+        assertThat(dto.getResult().getList()).isEmpty();
+    }
+
     public static void hasTechnology(String technologyName, CategoriesStatisticsDto dto) {
         assertThat(dto.getResult().getList().get(technologyName)).isNotNull();
     }
