@@ -48,7 +48,7 @@ public class ReportEndpointResultITest extends AbstractITest {
             List.of("php", "java")
         );
 
-        hasAppliedFilters(response.getBody());
+        OfferCategoriesAssert.hasAppliedFilters(response.getBody(), new String[] {"php", "java"});
         OfferCategoriesAssert.hasExactCategories("php", response.getBody(), new ExpectedCategories().
             add("php", 50.0, 3).
             add("docker", 33.333333333333336, 2).
@@ -56,13 +56,5 @@ public class ReportEndpointResultITest extends AbstractITest {
         );
         OfferCategoriesAssert.hasTechnology("java", response.getBody());
         OfferCategoriesAssert.hasNotTechnology("python", response.getBody());
-    }
-
-    /* TODO Move to some separate class like pl.api.itoffers.helper.assertions.OfferCategoriesAssert */
-    private static void hasAppliedFilters(CategoriesStatisticsDto dto) {
-        assertThat(dto.getFilters().getDateFrom()).isNotNull();
-        assertThat(dto.getFilters().getDateTo()).isNotNull();
-        String[] expectedTechnologies = {"php", "java"};
-        assertThat(dto.getFilters().getTechnologies()).isEqualTo(expectedTechnologies);
     }
 }

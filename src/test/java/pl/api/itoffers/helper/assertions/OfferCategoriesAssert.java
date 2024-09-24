@@ -9,6 +9,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class OfferCategoriesAssert {
 
+    public static void hasAppliedFilters(CategoriesStatisticsDto dto, String[] expectedTechnologies) {
+        assertThat(dto.getFilters().getDateFrom()).isNotNull();
+        assertThat(dto.getFilters().getDateTo()).isNotNull();
+        assertThat(dto.getFilters().getTechnologies()).isEqualTo(expectedTechnologies);
+    }
+
     public static void hasTechnology(String technologyName, CategoriesStatisticsDto dto) {
         assertThat(dto.getResult().getList().get(technologyName)).isNotNull();
     }
