@@ -1,11 +1,11 @@
 create table "salary" (
     offer_id uuid not null,
-    salary_currency varchar(3),
-    salary_employment_type varchar(20),
-    salary_from integer,
-    salary_to integer,
+    currency varchar(3),
+    employment_type varchar(20),
+    amount_from integer,
+    amount_to integer,
     is_original boolean,
-    primary key (offer_id, salary_currency)
+    primary key (offer_id, currency)
 );
 
 alter table if exists "salary"
