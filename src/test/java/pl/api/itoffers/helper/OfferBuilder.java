@@ -141,6 +141,21 @@ public class OfferBuilder {
         clearState();
     }
 
+    public Offer saveAndGetOffer() {
+        checkIfStateIsNotEmpty();
+
+        Offer offer = createOffer(
+            technology,
+            saveCompany(),
+            saveCategories(),
+            createdAt
+        );
+
+        offerRepository.save(offer);
+        clearState();
+        return offer;
+    }
+
     private Company saveCompany() {
         Company companyToSave = companyRepository.findByName(company.getName());
         if (null == companyToSave) {

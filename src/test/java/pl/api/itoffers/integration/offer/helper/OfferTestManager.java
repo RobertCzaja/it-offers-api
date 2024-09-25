@@ -7,6 +7,7 @@ import pl.api.itoffers.helper.OfferBuilder;
 import pl.api.itoffers.offer.application.repository.CategoryRepository;
 import pl.api.itoffers.offer.application.repository.CompanyRepository;
 import pl.api.itoffers.offer.application.repository.OfferRepository;
+import pl.api.itoffers.offer.application.repository.SalaryRepository;
 
 @Service
 @Profile("test")
@@ -18,6 +19,8 @@ public class OfferTestManager {
     private CompanyRepository companyRepository;
     @Autowired
     private OfferRepository offerRepository;
+    @Autowired
+    private SalaryRepository salaryRepository;
 
     public OfferBuilder createOfferBuilder() {
         return new OfferBuilder(
@@ -29,5 +32,6 @@ public class OfferTestManager {
         offerRepository.deleteAll();
         categoryRepository.deleteAll();
         companyRepository.deleteAll();
+        salaryRepository.deleteAll();
     }
 }
