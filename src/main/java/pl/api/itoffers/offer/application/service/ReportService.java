@@ -2,6 +2,7 @@ package pl.api.itoffers.offer.application.service;
 
 import org.springframework.stereotype.Service;
 import pl.api.itoffers.offer.application.dto.outgoing.*;
+import pl.api.itoffers.offer.application.factory.TechnologiesCategoriesDtoFactory;
 import pl.api.itoffers.offer.application.repository.OfferRepository;
 import pl.api.itoffers.offer.domain.Category;
 import pl.api.itoffers.offer.domain.Offer;
@@ -26,7 +27,7 @@ public class ReportService {
             List<CategoryDto> technologyWithCategories = technologiesWithCategories.get(offer.getTechnology());
 
             if (null == technologyWithCategories) {
-                technologiesWithCategories.put(offer.getTechnology(), CategoryDtoList.create(offer.getCategories()));
+                technologiesWithCategories.put(offer.getTechnology(), TechnologiesCategoriesDtoFactory.create(offer.getCategories()));
             } else {
                 offer.getCategories().forEach(category -> addCategoryToTechnologyCategories(category, technologyWithCategories));
             }
