@@ -12,7 +12,7 @@ import lombok.RequiredArgsConstructor;
 @Embeddable
 @NoArgsConstructor(access = AccessLevel.PUBLIC, force = true)
 @RequiredArgsConstructor
-public class Salary {
+public class DeprecatedSalary {
 
     @Column(name = "salary_from")
     private final Double from;

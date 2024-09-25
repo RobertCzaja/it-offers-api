@@ -1,6 +1,6 @@
 package pl.api.itoffers.provider.justjoinit.model;
 
-import pl.api.itoffers.offer.domain.Salary;
+import pl.api.itoffers.offer.domain.DeprecatedSalary;
 
 import java.time.Instant;
 import java.util.ArrayList;
@@ -15,7 +15,7 @@ public class JustJoinItOffer {
     private final String experienceLevel;
     private final Instant publishedAt;
     private final String companyName;
-    private final ArrayList<Salary> salaries;
+    private final ArrayList<DeprecatedSalary> salaries;
     private final String workplaceType;
 
     public JustJoinItOffer(
@@ -25,7 +25,7 @@ public class JustJoinItOffer {
             String experienceLevel,
             Instant publishedAt,
             String companyName,
-            ArrayList<Salary> salaries,
+            ArrayList<DeprecatedSalary> salaries,
             String workplaceType
     ) {
         this.slug = slug;
@@ -62,7 +62,7 @@ public class JustJoinItOffer {
         return companyName;
     }
 
-    public ArrayList<Salary> getSalaries() {
+    public ArrayList<DeprecatedSalary> getSalaries() {
         return salaries;
     }
 

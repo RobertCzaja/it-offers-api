@@ -5,7 +5,6 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
-import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
 import java.util.Set;
@@ -27,7 +26,7 @@ public class Offer {
     private final String title;
     private final String seniority;
     @Embedded
-    private final Salary salary;
+    private final DeprecatedSalary deprecatedSalary;
     @Embedded
     private final Characteristics characteristics;
     @Getter

@@ -2,7 +2,7 @@ package pl.api.itoffers.provider.justjoinit.infrastructure;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import org.jetbrains.annotations.NotNull;
-import pl.api.itoffers.offer.domain.Salary;
+import pl.api.itoffers.offer.domain.DeprecatedSalary;
 import pl.api.itoffers.provider.justjoinit.exception.JustJoinItException;
 import pl.api.itoffers.provider.justjoinit.model.JustJoinItOffer;
 
@@ -52,13 +52,13 @@ public class JustJoinItOfferFactory {
         return requiredSkills;
     }
 
-    private @NotNull ArrayList<Salary> getSalaries(JsonNode offerNode)
+    private @NotNull ArrayList<DeprecatedSalary> getSalaries(JsonNode offerNode)
     {
         Iterator<JsonNode> employmentTypesNode = offerNode.path("employmentTypes").elements();
-        ArrayList<Salary> salaries = new ArrayList<>();
+        ArrayList<DeprecatedSalary> salaries = new ArrayList<>();
         while (employmentTypesNode.hasNext()) {
             JsonNode employmentType = employmentTypesNode.next();
-            salaries.add(new Salary(
+            salaries.add(new DeprecatedSalary(
                     employmentType.path("from").asDouble(),
                     employmentType.path("to").asDouble(),
                     employmentType.path("currency").asText().toUpperCase(),
