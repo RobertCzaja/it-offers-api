@@ -9,7 +9,7 @@ import pl.api.itoffers.helper.OfferBuilder;
 import pl.api.itoffers.helper.assertions.ExpectedCategories;
 import pl.api.itoffers.helper.assertions.OfferCategoriesAssert;
 import pl.api.itoffers.integration.offer.helper.OfferTestManager;
-import pl.api.itoffers.integration.offer.helper.ReportEndpointCaller;
+import pl.api.itoffers.integration.offer.helper.ReportCategoriesEndpointCaller;
 import pl.api.itoffers.offer.application.dto.outgoing.CategoriesStatisticsDto;
 
 import java.util.List;
@@ -20,7 +20,7 @@ public class ReportEndpointResultITest extends AbstractITest {
     @Autowired
     private OfferTestManager offerTestManager;
     @Autowired
-    private ReportEndpointCaller reportEndpointCaller;
+    private ReportCategoriesEndpointCaller reportCategoriesEndpointCaller;
     private OfferBuilder builder;
 
     @BeforeEach
@@ -44,7 +44,7 @@ public class ReportEndpointResultITest extends AbstractITest {
         builder.job("java").at("09-01").skills("java").save();
         builder.job("python").at("09-01").skills("python", "django").save();
 
-        ResponseEntity<CategoriesStatisticsDto> response = reportEndpointCaller.makeRequestForObject(
+        ResponseEntity<CategoriesStatisticsDto> response = reportCategoriesEndpointCaller.makeRequestForObject(
     "2024-09-01",
             "2024-09-02",
             List.of("php", "java")
@@ -66,7 +66,7 @@ public class ReportEndpointResultITest extends AbstractITest {
     public void whenTechnologiesAreNotProvidedReturnsNoResults() {
         builder.job("php").at("08-30").skills("php", "docker").save();
 
-        ResponseEntity<CategoriesStatisticsDto> response = reportEndpointCaller.makeRequestForObject(null, null, null);
+        ResponseEntity<CategoriesStatisticsDto> response = reportCategoriesEndpointCaller.makeRequestForObject(null, null, null);
 
         OfferCategoriesAssert.hasAppliedFilters(response.getBody(), null);
         OfferCategoriesAssert.hasNoResults(response.getBody());

@@ -9,11 +9,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import pl.api.itoffers.helper.AbstractITest;
 import pl.api.itoffers.integration.offer.helper.ReportAssert;
-import pl.api.itoffers.integration.offer.helper.ReportEndpointCaller;
+import pl.api.itoffers.integration.offer.helper.ReportCategoriesEndpointCaller;
 
 public class ReportEndpointValidationITest extends AbstractITest  {
     @Autowired
-    private ReportEndpointCaller reportEndpointCaller;
+    private ReportCategoriesEndpointCaller reportCategoriesEndpointCaller;
 
     @BeforeEach
     public void setUp() {
@@ -26,14 +26,14 @@ public class ReportEndpointValidationITest extends AbstractITest  {
         "2026-01-01:"
     }, delimiter = ':')
     public void shouldReturnErrorResponseOnInvalidDatesRange(String dateFrom, String dateTo) {
-        ResponseEntity<String> response = reportEndpointCaller.makeRequest(dateFrom, dateTo);
+        ResponseEntity<String> response = reportCategoriesEndpointCaller.makeRequest(dateFrom, dateTo);
 
         ReportAssert.responseIs(response, HttpStatus.BAD_REQUEST, "dateFrom cannot be greater thant dateTo");
     }
 
     @Test
     public void shouldUserDifferentThanAdminIsNotAllowToGetCategoriesReport() {
-        ResponseEntity<String> response = reportEndpointCaller.makeRequestAsUser();
+        ResponseEntity<String> response = reportCategoriesEndpointCaller.makeRequestAsUser();
 
         ReportAssert.responseIs(response, HttpStatus.FORBIDDEN, "Access denied");
     }

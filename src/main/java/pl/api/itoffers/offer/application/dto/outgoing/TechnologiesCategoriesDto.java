@@ -4,17 +4,25 @@ import lombok.AccessLevel;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import pl.api.itoffers.offer.application.factory.TechnologiesCategoriesDtoFactory;
+import pl.api.itoffers.offer.application.service.ReportCategoriesService;
+import pl.api.itoffers.offer.domain.Offer;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
+/**
+ * TODO needs to be fully applied to class
+ * @see ReportCategoriesService
+ */
 @Data
 @RequiredArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PRIVATE, force = true)
 public class TechnologiesCategoriesDto {
     private final Map<String, List<CategoryDto>> list; /* TODO change name to map */
+    
+    public void add(Offer offer) {
+        list.put(offer.getTechnology(), TechnologiesCategoriesDtoFactory.create(offer.getCategories()));
+    }
 
     public void sort() {
         for (String technology : list.keySet()) {

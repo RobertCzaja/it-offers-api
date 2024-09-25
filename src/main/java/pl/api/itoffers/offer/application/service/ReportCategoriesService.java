@@ -12,10 +12,10 @@ import java.util.*;
 
 /* TODO think about refactor of that class */
 @Service
-public class ReportService {
+public class ReportCategoriesService {
     private final OfferRepository offerRepository;
 
-    public ReportService(OfferRepository offerRepository) {
+    public ReportCategoriesService(OfferRepository offerRepository) {
         this.offerRepository = offerRepository;
     }
 

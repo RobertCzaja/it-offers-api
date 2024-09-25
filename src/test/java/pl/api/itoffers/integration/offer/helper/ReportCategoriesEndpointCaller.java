@@ -16,7 +16,7 @@ import java.net.URI;
 import java.util.List;
 
 @Service
-public class ReportEndpointCaller {
+public class ReportCategoriesEndpointCaller {
 
     @Autowired
     private TestRestTemplate template;

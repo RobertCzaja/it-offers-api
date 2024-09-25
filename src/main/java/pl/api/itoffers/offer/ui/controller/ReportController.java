@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import pl.api.itoffers.offer.application.dto.outgoing.CategoriesStatisticsDto;
 import pl.api.itoffers.offer.application.dto.incoming.CategoriesFilter;
-import pl.api.itoffers.offer.application.service.ReportService;
+import pl.api.itoffers.offer.application.service.ReportCategoriesService;
 
 import java.util.*;
 
@@ -19,7 +19,7 @@ public class ReportController {
     public final static String PATH_CATEGORY = "/report/categories";
 
     @Autowired
-    private ReportService reportService;
+    private ReportCategoriesService reportService;
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping(PATH_CATEGORY)

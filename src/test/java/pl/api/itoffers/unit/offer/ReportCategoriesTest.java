@@ -6,23 +6,23 @@ import pl.api.itoffers.helper.OfferBuilder;
 import pl.api.itoffers.helper.assertions.ExpectedCategories;
 import pl.api.itoffers.helper.assertions.OfferCategoriesAssert;
 import pl.api.itoffers.offer.application.dto.outgoing.CategoriesStatisticsDto;
-import pl.api.itoffers.offer.application.service.ReportService;
+import pl.api.itoffers.offer.application.service.ReportCategoriesService;
 import pl.api.itoffers.offer.domain.Offer;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ReportTest {
+public class ReportCategoriesTest {
 
     private OfferInMemoryRepository offerRepository;
     private OfferBuilder builder;
-    private ReportService reportService;
+    private ReportCategoriesService reportCategoriesService;
 
     @BeforeEach
     public void setUp() {
         this.offerRepository = new OfferInMemoryRepository();
         this.builder = new OfferBuilder();
-        this.reportService = new ReportService(this.offerRepository);
+        this.reportCategoriesService = new ReportCategoriesService(this.offerRepository);
     }
 
     /* TODO Bug https://github.com/RobertCzaja/it-offers/issues/41 */
@@ -40,7 +40,7 @@ public class ReportTest {
         offers.add(builder.job("java").skills("java", "postgres", "hibernate").build());
         offerRepository.offers = offers;
 
-        CategoriesStatisticsDto dto = reportService.computeCategoriesStatistics(null, null, null);
+        CategoriesStatisticsDto dto = reportCategoriesService.computeCategoriesStatistics(null, null, null);
 
         OfferCategoriesAssert.hasExactCategories("java", dto, new ExpectedCategories().
             add("java", 40.0, 4).
