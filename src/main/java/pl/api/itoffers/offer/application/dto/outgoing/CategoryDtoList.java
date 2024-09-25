@@ -29,35 +29,4 @@ public class CategoryDtoList {
         }
         return categories;
     }
-
-    private static int countAllCategories(List<CategoryDto> technologyCategories) {
-        int totalCategoriesCount = 0;
-        for (CategoryDto categoryDto : technologyCategories) {
-            totalCategoriesCount += categoryDto.getCount();
-        }
-        return totalCategoriesCount;
-    }
-
-    public static List<CategoryDto> recalculatedCategories(List<CategoryDto> technologyCategories) {
-        int totalCategoriesCount = CategoryDtoList.countAllCategories(technologyCategories);
-        List<CategoryDto> recalculatedCategories = new ArrayList<CategoryDto>();
-
-        for (CategoryDto categoryDto : technologyCategories) {
-            recalculatedCategories.add(categoryDto.withRecalculatedPercentage(totalCategoriesCount));
-        }
-        return recalculatedCategories;
-    }
-
-    public static void sort(List<CategoryDto> technologyCategories) {
-        technologyCategories.sort(new Comparator<CategoryDto>() {
-            @Override
-            public int compare(CategoryDto dto1, CategoryDto dto2) {
-                int countCompare = dto2.getCount().compareTo(dto1.getCount());
-
-                return countCompare != 0
-                    ? countCompare
-                    : dto1.getCategoryName().compareTo(dto2.getCategoryName());
-            }
-        });
-    }
 }

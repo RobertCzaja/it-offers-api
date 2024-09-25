@@ -30,14 +30,11 @@ public class ReportService {
             } else {
                 offer.getCategories().forEach(category -> addCategoryToTechnologyCategories(category, technologyWithCategories));
             }
-
-            sort(technologiesWithCategories);
         }
+        TechnologiesCategoriesDto technologiesCategoriesDto = new TechnologiesCategoriesDto(technologiesWithCategories);
+        technologiesCategoriesDto.sort();
 
-        return new CategoriesStatisticsDto(
-            new FiltersDto(from, to, technologies),
-            new TechnologiesCategoriesDto(technologiesWithCategories)
-        );
+        return new CategoriesStatisticsDto(new FiltersDto(from, to, technologies), technologiesCategoriesDto);
     }
 
     /** todo percentage set here doesn't matter 'cause it's recalculated once again while sorting */
@@ -50,17 +47,5 @@ public class ReportService {
             }
         }
         technologyWithCategories.add(new CategoryDto(category.getId(), category.getName(), technologyWithCategories.size()));
-    }
-
-    private static void sort(HashMap<String, List<CategoryDto>> technologiesWithCategories) {
-        for (String technology : technologiesWithCategories.keySet()) {
-            List<CategoryDto> recalculatedCategories = CategoryDtoList.recalculatedCategories(
-                technologiesWithCategories.get(technology)
-            );
-
-            CategoryDtoList.sort(recalculatedCategories);
-
-            technologiesWithCategories.put(technology, recalculatedCategories);
-        }
     }
 }
