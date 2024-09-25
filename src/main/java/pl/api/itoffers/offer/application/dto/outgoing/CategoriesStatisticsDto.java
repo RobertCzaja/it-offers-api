@@ -7,5 +7,5 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class CategoriesStatisticsDto {
     private final FiltersDto filters;
-    private final CategoriesDto result;
+    private final TechnologiesCategoriesDto result;
 }

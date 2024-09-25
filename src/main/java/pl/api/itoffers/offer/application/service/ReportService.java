@@ -36,7 +36,7 @@ public class ReportService {
 
         return new CategoriesStatisticsDto(
             new FiltersDto(from, to, technologies),
-            new CategoriesDto(technologiesWithCategories)
+            new TechnologiesCategoriesDto(technologiesWithCategories)
         );
     }
 
