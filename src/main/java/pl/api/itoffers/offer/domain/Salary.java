@@ -1,6 +1,5 @@
 package pl.api.itoffers.offer.domain;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;

@@ -1,4 +1,4 @@
-package pl.api.itoffers.offer.application.service;
+package pl.api.itoffers.offer.application.factory;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
