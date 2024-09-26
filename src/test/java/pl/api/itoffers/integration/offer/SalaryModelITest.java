@@ -32,9 +32,8 @@ public class SalaryModelITest extends AbstractITest {
 
     @Test
     public void shouldSaveSalary() {
-        // todo think about making more abstract offer that you can create using that builder
-        Offer offer1 = builder.job("php").at("01-01").skills("phpUnit").saveAndGetOffer();
-        Offer offer2 = builder.job("java").at("02-02").skills("jUnit").saveAndGetOffer();
+        Offer offer1 = builder.offer("php", "phpUnit").saveAndGetOffer();
+        Offer offer2 = builder.offer("java", "jUnit").saveAndGetOffer();
 
         SalaryId id1a = new SalaryId(offer1.getId(), "PLN");
         SalaryId id1b = new SalaryId(offer1.getId(), "EUR");

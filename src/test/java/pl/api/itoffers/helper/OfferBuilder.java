@@ -96,6 +96,12 @@ public class OfferBuilder {
         return this;
     }
 
+    public OfferBuilder offer(String technology, String skill) {
+        job(technology);
+        skills(skill);
+        return this;
+    }
+
     private static Offer createOffer(
         String technology,
         Company company,
