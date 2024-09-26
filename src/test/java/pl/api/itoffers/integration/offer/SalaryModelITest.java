@@ -9,6 +9,7 @@ import pl.api.itoffers.integration.offer.helper.OfferTestManager;
 import pl.api.itoffers.offer.application.repository.SalaryRepository;
 import pl.api.itoffers.offer.domain.Offer;
 import pl.api.itoffers.offer.domain.Salary;
+import pl.api.itoffers.offer.domain.SalaryAmount;
 import pl.api.itoffers.offer.domain.SalaryId;
 
 import java.util.List;
@@ -40,9 +41,9 @@ public class SalaryModelITest extends AbstractITest {
         SalaryId id2a = new SalaryId(offer2.getId(), "PLN");
 
         salaryRepository.saveAll(List.of(
-            new Salary(id1a, 15000, 20000, "b2b", true),
-            new Salary(id1b, 16000, 21000, "uop", true), // todo allow only to one original salary
-            new Salary(id2a, 23000, 26000, "b2b", false)
+            new Salary(id1a, new SalaryAmount(15000, 20000), "b2b", true),
+            new Salary(id1b, new SalaryAmount(16000, 21000), "uop", true),
+            new Salary(id2a, new SalaryAmount(23000, 26000), "b2b", false)
         ));
 
         assertThat(salaryRepository.findById(id1a)).isNotNull();
