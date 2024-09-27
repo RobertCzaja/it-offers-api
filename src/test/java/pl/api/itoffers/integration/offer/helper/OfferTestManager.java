@@ -29,9 +29,9 @@ public class OfferTestManager {
     }
 
     public void clearAll() {
+        salaryRepository.deleteAll();
         offerRepository.deleteAll();
         categoryRepository.deleteAll();
         companyRepository.deleteAll();
-        salaryRepository.deleteAll();
     }
 }

@@ -1,9 +1,6 @@
-package pl.api.itoffers.integration.provider.justjoinit;
+package pl.api.itoffers.unit.provider.justjoinit;
 
-import jakarta.validation.Payload;
-import org.apache.commons.io.IOUtils;
 import org.junit.Test;
-import org.testcontainers.shaded.org.apache.commons.io.FileUtils;
 import pl.api.itoffers.integration.provider.justjoinit.payload.JustJoinItParams;
 import pl.api.itoffers.provider.justjoinit.service.JustJoinItPayloadExtractor;
 import pl.api.itoffers.shared.utils.fileManager.FileManager;

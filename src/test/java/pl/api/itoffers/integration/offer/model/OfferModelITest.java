@@ -1,4 +1,4 @@
-package pl.api.itoffers.integration.offer;
+package pl.api.itoffers.integration.offer.model;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
