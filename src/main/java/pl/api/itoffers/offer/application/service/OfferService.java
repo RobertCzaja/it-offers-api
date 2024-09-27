@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.api.itoffers.offer.application.factory.OfferFactory;
+import pl.api.itoffers.offer.application.factory.SalariesFactory;
 import pl.api.itoffers.offer.application.repository.CategoryRepository;
 import pl.api.itoffers.offer.application.repository.CompanyRepository;
 import pl.api.itoffers.offer.application.repository.OfferRepository;
@@ -27,6 +28,8 @@ public class OfferService {
     private OfferRepository offerRepository;
     @Autowired
     private OfferFactory offerFactory;
+    @Autowired
+    private SalariesFactory salariesFactory;
 
     public void processOffersFromExternalService(UUID scrappingId)
     {
@@ -37,6 +40,7 @@ public class OfferService {
             Map<String, Set<Category>> categories = offerFactory.createCategories(rawOffer);
             Company company = offerFactory.createCompany(rawOffer);
             Offer offer = offerFactory.createOffer(rawOffer, categories.get("forEntity"), company);
+            Set<Salary> salaries = salariesFactory.create(offer, rawOffer);
 
             Offer alreadyStoredOffer = findAlreadyStoredOffer(offer);
 
@@ -47,6 +51,7 @@ public class OfferService {
             companyRepository.save(company);
             categoryRepository.saveAll(categories.get("toSave"));
             offerRepository.save(offer);
+            // todo save all Salary entities
             log.info(String.format("[just-join-it][migration] new offer %s", offer));
         }
     }
