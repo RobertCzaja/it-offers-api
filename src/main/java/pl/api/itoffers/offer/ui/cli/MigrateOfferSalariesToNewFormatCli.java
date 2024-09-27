@@ -9,13 +9,10 @@ import pl.api.itoffers.offer.application.repository.SalaryRepository;
 import pl.api.itoffers.offer.domain.Offer;
 import pl.api.itoffers.offer.domain.Salary;
 import pl.api.itoffers.offer.domain.SalaryAmount;
-import pl.api.itoffers.offer.domain.SalaryId;
 import pl.api.itoffers.provider.justjoinit.JustJoinItRepository;
 import pl.api.itoffers.provider.justjoinit.model.JustJoinItRawOffer;
-import software.amazon.awssdk.services.secretsmanager.endpoints.internal.Value;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 /**
  * OneUse - not finished!
@@ -138,8 +135,8 @@ public class MigrateOfferSalariesToNewFormatCli {
 
                 salaryRepository.save(
                     new Salary(
-                        new SalaryId(offer.getId(), currency.toUpperCase()),
-                        new SalaryAmount(from, to),
+                        offer.getId(),
+                        new SalaryAmount(from, to, currency.toUpperCase()),
                         (String) employmentType.get("type"),
                         true
                     )
@@ -152,8 +149,8 @@ public class MigrateOfferSalariesToNewFormatCli {
                     if (null != plnTo && null != plnFrom) {
                         salaryRepository.save(
                             new Salary(
-                                new SalaryId(offer.getId(), "PLN"),
-                                new SalaryAmount(plnFrom.intValue(), plnTo.intValue()),
+                                offer.getId(),
+                                new SalaryAmount(plnFrom.intValue(), plnTo.intValue(), "PLN"),
                                 (String) employmentType.get("type"),
                                 false
                             )

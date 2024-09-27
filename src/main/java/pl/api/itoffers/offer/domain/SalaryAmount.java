@@ -16,4 +16,5 @@ public class SalaryAmount {
     private final Integer from;
     @Column(name = "amount_to")
     private final Integer to;
+    private final String currency;
 }

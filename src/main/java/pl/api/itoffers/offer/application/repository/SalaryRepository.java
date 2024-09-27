@@ -4,9 +4,10 @@ import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import pl.api.itoffers.offer.domain.Salary;
-import pl.api.itoffers.offer.domain.SalaryId;
+
+import java.util.UUID;
 
 @Transactional
 @Repository
-public interface SalaryRepository extends JpaRepository<Salary, SalaryId> {
+public interface SalaryRepository extends JpaRepository<Salary, UUID> {
 }

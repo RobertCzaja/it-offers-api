@@ -10,7 +10,6 @@ import pl.api.itoffers.offer.application.repository.SalaryRepository;
 import pl.api.itoffers.offer.domain.Offer;
 import pl.api.itoffers.offer.domain.Salary;
 import pl.api.itoffers.offer.domain.SalaryAmount;
-import pl.api.itoffers.offer.domain.SalaryId;
 
 import java.util.List;
 
@@ -36,18 +35,12 @@ public class SalaryModelITest extends AbstractITest {
         Offer offer1 = builder.offer("php", "phpUnit").saveAndGetOffer();
         Offer offer2 = builder.offer("java", "jUnit").saveAndGetOffer();
 
-        SalaryId id1a = new SalaryId(offer1.getId(), "PLN");
-        SalaryId id1b = new SalaryId(offer1.getId(), "EUR");
-        SalaryId id2a = new SalaryId(offer2.getId(), "PLN");
-
         salaryRepository.saveAll(List.of(
-            new Salary(id1a, new SalaryAmount(15000, 20000), "b2b", true),
-            new Salary(id1b, new SalaryAmount(16000, 21000), "uop", true),
-            new Salary(id2a, new SalaryAmount(23000, 26000), "b2b", false)
+            new Salary(offer1.getId(), new SalaryAmount(15000, 20000, "PLN"), "b2b", true),
+            new Salary(offer1.getId(), new SalaryAmount(16000, 21000, "EUR"), "uop", true),
+            new Salary(offer2.getId(), new SalaryAmount(23000, 26000, "PLN"), "b2b", false)
         ));
 
-        assertThat(salaryRepository.findById(id1a)).isNotNull();
-        assertThat(salaryRepository.findById(id1b)).isNotNull();
-        assertThat(salaryRepository.findById(id2a)).isNotNull();
+        assertThat(salaryRepository.findAll()).hasSize(3);
     }
 }
