@@ -116,7 +116,7 @@ public class OfferBuilder {
             new DeprecatedSalary(Double.valueOf(14000),Double.valueOf(18000), "PLN", "b2b"),
             new Characteristics("hybrid","full_time", true),
             categories,
-            new HashSet<Salary>(), // todo fill some Salaries for the testing purpose
+            null, // todo fill some Salaries for the testing purpose
             company,
             JustJoinItDateTime.createFrom().value,
             createdAt
