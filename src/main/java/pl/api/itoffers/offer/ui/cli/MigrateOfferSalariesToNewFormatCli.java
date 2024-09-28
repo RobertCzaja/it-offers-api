@@ -135,7 +135,7 @@ public class MigrateOfferSalariesToNewFormatCli {
 
                 salaryRepository.save(
                     new Salary(
-                        offer.getId(),
+                        offer,
                         new SalaryAmount(from, to, currency.toUpperCase()),
                         (String) employmentType.get("type"),
                         true
@@ -149,7 +149,7 @@ public class MigrateOfferSalariesToNewFormatCli {
                     if (null != plnTo && null != plnFrom) {
                         salaryRepository.save(
                             new Salary(
-                                offer.getId(),
+                                offer,
                                 new SalaryAmount(plnFrom.intValue(), plnTo.intValue(), "PLN"),
                                 (String) employmentType.get("type"),
                                 false

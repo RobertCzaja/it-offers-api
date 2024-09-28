@@ -5,6 +5,9 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.annotations.JoinFormula;
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
 
 import java.time.LocalDateTime;
 import java.util.Set;
@@ -32,9 +35,11 @@ public class Offer {
     @Getter
     @ManyToMany
     private final Set<Category> categories;
-    @Getter
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "offerId")
+    @OneToMany(
+        mappedBy = "offer",
+        cascade = CascadeType.ALL,
+        orphanRemoval = true
+    )
     private final Set<Salary> salaries;
     @Getter
     @ManyToOne

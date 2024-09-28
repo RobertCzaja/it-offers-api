@@ -25,12 +25,12 @@ public class SalariesFactory {
             throw new RuntimeException("employmentTypes key does not exist");
         }
 
-        employmentTypes.forEach(employmentType -> salaries.addAll(createSalaries(offer.getId(), employmentType)));
+        employmentTypes.forEach(employmentType -> salaries.addAll(createSalaries(offer, employmentType)));
 
         return salaries;
     }
 
-    public Set<Salary> createSalaries(UUID offerId, LinkedHashMap employmentType) {
+    public Set<Salary> createSalaries(Offer offer, LinkedHashMap employmentType) {
         Set<Salary> salaries = new HashSet<Salary>();
         Integer to = (Integer) employmentType.get("to");
         Integer from = (Integer) employmentType.get("from");
@@ -41,14 +41,14 @@ public class SalariesFactory {
             return salaries;
         }
 
-        salaries.add(Salary.original(offerId, from, to, currency, (String) employmentType.get("type")));
+        salaries.add(Salary.original(offer, from, to, currency, (String) employmentType.get("type")));
 
         if (!isPln) {
             Double plnTo = (Double) employmentType.get("to_pln");
             Double plnFrom = (Double) employmentType.get("from_pln");
 
             if (null != plnTo && null != plnFrom) {
-                salaries.add(Salary.convertedToPLN(offerId, plnFrom.intValue(), plnTo.intValue(), (String) employmentType.get("type")));
+                salaries.add(Salary.convertedToPLN(offer, plnFrom.intValue(), plnTo.intValue(), (String) employmentType.get("type")));
             }
         }
 

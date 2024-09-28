@@ -38,9 +38,9 @@ public class SalaryModelITest extends AbstractITest {
         Offer offer2 = builder.offer("java", "jUnit").saveAndGetOffer();
 
         salaryRepository.saveAll(List.of(
-            new Salary(offer1.getId(), new SalaryAmount(15000, 20000, "PLN"), "b2b", true),
-            new Salary(offer1.getId(), new SalaryAmount(16000, 21000, "EUR"), "uop", true),
-            new Salary(offer2.getId(), new SalaryAmount(23000, 26000, "PLN"), "b2b", false)
+            new Salary(offer1, new SalaryAmount(15000, 20000, "PLN"), "b2b", true),
+            new Salary(offer1, new SalaryAmount(16000, 21000, "EUR"), "uop", true),
+            new Salary(offer2, new SalaryAmount(23000, 26000, "PLN"), "b2b", false)
         ));
 
         assertThat(salaryRepository.findAll()).hasSize(3);
@@ -50,12 +50,12 @@ public class SalaryModelITest extends AbstractITest {
     public void shouldNotAllowToSaveSalaryConsideredAsDuplication() {
         Offer offer1 = builder.offer("php", "phpUnit").saveAndGetOffer();
 
-        salaryRepository.save(new Salary(offer1.getId(), new SalaryAmount(15000, 20000, "PLN"), "b2b", true));
+        salaryRepository.save(new Salary(offer1, new SalaryAmount(15000, 20000, "PLN"), "b2b", true));
 
         assertThrows(
             DataIntegrityViolationException.class,
             () -> salaryRepository.save(
-                new Salary(offer1.getId(), new SalaryAmount(16000, 21000, "PLN"), "b2b", false)
+                new Salary(offer1, new SalaryAmount(16000, 21000, "PLN"), "b2b", false)
             )
         );
     }
