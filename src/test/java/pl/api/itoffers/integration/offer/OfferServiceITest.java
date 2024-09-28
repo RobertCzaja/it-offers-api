@@ -1,6 +1,5 @@
 package pl.api.itoffers.integration.offer;
 
-import org.assertj.core.util.Sets;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,8 +12,9 @@ import pl.api.itoffers.offer.application.repository.CategoryRepository;
 import pl.api.itoffers.offer.application.repository.CompanyRepository;
 import pl.api.itoffers.offer.application.repository.OfferRepository;
 import pl.api.itoffers.offer.application.service.OfferService;
-import pl.api.itoffers.offer.domain.Company;
 import pl.api.itoffers.offer.domain.Offer;
+import pl.api.itoffers.offer.domain.Salary;
+import pl.api.itoffers.offer.domain.SalaryAmount;
 import pl.api.itoffers.provider.justjoinit.JustJoinItProvider;
 import pl.api.itoffers.provider.justjoinit.JustJoinItRepository;
 import pl.api.itoffers.provider.justjoinit.model.JustJoinItDateTime;
@@ -85,12 +85,22 @@ public class OfferServiceITest extends AbstractITest {
         assertThat(offer.getSlug()).isEqualTo("iteamly-senior-full-stack-developer-react-php--krakow-php");
         assertThat(offer.getCompany().getName()).isEqualTo("iTeamly");
         assertThat(offer.getPublishedAt()).isEqualTo(JustJoinItDateTime.createFrom("2024-08-25T07:00:56.216Z").value);
-
-        // todo check salaries
+        assertThat(offer.getSalaries().size()).isEqualTo(1);
+        assertFirstSalary(offer, 25000, 32000, "PLN", "b2b", true);
     }
 
     private void fetchOffersFromExternalService(UUID scrappingId, String returnedPayload) {
         jjitConnector.payloadPath = returnedPayload;
         jjitProvider.fetch(TECHNOLOGY, scrappingId);
+    }
+
+    /*TODO how to get first element from PersistentSet?*/
+    private static void assertFirstSalary(Offer offer, int from, int to, String currency, String type, boolean isOriginal) {
+        for (Salary salary : offer.getSalaries()) {
+            assertThat(salary.getIsOriginal()).isEqualTo(isOriginal);
+            assertThat(salary.getEmploymentType()).isEqualTo(type);
+            assertThat(salary.getAmount()).isEqualTo(new SalaryAmount(from,to,currency));
+            break;
+        }
     }
 }

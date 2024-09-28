@@ -54,7 +54,7 @@ public class OfferService {
             companyRepository.save(company);
             categoryRepository.saveAll(categories.get("toSave"));
             offerRepository.save(offer);
-            //salaryRepository.saveAll(salariesFactory.create(offer, rawOffer));
+            salaryRepository.saveAll(salariesFactory.create(offer, rawOffer));
             log.info(String.format("[just-join-it][migration] new offer %s", offer));
         }
     }

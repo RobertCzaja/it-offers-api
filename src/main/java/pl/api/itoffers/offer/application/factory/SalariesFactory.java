@@ -14,7 +14,6 @@ public class SalariesFactory {
     /**
      * TODO finish implementation
      * TODO create more specific UnitTests for that class
-     * TODO at this stage Offer Entity needs to contain an ID
      * TODO testing data should contain on offer with default USD currency but recalculated to PLN
      */
     public Set<Salary> create(Offer offer, JustJoinItRawOffer rawOffer) {

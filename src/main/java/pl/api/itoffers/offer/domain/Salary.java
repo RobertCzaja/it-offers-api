@@ -2,6 +2,7 @@ package pl.api.itoffers.offer.domain;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 
@@ -14,12 +15,15 @@ public class Salary {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "offer_id")
     private final Offer offer;
     @Embedded
+    @Getter
     private final SalaryAmount amount;
+    @Getter
     private final String employmentType;
+    @Getter
     private final Boolean isOriginal;
 
 

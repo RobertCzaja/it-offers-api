@@ -35,11 +35,8 @@ public class Offer {
     @Getter
     @ManyToMany
     private final Set<Category> categories;
-    @OneToMany(
-        mappedBy = "offer",
-        cascade = CascadeType.ALL,
-        orphanRemoval = true
-    )
+    @OneToMany(mappedBy = "offer", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    @Getter
     private final Set<Salary> salaries;
     @Getter
     @ManyToOne

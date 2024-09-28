@@ -32,7 +32,7 @@ public class OfferFactory {
             createSalary(rawOffer),
             createCharacteristics(rawOffer),
             categories,
-            new HashSet<Salary>(), // todo Salaries are not saved yet, supposed to be a real collection?
+            null, // todo maybe that could be removed? // todo Salaries are not saved yet, supposed to be a real collection?
             company,
             JustJoinItDateTime.createFrom(
                 (String) rawOffer.getOffer().get("publishedAt")
