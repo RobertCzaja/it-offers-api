@@ -25,18 +25,19 @@ public class OfferFactory {
     ) {
 
         return new Offer(
-                rawOffer.getTechnology(),
-                (String) rawOffer.getOffer().get("slug"),
-                (String) rawOffer.getOffer().get("title"),
-                (String) rawOffer.getOffer().get("experienceLevel"),
-                createSalary(rawOffer),
-                createCharacteristics(rawOffer),
-                categories,
-                company,
-                JustJoinItDateTime.createFrom(
-                        (String) rawOffer.getOffer().get("publishedAt")
-                ).value,
-                LocalDateTime.now()
+            rawOffer.getTechnology(),
+            (String) rawOffer.getOffer().get("slug"),
+            (String) rawOffer.getOffer().get("title"),
+            (String) rawOffer.getOffer().get("experienceLevel"),
+            createSalary(rawOffer),
+            createCharacteristics(rawOffer),
+            categories,
+            new HashSet<Salary>(), // todo Salaries are not saved yet, supposed to be a real collection?
+            company,
+            JustJoinItDateTime.createFrom(
+                (String) rawOffer.getOffer().get("publishedAt")
+            ).value,
+            LocalDateTime.now()
         );
     }
 

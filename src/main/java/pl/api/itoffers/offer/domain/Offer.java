@@ -33,6 +33,10 @@ public class Offer {
     @ManyToMany
     private final Set<Category> categories;
     @Getter
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "offerId")
+    private final Set<Salary> salaries;
+    @Getter
     @ManyToOne
     private final Company company;
     @Getter
