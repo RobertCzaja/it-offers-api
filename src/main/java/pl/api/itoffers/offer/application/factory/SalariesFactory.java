@@ -3,7 +3,6 @@ package pl.api.itoffers.offer.application.factory;
 import org.springframework.stereotype.Service;
 import pl.api.itoffers.offer.domain.Offer;
 import pl.api.itoffers.offer.domain.Salary;
-import pl.api.itoffers.offer.domain.SalaryAmount;
 import pl.api.itoffers.provider.justjoinit.model.JustJoinItRawOffer;
 
 import java.util.*;
@@ -23,7 +22,7 @@ public class SalariesFactory {
         List<LinkedHashMap> employmentTypes = (List<LinkedHashMap>) rawOffer.getOffer().get("employmentTypes");
 
         if (null == employmentTypes) {
-            return new HashSet<Salary>();
+            throw new RuntimeException("employmentTypes key does not exist");
         }
 
         employmentTypes.forEach(employmentType -> salaries.addAll(createSalaries(offer.getId(), employmentType)));
