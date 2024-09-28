@@ -15,10 +15,10 @@ public class SalariesFactory {
     /**
      * TODO finish implementation
      * TODO create more specific UnitTests for that class
+     * TODO at this stage Offer Entity needs to contain an ID
+     * TODO testing data should contain on offer with default USD currency but recalculated to PLN
      */
     public Set<Salary> create(Offer offer, JustJoinItRawOffer rawOffer) {
-        // TODO at this stage Offer Entity needs to contain an ID
-
         Set<Salary> salaries = new HashSet<Salary>();
         List<LinkedHashMap> employmentTypes = (List<LinkedHashMap>) rawOffer.getOffer().get("employmentTypes");
 
@@ -28,7 +28,7 @@ public class SalariesFactory {
 
         employmentTypes.forEach(employmentType -> salaries.addAll(createSalaries(offer.getId(), employmentType)));
 
-        return new HashSet<Salary>();
+        return salaries;
     }
 
     public Set<Salary> createSalaries(UUID offerId, LinkedHashMap employmentType) {
@@ -36,34 +36,20 @@ public class SalariesFactory {
         Integer to = (Integer) employmentType.get("to");
         Integer from = (Integer) employmentType.get("from");
         String currency = (String) employmentType.get("currency");
-        Boolean isPln = currency.equalsIgnoreCase("pln");
+        boolean isPln = currency.equalsIgnoreCase("pln");
 
         if (null == to || null == from) {
             return salaries;
         }
 
-        salaries.add(
-            new Salary(
-                offerId,
-                new SalaryAmount(from, to, currency.toUpperCase()),
-                (String) employmentType.get("type"),
-                true
-            )
-        );
+        salaries.add(Salary.original(offerId, from, to, currency, (String) employmentType.get("type")));
 
         if (!isPln) {
             Double plnTo = (Double) employmentType.get("to_pln");
             Double plnFrom = (Double) employmentType.get("from_pln");
 
             if (null != plnTo && null != plnFrom) {
-                salaries.add(
-                    new Salary(
-                        offerId,
-                        new SalaryAmount(plnFrom.intValue(), plnTo.intValue(), "PLN"),
-                        (String) employmentType.get("type"),
-                        false
-                    )
-                );
+                salaries.add(Salary.convertedToPLN(offerId, plnFrom.intValue(), plnTo.intValue(), (String) employmentType.get("type")));
             }
         }
 

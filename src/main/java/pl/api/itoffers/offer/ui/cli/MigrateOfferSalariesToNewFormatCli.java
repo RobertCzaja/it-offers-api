@@ -123,7 +123,7 @@ public class MigrateOfferSalariesToNewFormatCli {
                 continue;
             }
 
-            for (LinkedHashMap employmentType : employmentTypes) {
+            for (LinkedHashMap employmentType : employmentTypes) {/*TODO it's duplicated in SalariesFactory*/
                 Integer to = (Integer) employmentType.get("to");
                 Integer from = (Integer) employmentType.get("from");
                 String currency = (String) employmentType.get("currency");
