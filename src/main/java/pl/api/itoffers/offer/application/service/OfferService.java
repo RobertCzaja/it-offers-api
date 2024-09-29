@@ -37,8 +37,8 @@ public class OfferService {
 
         for (JustJoinItRawOffer rawOffer : rawOffers) {
 
-            Map<String, Set<Category>> categories = offerFactory.createCategories(rawOffer); // todo save cascade
-            Company company = offerFactory.createCompany(rawOffer); // todo save cascade
+            Map<String, Set<Category>> categories = offerFactory.createCategories(rawOffer);
+            Company company = offerFactory.createCompany(rawOffer);
             Offer offer = offerFactory.createOffer(
                 rawOffer,
                 categories.get("forEntity"),
@@ -52,7 +52,6 @@ public class OfferService {
                 continue;
             }
 
-            // todo add transaction for all that saving
             companyRepository.save(company);
             categoryRepository.saveAll(categories.get("toSave"));
             offerRepository.save(offer);
