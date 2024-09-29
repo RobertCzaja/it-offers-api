@@ -1,7 +1,6 @@
 package pl.api.itoffers.offer.application.factory;
 
 import org.springframework.stereotype.Service;
-import pl.api.itoffers.offer.domain.Offer;
 import pl.api.itoffers.offer.domain.Salary;
 import pl.api.itoffers.provider.justjoinit.model.JustJoinItRawOffer;
 
