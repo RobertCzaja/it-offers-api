@@ -12,7 +12,6 @@ public class SalariesFactory {
 
     /**
      * TODO finish implementation
-     * TODO testing data should contain on offer with default USD currency but recalculated to PLN
      */
     public Set<Salary> create(JustJoinItRawOffer rawOffer) {
         Set<Salary> salaries = new HashSet<Salary>();
@@ -44,8 +43,8 @@ public class SalariesFactory {
         salaries.add(Salary.original(from, to, currency, (String) employmentType.get("type")));
 
         if (!isPln) {
-            Double plnTo = (Double) employmentType.get("to_pln");
-            Double plnFrom = (Double) employmentType.get("from_pln");
+            Double plnTo = toDouble(employmentType.get("to_pln"));
+            Double plnFrom = toDouble(employmentType.get("from_pln"));
 
             if (null != plnTo && null != plnFrom) {
                 salaries.add(Salary.convertedToPLN(plnFrom.intValue(), plnTo.intValue(), (String) employmentType.get("type")));
@@ -53,5 +52,9 @@ public class SalariesFactory {
         }
 
         return salaries;
+    }
+
+    private static Double toDouble(Object amount) {
+        return (amount instanceof String) ? Double.parseDouble((String) amount) : (Double) amount;
     }
 }
