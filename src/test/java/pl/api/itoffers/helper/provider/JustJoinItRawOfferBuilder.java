@@ -6,24 +6,45 @@ import java.time.LocalDateTime;
 import java.util.*;
 
 public class JustJoinItRawOfferBuilder {
-    public static JustJoinItRawOffer build() {
-        Map<String, Object> data = new LinkedHashMap<String, Object>();
-        List<LinkedHashMap> employmentTypes1 = new ArrayList<LinkedHashMap>();
-        LinkedHashMap<String, Object> employmentType1a = new LinkedHashMap<String, Object>();
-        employmentType1a.put("to", 32000);
-        employmentType1a.put("from", 25000);
-        employmentType1a.put("type", "b2b");
-        employmentType1a.put("currency", "pln");
-        employmentType1a.put("to_pln", "32000");
-        employmentType1a.put("from_pln", "25000");
-        employmentTypes1.add(employmentType1a);
-        data.put("employmentTypes", employmentTypes1);
 
-        return new JustJoinItRawOffer(
+    private Map<String, Object> data = new LinkedHashMap<String, Object>();
+
+    private void cleanState() {
+        data = new LinkedHashMap<String, Object>();
+    }
+
+    public JustJoinItRawOfferBuilder salary(
+        String type,
+        String currency,
+        Integer from,
+        Integer to,
+        String fromPln,
+        String toPln
+    ) {
+        ArrayList<LinkedHashMap> employmentTypes = (ArrayList<LinkedHashMap>) data.get("employmentTypes");
+        if (null == employmentTypes) {
+            employmentTypes = new ArrayList<LinkedHashMap>();
+            data.put("employmentTypes", employmentTypes);
+        }
+        LinkedHashMap<String, Object> employmentType = new LinkedHashMap<String, Object>();
+        employmentType.put("to", to);
+        employmentType.put("from", from);
+        employmentType.put("type", type);
+        employmentType.put("currency", currency);
+        employmentType.put("to_pln", toPln);
+        employmentType.put("from_pln", fromPln);
+        employmentTypes.add(employmentType);
+        return this;
+    }
+
+    public JustJoinItRawOffer build() {
+        JustJoinItRawOffer rawOffer = new JustJoinItRawOffer(
             UUID.randomUUID(),
             "technologyThatDoesNotMatter",
             data,
             LocalDateTime.now()
         );
+        cleanState();
+        return rawOffer;
     }
 }
