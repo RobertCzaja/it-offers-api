@@ -16,7 +16,7 @@ public class SalariesFactory {
      * TODO create more specific UnitTests for that class
      * TODO testing data should contain on offer with default USD currency but recalculated to PLN
      */
-    public Set<Salary> create(Offer offer, JustJoinItRawOffer rawOffer) {
+    public Set<Salary> create(JustJoinItRawOffer rawOffer) {
         Set<Salary> salaries = new HashSet<Salary>();
         List<LinkedHashMap> employmentTypes = (List<LinkedHashMap>) rawOffer.getOffer().get("employmentTypes");
 
@@ -24,12 +24,15 @@ public class SalariesFactory {
             throw new RuntimeException("employmentTypes key does not exist");
         }
 
-        employmentTypes.forEach(employmentType -> salaries.addAll(createSalaries(offer, employmentType)));
+        employmentTypes.forEach(employmentType -> salaries.addAll(createSalaries(employmentType)));
 
         return salaries;
     }
 
-    public Set<Salary> createSalaries(Offer offer, LinkedHashMap employmentType) {
+    /**
+     * TODO some of that logic could be encapsulated in Offer Entity
+     */
+    public Set<Salary> createSalaries(LinkedHashMap employmentType) {
         Set<Salary> salaries = new HashSet<Salary>();
         Integer to = (Integer) employmentType.get("to");
         Integer from = (Integer) employmentType.get("from");
@@ -40,14 +43,14 @@ public class SalariesFactory {
             return salaries;
         }
 
-        salaries.add(Salary.original(offer, from, to, currency, (String) employmentType.get("type")));
+        salaries.add(Salary.original(from, to, currency, (String) employmentType.get("type")));
 
         if (!isPln) {
             Double plnTo = (Double) employmentType.get("to_pln");
             Double plnFrom = (Double) employmentType.get("from_pln");
 
             if (null != plnTo && null != plnFrom) {
-                salaries.add(Salary.convertedToPLN(offer, plnFrom.intValue(), plnTo.intValue(), (String) employmentType.get("type")));
+                salaries.add(Salary.convertedToPLN(plnFrom.intValue(), plnTo.intValue(), (String) employmentType.get("type")));
             }
         }
 

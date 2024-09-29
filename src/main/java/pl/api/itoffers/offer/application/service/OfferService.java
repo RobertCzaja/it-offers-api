@@ -8,7 +8,6 @@ import pl.api.itoffers.offer.application.factory.SalariesFactory;
 import pl.api.itoffers.offer.application.repository.CategoryRepository;
 import pl.api.itoffers.offer.application.repository.CompanyRepository;
 import pl.api.itoffers.offer.application.repository.OfferRepository;
-import pl.api.itoffers.offer.application.repository.SalaryRepository;
 import pl.api.itoffers.offer.domain.*;
 import pl.api.itoffers.provider.justjoinit.JustJoinItRepository;
 import pl.api.itoffers.provider.justjoinit.model.JustJoinItRawOffer;
@@ -31,8 +30,6 @@ public class OfferService {
     private OfferFactory offerFactory;
     @Autowired
     private SalariesFactory salariesFactory;
-    @Autowired
-    private SalaryRepository salaryRepository;
 
     public void processOffersFromExternalService(UUID scrappingId)
     {
@@ -40,9 +37,14 @@ public class OfferService {
 
         for (JustJoinItRawOffer rawOffer : rawOffers) {
 
-            Map<String, Set<Category>> categories = offerFactory.createCategories(rawOffer);
-            Company company = offerFactory.createCompany(rawOffer);
-            Offer offer = offerFactory.createOffer(rawOffer, categories.get("forEntity"), company);
+            Map<String, Set<Category>> categories = offerFactory.createCategories(rawOffer); // todo save cascade
+            Company company = offerFactory.createCompany(rawOffer); // todo save cascade
+            Offer offer = offerFactory.createOffer(
+                rawOffer,
+                categories.get("forEntity"),
+                salariesFactory.create(rawOffer),
+                company
+            );
 
             Offer alreadyStoredOffer = findAlreadyStoredOffer(offer);
 
@@ -54,7 +56,6 @@ public class OfferService {
             companyRepository.save(company);
             categoryRepository.saveAll(categories.get("toSave"));
             offerRepository.save(offer);
-            salaryRepository.saveAll(salariesFactory.create(offer, rawOffer));
             log.info(String.format("[just-join-it][migration] new offer %s", offer));
         }
     }

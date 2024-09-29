@@ -21,6 +21,7 @@ public class OfferFactory {
     public Offer createOffer(
             JustJoinItRawOffer rawOffer,
             Set<Category> categories,
+            Set<Salary> salaries,
             Company company
     ) {
 
@@ -32,7 +33,7 @@ public class OfferFactory {
             createSalary(rawOffer),
             createCharacteristics(rawOffer),
             categories,
-            null, // todo maybe that could be removed? // todo Salaries are not saved yet, supposed to be a real collection?
+            salaries,
             company,
             JustJoinItDateTime.createFrom(
                 (String) rawOffer.getOffer().get("publishedAt")

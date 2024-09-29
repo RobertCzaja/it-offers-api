@@ -35,9 +35,8 @@ public class Offer {
     @Getter
     @ManyToMany
     private final Set<Category> categories;
-    @OneToMany(mappedBy = "offer", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
-    @Getter
-    private final Set<Salary> salaries;
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
+    private final Set<Salary> salary;
     @Getter
     @ManyToOne
     private final Company company;
@@ -45,6 +44,10 @@ public class Offer {
     private final LocalDateTime publishedAt;
     @Getter
     private final LocalDateTime createdAt;
+
+    public Set<Salary> getSalaries() {
+        return salary;
+    }
 
     @Override
     public String toString() {
