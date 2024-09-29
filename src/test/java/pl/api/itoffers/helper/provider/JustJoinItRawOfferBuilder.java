@@ -18,8 +18,8 @@ public class JustJoinItRawOfferBuilder {
         String currency,
         Integer from,
         Integer to,
-        String fromPln,
-        String toPln
+        Double fromPln,
+        Double toPln
     ) {
         ArrayList<LinkedHashMap> employmentTypes = (ArrayList<LinkedHashMap>) data.get("employmentTypes");
         if (null == employmentTypes) {
