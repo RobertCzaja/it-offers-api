@@ -13,6 +13,11 @@ public class JustJoinItRawOfferBuilder {
         data = new LinkedHashMap<String, Object>();
     }
 
+    public JustJoinItRawOfferBuilder emptySalary(String type, String currency) {
+        salary(type, currency, null, null, null, null);
+        return this;
+    }
+
     public JustJoinItRawOfferBuilder salary(
         String type,
         String currency,
