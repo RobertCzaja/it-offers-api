@@ -8,7 +8,6 @@ import pl.api.itoffers.offer.application.factory.SalariesFactory;
 import pl.api.itoffers.offer.domain.Salary;
 import pl.api.itoffers.provider.justjoinit.model.JustJoinItRawOffer;
 
-import java.util.Iterator;
 import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -45,8 +44,8 @@ public class SalariesFactoryTest {
         Set<Salary> salaries = salariesFactory.create(rawJJITOffer);
 
         assertThat(salaries).hasSize(2);
-        OfferSalaryAssert.isEquals(salaries, 0, "b2b", "EUR", 4500, 7000, true);
-        OfferSalaryAssert.isEquals(salaries, 1, "b2b", "PLN", 19256, 29955, false);
+        OfferSalaryAssert.collectionContains(salaries, "b2b", "EUR", 4500, 7000, true);
+        OfferSalaryAssert.collectionContains(salaries, "b2b", "PLN", 19256, 29955, false);
     }
 
     /*todo when from & to will be null*/

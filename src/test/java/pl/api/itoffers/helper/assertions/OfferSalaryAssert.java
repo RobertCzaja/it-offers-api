@@ -25,9 +25,8 @@ public class OfferSalaryAssert {
         assertThat(salary.getIsOriginal()).isEqualTo(isOriginal);
     }
 
-    public static void isEquals(
+    public static void collectionContains(
         Set<Salary> salaries,
-        int salaryIndex,
         String type,
         String currency,
         Integer from,
@@ -35,9 +34,20 @@ public class OfferSalaryAssert {
         boolean isOriginal
     ) {
         Object[] salariesArray = salaries.toArray();
-        Salary salary = (Salary) salariesArray[salaryIndex];
-        assertThat(salary.getEmploymentType()).isEqualTo(type);
-        assertThat(salary.getAmount()).isEqualTo(new SalaryAmount(from,  to, currency));
-        assertThat(salary.getIsOriginal()).isEqualTo(isOriginal);
+        for (Object salaryObject : salariesArray) {
+            Salary salary = (Salary) salaryObject;
+
+            if (
+                salary.getIsOriginal().equals(isOriginal) &&
+                salary.getEmploymentType().equals(type) &&
+                salary.getAmount().getCurrency().equals(currency) &&
+                salary.getAmount().getFrom().equals(from) &&
+                salary.getAmount().getTo().equals(to)
+            ) {
+                return;
+            }
+
+        }
+        throw new RuntimeException("Expected Salary does not appear in the given Salaries");
     }
 }
