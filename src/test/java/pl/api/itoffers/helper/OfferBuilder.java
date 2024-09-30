@@ -40,6 +40,7 @@ public class OfferBuilder {
 
     private void clearState() {
         categories = new HashSet<Category>();
+        salaries = new HashSet<Salary>();
         technology = null;
         company = new Company("creativestyle", "Kraków", "Zabłocie 25/1");
         createdAt = LocalDateTime.now();
@@ -63,6 +64,21 @@ public class OfferBuilder {
     /** @param monthAndDay in format MM-dd  */
     public OfferBuilder at(String monthAndDay) {
         createdAt = JustJoinItDateTime.createFromDate("2024-"+monthAndDay).value;
+        return this;
+    }
+
+    public OfferBuilder pln(int from, int to, String employmentType) {
+        salaries.add(new Salary(new SalaryAmount(from, to, "PLN"), employmentType, false));
+        return this;
+    }
+
+    public OfferBuilder pln(int from, int to) {
+        pln(from, to, "b2b");
+        return this;
+    }
+
+    public OfferBuilder usd(int from, int to) {
+        salaries.add(new Salary(new SalaryAmount(from, to, "USD"), "b2b", false));
         return this;
     }
 
@@ -125,6 +141,7 @@ public class OfferBuilder {
         );
     }
 
+    /** TODO: duplicated, should be merged into one */
     public Offer build() {
         checkIfStateIsNotEmpty();
         Offer offer = createOffer(
@@ -138,6 +155,7 @@ public class OfferBuilder {
         return offer;
     }
 
+    /** TODO: duplicated, should be merged into one */
     public void save() {
         checkIfStateIsNotEmpty();
         offerRepository.save(
@@ -152,6 +170,7 @@ public class OfferBuilder {
         clearState();
     }
 
+    /** TODO: duplicated, should be merged into one */
     public Offer saveAndGetOffer() {
         checkIfStateIsNotEmpty();
 
