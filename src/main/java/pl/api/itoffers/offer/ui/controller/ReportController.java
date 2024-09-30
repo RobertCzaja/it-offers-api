@@ -17,6 +17,7 @@ import java.util.*;
 @RestController
 public class ReportController {
     public final static String PATH_CATEGORY = "/report/categories";
+    public final static String PATH_SALARIES = "/report/salaries";
 
     @Autowired
     private ReportCategoriesService reportService;
@@ -32,6 +33,15 @@ public class ReportController {
 
         return new ResponseEntity<CategoriesStatisticsDto>(
             reportService.computeCategoriesStatistics(filter.getFrom(), filter.getTo(), filter.getTechnologies()),
+            HttpStatus.OK
+        );
+    }
+
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @GetMapping(PATH_SALARIES)
+    public ResponseEntity<String>/*todo update returned object type*/ salariesReport() {
+        return new ResponseEntity<String>(/*todo add object type*/
+            "Mocked Return",
             HttpStatus.OK
         );
     }
