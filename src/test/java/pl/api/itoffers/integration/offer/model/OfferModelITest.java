@@ -49,7 +49,7 @@ public class OfferModelITest extends AbstractITest {
                 new DeprecatedSalary(Double.valueOf(14000),Double.valueOf(18000), "PLN", "b2b"),
                 new Characteristics("hybrid","full_time", true),
                 categories,
-                null, // TODO fill some salaries for the testing purpose
+                null,
                 company,
                 publishedAt,
                 JustJoinItDateTime.createFrom().value
@@ -59,6 +59,7 @@ public class OfferModelITest extends AbstractITest {
 
         Optional<Offer> fetchedOffer = offerRepository.findById(offer.getId());
         assertThat(fetchedOffer.get().getCreatedAt()).isEqualTo(JustJoinItDateTime.createFrom().value);
+        assertThat(fetchedOffer.get().getSalaries()).isEmpty();
     }
 
     private Set<Category> saveAndGetCategories() {
