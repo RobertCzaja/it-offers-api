@@ -13,6 +13,7 @@ public class OfferBuilder {
 
     private String technology;
     private Set<Category> categories = new HashSet<Category>();
+    private Set<Salary> salaries = new HashSet<Salary>();
     /**
      * If it's set to true it will generate for each Category entity random UUID. It's important to set it to false
      * in integration testing because Category entity with already set UUID cannot be saved in DB.
@@ -106,6 +107,7 @@ public class OfferBuilder {
         String technology,
         Company company,
         Set<Category> categories,
+        Set<Salary> salaries,
         LocalDateTime createdAt
     ) {
         return new Offer(
@@ -116,7 +118,7 @@ public class OfferBuilder {
             new DeprecatedSalary(Double.valueOf(14000),Double.valueOf(18000), "PLN", "b2b"),
             new Characteristics("hybrid","full_time", true),
             categories,
-            null, // todo fill some Salaries for the testing purpose
+            salaries,
             company,
             JustJoinItDateTime.createFrom().value,
             createdAt
@@ -129,6 +131,7 @@ public class OfferBuilder {
             technology,
             company,
             categories,
+            salaries,
             createdAt
         );
         clearState();
@@ -142,6 +145,7 @@ public class OfferBuilder {
                 technology,
                 saveCompany(),
                 saveCategories(),
+                salaries,
                 createdAt
             )
         );
@@ -155,6 +159,7 @@ public class OfferBuilder {
             technology,
             saveCompany(),
             saveCategories(),
+            salaries,
             createdAt
         );
 
