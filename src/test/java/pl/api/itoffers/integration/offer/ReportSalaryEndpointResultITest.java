@@ -22,7 +22,7 @@ public class ReportSalaryEndpointResultITest extends AbstractITest {
     }
 
     @Test
-    public void should_____________________() {
+    public void shouldReturnMostTopPaidJobs() {
         // todo add implementation
     }
 }

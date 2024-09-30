@@ -37,6 +37,14 @@ public class ReportController {
         );
     }
 
+    /**
+     * TODO
+     *  add technologies filter
+     *  add dates filter
+     *  add salaries filter
+     *  add employmentType filter
+     *  add option that consider "from"/"to" ("to" is default) as a value that orders that TOP salaries
+     */
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping(PATH_SALARIES)
     public ResponseEntity<String>/*todo update returned object type*/ salariesReport() {

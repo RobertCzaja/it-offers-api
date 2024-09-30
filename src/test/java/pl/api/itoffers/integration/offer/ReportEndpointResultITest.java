@@ -14,8 +14,6 @@ import pl.api.itoffers.offer.application.dto.outgoing.CategoriesStatisticsDto;
 
 import java.util.List;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 public class ReportEndpointResultITest extends AbstractITest {
     @Autowired
     private OfferTestManager offerTestManager;
