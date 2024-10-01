@@ -23,6 +23,13 @@ public class ReportSalaryEndpointResultITest extends AbstractITest {
 
     @Test
     public void shouldReturnMostTopPaidJobs() {
+        this.builder.job("php").skills("php").pln(15000, 18000).save();
+        this.builder.job("php").skills("php").pln(17000, 21000).save();
+        this.builder.job("php").skills("php").pln(18000, 23000).save();
+        this.builder.job("java").skills("java").pln(17000, 19000).save();
+        this.builder.job("java").skills("java").pln(18000, 24000).save();
+        this.builder.job("java").skills("java").pln(21500, 26000).save();
+
         // todo add implementation
     }
 }
