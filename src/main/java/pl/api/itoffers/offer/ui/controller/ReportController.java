@@ -10,7 +10,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import pl.api.itoffers.offer.application.dto.outgoing.CategoriesStatisticsDto;
 import pl.api.itoffers.offer.application.dto.incoming.CategoriesFilter;
+import pl.api.itoffers.offer.application.dto.outgoing.OffersDto;
 import pl.api.itoffers.offer.application.service.ReportCategoriesService;
+import pl.api.itoffers.offer.application.service.ReportSalariesService;
 
 import java.util.*;
 
@@ -20,7 +22,9 @@ public class ReportController {
     public final static String PATH_SALARIES = "/report/salaries";
 
     @Autowired
-    private ReportCategoriesService reportService;
+    private ReportCategoriesService reportCategoriesService;
+    @Autowired
+    private ReportSalariesService reportSalariesService;
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping(PATH_CATEGORY)
@@ -32,7 +36,7 @@ public class ReportController {
         CategoriesFilter filter = new CategoriesFilter(technologies, dateFrom, dateTo);
 
         return new ResponseEntity<CategoriesStatisticsDto>(
-            reportService.computeCategoriesStatistics(filter.getFrom(), filter.getTo(), filter.getTechnologies()),
+            reportCategoriesService.computeCategoriesStatistics(filter.getFrom(), filter.getTo(), filter.getTechnologies()),
             HttpStatus.OK
         );
     }
@@ -47,9 +51,9 @@ public class ReportController {
      */
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping(PATH_SALARIES)
-    public ResponseEntity<String>/*todo update returned object type*/ salariesReport() {
-        return new ResponseEntity<String>(/*todo add object type*/
-            "Mocked Return",
+    public ResponseEntity<OffersDto> salariesReport() {
+        return new ResponseEntity<OffersDto>(
+            new OffersDto(reportSalariesService.getMostPaidOffers()),
             HttpStatus.OK
         );
     }
