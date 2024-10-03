@@ -108,6 +108,12 @@ public class OfferBuilder {
         return this;
     }
 
+    public OfferBuilder plainJob(String positionMainTechnology) {
+        technology = positionMainTechnology;
+        skills(positionMainTechnology);
+        return this;
+    }
+
     public OfferBuilder job(String positionMainTechnology) {
         technology = positionMainTechnology;
         return this;

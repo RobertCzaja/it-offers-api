@@ -40,16 +40,14 @@ public class ReportSalaryEndpointResultITest extends AbstractITest {
 
     @Test
     public void shouldReturnMostTopPaidJobs() {
-        // todo think about create more generic Builder method to create Offer that will take as a parameter only Salary
-        // todo add some "usd" offers, that I can be sure is not in the final result
         // todo add single offer with two salaries: one that meats the requirements and the second which doesn't
-        this.builder.job("php").skills("php").pln(15000, 18000).save();
-        this.builder.job("php").skills("php").pln(17000, 21000).save();
-        this.builder.job("php").skills("php").pln(18000, 23000).save();
-        this.builder.job("java").skills("java").pln(17000, 19000).save();
-        this.builder.job("java").skills("java").pln(18000, 24000).save();
-        this.builder.job("java").skills("java").pln(21500, 26000).save();
-        this.builder.job("java").skills("java").usd(22000, 23000).save();
+        this.builder.plainJob("php").pln(15000, 18000).save();
+        this.builder.plainJob("php").pln(17000, 21000).save();
+        this.builder.plainJob("php").pln(18000, 23000).save();
+        this.builder.plainJob("java").pln(17000, 19000).save();
+        this.builder.plainJob("java").pln(18000, 24000).save();
+        this.builder.plainJob("java").pln(21500, 26000).save();
+        this.builder.plainJob("java").usd(22000, 23000).save();
 
         HttpEntity<OffersDto> result = template.exchange(
             ReportController.PATH_SALARIES,
@@ -58,7 +56,8 @@ public class ReportSalaryEndpointResultITest extends AbstractITest {
             OffersDto.class
         );
 
-        // todo add assertions
+        // todo add more detailed assertions
+        // todo results must be ordered - the most paid jobs at the first positions
         assertThat(result.getBody().getList()).hasSize(4);
     }
 }
