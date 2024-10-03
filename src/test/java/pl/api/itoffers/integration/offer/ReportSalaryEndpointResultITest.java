@@ -49,6 +49,7 @@ public class ReportSalaryEndpointResultITest extends AbstractITest {
         this.builder.job("java").skills("java").pln(17000, 19000).save();
         this.builder.job("java").skills("java").pln(18000, 24000).save();
         this.builder.job("java").skills("java").pln(21500, 26000).save();
+        this.builder.job("java").skills("java").usd(22000, 23000).save();
 
         HttpEntity<OffersDto> result = template.exchange(
             ReportController.PATH_SALARIES,

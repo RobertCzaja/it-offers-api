@@ -15,9 +15,9 @@ public class ReportSalariesService {
 
     /**
      * todo WIP
-     * todo "to" parameter add all of the rest supposed to be passed as method arguments
+     * todo "to"/"currency" parameters supposed to be passed as method arguments
      */
     public List<OfferDto> getMostPaidOffers() {
-        return offerReadRepository.getBySalary(20000);
+        return offerReadRepository.getBySalary(20000, "PLN");
     }
 }
