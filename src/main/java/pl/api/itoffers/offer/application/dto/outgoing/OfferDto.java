@@ -18,17 +18,19 @@ public class OfferDto {
     String title;
     String link;
 
-    public static List<OfferDto> createFrom(Offer offer) {
+    public static List<OfferDto> createFrom(Offer offer, String currency, String employmentType) {
         List<OfferDto> list = new ArrayList<OfferDto>();
         for (Salary salary : offer.getSalaries()) {
-            list.add(new OfferDto(
-                salary.getAmount().getFrom(),
-                salary.getAmount().getTo(),
-                salary.getAmount().getCurrency(),
-                offer.getTechnology(),
-                offer.getTitle(),
-                offer.getSlug()
-            ));
+            if (salary.getAmount().getCurrency().equalsIgnoreCase(currency) && salary.getEmploymentType().equalsIgnoreCase(employmentType)) {
+                list.add(new OfferDto(
+                    salary.getAmount().getFrom(),
+                    salary.getAmount().getTo(),
+                    salary.getAmount().getCurrency(),
+                    offer.getTechnology(),
+                    offer.getTitle(),
+                    offer.getSlug()
+                ));
+            }
         }
         return list;
     }

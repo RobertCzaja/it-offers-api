@@ -22,7 +22,7 @@ public class OfferHibernateReadRepository implements OfferReadRepository {
 
     private final EntityManager em;
 
-    public List<OfferDto> getBySalary(int amountTo, String currency) {
+    public List<OfferDto> getBySalary(int amountTo, String currency, String employmentType) {
         CriteriaBuilder builder = em.getCriteriaBuilder();
         CriteriaQuery<Offer> query = builder.createQuery(Offer.class);
         Root<Offer> root = query.from(Offer.class);
@@ -31,6 +31,7 @@ public class OfferHibernateReadRepository implements OfferReadRepository {
         query.where(
             builder.and(
                 builder.greaterThanOrEqualTo(salary.get("amount").get("to"), amountTo),
+                builder.equal(salary.get("employmentType"), employmentType),
                 builder.equal(salary.get("amount").get("currency"), currency)
             )
         );
@@ -39,7 +40,7 @@ public class OfferHibernateReadRepository implements OfferReadRepository {
         List<Offer> offers = typedQuery.getResultList();
 
         List<OfferDto> dtos = new ArrayList<OfferDto>();
-        offers.forEach(offer -> dtos.addAll(OfferDto.createFrom(offer)));
+        offers.forEach(offer -> dtos.addAll(OfferDto.createFrom(offer, currency, employmentType)));
         return dtos;
     }
 }

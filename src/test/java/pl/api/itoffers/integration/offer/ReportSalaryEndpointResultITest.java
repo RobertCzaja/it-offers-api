@@ -43,10 +43,10 @@ public class ReportSalaryEndpointResultITest extends AbstractITest {
         // todo add single offer with two salaries: one that meats the requirements and the second which doesn't
         this.builder.plainJob("php").pln(15000, 18000).save();
         this.builder.plainJob("php").pln(17000, 21000).save();
-        this.builder.plainJob("php").pln(18000, 23000).save();
+        this.builder.plainJob("php").pln(18000, 23000, "b2b").pln(15000, 19900, "permanent").save();
         this.builder.plainJob("java").pln(17000, 19000).save();
         this.builder.plainJob("java").pln(18000, 24000).save();
-        this.builder.plainJob("java").pln(21500, 26000).save();
+        this.builder.plainJob("java").pln(21500, 26000).usd(14000, 20100).save();
         this.builder.plainJob("java").usd(22000, 23000).save();
 
         HttpEntity<OffersDto> result = template.exchange(
