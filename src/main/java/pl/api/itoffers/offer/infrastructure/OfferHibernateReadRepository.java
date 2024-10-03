@@ -8,12 +8,14 @@ import jakarta.persistence.criteria.Join;
 import jakarta.persistence.criteria.Root;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
+import pl.api.itoffers.offer.application.dto.outgoing.CategoryDto;
 import pl.api.itoffers.offer.application.dto.outgoing.OfferDto;
 import pl.api.itoffers.offer.application.repository.OfferReadRepository;
 import pl.api.itoffers.offer.domain.Offer;
 import pl.api.itoffers.offer.domain.Salary;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 @Repository
@@ -41,6 +43,16 @@ public class OfferHibernateReadRepository implements OfferReadRepository {
 
         List<OfferDto> dtos = new ArrayList<OfferDto>();
         offers.forEach(offer -> dtos.addAll(OfferDto.createFrom(offer, currency, employmentType)));
+        sortDesc(dtos);
         return dtos;
+    }
+
+    private static void sortDesc(List<OfferDto> offers) {
+        offers.sort(new Comparator<OfferDto>() {
+            @Override
+            public int compare(OfferDto dto1, OfferDto dto2) {
+                return dto2.getAmountTo().compareTo(dto1.getAmountTo());
+            }
+        });
     }
 }

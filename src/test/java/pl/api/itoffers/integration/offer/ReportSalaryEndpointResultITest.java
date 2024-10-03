@@ -1,5 +1,6 @@
 package pl.api.itoffers.integration.offer;
 
+import com.google.gson.Gson;
 import org.junit.jupiter.api.BeforeEach;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.web.client.TestRestTemplate;
@@ -11,12 +12,9 @@ import pl.api.itoffers.helper.ApiAuthorizationHelper;
 import pl.api.itoffers.helper.AuthorizationCredentials;
 import pl.api.itoffers.helper.OfferBuilder;
 import pl.api.itoffers.integration.offer.helper.OfferTestManager;
-import pl.api.itoffers.offer.application.dto.outgoing.CategoriesStatisticsDto;
-import pl.api.itoffers.offer.application.dto.outgoing.OfferDto;
 import pl.api.itoffers.offer.application.dto.outgoing.OffersDto;
 import pl.api.itoffers.offer.ui.controller.ReportController;
 
-import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -40,7 +38,6 @@ public class ReportSalaryEndpointResultITest extends AbstractITest {
 
     @Test
     public void shouldReturnMostTopPaidJobs() {
-        // todo add single offer with two salaries: one that meats the requirements and the second which doesn't
         this.builder.plainJob("php").pln(15000, 18000).save();
         this.builder.plainJob("php").pln(17000, 21000).save();
         this.builder.plainJob("php").pln(18000, 23000, "b2b").pln(15000, 19900, "permanent").save();
@@ -56,8 +53,13 @@ public class ReportSalaryEndpointResultITest extends AbstractITest {
             OffersDto.class
         );
 
-        // todo add more detailed assertions
-        // todo results must be ordered - the most paid jobs at the first positions
         assertThat(result.getBody().getList()).hasSize(4);
+        String serializedBody = new Gson().toJson(result.getBody());
+        assertThat(serializedBody).isEqualTo("{\"list\":["+
+            "{\"amountFrom\":21500,\"amountTo\":26000,\"currency\":\"PLN\",\"technology\":\"java\",\"title\":\"Software Development Engineer\",\"link\":\"remitly-software-development-engineer-krakow-go-5fbdbda0\"},"+
+            "{\"amountFrom\":18000,\"amountTo\":24000,\"currency\":\"PLN\",\"technology\":\"java\",\"title\":\"Software Development Engineer\",\"link\":\"remitly-software-development-engineer-krakow-go-5fbdbda0\"},"+
+            "{\"amountFrom\":18000,\"amountTo\":23000,\"currency\":\"PLN\",\"technology\":\"php\",\"title\":\"Software Development Engineer\",\"link\":\"remitly-software-development-engineer-krakow-go-5fbdbda0\"},"+
+            "{\"amountFrom\":17000,\"amountTo\":21000,\"currency\":\"PLN\",\"technology\":\"php\",\"title\":\"Software Development Engineer\",\"link\":\"remitly-software-development-engineer-krakow-go-5fbdbda0\"}"+
+        "]}");
     }
 }
