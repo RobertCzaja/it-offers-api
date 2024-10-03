@@ -41,6 +41,8 @@ public class ReportSalaryEndpointResultITest extends AbstractITest {
     @Test
     public void shouldReturnMostTopPaidJobs() {
         // todo think about create more generic Builder method to create Offer that will take as a parameter only Salary
+        // todo add some "usd" offers, that I can be sure is not in the final result
+        // todo add single offer with two salaries: one that meats the requirements and the second which doesn't
         this.builder.job("php").skills("php").pln(15000, 18000).save();
         this.builder.job("php").skills("php").pln(17000, 21000).save();
         this.builder.job("php").skills("php").pln(18000, 23000).save();
@@ -56,6 +58,6 @@ public class ReportSalaryEndpointResultITest extends AbstractITest {
         );
 
         // todo add assertions
-        assertThat(result.getBody().getList()).hasSize(1);
+        assertThat(result.getBody().getList()).hasSize(4);
     }
 }

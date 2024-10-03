@@ -2,13 +2,11 @@ package pl.api.itoffers.offer.application.service;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
-import jakarta.persistence.criteria.CriteriaBuilder;
-import jakarta.persistence.criteria.CriteriaQuery;
-import jakarta.persistence.criteria.Predicate;
-import jakarta.persistence.criteria.Root;
+import jakarta.persistence.criteria.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import pl.api.itoffers.offer.application.dto.outgoing.OfferDto;
+import pl.api.itoffers.offer.domain.Offer;
 import pl.api.itoffers.offer.domain.Salary;
 
 import java.util.ArrayList;
@@ -22,20 +20,22 @@ public class ReportSalariesService {
 
     /**
      * todo WIP
+     * todo "to" parameter add all of the rest supposed to be passed as method arguments
      * todo Move Criteria to Repository
      */
     public List<OfferDto> getMostPaidOffers() {
+        CriteriaBuilder builder = em.getCriteriaBuilder();
+        CriteriaQuery<Offer> query = builder.createQuery(Offer.class);
+        Root<Offer> root = query.from(Offer.class);
+        Join<Offer, Salary> salary = root.join("salary");
+        query.select(root);
+        query.where(builder.greaterThanOrEqualTo(salary.get("amount").get("to"), 20000));
 
-        CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
-        CriteriaQuery<Salary> criteriaQuery = criteriaBuilder.createQuery(Salary.class);
-        Root<Salary> root = criteriaQuery.from(Salary.class);
-        criteriaQuery.select(root);
+        TypedQuery<Offer> typedQuery = em.createQuery(query);
+        List<Offer> offers = typedQuery.getResultList();
 
-        TypedQuery<Salary> query = em.createQuery(criteriaQuery);
-        query.getResultList();
-
-        List<OfferDto> offers = new ArrayList<OfferDto>();
-        offers.add(new OfferDto(15000,17000,"PLN", "php", "some title", "some url"));
-        return offers;
+        List<OfferDto> dtos = new ArrayList<OfferDto>();
+        offers.forEach(offer -> dtos.addAll(OfferDto.createFrom(offer)));
+        return dtos;
     }
 }
