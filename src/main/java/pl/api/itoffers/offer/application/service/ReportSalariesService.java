@@ -17,7 +17,7 @@ public class ReportSalariesService {
      * todo WIP
      * todo "to"/"currency" parameters supposed to be passed as method arguments
      */
-    public List<OfferDto> getMostPaidOffers() {
-        return offerReadRepository.getBySalary(20000, "PLN", "b2b");
+    public List<OfferDto> getMostPaidOffers(String currency, String employmentType, Integer amountTo) {
+        return offerReadRepository.getBySalary(amountTo, currency, employmentType);
     }
 }

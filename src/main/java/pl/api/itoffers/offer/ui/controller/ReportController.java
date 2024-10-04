@@ -46,14 +46,17 @@ public class ReportController {
      *  add technologies filter
      *  add dates filter
      *  add salaries filter
-     *  add employmentType filter
      *  add option that consider "from"/"to" ("to" is default) as a value that orders that TOP salaries
      */
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping(PATH_SALARIES)
-    public ResponseEntity<OffersDto> salariesReport() {
+    public ResponseEntity<OffersDto> salariesReport(
+        @RequestParam(required = false, defaultValue = "PLN") String currency,
+        @RequestParam(required = false, defaultValue = "b2b") String employmentType,
+        @RequestParam(required = false, defaultValue = "0") String to
+    ) {
         return new ResponseEntity<OffersDto>(
-            new OffersDto(reportSalariesService.getMostPaidOffers()),
+            new OffersDto(reportSalariesService.getMostPaidOffers(currency, employmentType, Integer.parseInt(to))),
             HttpStatus.OK
         );
     }
