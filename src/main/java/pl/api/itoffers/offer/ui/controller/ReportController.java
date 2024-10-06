@@ -1,5 +1,6 @@
 package pl.api.itoffers.offer.ui.controller;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
@@ -11,20 +12,21 @@ import org.springframework.web.bind.annotation.RestController;
 import pl.api.itoffers.offer.application.dto.outgoing.CategoriesStatisticsDto;
 import pl.api.itoffers.offer.application.dto.incoming.CategoriesFilter;
 import pl.api.itoffers.offer.application.dto.outgoing.OffersDto;
+import pl.api.itoffers.offer.application.repository.TechnologyRepository;
 import pl.api.itoffers.offer.application.service.ReportCategoriesService;
 import pl.api.itoffers.offer.application.service.ReportSalariesService;
 
 import java.util.*;
 
 @RestController
+@RequiredArgsConstructor
 public class ReportController {
     public final static String PATH_CATEGORY = "/report/categories";
     public final static String PATH_SALARIES = "/report/salaries";
 
-    @Autowired
-    private ReportCategoriesService reportCategoriesService;
-    @Autowired
-    private ReportSalariesService reportSalariesService;
+    private final ReportCategoriesService reportCategoriesService;
+    private final ReportSalariesService reportSalariesService;
+    private final TechnologyRepository technologyRepository;
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping(PATH_CATEGORY)
@@ -41,22 +43,25 @@ public class ReportController {
         );
     }
 
-    /**
-     * TODO
-     *  add technologies filter
-     *  add dates filter
-     *  add salaries filter
-     *  add option that consider "from"/"to" ("to" is default) as a value that orders that TOP salaries
-     */
+    /** todo : add dates filter */
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping(PATH_SALARIES)
     public ResponseEntity<OffersDto> salariesReport(
         @RequestParam(required = false, defaultValue = "PLN") String currency,
         @RequestParam(required = false, defaultValue = "b2b") String employmentType,
-        @RequestParam(required = false, defaultValue = "0") String to
+        @RequestParam(required = false, defaultValue = "0") String to,
+        @RequestParam(required = false) String[] technologies
     ) {
+        List<String> technologiesList = Arrays.asList(null == technologies ? new String[]{} : technologies);
         return new ResponseEntity<OffersDto>(
-            new OffersDto(reportSalariesService.getMostPaidOffers(currency, employmentType, Integer.parseInt(to))),
+            new OffersDto(
+                reportSalariesService.getMostPaidOffers(
+                    currency,
+                    employmentType,
+                    Integer.parseInt(to),
+                    technologiesList.isEmpty() ? technologyRepository.allActive() : technologiesList
+                )
+            ),
             HttpStatus.OK
         );
     }

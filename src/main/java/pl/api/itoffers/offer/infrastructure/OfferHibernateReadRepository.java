@@ -24,7 +24,10 @@ public class OfferHibernateReadRepository implements OfferReadRepository {
 
     private final EntityManager em;
 
-    public List<OfferDto> getBySalary(int amountTo, String currency, String employmentType) {
+    /**
+     * TODO handler param: technologies
+     */
+    public List<OfferDto> getBySalary(int amountTo, String currency, String employmentType, List<String> technologies) {
         CriteriaBuilder builder = em.getCriteriaBuilder();
         CriteriaQuery<Offer> query = builder.createQuery(Offer.class);
         Root<Offer> root = query.from(Offer.class);
