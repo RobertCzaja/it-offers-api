@@ -43,8 +43,15 @@ public class SalariesFactory {
         salaries.add(Salary.original(from, to, currency, (String) employmentType.get("type")));
 
         if (!isPln) {
-            Double plnTo = toDouble(employmentType.get("to_pln"));
-            Double plnFrom = toDouble(employmentType.get("from_pln"));
+            Double plnTo = null;
+            Double plnFrom = null;
+            try {
+                 plnTo = toDouble(employmentType.get("to_pln"));
+                 plnFrom = toDouble(employmentType.get("from_pln"));
+            } catch (Exception e) {
+                String a = "";
+            }
+
 
             if (null != plnTo && null != plnFrom) {
                 salaries.add(Salary.convertedToPLN(plnFrom.intValue(), plnTo.intValue(), (String) employmentType.get("type")));
@@ -55,6 +62,8 @@ public class SalariesFactory {
     }
 
     private static Double toDouble(Object amount) {
-        return (amount instanceof String) ? Double.parseDouble((String) amount) : (Double) amount;
+        return (amount instanceof String)
+            ? Double.parseDouble((String) amount)
+            : Double.valueOf(String.valueOf(amount));
     }
 }
