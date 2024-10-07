@@ -61,4 +61,6 @@ public class ReportSalaryEndpointResultITest extends AbstractITest {
 
         ReportAssert.responseIs(response, HttpStatus.FORBIDDEN, "Access denied");
     }
+
+    // todo add test which check 'technologies filter'
 }
