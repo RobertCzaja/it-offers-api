@@ -3,6 +3,8 @@ package pl.api.itoffers.integration.offer;
 import com.google.gson.Gson;
 import org.junit.jupiter.api.BeforeEach;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.json.AutoConfigureJsonTesters;
+import org.springframework.boot.test.json.JacksonTester;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,13 +14,20 @@ import pl.api.itoffers.helper.OfferBuilder;
 import pl.api.itoffers.integration.offer.helper.OfferTestManager;
 import pl.api.itoffers.integration.offer.helper.ReportAssert;
 import pl.api.itoffers.integration.offer.helper.ReportSalariesEndpointCaller;
+import pl.api.itoffers.offer.application.dto.outgoing.OfferDto;
 import pl.api.itoffers.offer.application.dto.outgoing.OffersDto;
 
 
+import java.io.IOException;
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
+@AutoConfigureJsonTesters
 public class ReportSalaryEndpointResultITest extends AbstractITest {
 
+    @Autowired
+    private JacksonTester<OffersDto> jsonResultAttempt;
     @Autowired
     private ReportSalariesEndpointCaller caller;
     @Autowired
@@ -43,11 +52,10 @@ public class ReportSalaryEndpointResultITest extends AbstractITest {
         this.builder.plainJob("java").pln(21500, 26000).usd(14000, 20100).save();
         this.builder.plainJob("java").usd(22000, 23000).save();
 
-        HttpEntity<OffersDto> result = caller.makeRequest(20000);
+        HttpEntity<OffersDto> result = caller.makeRequest(20000, null);
 
         assertThat(result.getBody().getList()).hasSize(4);
-        String serializedBody = new Gson().toJson(result.getBody());
-        assertThat(serializedBody).isEqualTo("{\"list\":["+
+        assertThat(toJson(result.getBody())).isEqualTo("{\"list\":["+
             "{\"amountFrom\":21500,\"amountTo\":26000,\"currency\":\"PLN\",\"technology\":\"java\",\"title\":\"Software Development Engineer\",\"link\":\"remitly-software-development-engineer-krakow-go-5fbdbda0\"},"+
             "{\"amountFrom\":18000,\"amountTo\":24000,\"currency\":\"PLN\",\"technology\":\"java\",\"title\":\"Software Development Engineer\",\"link\":\"remitly-software-development-engineer-krakow-go-5fbdbda0\"},"+
             "{\"amountFrom\":18000,\"amountTo\":23000,\"currency\":\"PLN\",\"technology\":\"php\",\"title\":\"Software Development Engineer\",\"link\":\"remitly-software-development-engineer-krakow-go-5fbdbda0\"},"+
@@ -62,5 +70,30 @@ public class ReportSalaryEndpointResultITest extends AbstractITest {
         ReportAssert.responseIs(response, HttpStatus.FORBIDDEN, "Access denied");
     }
 
-    // todo add test which check 'technologies filter'
+    @Test
+    public void shouldReturnOnlyMostTopPaidPhpJobs() throws IOException {
+        this.builder.plainJob("php").pln(15000, 18000).save();
+        this.builder.plainJob("java").pln(17000, 19000).save();
+
+        HttpEntity<OffersDto> result = caller.makeRequest(null, List.of("php"));
+
+        OffersDto expected = new OffersDto(
+            List.of(
+                new OfferDto(
+                    15000,
+                    18000,
+                    "PLN",
+                    "php",
+                    "Software Development Engineer",
+                    "remitly-software-development-engineer-krakow-go-5fbdbda0"
+                )
+            )
+        );
+
+        assertThat(toJson(result.getBody())).isEqualTo(jsonResultAttempt.write(expected).getJson());
+    }
+
+    private static String toJson(Object responseBody) {
+        return new Gson().toJson(responseBody);
+    }
 }

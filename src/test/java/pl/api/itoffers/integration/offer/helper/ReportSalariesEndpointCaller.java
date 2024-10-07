@@ -14,6 +14,7 @@ import pl.api.itoffers.offer.application.dto.outgoing.OffersDto;
 import pl.api.itoffers.offer.ui.controller.ReportController;
 
 import java.net.URI;
+import java.util.List;
 
 @Service
 @Profile("test")
@@ -26,9 +27,12 @@ public class ReportSalariesEndpointCaller {
     @Autowired
     private ApiAuthorizationHelper apiAuthorizationHelper;
 
-    public ResponseEntity<OffersDto> makeRequest(Integer amountTo) {
+    public ResponseEntity<OffersDto> makeRequest(
+        Integer amountTo,
+        List<String> technologies
+    ) {
         return template.exchange(
-            createUri(amountTo),
+            createUri(amountTo, technologies),
             HttpMethod.GET,
             new HttpEntity<>(apiAuthorizationHelper.getHeaders(AuthorizationCredentials.ADMIN)),
             OffersDto.class
@@ -44,11 +48,15 @@ public class ReportSalariesEndpointCaller {
         );
     }
 
-    private static URI createUri(Integer amountTo) {
+    private static URI createUri(Integer amountTo, List<String> technologies) {
         UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(PATH);
 
         if (null != amountTo) {
             builder = builder.queryParam("to", amountTo);
+        }
+
+        if (null != technologies) {
+            builder = builder.queryParam("technologies", String.join(",", technologies));
         }
 
         return builder.build().toUri();
