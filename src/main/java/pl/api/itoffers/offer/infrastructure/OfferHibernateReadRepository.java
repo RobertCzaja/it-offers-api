@@ -8,12 +8,12 @@ import jakarta.persistence.criteria.Join;
 import jakarta.persistence.criteria.Root;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
-import pl.api.itoffers.offer.application.dto.outgoing.CategoryDto;
 import pl.api.itoffers.offer.application.dto.outgoing.OfferDto;
 import pl.api.itoffers.offer.application.repository.OfferReadRepository;
 import pl.api.itoffers.offer.domain.Offer;
 import pl.api.itoffers.offer.domain.Salary;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -24,7 +24,14 @@ public class OfferHibernateReadRepository implements OfferReadRepository {
 
     private final EntityManager em;
 
-    public List<OfferDto> getBySalary(int amountTo, String currency, String employmentType, List<String> technologies) {
+    public List<OfferDto> getBySalary(
+        int amountTo,
+        String currency,
+        String employmentType,
+        List<String> technologies,
+        LocalDateTime from,
+        LocalDateTime to
+    ) {
         CriteriaBuilder builder = em.getCriteriaBuilder();
         CriteriaQuery<Offer> query = builder.createQuery(Offer.class);
         Root<Offer> offerRoot = query.from(Offer.class);
@@ -39,6 +46,7 @@ public class OfferHibernateReadRepository implements OfferReadRepository {
                 builder.greaterThanOrEqualTo(salary.get("amount").get("to"), amountTo),
                 builder.equal(salary.get("employmentType"), employmentType),
                 builder.equal(salary.get("amount").get("currency"), currency),
+                builder.between(offerRoot.get("createdAt"), from, to),
                 technologyInClause
             )
         );

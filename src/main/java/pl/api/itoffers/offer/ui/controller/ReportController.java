@@ -50,7 +50,7 @@ public class ReportController {
         @RequestParam(required = false, defaultValue = "b2b") String employmentType,
         @RequestParam(required = false, defaultValue = "0") String to,
         @RequestParam(required = false) String[] technologies,
-        @RequestParam(required = false) @DateTimeFormat(pattern="yyyy-MM-dd") Date dateFrom, // todo add test for that
+        @RequestParam(required = false) @DateTimeFormat(pattern="yyyy-MM-dd") Date dateFrom,
         @RequestParam(required = false) @DateTimeFormat(pattern="yyyy-MM-dd") Date dateTo
     ) {
         return new ResponseEntity<OffersDto>(

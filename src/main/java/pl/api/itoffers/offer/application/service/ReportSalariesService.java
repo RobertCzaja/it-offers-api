@@ -21,6 +21,13 @@ public class ReportSalariesService {
         List<String> technologies,
         DatesRangeFilter datesRange
     ) {
-        return offerReadRepository.getBySalary(amountTo, currency, employmentType, technologies);
+        return offerReadRepository.getBySalary(
+            amountTo,
+            currency,
+            employmentType,
+            technologies,
+            datesRange.getFrom(),
+            datesRange.getTo()
+        );
     }
 }

@@ -52,7 +52,7 @@ public class ReportSalaryEndpointResultITest extends AbstractITest {
         this.builder.plainJob("java").pln(21500, 26000).usd(14000, 20100).save();
         this.builder.plainJob("java").usd(22000, 23000).save();
 
-        HttpEntity<OffersDto> result = caller.makeRequest(20000, null);
+        HttpEntity<OffersDto> result = caller.makeRequest(20000, null, null, null);
 
         assertThat(result.getBody().getList()).hasSize(4);
         assertThat(toJson(result.getBody())).isEqualTo("{\"list\":["+
@@ -75,7 +75,7 @@ public class ReportSalaryEndpointResultITest extends AbstractITest {
         this.builder.plainJob("php").pln(15000, 18000).save();
         this.builder.plainJob("java").pln(17000, 19000).save();
 
-        HttpEntity<OffersDto> result = caller.makeRequest(null, List.of("php"));
+        HttpEntity<OffersDto> result = caller.makeRequest(null, List.of("php"), null, null);
 
         OffersDto expected = new OffersDto(
             List.of(
@@ -93,12 +93,45 @@ public class ReportSalaryEndpointResultITest extends AbstractITest {
         assertThat(toJson(result.getBody())).isEqualTo(jsonResultAttempt.write(expected).getJson());
     }
 
-    /** TODO add implementation */
     @Test
-    public void shouldReturnOnlyMostTopPaidJobsForGivenDatesRange() {
-        assertThat("").isNotNull();
+    public void shouldReturnOnlyMostTopPaidJobsForGivenDatesRange() throws IOException {
+        this.builder.plainJob("php").pln(15000, 18000).at("01-01").save();
+        this.builder.plainJob("php").pln(16000, 19000).at("01-02").save();
+        this.builder.plainJob("php").pln(17000, 20000).at("01-03").save();
+        this.builder.plainJob("php").pln(18000, 21000).at("01-04").save();
+
+        HttpEntity<OffersDto> result = caller.makeRequest(
+            null,
+            null,
+            "2024-01-02",
+            "2024-01-03"
+        );
+
+        OffersDto expected = new OffersDto(
+            List.of(
+                new OfferDto(
+                    17000,
+                    20000,
+                    "PLN",
+                    "php",
+                    "Software Development Engineer",
+                    "remitly-software-development-engineer-krakow-go-5fbdbda0"
+                ),
+                new OfferDto(
+                    16000,
+                    19000,
+                    "PLN",
+                    "php",
+                    "Software Development Engineer",
+                    "remitly-software-development-engineer-krakow-go-5fbdbda0"
+                )
+            )
+        );
+
+        assertThat(toJson(result.getBody())).isEqualTo(jsonResultAttempt.write(expected).getJson());
     }
 
+    /* todo move to some Shared class */
     private static String toJson(Object responseBody) {
         return new Gson().toJson(responseBody);
     }

@@ -29,10 +29,12 @@ public class ReportSalariesEndpointCaller {
 
     public ResponseEntity<OffersDto> makeRequest(
         Integer amountTo,
-        List<String> technologies
+        List<String> technologies,
+        String dateFrom,
+        String dateTo
     ) {
         return template.exchange(
-            createUri(amountTo, technologies),
+            createUri(amountTo, technologies, dateFrom, dateTo),
             HttpMethod.GET,
             new HttpEntity<>(apiAuthorizationHelper.getHeaders(AuthorizationCredentials.ADMIN)),
             OffersDto.class
@@ -48,7 +50,12 @@ public class ReportSalariesEndpointCaller {
         );
     }
 
-    private static URI createUri(Integer amountTo, List<String> technologies) {
+    private static URI createUri(
+        Integer amountTo,
+        List<String> technologies,
+        String dateFrom,
+        String dateTo
+    ) {
         UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(PATH);
 
         if (null != amountTo) {
@@ -57,6 +64,14 @@ public class ReportSalariesEndpointCaller {
 
         if (null != technologies) {
             builder = builder.queryParam("technologies", String.join(",", technologies));
+        }
+
+        if (null != dateFrom) {
+            builder = builder.queryParam("dateFrom", dateFrom);
+        }
+
+        if (null != dateTo) {
+            builder = builder.queryParam("dateTo", dateTo);
         }
 
         return builder.build().toUri();
