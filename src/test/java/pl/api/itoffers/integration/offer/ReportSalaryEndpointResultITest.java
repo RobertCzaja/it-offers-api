@@ -1,6 +1,5 @@
 package pl.api.itoffers.integration.offer;
 
-import com.google.gson.Gson;
 import org.junit.jupiter.api.BeforeEach;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.json.AutoConfigureJsonTesters;
@@ -16,6 +15,7 @@ import pl.api.itoffers.integration.offer.helper.ReportAssert;
 import pl.api.itoffers.integration.offer.helper.ReportSalariesEndpointCaller;
 import pl.api.itoffers.offer.application.dto.outgoing.OfferDto;
 import pl.api.itoffers.offer.application.dto.outgoing.OffersDto;
+import pl.api.itoffers.shared.utils.json.Json;
 
 
 import java.io.IOException;
@@ -55,7 +55,7 @@ public class ReportSalaryEndpointResultITest extends AbstractITest {
         HttpEntity<OffersDto> result = caller.makeRequest(20000, null, null, null);
 
         assertThat(result.getBody().getList()).hasSize(4);
-        assertThat(toJson(result.getBody())).isEqualTo("{\"list\":["+
+        assertThat(Json.convertToString(result.getBody())).isEqualTo("{\"list\":["+
             "{\"amountFrom\":21500,\"amountTo\":26000,\"currency\":\"PLN\",\"technology\":\"java\",\"title\":\"Software Development Engineer\",\"link\":\"remitly-software-development-engineer-krakow-go-5fbdbda0\"},"+
             "{\"amountFrom\":18000,\"amountTo\":24000,\"currency\":\"PLN\",\"technology\":\"java\",\"title\":\"Software Development Engineer\",\"link\":\"remitly-software-development-engineer-krakow-go-5fbdbda0\"},"+
             "{\"amountFrom\":18000,\"amountTo\":23000,\"currency\":\"PLN\",\"technology\":\"php\",\"title\":\"Software Development Engineer\",\"link\":\"remitly-software-development-engineer-krakow-go-5fbdbda0\"},"+
@@ -90,7 +90,7 @@ public class ReportSalaryEndpointResultITest extends AbstractITest {
             )
         );
 
-        assertThat(toJson(result.getBody())).isEqualTo(jsonResultAttempt.write(expected).getJson());
+        assertThat(Json.convertToString(result.getBody())).isEqualTo(jsonResultAttempt.write(expected).getJson());
     }
 
     @Test
@@ -128,11 +128,6 @@ public class ReportSalaryEndpointResultITest extends AbstractITest {
             )
         );
 
-        assertThat(toJson(result.getBody())).isEqualTo(jsonResultAttempt.write(expected).getJson());
-    }
-
-    /* todo move to some Shared class */
-    private static String toJson(Object responseBody) {
-        return new Gson().toJson(responseBody);
+        assertThat(Json.convertToString(result.getBody())).isEqualTo(jsonResultAttempt.write(expected).getJson());
     }
 }
