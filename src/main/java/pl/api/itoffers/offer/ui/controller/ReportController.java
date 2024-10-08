@@ -1,7 +1,6 @@
 package pl.api.itoffers.offer.ui.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import pl.api.itoffers.offer.application.dto.outgoing.CategoriesStatisticsDto;
 import pl.api.itoffers.offer.application.dto.incoming.CategoriesFilter;
 import pl.api.itoffers.offer.application.dto.outgoing.OffersDto;
-import pl.api.itoffers.offer.application.repository.TechnologyRepository;
+import pl.api.itoffers.offer.application.factory.TechnologiesFilterFactory;
 import pl.api.itoffers.offer.application.service.ReportCategoriesService;
 import pl.api.itoffers.offer.application.service.ReportSalariesService;
 
@@ -26,7 +25,7 @@ public class ReportController {
 
     private final ReportCategoriesService reportCategoriesService;
     private final ReportSalariesService reportSalariesService;
-    private final TechnologyRepository technologyRepository;
+    private final TechnologiesFilterFactory technologiesFilterFactory;
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping(PATH_CATEGORY)
@@ -52,14 +51,13 @@ public class ReportController {
         @RequestParam(required = false, defaultValue = "0") String to,
         @RequestParam(required = false) String[] technologies
     ) {
-        List<String> technologiesList = Arrays.asList(null == technologies ? new String[]{} : technologies);
         return new ResponseEntity<OffersDto>(
             new OffersDto(
                 reportSalariesService.getMostPaidOffers(
                     currency,
                     employmentType,
                     Integer.parseInt(to),
-                    technologiesList.isEmpty() ? technologyRepository.allActive() : technologiesList
+                    technologiesFilterFactory.get(technologies)
                 )
             ),
             HttpStatus.OK
