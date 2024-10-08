@@ -123,6 +123,41 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "Report Salaries",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{apiToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{apiUrl}}/report/salaries?technologies=php",
+					"host": [
+						"{{apiUrl}}"
+					],
+					"path": [
+						"report",
+						"salaries"
+					],
+					"query": [
+						{
+							"key": "technologies",
+							"value": "php",
+							"description": "example php,java,devops"
+						}
+					]
+				}
+			},
+			"response": []
 		}
 	],
 	"variable": [
