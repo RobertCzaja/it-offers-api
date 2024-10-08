@@ -77,19 +77,7 @@ public class ReportSalaryEndpointResultITest extends AbstractITest {
 
         HttpEntity<OffersDto> result = caller.makeRequest(null, List.of("php"), null, null);
 
-        OffersDto expected = new OffersDto(
-            List.of(
-                new OfferDto(
-                    15000,
-                    18000,
-                    "PLN",
-                    "php",
-                    "Software Development Engineer",
-                    "remitly-software-development-engineer-krakow-go-5fbdbda0"
-                )
-            )
-        );
-
+        OffersDto expected = new OffersDto(List.of(createOffer(15000, 18000)));
         assertThat(Json.convertToString(result.getBody())).isEqualTo(jsonResultAttempt.write(expected).getJson());
     }
 
@@ -107,27 +95,18 @@ public class ReportSalaryEndpointResultITest extends AbstractITest {
             "2024-01-03"
         );
 
-        OffersDto expected = new OffersDto(
-            List.of(
-                new OfferDto(
-                    17000,
-                    20000,
-                    "PLN",
-                    "php",
-                    "Software Development Engineer",
-                    "remitly-software-development-engineer-krakow-go-5fbdbda0"
-                ),
-                new OfferDto(
-                    16000,
-                    19000,
-                    "PLN",
-                    "php",
-                    "Software Development Engineer",
-                    "remitly-software-development-engineer-krakow-go-5fbdbda0"
-                )
-            )
-        );
-
+        OffersDto expected = new OffersDto(List.of(createOffer(17000, 20000), createOffer(16000, 19000)));
         assertThat(Json.convertToString(result.getBody())).isEqualTo(jsonResultAttempt.write(expected).getJson());
+    }
+
+    private static OfferDto createOffer(int from, int to) {
+        return new OfferDto(
+            from,
+            to,
+            "PLN",
+            "php",
+            "Software Development Engineer",
+            "remitly-software-development-engineer-krakow-go-5fbdbda0"
+        );
     }
 }
