@@ -8,6 +8,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import pl.api.itoffers.offer.application.dto.incoming.DatesRangeFilter;
 import pl.api.itoffers.offer.application.dto.outgoing.CategoriesStatisticsDto;
 import pl.api.itoffers.offer.application.dto.incoming.CategoriesFilter;
 import pl.api.itoffers.offer.application.dto.outgoing.OffersDto;
@@ -42,14 +43,15 @@ public class ReportController {
         );
     }
 
-    /** todo : add dates filter */
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping(PATH_SALARIES)
     public ResponseEntity<OffersDto> salariesReport(
         @RequestParam(required = false, defaultValue = "PLN") String currency,
         @RequestParam(required = false, defaultValue = "b2b") String employmentType,
         @RequestParam(required = false, defaultValue = "0") String to,
-        @RequestParam(required = false) String[] technologies
+        @RequestParam(required = false) String[] technologies,
+        @RequestParam(required = false) @DateTimeFormat(pattern="yyyy-MM-dd") Date dateFrom, // todo add test for that
+        @RequestParam(required = false) @DateTimeFormat(pattern="yyyy-MM-dd") Date dateTo
     ) {
         return new ResponseEntity<OffersDto>(
             new OffersDto(
@@ -57,7 +59,8 @@ public class ReportController {
                     currency,
                     employmentType,
                     Integer.parseInt(to),
-                    technologiesFilterFactory.get(technologies)
+                    technologiesFilterFactory.get(technologies),
+                    new DatesRangeFilter(dateFrom, dateTo)
                 )
             ),
             HttpStatus.OK

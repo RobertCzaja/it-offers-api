@@ -93,6 +93,12 @@ public class ReportSalaryEndpointResultITest extends AbstractITest {
         assertThat(toJson(result.getBody())).isEqualTo(jsonResultAttempt.write(expected).getJson());
     }
 
+    /** TODO add implementation */
+    @Test
+    public void shouldReturnOnlyMostTopPaidJobsForGivenDatesRange() {
+        assertThat("").isNotNull();
+    }
+
     private static String toJson(Object responseBody) {
         return new Gson().toJson(responseBody);
     }
