@@ -23,32 +23,32 @@ public class MigrateOfferSalariesToNewFormatCli {
 
     @Autowired
     private OfferRepository offerRepository;
-    //@Autowired
-    //private SalaryRepository salaryRepository;
     @Autowired
     private JustJoinItRepository justJoinItRepository;
 
     //@ShellMethod(key="migrate-offer-salaries-to-new-format")
     @ShellMethod(key="m")
-    public String migrate(String mode) {
+    public String migrate(String mode, int limit) {
 
         List<Offer> offers = offerRepository.findAll();
 
         int migrated = 0;
+        int i = 0;
         for (Offer offer : offers) {
             if (!offer.getSalaries().isEmpty()) {
                 continue;
             }
-
-            //log.info(String.format("offer %s", offer.getId()));
+            i++;
+            if (i >= limit) {
+                break;
+            }
 
             List<JustJoinItRawOffer> rawOffers = fetchRawOffers(offer, "Z");
 
             if (rawOffers.isEmpty()) {
                 rawOffers = fetchRawOffers(offer, ".000Z");
                 if (rawOffers.isEmpty()) {
-                    log.error("Slug: {} |Tile: {} |PublishedAt: {}", offer.getSlug(), offer.getTitle(), offer.getPublishedAt());
-                    //throw new RuntimeException(String.format("Raw data does not exist for OfferId %s", offer.getId()));
+                    log.error("Slug: \"{}\" \nTile: \"{}\" \nPublishedAt: \"{}\"\n", offer.getSlug(), offer.getTitle(), offer.getPublishedAt());
                 }
             }
 
@@ -128,9 +128,11 @@ public class MigrateOfferSalariesToNewFormatCli {
 //                }
 //                break; // salary is saved for this offer, so we can move to another offer
 //            }
-            ++migrated;
+            migrated++;
         }
 
+        log.info("Processed offers: {}", i);
+        log.info("Migrated offers: {}", migrated);
         return "Migrated";
     }
 
