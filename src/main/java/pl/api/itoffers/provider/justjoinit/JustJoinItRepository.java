@@ -12,6 +12,6 @@ import java.util.UUID;
 public interface JustJoinItRepository extends MongoRepository<JustJoinItRawOffer, UUID> {
     List<JustJoinItRawOffer> findByScrapingId(UUID scrapingId);
 
-    @Query("{ $and: [ { \"offer.title\": ?0, \"offer.slug\": ?1, \"offer.companyName\": ?2 } ] }")
-    List<JustJoinItRawOffer> findDuplicatedOffers(String title, String slug, String companyName);
+    @Query("{ $and: [ { \"offer.title\": ?0, \"offer.slug\": ?1, \"offer.companyName\": ?2,  \"offer.publishedAt\": ?3} ] }")
+    List<JustJoinItRawOffer> findDuplicatedOffers(String title, String slug, String companyName, String publishedAt);
 }

@@ -5,7 +5,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 import pl.api.itoffers.offer.application.repository.OfferRepository;
+import pl.api.itoffers.offer.domain.Offer;
 import pl.api.itoffers.provider.justjoinit.JustJoinItRepository;
+import pl.api.itoffers.provider.justjoinit.model.JustJoinItRawOffer;
 
 import java.util.*;
 
@@ -26,22 +28,29 @@ public class MigrateOfferSalariesToNewFormatCli {
     @Autowired
     private JustJoinItRepository justJoinItRepository;
 
-    @ShellMethod(key="migrate-offer-salaries-to-new-format")
+    //@ShellMethod(key="migrate-offer-salaries-to-new-format")
+    @ShellMethod(key="m")
     public String migrate(String mode) {
 
-//        List<Offer> offers = offerRepository.findAll();
-//
-//        for (Offer offer : offers) {
-//            log.info(String.format("offer %s", offer.getId()));
-//            List<JustJoinItRawOffer> rawOffers = justJoinItRepository.findDuplicatedOffers(
-//                offer.getTitle(),
-//                offer.getSlug(),
-//                offer.getCompany().getName()
-//            );
-//
-//            if (rawOffers.isEmpty()) {
-//                throw new RuntimeException(String.format("Raw data does not exist for OfferId %s", offer.getId()));
-//            }
+        List<Offer> offers = offerRepository.findAll();
+
+        for (Offer offer : offers) {
+
+            if (!offer.getSalaries().isEmpty()) {
+                continue;
+            }
+
+            log.info(String.format("offer %s", offer.getId()));
+            List<JustJoinItRawOffer> rawOffers = justJoinItRepository.findDuplicatedOffers(
+                offer.getTitle(),
+                offer.getSlug(),
+                offer.getCompany().getName(),
+                offer.getPublishedAt()+"Z"
+            );
+
+            if (rawOffers.isEmpty()) {
+                throw new RuntimeException(String.format("Raw data does not exist for OfferId %s", offer.getId()));
+            }
 //
 //            for (JustJoinItRawOffer rawOffer : rawOffers) {
 //                Map<String, Object> first = rawOffers.get(0).getOffer();
@@ -76,37 +85,37 @@ public class MigrateOfferSalariesToNewFormatCli {
 //                if (!employmentTypes1Type.equals(employmentTypes2Type)) {
 //                    throw new RuntimeException(String.format("Employment types are different for OfferId %s", offer.getId()));
 //                }
+
+//                for (String key : second.keySet()) {
+//                    if (null == first.get(key) && null == second.get(key)) {
+//                        continue;
+//                    }
 //
-////                for (String key : second.keySet()) {
-////                    if (null == first.get(key) && null == second.get(key)) {
-////                        continue;
-////                    }
-////
-////                    Object firstValue = first.get(key);
-////                    Object secondValue = second.get(key);
-////
-////                    if (firstValue instanceof List<?> || secondValue instanceof List<?>) {
-////                        List<Object> firstValueArray = (List<Object>) firstValue;
-////                        List<Object> secondValueArray = (List<Object>) secondValue;
-////
-////                        if (firstValueArray.size() != secondValueArray.size()) {
-////                            if (!key.equals("multilocation")) {
-////                                throw new RuntimeException(String.format("RawOffers arrays are different for OfferId %s", offer.getId()));
-////                            }
-////                        }
-////                        continue;
-////                    }
-////
-////                    if (key.equals("companyLogoThumbUrl") || key.equals("publishedAt")) {
-////                        continue;
-////                    }
-////
-////                    if (!firstValue.equals(secondValue)) {
-////                        throw new RuntimeException(String.format("RawOffers are different for OfferId %s", offer.getId()));
-////                    }
-////                }
-//            }
+//                    Object firstValue = first.get(key);
+//                    Object secondValue = second.get(key);
 //
+//                    if (firstValue instanceof List<?> || secondValue instanceof List<?>) {
+//                        List<Object> firstValueArray = (List<Object>) firstValue;
+//                        List<Object> secondValueArray = (List<Object>) secondValue;
+//
+//                        if (firstValueArray.size() != secondValueArray.size()) {
+//                            if (!key.equals("multilocation")) {
+//                                throw new RuntimeException(String.format("RawOffers arrays are different for OfferId %s", offer.getId()));
+//                            }
+//                        }
+//                        continue;
+//                    }
+//
+//                    if (key.equals("companyLogoThumbUrl") || key.equals("publishedAt")) {
+//                        continue;
+//                    }
+//
+//                    if (!firstValue.equals(secondValue)) {
+//                        throw new RuntimeException(String.format("RawOffers are different for OfferId %s", offer.getId()));
+//                    }
+//                }
+            }
+
 //            if (false == mode.equals("migrate")) {
 //                continue;
 //            }
