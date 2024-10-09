@@ -1,10 +1,7 @@
 package pl.api.itoffers.offer.domain;
 
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.JoinFormula;
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
@@ -35,8 +32,9 @@ public class Offer {
     @Getter
     @ManyToMany
     private final Set<Category> categories;
+    @NonNull
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
-    private final Set<Salary> salary;
+    private Set<Salary> salary;
     @Getter
     @ManyToOne
     private final Company company;
@@ -44,6 +42,14 @@ public class Offer {
     private final LocalDateTime publishedAt;
     @Getter
     private final LocalDateTime createdAt;
+
+    /**
+     * Should be removed after Salaries migration
+     */
+    @Deprecated
+    public void setSalaries(Set<Salary> salaries) {
+        this.salary = salaries;
+    }
 
     public Set<Salary> getSalaries() {
         return salary;

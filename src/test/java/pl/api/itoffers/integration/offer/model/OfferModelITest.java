@@ -49,7 +49,7 @@ public class OfferModelITest extends AbstractITest {
                 new DeprecatedSalary(Double.valueOf(14000),Double.valueOf(18000), "PLN", "b2b"),
                 new Characteristics("hybrid","full_time", true),
                 categories,
-                null,
+                new HashSet<>(),
                 company,
                 publishedAt,
                 JustJoinItDateTime.createFrom().value
