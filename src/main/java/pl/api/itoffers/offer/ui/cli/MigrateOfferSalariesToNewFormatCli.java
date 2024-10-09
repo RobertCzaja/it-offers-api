@@ -34,8 +34,8 @@ public class MigrateOfferSalariesToNewFormatCli {
 
         List<Offer> offers = offerRepository.findAll();
 
+        int migrated = 0;
         for (Offer offer : offers) {
-
             if (!offer.getSalaries().isEmpty()) {
                 continue;
             }
@@ -47,7 +47,8 @@ public class MigrateOfferSalariesToNewFormatCli {
             if (rawOffers.isEmpty()) {
                 rawOffers = fetchRawOffers(offer, ".000Z");
                 if (rawOffers.isEmpty()) {
-                    throw new RuntimeException(String.format("Raw data does not exist for OfferId %s", offer.getId()));
+                    log.error("Slug: {} |Tile: {} |PublishedAt: {}", offer.getSlug(), offer.getTitle(), offer.getPublishedAt());
+                    //throw new RuntimeException(String.format("Raw data does not exist for OfferId %s", offer.getId()));
                 }
             }
 
@@ -72,20 +73,17 @@ public class MigrateOfferSalariesToNewFormatCli {
                     continue;
                 }
 
-                if (!employmentTypes1To.equals(employmentTypes2To) || !employmentTypes1From.equals(employmentTypes2From)) {
-                    log.info("{} Different salary {}-{} -> {}-{}", offer.getId(), employmentTypes1From, employmentTypes1To, employmentTypes2From, employmentTypes2To);
-                }
-                if (!employmentTypes1Currency.equals(employmentTypes2Currency)) {
-                    log.info("{} Different currency", offer.getId());
-                }
-                if (!employmentTypes1Type.equals(employmentTypes2Type)) {
-                    log.info("{} Different employmentType", offer.getId());
-                }
+                if (!employmentTypes1To.equals(employmentTypes2To) || !employmentTypes1From.equals(employmentTypes2From))
+                    log.warn("{} Different salary: {}-{}->{}-{}", offer.getId(), employmentTypes1From, employmentTypes1To, employmentTypes2From, employmentTypes2To);
+                if (!employmentTypes1Currency.equals(employmentTypes2Currency))
+                    log.warn("{} Different currency", offer.getId());
+                if (!employmentTypes1Type.equals(employmentTypes2Type))
+                    log.warn("{} Different employmentType", offer.getId());
             }
 
-//            if (false == mode.equals("migrate")) {
-//                continue;
-//            }
+            if (false == mode.equals("migrate")) {
+                continue;
+            }
 //
 //            ArrayList<LinkedHashMap> employmentTypes= (ArrayList<LinkedHashMap>) rawOffers.get(0).getOffer().get("employmentTypes");
 //
@@ -130,6 +128,7 @@ public class MigrateOfferSalariesToNewFormatCli {
 //                }
 //                break; // salary is saved for this offer, so we can move to another offer
 //            }
+            ++migrated;
         }
 
         return "Migrated";
