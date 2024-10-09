@@ -40,80 +40,47 @@ public class MigrateOfferSalariesToNewFormatCli {
                 continue;
             }
 
-            log.info(String.format("offer %s", offer.getId()));
-            List<JustJoinItRawOffer> rawOffers = justJoinItRepository.findDuplicatedOffers(
-                offer.getTitle(),
-                offer.getSlug(),
-                offer.getCompany().getName(),
-                offer.getPublishedAt()+"Z"
-            );
+            //log.info(String.format("offer %s", offer.getId()));
+
+            List<JustJoinItRawOffer> rawOffers = fetchRawOffers(offer, "Z");
 
             if (rawOffers.isEmpty()) {
-                throw new RuntimeException(String.format("Raw data does not exist for OfferId %s", offer.getId()));
+                rawOffers = fetchRawOffers(offer, ".000Z");
+                if (rawOffers.isEmpty()) {
+                    throw new RuntimeException(String.format("Raw data does not exist for OfferId %s", offer.getId()));
+                }
             }
-//
-//            for (JustJoinItRawOffer rawOffer : rawOffers) {
-//                Map<String, Object> first = rawOffers.get(0).getOffer();
-//                Map<String, Object> second = rawOffer.getOffer();
-//
-//                ArrayList<LinkedHashMap> employmentTypes1 = (ArrayList<LinkedHashMap>) first.get("employmentTypes");
-//                ArrayList<LinkedHashMap> employmentTypes2 = (ArrayList<LinkedHashMap>) second.get("employmentTypes");
-//
-//                Integer employmentTypes1To = (Integer) employmentTypes1.get(0).get("to");
-//                Integer employmentTypes1From = (Integer) employmentTypes1.get(0).get("from");
-//                String employmentTypes1Currency = (String) employmentTypes1.get(0).get("currency");
-//                String employmentTypes1Type = (String) employmentTypes1.get(0).get("type");
-//
-//                Integer employmentTypes2To = (Integer) employmentTypes2.get(0).get("to");
-//                Integer employmentTypes2From = (Integer) employmentTypes2.get(0).get("from");
-//                String employmentTypes2Currency = (String) employmentTypes2.get(0).get("currency");
-//                String employmentTypes2Type = (String) employmentTypes2.get(0).get("type");
-//
-//                if (null == employmentTypes1To && null == employmentTypes2To) {
-//                    continue;
-//                }
-//
-//                if (!employmentTypes1To.equals(employmentTypes2To)) {
-//                    throw new RuntimeException(String.format("Salaries to are different for OfferId %s", offer.getId()));
-//                }
-//                if (!employmentTypes1From.equals(employmentTypes2From)) {
-//                    throw new RuntimeException(String.format("Salaries from are different for OfferId %s", offer.getId()));
-//                }
-//                if (!employmentTypes1Currency.equals(employmentTypes2Currency)) {
-//                    throw new RuntimeException(String.format("Salaries currencies are different for OfferId %s", offer.getId()));
-//                }
-//                if (!employmentTypes1Type.equals(employmentTypes2Type)) {
-//                    throw new RuntimeException(String.format("Employment types are different for OfferId %s", offer.getId()));
-//                }
 
-//                for (String key : second.keySet()) {
-//                    if (null == first.get(key) && null == second.get(key)) {
-//                        continue;
-//                    }
-//
-//                    Object firstValue = first.get(key);
-//                    Object secondValue = second.get(key);
-//
-//                    if (firstValue instanceof List<?> || secondValue instanceof List<?>) {
-//                        List<Object> firstValueArray = (List<Object>) firstValue;
-//                        List<Object> secondValueArray = (List<Object>) secondValue;
-//
-//                        if (firstValueArray.size() != secondValueArray.size()) {
-//                            if (!key.equals("multilocation")) {
-//                                throw new RuntimeException(String.format("RawOffers arrays are different for OfferId %s", offer.getId()));
-//                            }
-//                        }
-//                        continue;
-//                    }
-//
-//                    if (key.equals("companyLogoThumbUrl") || key.equals("publishedAt")) {
-//                        continue;
-//                    }
-//
-//                    if (!firstValue.equals(secondValue)) {
-//                        throw new RuntimeException(String.format("RawOffers are different for OfferId %s", offer.getId()));
-//                    }
-//                }
+            for (JustJoinItRawOffer rawOffer : rawOffers) {
+                Map<String, Object> first = rawOffers.get(0).getOffer();
+                Map<String, Object> second = rawOffer.getOffer();
+
+                ArrayList<LinkedHashMap> employmentTypes1 = (ArrayList<LinkedHashMap>) first.get("employmentTypes");
+                ArrayList<LinkedHashMap> employmentTypes2 = (ArrayList<LinkedHashMap>) second.get("employmentTypes");
+
+                Integer employmentTypes1To = (Integer) employmentTypes1.get(0).get("to");
+                Integer employmentTypes1From = (Integer) employmentTypes1.get(0).get("from");
+                String employmentTypes1Currency = (String) employmentTypes1.get(0).get("currency");
+                String employmentTypes1Type = (String) employmentTypes1.get(0).get("type");
+
+                Integer employmentTypes2To = (Integer) employmentTypes2.get(0).get("to");
+                Integer employmentTypes2From = (Integer) employmentTypes2.get(0).get("from");
+                String employmentTypes2Currency = (String) employmentTypes2.get(0).get("currency");
+                String employmentTypes2Type = (String) employmentTypes2.get(0).get("type");
+
+                if (null == employmentTypes1To && null == employmentTypes2To) {
+                    continue;
+                }
+
+                if (!employmentTypes1To.equals(employmentTypes2To) || !employmentTypes1From.equals(employmentTypes2From)) {
+                    log.info("{} Different salary {}-{} -> {}-{}", offer.getId(), employmentTypes1From, employmentTypes1To, employmentTypes2From, employmentTypes2To);
+                }
+                if (!employmentTypes1Currency.equals(employmentTypes2Currency)) {
+                    log.info("{} Different currency", offer.getId());
+                }
+                if (!employmentTypes1Type.equals(employmentTypes2Type)) {
+                    log.info("{} Different employmentType", offer.getId());
+                }
             }
 
 //            if (false == mode.equals("migrate")) {
@@ -163,9 +130,17 @@ public class MigrateOfferSalariesToNewFormatCli {
 //                }
 //                break; // salary is saved for this offer, so we can move to another offer
 //            }
-//        }
+        }
 
         return "Migrated";
     }
 
+    private List<JustJoinItRawOffer> fetchRawOffers(Offer offer, String publishedAtPostfix) {
+        return justJoinItRepository.findDuplicatedOffers(
+            offer.getTitle(),
+            offer.getSlug(),
+            offer.getCompany().getName(),
+            offer.getPublishedAt()+publishedAtPostfix
+        );
+    }
 }
