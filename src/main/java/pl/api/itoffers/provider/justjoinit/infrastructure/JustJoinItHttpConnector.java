@@ -1,6 +1,5 @@
 package pl.api.itoffers.provider.justjoinit.infrastructure;
 
-import lombok.SneakyThrows;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +15,7 @@ import java.util.Scanner;
 @Service
 public final class JustJoinItHttpConnector implements JustJoinItConnector
 {
-    private static final String PATH = "/all-locations/";
+    private static final String PATH = "/job-offers/all-locations/";
 
     @Autowired
     private JustJoinItParameters parameters;
