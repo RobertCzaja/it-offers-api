@@ -30,7 +30,9 @@ public class MigrateOfferSalariesToNewFormatCli {
     @ShellMethod(key="m")
     public String migrate(String mode, int limit) {
 
+        log.info("Postgres All Offers - Start Fetching");
         List<Offer> offers = offerRepository.findAll();
+        log.info("Postgres All Offers - Finished Fetching");
 
         int migrated = 0;
         int i = 0;
@@ -38,8 +40,7 @@ public class MigrateOfferSalariesToNewFormatCli {
             if (!offer.getSalaries().isEmpty()) {
                 continue;
             }
-            i++;
-            if (i >= limit) {
+            if (++i >= limit) {
                 break;
             }
 
@@ -48,7 +49,7 @@ public class MigrateOfferSalariesToNewFormatCli {
             if (rawOffers.isEmpty()) {
                 rawOffers = fetchRawOffers(offer, ".000Z");
                 if (rawOffers.isEmpty()) {
-                    log.error("Slug: \"{}\" \nTile: \"{}\" \nPublishedAt: \"{}\"\n", offer.getSlug(), offer.getTitle(), offer.getPublishedAt());
+                    log.error("\nSlug: \"{}\" \nTile: \"{}\" \nPublishedAt: \"{}\"", offer.getSlug(), offer.getTitle(), offer.getPublishedAt());
                 }
             }
 
