@@ -30,7 +30,6 @@ public class MigrateOfferSalariesToNewFormatCli {
     private final SalariesFactory salariesFactory;
     private final EntityManager entityManager;
 
-    //@ShellMethod(key="migrate-offer-salaries-to-new-format")
     @ShellMethod(key="m")
     public String migrate(String mode, int limit) {
 
