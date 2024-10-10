@@ -10,9 +10,6 @@ import java.util.*;
 @Service
 public class SalariesFactory {
 
-    /**
-     * TODO finish implementation
-     */
     public Set<Salary> create(JustJoinItRawOffer rawOffer) {
         Set<Salary> salaries = new HashSet<Salary>();
         List<LinkedHashMap> employmentTypes = (List<LinkedHashMap>) rawOffer.getOffer().get("employmentTypes");
@@ -29,7 +26,7 @@ public class SalariesFactory {
     /**
      * TODO some of that logic could be encapsulated in Offer Entity
      */
-    public Set<Salary> createSalaries(LinkedHashMap employmentType) {
+    private Set<Salary> createSalaries(LinkedHashMap employmentType) {
         Set<Salary> salaries = new HashSet<Salary>();
         Integer to = (Integer) employmentType.get("to");
         Integer from = (Integer) employmentType.get("from");
@@ -43,15 +40,8 @@ public class SalariesFactory {
         salaries.add(Salary.original(from, to, currency, (String) employmentType.get("type")));
 
         if (!isPln) {
-            Double plnTo = null;
-            Double plnFrom = null;
-            try {
-                 plnTo = toDouble(employmentType.get("to_pln"));
-                 plnFrom = toDouble(employmentType.get("from_pln"));
-            } catch (Exception e) {
-                String a = "";
-            }
-
+            Double plnTo = toDouble(employmentType.get("to_pln"));
+            Double plnFrom = toDouble(employmentType.get("from_pln"));
 
             if (null != plnTo && null != plnFrom) {
                 salaries.add(Salary.convertedToPLN(plnFrom.intValue(), plnTo.intValue(), (String) employmentType.get("type")));

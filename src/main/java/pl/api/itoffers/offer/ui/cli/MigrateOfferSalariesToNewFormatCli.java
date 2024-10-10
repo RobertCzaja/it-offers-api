@@ -1,30 +1,34 @@
 package pl.api.itoffers.offer.ui.cli;
 
+import jakarta.persistence.EntityManager;
+import jakarta.transaction.Transactional;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
+import pl.api.itoffers.offer.application.factory.SalariesFactory;
 import pl.api.itoffers.offer.application.repository.OfferRepository;
 import pl.api.itoffers.offer.domain.Offer;
+import pl.api.itoffers.offer.domain.Salary;
 import pl.api.itoffers.provider.justjoinit.JustJoinItRepository;
 import pl.api.itoffers.provider.justjoinit.model.JustJoinItRawOffer;
 
 import java.util.*;
 
 /**
- * OneUse - not finished!
- * @deprecated it's not finished - that solution with migrating Salaries it's a dead end because there is
- * a problem with matching RawOffers from MongoDB and with that Offers from Postgres. For one Postgres Offer
- * there can be multiple RawOffers, and sometimes you just fetch for incorrect MongoDB documents for current Postgres record.
+ * OneUse - remove after usage
+ * @deprecated
  */
 @Slf4j
 @ShellComponent
+@Transactional
+@AllArgsConstructor
 public class MigrateOfferSalariesToNewFormatCli {
 
-    @Autowired
-    private OfferRepository offerRepository;
-    @Autowired
-    private JustJoinItRepository justJoinItRepository;
+    private final OfferRepository offerRepository;
+    private final JustJoinItRepository justJoinItRepository;
+    private final SalariesFactory salariesFactory;
+    private final EntityManager entityManager;
 
     //@ShellMethod(key="migrate-offer-salaries-to-new-format")
     @ShellMethod(key="m")
@@ -35,6 +39,7 @@ public class MigrateOfferSalariesToNewFormatCli {
         log.info("Postgres All Offers - Finished Fetching");
 
         int migrated = 0;
+        int emptySalaries = 0;
         int i = 0;
         for (Offer offer : offers) {
             if (!offer.getSalaries().isEmpty()) {
@@ -50,6 +55,7 @@ public class MigrateOfferSalariesToNewFormatCli {
                 rawOffers = fetchRawOffers(offer, ".000Z");
                 if (rawOffers.isEmpty()) {
                     log.error("\nSlug: \"{}\" \nTile: \"{}\" \nPublishedAt: \"{}\"", offer.getSlug(), offer.getTitle(), offer.getPublishedAt());
+                    continue;
                 }
             }
 
@@ -85,55 +91,25 @@ public class MigrateOfferSalariesToNewFormatCli {
             if (false == mode.equals("migrate")) {
                 continue;
             }
-//
-//            ArrayList<LinkedHashMap> employmentTypes= (ArrayList<LinkedHashMap>) rawOffers.get(0).getOffer().get("employmentTypes");
-//
-//            if (employmentTypes.isEmpty()) {
-//                log.info(String.format("no salaries found in %s", offer.getId()));
-//                continue;
-//            }
-//
-//            for (LinkedHashMap employmentType : employmentTypes) {/*TODO it's duplicated in SalariesFactory*/
-//                Integer to = (Integer) employmentType.get("to");
-//                Integer from = (Integer) employmentType.get("from");
-//                String currency = (String) employmentType.get("currency");
-//                Boolean isPln = currency.equalsIgnoreCase("pln");
-//
-//                if (null == to || null == from) {
-//                    continue;
-//                }
-//
-//                salaryRepository.save(
-//                    new Salary(
-//                        offer,
-//                        new SalaryAmount(from, to, currency.toUpperCase()),
-//                        (String) employmentType.get("type"),
-//                        true
-//                    )
-//                );
-//
-//                if (!isPln) {
-//                    Double plnTo = (Double)employmentType.get("to_pln");
-//                    Double plnFrom = (Double)employmentType.get("from_pln");
-//
-//                    if (null != plnTo && null != plnFrom) {
-//                        salaryRepository.save(
-//                            new Salary(
-//                                offer,
-//                                new SalaryAmount(plnFrom.intValue(), plnTo.intValue(), "PLN"),
-//                                (String) employmentType.get("type"),
-//                                false
-//                            )
-//                        );
-//                    }
-//                }
-//                break; // salary is saved for this offer, so we can move to another offer
-//            }
+
+            Set<Salary> salaries = salariesFactory.create(rawOffers.get(0));
+
+            if (salaries.isEmpty()) {
+                log.warn("No salaries for Offer {}", offer.getId());
+                emptySalaries++;
+                continue;
+            }
+
+            offer.setSalaries(salariesFactory.create(rawOffers.get(0)));
+            entityManager.persist(offer);
+            entityManager.flush();
             migrated++;
+            log.info("Offer {} migrated", offer.getId());
         }
 
         log.info("Processed offers: {}", i);
         log.info("Migrated offers: {}", migrated);
+        log.info("Empty salaries: {}", emptySalaries);
         return "Migrated";
     }
 

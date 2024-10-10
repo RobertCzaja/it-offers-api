@@ -33,7 +33,7 @@ public class Offer {
     @ManyToMany
     private final Set<Category> categories;
     @NonNull
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Salary> salary;
     @Getter
     @ManyToOne
