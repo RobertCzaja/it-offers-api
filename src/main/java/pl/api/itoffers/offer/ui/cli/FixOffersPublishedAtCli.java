@@ -12,8 +12,7 @@ import pl.api.itoffers.provider.justjoinit.JustJoinItRepository;
 import pl.api.itoffers.provider.justjoinit.model.JustJoinItRawOffer;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 /**
  * OneUse - should be used only once, only for data fix
@@ -50,7 +49,12 @@ public class FixOffersPublishedAtCli {
                 continue;
             }
 
-            areRawOffersAreTheSameOriginOffer(justJoinItRawOffers);
+            try {
+                areRawOffersAreTheSameOriginOffer(justJoinItRawOffers);
+            } catch (RuntimeException e) {
+                log.warn("Different {}", e.getMessage());
+                continue;
+            }
 
             // todo: get first
             // todo: update publishedAt
@@ -65,7 +69,22 @@ public class FixOffersPublishedAtCli {
     }
 
     private static void areRawOffersAreTheSameOriginOffer(List<JustJoinItRawOffer> rawOffers) {
-        // todo add implementation
+        for (JustJoinItRawOffer rawOffer : rawOffers) {
+            Map<String, Object> first = rawOffers.get(0).getOffer();
+            Map<String, Object> second = rawOffer.getOffer();
+
+            ArrayList<String> requiredSkills1 = (ArrayList<String>) first.get("requiredSkills");
+            ArrayList<String> requiredSkills2 = (ArrayList<String>) second.get("requiredSkills");
+
+            Collections.sort(requiredSkills1);
+            Collections.sort(requiredSkills2);
+
+            if (! requiredSkills2.equals(requiredSkills1)) {
+                throw new RuntimeException(String.format("requiredSkills: %s->%s", requiredSkills2, requiredSkills2));
+            }
+
+            // todo think if should I add some more checking
+        }
     }
 
     private List<JustJoinItRawOffer> fetchRawOffers(Offer offer) {
