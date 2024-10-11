@@ -24,6 +24,7 @@ public class Offer {
     private final String slug;
     @Getter
     private final String title;
+    @Getter
     private final String seniority;
     @Embedded
     private final DeprecatedSalary deprecatedSalary;

@@ -9,7 +9,6 @@ import pl.api.itoffers.offer.application.repository.OfferRepository;
 import pl.api.itoffers.offer.domain.Offer;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -27,6 +26,11 @@ public class OfferInMemoryRepository implements OfferRepository {
     @Override
     public Offer findByDifferentOffer(String slug, String title, String companyName, LocalDateTime publishedAt) {
         return null;
+    }
+
+    @Override
+    public List<Offer> findByPublishedAt(LocalDateTime publishedAt) {
+        throw new RuntimeException("Not implemented");
     }
 
     @Override

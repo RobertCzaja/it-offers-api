@@ -12,6 +12,10 @@ public class CliFixParams {
         this.limit = limit;
     }
 
+    public boolean isMigration() {
+        return this.mode == Mode.migration;
+    }
+
     public enum Mode {
         test,
         migration

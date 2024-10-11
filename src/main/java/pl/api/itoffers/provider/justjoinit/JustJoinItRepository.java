@@ -14,4 +14,7 @@ public interface JustJoinItRepository extends MongoRepository<JustJoinItRawOffer
 
     @Query("{ $and: [ { \"offer.title\": ?0, \"offer.slug\": ?1, \"offer.companyName\": ?2,  \"offer.publishedAt\": ?3} ] }")
     List<JustJoinItRawOffer> findDuplicatedOffers(String title, String slug, String companyName, String publishedAt);
+
+    @Query("{ $and: [ { \"offer.title\": ?0, \"offer.slug\": ?1, \"offer.companyName\": ?2,  \"offer.experienceLevel\": ?3} ] }")
+    List<JustJoinItRawOffer> findOriginatedRawOffers(String title, String slug, String companyName, String seniority);
 }

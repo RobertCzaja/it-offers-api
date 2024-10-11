@@ -19,4 +19,6 @@ public interface OfferRepository extends JpaRepository<Offer, UUID> {
 
     @Query("SELECT o FROM Offer o WHERE o.slug = :slug AND o.title = :title AND o.company.name = :companyName AND o.publishedAt = :publishedAt")
     Offer findByDifferentOffer(String slug, String title, String companyName, LocalDateTime publishedAt);
+
+    List<Offer> findByPublishedAt(LocalDateTime publishedAt);
 }
