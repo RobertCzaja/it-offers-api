@@ -12,12 +12,18 @@ public class CliFixParams {
         this.limit = limit;
     }
 
+    public boolean isForceMode() {
+        return this.mode == Mode.migrationforce || this.mode == Mode.testforce;
+    }
+
     public boolean isMigration() {
-        return this.mode == Mode.migration;
+        return this.mode == Mode.migration || this.mode == Mode.migrationforce;
     }
 
     public enum Mode {
         test,
-        migration
+        testforce,
+        migration,
+        migrationforce
     }
 }

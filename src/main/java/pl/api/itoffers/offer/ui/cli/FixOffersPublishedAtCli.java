@@ -25,8 +25,7 @@ import java.util.*;
 @Transactional
 @AllArgsConstructor
 public class FixOffersPublishedAtCli {
-    /*TODO set here "2024-07-27T15:00:38.890000" when time to PROD fix has come*/
-    private static final LocalDateTime DATETIME_TO_FIX = LocalDateTime.parse("2024-09-26T05:00:29.065000");
+    private static final LocalDateTime DATETIME_TO_FIX = LocalDateTime.parse("2024-07-27T15:00:38.890000");
 
     private final OfferRepository offerRepository;
     private final JustJoinItRepository justJoinItRepository;
@@ -58,13 +57,14 @@ public class FixOffersPublishedAtCli {
             }
 
             try {
-                areRawOffersAreTheSameOriginOffer(justJoinItRawOffers);
+                areRawOffersAreTheSameOriginOffer(justJoinItRawOffers, params.isForceMode());
             } catch (RuntimeException e) {
                 log.warn("[Offer: {}] Different {}", offer.getId(), e.getMessage());
                 continue;
             }
 
             LocalDateTime correctPublishedAt = getTheOldestPublishedAt(justJoinItRawOffers);
+            log.info("[Offer: {}] {}->{}", offer.getId(), offer.getPublishedAt(), correctPublishedAt);
 
             if (! params.isMigration()) {
                 continue;
@@ -97,7 +97,10 @@ public class FixOffersPublishedAtCli {
         return theOldestPublishedAt;
     }
 
-    private static void areRawOffersAreTheSameOriginOffer(List<JustJoinItRawOffer> rawOffers) {
+    private static void areRawOffersAreTheSameOriginOffer(List<JustJoinItRawOffer> rawOffers, boolean noValidation) {
+        if (noValidation) {
+            return;
+        }
         for (JustJoinItRawOffer rawOffer : rawOffers) {
             Map<String, Object> first = rawOffers.get(0).getOffer();
             Map<String, Object> second = rawOffer.getOffer();
