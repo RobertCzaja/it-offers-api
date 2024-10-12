@@ -40,7 +40,8 @@ public class Offer {
     @ManyToOne
     private final Company company;
     @Getter
-    private final LocalDateTime publishedAt;
+    @NonNull
+    private LocalDateTime publishedAt;
     @Getter
     private final LocalDateTime createdAt;
 
@@ -50,6 +51,14 @@ public class Offer {
     @Deprecated
     public void setSalaries(Set<Salary> salaries) {
         this.salary = salaries;
+    }
+
+    /**
+     * Should be removed after Salaries migration
+     */
+    @Deprecated
+    public void setPublishedAt(LocalDateTime publishedAt) {
+        this.publishedAt = publishedAt;
     }
 
     public Set<Salary> getSalaries() {

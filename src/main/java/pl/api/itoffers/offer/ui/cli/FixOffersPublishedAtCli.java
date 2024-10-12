@@ -1,5 +1,6 @@
 package pl.api.itoffers.offer.ui.cli;
 
+import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -9,6 +10,7 @@ import org.springframework.shell.standard.ShellOption;
 import pl.api.itoffers.offer.application.repository.OfferRepository;
 import pl.api.itoffers.offer.domain.Offer;
 import pl.api.itoffers.provider.justjoinit.JustJoinItRepository;
+import pl.api.itoffers.provider.justjoinit.model.JustJoinItDateTime;
 import pl.api.itoffers.provider.justjoinit.model.JustJoinItRawOffer;
 
 import java.time.LocalDateTime;
@@ -28,6 +30,7 @@ public class FixOffersPublishedAtCli {
 
     private final OfferRepository offerRepository;
     private final JustJoinItRepository justJoinItRepository;
+    private final EntityManager em;
 
     @ShellMethod(key="i")
     public void fixAllOffersWithWrongPublishedAt(
@@ -56,16 +59,32 @@ public class FixOffersPublishedAtCli {
                 continue;
             }
 
-            // todo: get first
-            // todo: update publishedAt
-            // todo: save
+            offer.setPublishedAt(getTheOldestPublishedAt(justJoinItRawOffers));
 
-            if (params.isMigration()) {
+            if (! params.isMigration()) {
                 return;
+            }
+
+            em.persist(offer);
+            em.flush();
+
+            log.info("Offer {} migrated", offer.getId());
+        }
+    }
+
+
+    public static LocalDateTime getTheOldestPublishedAt(List<JustJoinItRawOffer> rawOffers) {
+        LocalDateTime theOldestPublishedAt = JustJoinItDateTime.createFrom((String) rawOffers.get(0).getOffer().get("publishedAt")).value;
+
+        for (JustJoinItRawOffer rawOffer : rawOffers) {
+            LocalDateTime publishedAt = JustJoinItDateTime.createFrom((String) rawOffer.getOffer().get("publishedAt")).value;
+
+            if (publishedAt.isBefore(theOldestPublishedAt)) {
+                theOldestPublishedAt = publishedAt;
             }
         }
 
-        // todo add stats:
+        return theOldestPublishedAt;
     }
 
     private static void areRawOffersAreTheSameOriginOffer(List<JustJoinItRawOffer> rawOffers) {
@@ -80,10 +99,8 @@ public class FixOffersPublishedAtCli {
             Collections.sort(requiredSkills2);
 
             if (! requiredSkills2.equals(requiredSkills1)) {
-                throw new RuntimeException(String.format("requiredSkills: %s->%s", requiredSkills2, requiredSkills2));
+                throw new RuntimeException(String.format("requiredSkills: %s->%s", requiredSkills1, requiredSkills2));
             }
-
-            // todo think if should I add some more checking
         }
     }
 
