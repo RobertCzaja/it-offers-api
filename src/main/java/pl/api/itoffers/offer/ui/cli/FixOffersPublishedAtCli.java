@@ -42,9 +42,14 @@ public class FixOffersPublishedAtCli {
 
         List<Offer> offers = offerRepository.findByPublishedAt(DATETIME_TO_FIX);
         log.info("Found: {}", offers.size());
+        FixReport report = new FixReport(Integer.valueOf(limit), offers.size());
 
         for (Offer offer : offers) {
-            // todo apply limit checking
+            report.startProcessing();
+            if (report.limitReached()) {
+                break;
+            }
+
             List<JustJoinItRawOffer> justJoinItRawOffers = fetchRawOffers(offer);
 
             if (justJoinItRawOffers.isEmpty()) {
@@ -55,21 +60,26 @@ public class FixOffersPublishedAtCli {
             try {
                 areRawOffersAreTheSameOriginOffer(justJoinItRawOffers);
             } catch (RuntimeException e) {
-                log.warn("Different {}", e.getMessage());
+                log.warn("[Offer: {}] Different {}", offer.getId(), e.getMessage());
                 continue;
             }
 
-            offer.setPublishedAt(getTheOldestPublishedAt(justJoinItRawOffers));
+            LocalDateTime correctPublishedAt = getTheOldestPublishedAt(justJoinItRawOffers);
 
             if (! params.isMigration()) {
-                return;
+                continue;
             }
+
+            offer.setPublishedAt(correctPublishedAt);
 
             em.persist(offer);
             em.flush();
 
+            report.migratedSuccessfully();
             log.info("Offer {} migrated", offer.getId());
         }
+
+        log.info("{}mode: {} \n", report, mode);
     }
 
 
