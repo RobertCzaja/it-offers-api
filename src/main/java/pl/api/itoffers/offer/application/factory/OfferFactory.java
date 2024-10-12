@@ -30,7 +30,6 @@ public class OfferFactory {
             (String) rawOffer.getOffer().get("slug"),
             (String) rawOffer.getOffer().get("title"),
             (String) rawOffer.getOffer().get("experienceLevel"),
-            createSalary(rawOffer),
             createCharacteristics(rawOffer),
             categories,
             salaries,
@@ -75,19 +74,6 @@ public class OfferFactory {
         }
 
         return company;
-    }
-
-    private DeprecatedSalary createSalary(JustJoinItRawOffer rawOffer) {
-        ArrayList<HashMap<String, Object>> employmentTypes = (ArrayList<HashMap<String, Object>>) rawOffer.getOffer().get("employmentTypes");
-        HashMap<String, Object> employmentType = employmentTypes.get(0);
-        return null != employmentType.get("from")
-                ? new DeprecatedSalary(
-                Double.valueOf((Integer)employmentType.get("from")),
-                Double.valueOf((Integer)employmentType.get("to")),
-                (String) employmentType.get("currency"),
-                (String) employmentType.get("type")
-        )
-                : new DeprecatedSalary();
     }
 
     private Characteristics createCharacteristics(JustJoinItRawOffer rawOffer) {

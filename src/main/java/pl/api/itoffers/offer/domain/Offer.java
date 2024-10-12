@@ -2,9 +2,6 @@ package pl.api.itoffers.offer.domain;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.JoinFormula;
-import org.hibernate.annotations.NotFound;
-import org.hibernate.annotations.NotFoundAction;
 
 import java.time.LocalDateTime;
 import java.util.Set;
@@ -26,8 +23,6 @@ public class Offer {
     private final String title;
     @Getter
     private final String seniority;
-    @Embedded
-    private final DeprecatedSalary deprecatedSalary;
     @Embedded
     private final Characteristics characteristics;
     @Getter
