@@ -40,3 +40,6 @@ application:
   provider:
     just-join-it:
       origin: https://justjoin.it
+logging:
+  pattern:
+    console: "%clr(%5p) [%d{HH:mm:ss}] %logger{36} - %msg%n"
