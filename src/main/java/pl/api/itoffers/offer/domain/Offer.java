@@ -16,6 +16,11 @@ public class Offer {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
     @Getter
+    @NonNull
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "origin_id", referencedColumnName = "id")
+    private Origin origin;
+    @Getter
     private final String technology;
     @Getter
     private final String slug;
@@ -54,6 +59,14 @@ public class Offer {
     @Deprecated
     public void setPublishedAt(LocalDateTime publishedAt) {
         this.publishedAt = publishedAt;
+    }
+
+    /**
+     * Should be removed after Provider/MongoDB ID migration
+     */
+    @Deprecated
+    public void setOrigin(Origin origin) {
+        this.origin = origin;
     }
 
     public Set<Salary> getSalaries() {

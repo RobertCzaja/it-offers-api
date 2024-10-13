@@ -24,8 +24,8 @@ public class OfferFactory {
             Set<Salary> salaries,
             Company company
     ) {
-
         return new Offer(
+            new Origin(rawOffer.getId().toString(), rawOffer.getScrapingId(), Origin.Provider.JUST_JOIN_IT),
             rawOffer.getTechnology(),
             (String) rawOffer.getOffer().get("slug"),
             (String) rawOffer.getOffer().get("title"),

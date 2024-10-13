@@ -33,6 +33,7 @@ public class OfferModelITest extends AbstractITest {
         Offer offer = offerBuilder.plainJob("php").saveAndGetOffer();
 
         Optional<Offer> fetchedOffer = offerRepository.findById(offer.getId());
+        assertThat(fetchedOffer.get().getOrigin().getProvider()).isEqualTo(Origin.Provider.JUST_JOIN_IT);
         assertThat(fetchedOffer.get().getCreatedAt()).isNotNull();
         assertThat(fetchedOffer.get().getSalaries()).isEmpty();
     }

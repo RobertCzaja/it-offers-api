@@ -1,5 +1,6 @@
 package pl.api.itoffers.helper;
 
+import org.aspectj.weaver.ast.Or;
 import pl.api.itoffers.offer.application.repository.CategoryRepository;
 import pl.api.itoffers.offer.application.repository.CompanyRepository;
 import pl.api.itoffers.offer.application.repository.OfferRepository;
@@ -20,6 +21,7 @@ public class OfferBuilder {
      */
     public boolean generateId = true;
     private Company company = new Company("creativestyle", "Kraków", "Zabłocie 25/1");
+    private Origin origin = createRandomOrigin();
     private LocalDateTime createdAt = LocalDateTime.now();
 
     private CategoryRepository categoryRepository;
@@ -39,6 +41,7 @@ public class OfferBuilder {
     }
 
     private void clearState() {
+        origin = createRandomOrigin();
         categories = new HashSet<Category>();
         salaries = new HashSet<Salary>();
         technology = null;
@@ -51,6 +54,14 @@ public class OfferBuilder {
         if (null == technology) throw new NotCompletedException("technology");
         if (null == company) throw new NotCompletedException("company");
         if (null == createdAt) throw new NotCompletedException("createdAt");
+    }
+
+    private static Origin createRandomOrigin() {
+        return new Origin(
+            UUID.randomUUID().toString().substring(0, 25),
+            UUID.randomUUID(),
+            Origin.Provider.JUST_JOIN_IT
+        );
     }
 
     private Category createCategory(String name) {
@@ -126,6 +137,7 @@ public class OfferBuilder {
     }
 
     private static Offer createOffer(
+        Origin origin,
         String technology,
         Company company,
         Set<Category> categories,
@@ -133,6 +145,7 @@ public class OfferBuilder {
         LocalDateTime createdAt
     ) {
         return new Offer(
+            origin,
             technology,
             "remitly-software-development-engineer-krakow-go-5fbdbda0",
             "Software Development Engineer",
@@ -150,6 +163,7 @@ public class OfferBuilder {
     public Offer build() {
         checkIfStateIsNotEmpty();
         Offer offer = createOffer(
+            origin,
             technology,
             company,
             categories,
@@ -165,6 +179,7 @@ public class OfferBuilder {
         checkIfStateIsNotEmpty();
         offerRepository.save(
             createOffer(
+                origin,
                 technology,
                 saveCompany(),
                 saveCategories(),
@@ -180,6 +195,7 @@ public class OfferBuilder {
         checkIfStateIsNotEmpty();
 
         Offer offer = createOffer(
+            origin,
             technology,
             saveCompany(),
             saveCategories(),
