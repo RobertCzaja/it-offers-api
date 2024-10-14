@@ -90,6 +90,27 @@ public class OfferServiceITest extends AbstractITest {
         OfferSalaryAssert.collectionContains(offer.getSalaries(), "permanent", "PLN", 25000, 32000, false);
     }
 
+    @Test
+    public void shouldSaveOfferOnlyOnceEvenIfTheNewOneWasUpdatedInJustJoinItExternalServiceWhichWeKnowBecauseOfNewPublishedAtField() {
+        UUID scrappingId1 = UUID.randomUUID();
+        fetchOffersFromExternalService(scrappingId1, JustJoinItParams.ALL_LOCATIONS_PAYLOAD_DUPLICATED_1_PATH);
+
+        UUID scrappingId2 = UUID.randomUUID();
+        fetchOffersFromExternalService(scrappingId2, JustJoinItParams.ALL_LOCATIONS_PAYLOAD_DUPLICATED_2_PATH);
+
+        UUID scrappingId3 = UUID.randomUUID();
+        fetchOffersFromExternalService(scrappingId3, JustJoinItParams.ALL_LOCATIONS_PAYLOAD_DUPLICATED_3_PATH);
+
+        offerService.processOffersFromExternalService(scrappingId1);
+        offerService.processOffersFromExternalService(scrappingId2);
+        offerService.processOffersFromExternalService(scrappingId3);
+
+        List<Offer> offers = offerRepository.findAll();
+        assertThat(offers).hasSize(1);
+        Offer offer =offers.get(0);
+        assertThat(offer.getPublishedAt()).isEqualTo(JustJoinItDateTime.createFrom("2024-08-25T07:00:56.216Z").value);
+    }
+
     private void fetchOffersFromExternalService(UUID scrappingId, String returnedPayload) {
         jjitConnector.payloadPath = returnedPayload;
         jjitProvider.fetch(TECHNOLOGY, scrappingId);

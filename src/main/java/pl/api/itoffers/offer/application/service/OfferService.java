@@ -63,8 +63,7 @@ public class OfferService {
         return offerRepository.findByDifferentOffer(
                 offer.getSlug(),
                 offer.getTitle(),
-                offer.getCompany().getName(),
-                offer.getPublishedAt()
+                offer.getCompany().getName()
         );
     }
 }

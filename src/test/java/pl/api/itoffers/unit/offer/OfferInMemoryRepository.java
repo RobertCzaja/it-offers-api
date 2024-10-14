@@ -24,7 +24,7 @@ public class OfferInMemoryRepository implements OfferRepository {
     }
 
     @Override
-    public Offer findByDifferentOffer(String slug, String title, String companyName, LocalDateTime publishedAt) {
+    public Offer findByDifferentOffer(String slug, String title, String companyName) {
         return null;
     }
 
