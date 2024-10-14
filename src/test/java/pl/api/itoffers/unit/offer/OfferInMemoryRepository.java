@@ -34,6 +34,11 @@ public class OfferInMemoryRepository implements OfferRepository {
     }
 
     @Override
+    public List<Offer> findAllByOrderBySlugAsc() {
+        throw new RuntimeException("Not implemented");
+    }
+
+    @Override
     public void flush() {
 
     }

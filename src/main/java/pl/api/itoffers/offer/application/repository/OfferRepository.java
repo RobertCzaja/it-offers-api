@@ -21,4 +21,6 @@ public interface OfferRepository extends JpaRepository<Offer, UUID> {
     Offer findByDifferentOffer(String slug, String title, String companyName);
 
     List<Offer> findByPublishedAt(LocalDateTime publishedAt);
+
+    List<Offer> findAllByOrderBySlugAsc();
 }
