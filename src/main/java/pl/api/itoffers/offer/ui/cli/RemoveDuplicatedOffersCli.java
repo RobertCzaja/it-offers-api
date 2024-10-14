@@ -69,10 +69,11 @@ public class RemoveDuplicatedOffersCli {
                     break;
                 }
 
-                if (groupedOffers.getValue().size() > 1) {
-                    // get list without last element
-                    // remove it
-                    // flush
+                ArrayList<Offer> currentOffers = groupedOffers.getValue();
+
+                if (currentOffers.size() > 1) {
+                    currentOffers.remove(currentOffers.size() - 1);
+                    offerRepository.deleteAll(currentOffers);
                     report.migratedSuccessfully();
                 }
             }
