@@ -55,7 +55,13 @@ public class OfferService {
             companyRepository.save(company);
             categoryRepository.saveAll(categories.get("toSave"));
             offerRepository.save(offer);
-            log.info(String.format("[just-join-it][migration] new offer %s", offer));
+            log.info(
+                "[just-join-it][import][{}] '{}' from {} at {}",
+                offer.getTechnology(),
+                offer.getTitle(),
+                offer.getCompany().getName(),
+                offer.getPublishedAt()
+            );
         }
     }
 
