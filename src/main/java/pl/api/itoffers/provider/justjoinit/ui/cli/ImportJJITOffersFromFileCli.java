@@ -14,6 +14,7 @@ import org.springframework.shell.standard.ShellOption;
 public class ImportJJITOffersFromFileCli {
     // todo get scrappingId from a client, or generate uuid and show to the client
     // todo check if I can create S3 container in docker compose
+    // todo move bucketname also to envs - maybe also filename should be in the env?
 
     @ShellMethod(key="jjit-s3")
     public void saveInMongoDBJJITOffersStoredInS3(

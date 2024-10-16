@@ -18,6 +18,8 @@ public class AWSCloudUtil {
     private String accessKey;
     @Value("${application.aws.s3.secretKey}")
     private String secretKey;
+    @Value("${application.aws.s3.bucket}")
+    private String bucket;
 
     private AWSCredentials awsCredentials(String accessKey, String secretKey) {
         return new BasicAWSCredentials(accessKey, secretKey);

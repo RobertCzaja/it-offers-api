@@ -38,6 +38,7 @@ jobs:
         MONGO_DB_URI: mongodb://localhost:27017
         AWS_S3_ACCESS_KEY: someKey
         AWS_S3_SECRET_KEY: someSecret
+        AWS_S3_BUCKET: someBucket
 
     - name: Save artifact
       uses: actions/upload-artifact@v3
