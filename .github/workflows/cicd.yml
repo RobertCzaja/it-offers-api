@@ -36,6 +36,8 @@ jobs:
         POSTGRES_DB: it-offers
         JWT_SECRET: 2D4A614E645267556B58703273357638792F423F4428472B4B6250655368566D
         MONGO_DB_URI: mongodb://localhost:27017
+        AWS_S3_ACCESS_KEY: someKey
+        AWS_S3_SECRET_KEY: someSecret
 
     - name: Save artifact
       uses: actions/upload-artifact@v3
