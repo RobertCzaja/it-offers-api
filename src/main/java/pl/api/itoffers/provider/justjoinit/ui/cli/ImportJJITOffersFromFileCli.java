@@ -1,8 +1,5 @@
 package pl.api.itoffers.provider.justjoinit.ui.cli;
 
-import com.amazonaws.services.s3.model.S3ObjectInputStream;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
@@ -11,14 +8,10 @@ import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 import org.springframework.shell.standard.ShellOption;
 import pl.api.itoffers.provider.justjoinit.JustJoinItRepository;
-import pl.api.itoffers.provider.justjoinit.model.JustJoinItDateTime;
-import pl.api.itoffers.provider.justjoinit.model.JustJoinItRawOffer;
 import pl.api.itoffers.provider.justjoinit.service.JustJoinItPayloadExtractor;
 import pl.api.itoffers.shared.aws.AwsS3Connector;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.*;
 
 @Slf4j
@@ -26,7 +19,6 @@ import java.util.*;
 @Transactional
 @AllArgsConstructor
 public class ImportJJITOffersFromFileCli {
-    // todo get scrappingId from a client, or generate uuid and show to the client
     // todo check if I can create S3 container in docker compose
     // todo create next cli to migrate JJIT MongoDB Offers to Postgres Offer
     // todo once it will be functionally finished - refactor all/create separated services to fetch JSON file
@@ -67,7 +59,5 @@ public class ImportJJITOffersFromFileCli {
 //                )
 //            );
         });
-
-        // todo check if JJIT raw offer isn't already in MongoDB
     }
 }
