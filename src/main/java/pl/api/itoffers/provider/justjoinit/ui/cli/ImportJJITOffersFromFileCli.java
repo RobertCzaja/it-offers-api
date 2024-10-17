@@ -96,22 +96,22 @@ public class ImportJJITOffersFromFileCli {
             }
 
             // todo get the newest one (by publishedAt)
+
+            /*offers.forEach(offer -> {
+            repository.save(
+                new JustJoinItRawOffer(
+                    scrappingId,
+                    (String) offer.get("technology"),
+                    offer,
+                    JustJoinItDateTime.createFrom(rawCreatedAt.get("$date")).value
+                )
+            );
+            });*/
+
+            report.migratedSuccessfully();
         }
 
-        // todo add some index to use limit of saving
-        // todo check in MongoDB it is not already added
-        // todo add final report
-
-//        offers.forEach(offer -> {
-////            repository.save(
-////                new JustJoinItRawOffer(
-////                    scrappingId,
-////                    (String) offer.get("technology"),
-////                    offer,
-////                    JustJoinItDateTime.createFrom(rawCreatedAt.get("$date")).value
-////                )
-////            );
-//        });
+        log.info("{}all offers in s3 file: {}\n", report, rawOffers.size());
     }
 
     public static JustJoinItRawOffer createJJITDocument(UUID scrappingId, Map<String, Object> rawOffer) {
