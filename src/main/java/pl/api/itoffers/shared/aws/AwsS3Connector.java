@@ -9,6 +9,10 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import software.amazon.awssdk.regions.Region;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
 @Service
 public class AwsS3Connector {
 
@@ -19,7 +23,20 @@ public class AwsS3Connector {
     @Value("${application.aws.s3.bucket}")
     private String bucket;
 
-    public S3ObjectInputStream download(String fileName) {
+    public String fetchJson(String fileName) throws IOException {
+        S3ObjectInputStream inputStream = this.download(fileName);
+        BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+
+        StringBuilder sb = new StringBuilder();
+
+        String line;
+        while ((line = reader.readLine()) != null) {
+            sb.append(line);
+        }
+        return sb.toString();
+    }
+
+    private S3ObjectInputStream download(String fileName) {
         return awsS3ClientBuilder().getObject(bucket, fileName).getObjectContent();
     }
 

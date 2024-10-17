@@ -44,44 +44,30 @@ public class ImportJJITOffersFromFileCli {
     ) throws IOException {
 
         log.info("Start fetching {}", FILE_NAME);
-        String justJoinItOffers = fetchJson(FILE_NAME);
+        String justJoinItOffers = awsS3Connector.fetchJson(FILE_NAME);
         log.info("Fetched");
         ArrayList<Map<String, Object>> offers = extractor.convert(mapper.readTree(justJoinItOffers).elements());
         UUID scrappingId = UUID.randomUUID();
         log.info("ScrappingId: {}", scrappingId);
 
+        // todo add limit
+        // todo should be grouped by slug first?
         // todo check in MongoDB it is not already added
         offers.forEach(offer -> {
             LinkedHashMap<String, String> rawCreatedAt = (LinkedHashMap<String, String>) offer.get("createdAt");
 
             String a = "";
 
-            repository.save(
-                new JustJoinItRawOffer(
-                    scrappingId,
-                    (String) offer.get("technology"),
-                    offer,
-                    JustJoinItDateTime.createFrom(rawCreatedAt.get("$date")).value
-                )
-            );
+//            repository.save(
+//                new JustJoinItRawOffer(
+//                    scrappingId,
+//                    (String) offer.get("technology"),
+//                    offer,
+//                    JustJoinItDateTime.createFrom(rawCreatedAt.get("$date")).value
+//                )
+//            );
         });
 
-        // todo should be grouped by slug first?
-        // todo add limit
         // todo check if JJIT raw offer isn't already in MongoDB
-    }
-
-    // todo move to some service
-    private String fetchJson(String fileName) throws IOException {
-        S3ObjectInputStream inputStream = awsS3Connector.download(fileName);
-        BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
-
-        StringBuilder sb = new StringBuilder();
-
-        String line;
-        while ((line = reader.readLine()) != null) {
-            sb.append(line);
-        }
-        return sb.toString();
     }
 }
