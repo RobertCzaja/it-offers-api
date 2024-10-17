@@ -11,6 +11,10 @@ import pl.api.itoffers.offer.domain.Offer;
 
 import java.util.*;
 
+/**
+ * OneUse - remove after usage
+ * @deprecated
+ */
 @Slf4j
 @ShellComponent
 @Transactional
