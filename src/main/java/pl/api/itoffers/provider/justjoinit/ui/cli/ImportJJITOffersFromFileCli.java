@@ -7,7 +7,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 import org.springframework.shell.standard.ShellOption;
+import pl.api.itoffers.offer.domain.Offer;
 import pl.api.itoffers.offer.ui.cli.CliFixParams;
+import pl.api.itoffers.offer.ui.cli.FixReport;
 import pl.api.itoffers.provider.justjoinit.JustJoinItRepository;
 import pl.api.itoffers.provider.justjoinit.model.JustJoinItDateTime;
 import pl.api.itoffers.provider.justjoinit.model.JustJoinItRawOffer;
@@ -15,7 +17,6 @@ import pl.api.itoffers.provider.justjoinit.service.JustJoinItPayloadExtractor;
 import pl.api.itoffers.shared.aws.AwsS3Connector;
 
 import java.io.IOException;
-import java.time.LocalDateTime;
 import java.util.*;
 
 /**
@@ -66,13 +67,40 @@ public class ImportJJITOffersFromFileCli {
             }
         }
 
+        FixReport report = new FixReport(Integer.valueOf(limit), jjitOffers.size());
+
         if (! params.isMigration()) {
-            // todo show report
+            log.info("{}all offers in s3 file: {}\n", report, rawOffers.size());
             return;
+        }
+
+        for (Map.Entry<String, List<JustJoinItRawOffer>> groupedOffers : jjitOffers.entrySet()) {
+            List<JustJoinItRawOffer> currentOffers = groupedOffers.getValue();
+            JustJoinItRawOffer currentOffer = currentOffers.get(0);
+
+            List<JustJoinItRawOffer> alreadyStored = repository.findOriginatedRawOffers(
+                (String) currentOffer.getOffer().get("title"),
+                (String) currentOffer.getOffer().get("slug"),
+                (String) currentOffer.getOffer().get("companyName"),
+                (String) currentOffer.getOffer().get("experienceLevel")
+            );
+
+            if (! alreadyStored.isEmpty()) {
+                log.warn("[already-stored] {}", currentOffer.getOffer().get("slug"));
+                continue;
+            }
+
+            report.startProcessing();
+            if (report.limitReached()) {
+                break;
+            }
+
+            // todo get the newest one (by publishedAt)
         }
 
         // todo add some index to use limit of saving
         // todo check in MongoDB it is not already added
+        // todo add final report
 
 //        offers.forEach(offer -> {
 ////            repository.save(
