@@ -13,6 +13,7 @@ import org.springframework.shell.standard.ShellOption;
 import pl.api.itoffers.provider.justjoinit.JustJoinItRepository;
 import pl.api.itoffers.provider.justjoinit.model.JustJoinItDateTime;
 import pl.api.itoffers.provider.justjoinit.model.JustJoinItRawOffer;
+import pl.api.itoffers.provider.justjoinit.service.JustJoinItPayloadExtractor;
 import pl.api.itoffers.shared.aws.AwsS3Connector;
 
 import java.io.BufferedReader;
@@ -34,6 +35,7 @@ public class ImportJJITOffersFromFileCli {
     private AwsS3Connector awsS3Connector;
     private ObjectMapper mapper;
     private JustJoinItRepository repository;
+    private JustJoinItPayloadExtractor extractor;
 
     @ShellMethod(key="jjit-s3")
     public void saveInMongoDBJJITOffersStoredInS3(
@@ -44,17 +46,10 @@ public class ImportJJITOffersFromFileCli {
         log.info("Start fetching {}", FILE_NAME);
         String justJoinItOffers = fetchJson(FILE_NAME);
         log.info("Fetched");
-        Iterator<JsonNode> offersNode = mapper.readTree(justJoinItOffers).elements();
+        ArrayList<Map<String, Object>> offers = extractor.convert(mapper.readTree(justJoinItOffers).elements());
         UUID scrappingId = UUID.randomUUID();
         log.info("ScrappingId: {}", scrappingId);
 
-        /* todo duplication from provider/justjoinit/service/JustJoinItPayloadExtractor.java:39 */
-        ArrayList<Map<String, Object>> offers = new ArrayList<>();
-        while (offersNode.hasNext()) {
-            offers.add(mapper.convertValue(offersNode.next(), new TypeReference<Map<String, Object>>() {}));
-        }
-
-        // todo which technology
         // todo check in MongoDB it is not already added
         offers.forEach(offer -> {
             LinkedHashMap<String, String> rawCreatedAt = (LinkedHashMap<String, String>) offer.get("createdAt");
@@ -66,7 +61,8 @@ public class ImportJJITOffersFromFileCli {
                     scrappingId,
                     (String) offer.get("technology"),
                     offer,
-                    JustJoinItDateTime.createFrom(rawCreatedAt.get("$date")).value)
+                    JustJoinItDateTime.createFrom(rawCreatedAt.get("$date")).value
+                )
             );
         });
 

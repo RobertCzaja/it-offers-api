@@ -36,16 +36,21 @@ public class JustJoinItPayloadExtractor {
                     .get(0)
                     .path("data")
                     .elements();
-            ArrayList<Map<String, Object>> offers = new ArrayList<>();
-            while (offersNode.hasNext()) {
-                offers.add(mapper.convertValue(offersNode.next(), new TypeReference<Map<String, Object>>() {}));
-            }
-            return offers;
-
+            return convert(offersNode);
         } catch (JsonProcessingException e) {
             fileManager.saveFile(rawJsonPayload, "json");
             throw new JustJoinItException("Could not extract offers from raw JSON payload. " + e.getMessage());
         }
     }
 
+    /**
+     * TODO add unit test
+     */
+    public ArrayList<Map<String, Object>> convert(Iterator<JsonNode> offersNode) {
+        ArrayList<Map<String, Object>> offers = new ArrayList<>();
+        while (offersNode.hasNext()) {
+            offers.add(mapper.convertValue(offersNode.next(), new TypeReference<Map<String, Object>>() {}));
+        }
+        return offers;
+    }
 }
