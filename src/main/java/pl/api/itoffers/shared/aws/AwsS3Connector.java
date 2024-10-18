@@ -26,6 +26,8 @@ public class AwsS3Connector {
     private String bucket;
 
     public String fetchJson(String fileName) throws IOException {
+        Runtime runtime = Runtime.getRuntime();
+
         log.info("[aws-s3-connector] start fetching");
         S3ObjectInputStream inputStream = this.download(fileName);
         log.info("[aws-s3-connector] fetched");
@@ -36,6 +38,12 @@ public class AwsS3Connector {
         log.info("[aws-s3-connector] start converting the file");
         String line;
         while ((line = reader.readLine()) != null) {
+            log.info(
+                "[aws-s3-connector] memory free: {}/allocated: {}/max: {}",
+                runtime.freeMemory() / 1024,
+                runtime.totalMemory() / 1024,
+                runtime.maxMemory() / 1024
+            );
             sb.append(line);
         }
         return sb.toString();
