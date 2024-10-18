@@ -7,7 +7,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 import org.springframework.shell.standard.ShellOption;
-import pl.api.itoffers.offer.domain.Offer;
 import pl.api.itoffers.offer.ui.cli.CliFixParams;
 import pl.api.itoffers.offer.ui.cli.FixReport;
 import pl.api.itoffers.provider.justjoinit.JustJoinItRepository;
@@ -17,6 +16,7 @@ import pl.api.itoffers.provider.justjoinit.service.JustJoinItPayloadExtractor;
 import pl.api.itoffers.shared.aws.AwsS3Connector;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.*;
 
 /**
@@ -28,8 +28,6 @@ import java.util.*;
 @Transactional
 @AllArgsConstructor
 public class ImportJJITOffersFromFileCli {
-    // todo create next cli to migrate JJIT MongoDB Offers to Postgres Offer
-    // todo once it will be functionally finished - refactor all/create separated services to fetch JSON file
     private static final String FILE_NAME = "dev-recruit.just_join_it_raw_offers.json";
 
     private AwsS3Connector awsS3Connector;
@@ -61,6 +59,7 @@ public class ImportJJITOffersFromFileCli {
 
             if (null == alreadySavedSameOffers) {
                 List<JustJoinItRawOffer> jjitOffersCollection = new ArrayList<>();
+                jjitOffersCollection.add(createJJITDocument(scrappingId, rawOffer));
                 jjitOffers.put(slug, jjitOffersCollection);
             } else {
                 alreadySavedSameOffers.add(createJJITDocument(scrappingId, rawOffer));
@@ -95,23 +94,29 @@ public class ImportJJITOffersFromFileCli {
                 break;
             }
 
-            // todo get the newest one (by publishedAt)
+            log.info("[new-offer] {}", currentOffer.getOffer().get("slug"));
 
-            /*offers.forEach(offer -> {
-            repository.save(
-                new JustJoinItRawOffer(
-                    scrappingId,
-                    (String) offer.get("technology"),
-                    offer,
-                    JustJoinItDateTime.createFrom(rawCreatedAt.get("$date")).value
-                )
-            );
-            });*/
+            repository.save(getNewest(currentOffers));
 
             report.migratedSuccessfully();
         }
 
         log.info("{}all offers in s3 file: {}\n", report, rawOffers.size());
+    }
+
+    private static JustJoinItRawOffer getNewest(List<JustJoinItRawOffer> offers) {
+        JustJoinItRawOffer newest = offers.get(0);
+
+        for (JustJoinItRawOffer currentOffer : offers) {
+            LocalDateTime currentPublishedAt = JustJoinItDateTime.createFrom((String) currentOffer.getOffer().get("publishedAt")).value;
+            LocalDateTime newestPublishedAt = JustJoinItDateTime.createFrom((String) newest.getOffer().get("publishedAt")).value;
+
+            if (newestPublishedAt.isBefore(currentPublishedAt)) {
+                newest = currentOffer;
+            }
+        }
+
+        return newest;
     }
 
     public static JustJoinItRawOffer createJJITDocument(UUID scrappingId, Map<String, Object> rawOffer) {
