@@ -44,7 +44,15 @@ public class ImportJJITOffersFromFileCli {
         CliFixParams params = new CliFixParams(mode, Integer.valueOf(limit));
 
         log.info("Start fetching {}", FILE_NAME);
-        String justJoinItOffers = awsS3Connector.fetchJson(FILE_NAME);
+        String justJoinItOffers;
+        try {
+            justJoinItOffers = awsS3Connector.fetchJson(FILE_NAME);
+        } catch (Exception e) {
+            log.error("{}", e);
+            e.printStackTrace();
+            throw e;
+        }
+
         log.info("Fetched");
         ArrayList<Map<String, Object>> rawOffers = extractor.convert(mapper.readTree(justJoinItOffers).elements());
         UUID scrappingId = UUID.randomUUID();
