@@ -46,6 +46,7 @@ public class AwsS3Connector {
             );*/
             sb.append(line);
         }
+        log.info("[aws-s3-connector] string converted");
         return sb.toString();
     }
 
