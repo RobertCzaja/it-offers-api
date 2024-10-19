@@ -5,17 +5,18 @@ import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.s3.model.S3ObjectInputStream;
-import lombok.extern.slf4j.Slf4j;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import pl.api.itoffers.shared.utils.monitor.MemoryUsage;
 import software.amazon.awssdk.regions.Region;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-@Slf4j
 @Service
+@RequiredArgsConstructor
 public class AwsS3Connector {
 
     @Value("${application.aws.s3.accessKey}")
@@ -24,21 +25,23 @@ public class AwsS3Connector {
     private String secretKey;
     @Value("${application.aws.s3.bucket}")
     private String bucket;
+    private final MemoryUsage memoryUsage;
 
     public String fetchJson(String fileName) throws IOException {
-        log.info("[aws-s3-connector] start fetching");
+        memoryUsage.log("before download");
         S3ObjectInputStream inputStream = this.download(fileName);
-        log.info("[aws-s3-connector] fetched");
         BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
 
         StringBuilder sb = new StringBuilder();
 
-        log.info("[aws-s3-connector] start converting the file");
+        memoryUsage.log("after download");
         int cp;
         while ((cp = reader.read()) != -1) {
             sb.append((char) cp);
         }
-        log.info("[aws-s3-connector] string converted");
+        memoryUsage.log("after string builder");
+        reader.close();
+        memoryUsage.log("after Reader closing");
         return sb.toString();
     }
 
