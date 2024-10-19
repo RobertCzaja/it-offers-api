@@ -43,9 +43,6 @@ public class JustJoinItPayloadExtractor {
         }
     }
 
-    /**
-     * TODO add unit test
-     */
     public ArrayList<Map<String, Object>> convert(Iterator<JsonNode> offersNode) {
         ArrayList<Map<String, Object>> offers = new ArrayList<>();
         while (offersNode.hasNext()) {
