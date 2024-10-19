@@ -25,7 +25,6 @@ public class ReportCategoriesTest {
         this.reportCategoriesService = new ReportCategoriesService(this.offerRepository);
     }
 
-    /* TODO Bug https://github.com/RobertCzaja/it-offers/issues/41 */
     @Test
     public void shouldReturnExpectedStatistics() {
         List<Offer> offers = new ArrayList<>();
