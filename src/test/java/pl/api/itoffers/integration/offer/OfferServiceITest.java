@@ -15,7 +15,7 @@ import pl.api.itoffers.offer.application.repository.OfferRepository;
 import pl.api.itoffers.offer.application.service.OfferService;
 import pl.api.itoffers.offer.domain.Offer;
 import pl.api.itoffers.provider.justjoinit.JustJoinItProvider;
-import pl.api.itoffers.provider.justjoinit.JustJoinItRepository;
+import pl.api.itoffers.provider.justjoinit.repository.JustJoinItRepository;
 import pl.api.itoffers.provider.justjoinit.model.JustJoinItDateTime;
 
 import java.util.HashSet;

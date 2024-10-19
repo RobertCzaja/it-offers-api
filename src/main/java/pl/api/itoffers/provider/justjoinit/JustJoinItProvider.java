@@ -1,8 +1,8 @@
 package pl.api.itoffers.provider.justjoinit;
 
-import org.bson.Document;
 import org.springframework.stereotype.Service;
 import pl.api.itoffers.provider.justjoinit.model.JustJoinItRawOffer;
+import pl.api.itoffers.provider.justjoinit.repository.JustJoinItRepository;
 import pl.api.itoffers.provider.justjoinit.service.JustJoinItPayloadExtractor;
 
 import java.time.LocalDateTime;

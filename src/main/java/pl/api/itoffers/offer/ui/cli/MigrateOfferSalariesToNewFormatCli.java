@@ -10,7 +10,7 @@ import pl.api.itoffers.offer.application.factory.SalariesFactory;
 import pl.api.itoffers.offer.application.repository.OfferRepository;
 import pl.api.itoffers.offer.domain.Offer;
 import pl.api.itoffers.offer.domain.Salary;
-import pl.api.itoffers.provider.justjoinit.JustJoinItRepository;
+import pl.api.itoffers.provider.justjoinit.repository.JustJoinItRepository;
 import pl.api.itoffers.provider.justjoinit.model.JustJoinItRawOffer;
 
 import java.util.*;

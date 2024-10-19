@@ -9,7 +9,7 @@ import org.springframework.shell.standard.ShellMethod;
 import org.springframework.shell.standard.ShellOption;
 import pl.api.itoffers.shared.utils.cli.CliFixParams;
 import pl.api.itoffers.shared.utils.cli.FixReport;
-import pl.api.itoffers.provider.justjoinit.JustJoinItRepository;
+import pl.api.itoffers.provider.justjoinit.repository.JustJoinItRepository;
 import pl.api.itoffers.provider.justjoinit.model.JustJoinItDateTime;
 import pl.api.itoffers.provider.justjoinit.model.JustJoinItRawOffer;
 import pl.api.itoffers.provider.justjoinit.service.JustJoinItPayloadExtractor;

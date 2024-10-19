@@ -1,4 +1,4 @@
-package pl.api.itoffers.provider.justjoinit;
+package pl.api.itoffers.provider.justjoinit.repository;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
