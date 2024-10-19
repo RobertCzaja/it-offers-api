@@ -8,6 +8,8 @@ import org.springframework.shell.standard.ShellMethod;
 import org.springframework.shell.standard.ShellOption;
 import pl.api.itoffers.offer.application.repository.OfferRepository;
 import pl.api.itoffers.offer.domain.Offer;
+import pl.api.itoffers.shared.utils.cli.CliFixParams;
+import pl.api.itoffers.shared.utils.cli.FixReport;
 
 import java.util.*;
 

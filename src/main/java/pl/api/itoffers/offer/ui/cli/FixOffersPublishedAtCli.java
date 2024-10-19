@@ -12,6 +12,8 @@ import pl.api.itoffers.offer.domain.Offer;
 import pl.api.itoffers.provider.justjoinit.JustJoinItRepository;
 import pl.api.itoffers.provider.justjoinit.model.JustJoinItDateTime;
 import pl.api.itoffers.provider.justjoinit.model.JustJoinItRawOffer;
+import pl.api.itoffers.shared.utils.cli.CliFixParams;
+import pl.api.itoffers.shared.utils.cli.FixReport;
 
 import java.time.LocalDateTime;
 import java.util.*;

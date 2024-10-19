@@ -1,4 +1,4 @@
-package pl.api.itoffers.offer.ui.cli;
+package pl.api.itoffers.shared.utils.cli;
 
 import lombok.ToString;
 

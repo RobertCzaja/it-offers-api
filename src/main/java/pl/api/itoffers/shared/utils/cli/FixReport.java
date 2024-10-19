@@ -1,4 +1,4 @@
-package pl.api.itoffers.offer.ui.cli;
+package pl.api.itoffers.shared.utils.cli;
 
 public class FixReport {
     private int limit;
