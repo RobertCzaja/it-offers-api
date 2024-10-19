@@ -6,6 +6,7 @@ import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.s3.model.S3ObjectInputStream;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import pl.api.itoffers.shared.utils.monitor.MemoryUsage;
@@ -16,6 +17,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 @Service
+@Slf4j
 @RequiredArgsConstructor
 public class AwsS3Connector {
 
@@ -28,20 +30,20 @@ public class AwsS3Connector {
     private final MemoryUsage memoryUsage;
 
     public String fetchJson(String fileName) throws IOException {
-        memoryUsage.log("before download");
+        log.info(memoryUsage.getLog("before download"));
         S3ObjectInputStream inputStream = this.download(fileName);
         BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
 
         StringBuilder sb = new StringBuilder();
 
-        memoryUsage.log("after download");
+        log.info(memoryUsage.getLog("after download"));
         int cp;
         while ((cp = reader.read()) != -1) {
             sb.append((char) cp);
         }
-        memoryUsage.log("after string builder");
+        log.info(memoryUsage.getLog("after string builder"));
         reader.close();
-        memoryUsage.log("after Reader closing");
+        log.info(memoryUsage.getLog("after Reader closing"));
         return sb.toString();
     }
 
