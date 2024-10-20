@@ -18,7 +18,7 @@ import java.util.UUID;
 public class CronLogScheduledJob {
     private final CronLogRepository repository;
 
-    @Scheduled(cron="0 * * * * *")
+    @Scheduled(cron="0 0 0 24 12 ?")
     public void fetchJustJoinIt() {
         log.info("[cron-log] executed");
         repository.save(new CronLog(UUID.randomUUID(), LocalDateTime.now()));
