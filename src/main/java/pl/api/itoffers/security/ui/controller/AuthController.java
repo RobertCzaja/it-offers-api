@@ -4,15 +4,10 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.function.EntityResponse;
 import pl.api.itoffers.security.application.service.AuthorizationService;
-import pl.api.itoffers.security.application.service.JwtService;
-import pl.api.itoffers.security.domain.User;
-import pl.api.itoffers.security.application.repository.UserRepository;
 import pl.api.itoffers.security.domain.exception.UserNotFound;
 import pl.api.itoffers.security.ui.request.AuthorizationRequest;
 import pl.api.itoffers.security.ui.response.AuthResponse;
@@ -25,7 +20,6 @@ public class AuthController {
     @Autowired
     private AuthorizationService authorizationService;
 
-    /* TODO https://github.com/RobertCzaja/it-offers/issues/8 */
     @PostMapping(AuthController.GET_TOKEN_PATH)
     public ResponseEntity<AuthResponse> auth(@Valid @RequestBody AuthorizationRequest request)
     {
