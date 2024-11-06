@@ -16,7 +16,7 @@ import pl.api.itoffers.offer.ui.controller.ReportController;
 import java.net.URI;
 import java.util.List;
 
-/* todo should be removed in #59 */
+/** @deprecated todo should be removed in #59 */
 @Service
 @Profile("test")
 public class ReportSalariesEndpointCaller {

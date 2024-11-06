@@ -30,6 +30,12 @@ public class OffersEndpointITest extends AbstractITest {
 
     @Test
     public void shouldCorrectlyGetOffers() {
+        this.builder
+            .job("php")
+            .skills("php", "docker")
+            // todo set createdAt/publishedAt/categories
+            .pln(15000, 18000)
+            .save();
 
         ResponseEntity<OffersDto2> response = caller.makeRequest(null, null, null ,null);
 

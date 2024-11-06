@@ -24,6 +24,7 @@ public class OfferBuilder {
     private Company company = new Company("creativestyle", "Kraków", "Zabłocie 25/1");
     private Origin origin = createRandomOrigin();
     private LocalDateTime createdAt = LocalDateTime.now();
+    private LocalDateTime publishedAt = LocalDateTime.now();
 
     private CategoryRepository categoryRepository;
     private CompanyRepository companyRepository;
@@ -80,6 +81,7 @@ public class OfferBuilder {
     /** @param monthAndDay in format MM-dd  */
     public OfferBuilder at(String monthAndDay) {
         createdAt = JustJoinItDateTime.createFromDate("2024-"+monthAndDay).value;
+        publishedAt = createdAt;
         return this;
     }
 
@@ -147,7 +149,8 @@ public class OfferBuilder {
         Company company,
         Set<Category> categories,
         Set<Salary> salaries,
-        LocalDateTime createdAt
+        LocalDateTime createdAt,
+        LocalDateTime publishedAt
     ) {
         return new Offer(
             origin,
@@ -159,7 +162,7 @@ public class OfferBuilder {
             categories,
             salaries,
             company,
-            JustJoinItDateTime.createFrom().value,
+            publishedAt,
             createdAt
         );
     }
@@ -173,7 +176,8 @@ public class OfferBuilder {
             company,
             categories,
             salaries,
-            createdAt
+            createdAt,
+            publishedAt
         );
         clearState();
         return offer;
@@ -189,7 +193,8 @@ public class OfferBuilder {
                 saveCompany(),
                 saveCategories(),
                 salaries,
-                createdAt
+                createdAt,
+                publishedAt
             )
         );
         clearState();
@@ -205,7 +210,8 @@ public class OfferBuilder {
             saveCompany(),
             saveCategories(),
             salaries,
-            createdAt
+            createdAt,
+            publishedAt
         );
 
         offerRepository.save(offer);
