@@ -14,10 +14,10 @@ import java.util.Date;
 @RestController
 @RequiredArgsConstructor
 public class OfferController {
-    public final static String PATH_OFFER = "/offers";
+    public final static String PATH_OFFERS = "/offers";
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @GetMapping(PATH_OFFER)
+    @GetMapping(PATH_OFFERS)
     public ResponseEntity offers(
         @RequestParam(required = false) String[] technologies,
         @RequestParam(required = false) @DateTimeFormat(pattern="yyyy-MM-dd") Date dateFrom,

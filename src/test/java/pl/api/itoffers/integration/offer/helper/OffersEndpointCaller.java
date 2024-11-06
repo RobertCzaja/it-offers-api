@@ -11,17 +11,15 @@ import org.springframework.web.util.UriComponentsBuilder;
 import pl.api.itoffers.helper.ApiAuthorizationHelper;
 import pl.api.itoffers.helper.AuthorizationCredentials;
 import pl.api.itoffers.offer.application.dto.outgoing.OffersDto;
-import pl.api.itoffers.offer.ui.controller.ReportController;
+import pl.api.itoffers.offer.ui.controller.OfferController;
 
 import java.net.URI;
 import java.util.List;
 
-/* todo should be removed in #59 */
 @Service
 @Profile("test")
-public class ReportSalariesEndpointCaller {
-
-    private static final String PATH = ReportController.PATH_SALARIES;
+public class OffersEndpointCaller {
+    private static final String PATH = OfferController.PATH_OFFERS;
 
     @Autowired
     private TestRestTemplate template;
@@ -39,15 +37,6 @@ public class ReportSalariesEndpointCaller {
             HttpMethod.GET,
             new HttpEntity<>(apiAuthorizationHelper.getHeaders(AuthorizationCredentials.ADMIN)),
             OffersDto.class
-        );
-    }
-
-    public ResponseEntity<String> makeRequestAsUser() {
-        return template.exchange(
-            PATH,
-            HttpMethod.GET,
-            new HttpEntity<>(apiAuthorizationHelper.getHeaders(AuthorizationCredentials.USER)),
-            String.class
         );
     }
 

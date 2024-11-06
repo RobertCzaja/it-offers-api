@@ -23,6 +23,7 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+/* todo should be removed in #59 */
 @AutoConfigureJsonTesters
 public class ReportSalaryEndpointResultITest extends AbstractITest {
 
