@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.util.UriComponentsBuilder;
 import pl.api.itoffers.helper.ApiAuthorizationHelper;
 import pl.api.itoffers.helper.AuthorizationCredentials;
-import pl.api.itoffers.offer.application.dto.outgoing.OffersDto;
+import pl.api.itoffers.offer.application.dto.outgoing.OffersDto2;
 import pl.api.itoffers.offer.ui.controller.OfferController;
 
 import java.net.URI;
@@ -26,7 +26,7 @@ public class OffersEndpointCaller {
     @Autowired
     private ApiAuthorizationHelper apiAuthorizationHelper;
 
-    public ResponseEntity<OffersDto> makeRequest(
+    public ResponseEntity<OffersDto2> makeRequest(
         Integer amountTo,
         List<String> technologies,
         String dateFrom,
@@ -36,7 +36,7 @@ public class OffersEndpointCaller {
             createUri(amountTo, technologies, dateFrom, dateTo),
             HttpMethod.GET,
             new HttpEntity<>(apiAuthorizationHelper.getHeaders(AuthorizationCredentials.ADMIN)),
-            OffersDto.class
+            OffersDto2.class
         );
     }
 

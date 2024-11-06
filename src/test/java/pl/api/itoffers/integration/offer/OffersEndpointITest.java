@@ -8,7 +8,7 @@ import pl.api.itoffers.helper.AbstractITest;
 import pl.api.itoffers.helper.OfferBuilder;
 import pl.api.itoffers.integration.offer.helper.OfferTestManager;
 import pl.api.itoffers.integration.offer.helper.OffersEndpointCaller;
-import pl.api.itoffers.offer.application.dto.outgoing.OffersDto;
+import pl.api.itoffers.offer.application.dto.outgoing.OffersDto2;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -31,7 +31,7 @@ public class OffersEndpointITest extends AbstractITest {
     @Test
     public void shouldCorrectlyGetOffers() {
 
-        ResponseEntity<OffersDto> response = caller.makeRequest(null, null, null ,null);
+        ResponseEntity<OffersDto2> response = caller.makeRequest(null, null, null ,null);
 
         assertThat("").isEmpty(); // todo add real assertions
     }
