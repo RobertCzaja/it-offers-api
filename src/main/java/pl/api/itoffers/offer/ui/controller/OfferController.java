@@ -8,8 +8,11 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import pl.api.itoffers.offer.application.dto.outgoing.OfferDto;
+import pl.api.itoffers.offer.application.dto.outgoing.OffersDto;
 
 import java.util.Date;
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -18,11 +21,16 @@ public class OfferController {
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping(PATH_OFFERS)
-    public ResponseEntity offers(
+    public ResponseEntity<OffersDto> offers(
         @RequestParam(required = false) String[] technologies,
         @RequestParam(required = false) @DateTimeFormat(pattern="yyyy-MM-dd") Date dateFrom,
         @RequestParam(required = false) @DateTimeFormat(pattern="yyyy-MM-dd") Date dateTo
-    ) {/*todo declare generic type in returned type hint*/
-        return new ResponseEntity("test", HttpStatus.OK);
+    ) {
+        // todo add real implementation #59
+        OffersDto result = new OffersDto(List.of(
+            new OfferDto(1,2,"PLN", "php", "title1", "link1"),
+            new OfferDto(2,3,"PLN", "java", "title2", "link2")
+        ));
+        return new ResponseEntity<OffersDto>(result, HttpStatus.OK);
     }
 }

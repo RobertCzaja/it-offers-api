@@ -11,6 +11,18 @@ import java.util.List;
 @Value
 @RequiredArgsConstructor
 public class OfferDto {
+    /*
+     * todo #59 add
+     *  Offer uuid
+     *  publishedAt
+     *  createdAt
+     *  requiredSkills/categories {name, id, createdAt}
+     *  companyData - name/city/street
+     *  seniorityLevel
+     *  remoteInterview
+     *  time
+     *  workplace
+     */
     Integer amountFrom;
     Integer amountTo;
     String currency;
