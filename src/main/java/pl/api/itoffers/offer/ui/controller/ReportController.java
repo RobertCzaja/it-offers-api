@@ -22,7 +22,7 @@ import java.util.*;
 @RequiredArgsConstructor
 public class ReportController {
     public final static String PATH_CATEGORY = "/report/categories";
-    public final static String PATH_SALARIES = "/report/salaries";
+    public final static String PATH_SALARIES = "/report/salaries"; /*todo to remove #59*/
 
     private final ReportCategoriesService reportCategoriesService;
     private final ReportSalariesService reportSalariesService;
