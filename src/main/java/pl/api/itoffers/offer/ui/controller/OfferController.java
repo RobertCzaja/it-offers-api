@@ -8,8 +8,10 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import pl.api.itoffers.offer.application.dto.incoming.DatesRangeFilter;
 import pl.api.itoffers.offer.application.dto.outgoing.OfferDto2;
 import pl.api.itoffers.offer.application.dto.outgoing.OffersDto2;
+import pl.api.itoffers.offer.application.factory.TechnologiesFilterFactory;
 import pl.api.itoffers.offer.application.repository.OfferReadRepository;
 
 import java.util.Date;
@@ -21,6 +23,7 @@ public class OfferController {
     public final static String PATH_OFFERS = "/offers";
 
     private final OfferReadRepository offerRepository;
+    private final TechnologiesFilterFactory technologiesFilterFactory;
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping(PATH_OFFERS)
@@ -29,11 +32,14 @@ public class OfferController {
         @RequestParam(required = false) @DateTimeFormat(pattern="yyyy-MM-dd") Date dateFrom,
         @RequestParam(required = false) @DateTimeFormat(pattern="yyyy-MM-dd") Date dateTo
     ) {
-        // todo add real implementation #59
-        OffersDto2 result = new OffersDto2(List.of(
-            new OfferDto2(1,2,"PLN", "php", "title1", "link1"),
-            new OfferDto2(2,3,"PLN", "java", "title2", "link2")
-        ));
-        return new ResponseEntity<OffersDto2>(result, HttpStatus.OK);
+        DatesRangeFilter dates = new DatesRangeFilter(dateFrom, dateTo);
+        return new ResponseEntity<OffersDto2>(
+            new OffersDto2(offerRepository.getList(
+                technologiesFilterFactory.get(technologies),
+                dates.getFrom(),
+                dates.getTo()
+            )),
+            HttpStatus.OK
+        );
     }
 }

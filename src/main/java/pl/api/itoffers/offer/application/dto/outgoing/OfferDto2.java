@@ -5,6 +5,7 @@ import lombok.Value;
 import pl.api.itoffers.offer.domain.Offer;
 import pl.api.itoffers.offer.domain.Salary;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,27 +25,11 @@ public class OfferDto2 {
      *  time
      *  workplace
      */
-    Integer amountFrom;
-    Integer amountTo;
-    String currency;
+    //Integer amountFrom;
+    //Integer amountTo;
+    //String currency;
     String technology;
     String title;
     String link;
-
-    public static List<OfferDto2> createFrom(Offer offer, String currency, String employmentType) {
-        List<OfferDto2> list = new ArrayList<OfferDto2>();
-        for (Salary salary : offer.getSalaries()) {
-            if (salary.getAmount().getCurrency().equalsIgnoreCase(currency) && salary.getEmploymentType().equalsIgnoreCase(employmentType)) {
-                list.add(new OfferDto2(
-                    salary.getAmount().getFrom(),
-                    salary.getAmount().getTo(),
-                    salary.getAmount().getCurrency(),
-                    offer.getTechnology(),
-                    offer.getTitle(),
-                    offer.getSlug()
-                ));
-            }
-        }
-        return list;
-    }
+    LocalDateTime publishedAt;
 }

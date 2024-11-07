@@ -37,6 +37,7 @@ public class OffersEndpointITest extends AbstractITest {
 
         ResponseEntity<OffersDto2> response = caller.makeRequest(null, null, null ,null);
 
-        assertThat("").isEmpty(); // todo add real assertions
+        assertThat(response.getBody().getList()).hasSize(4);
+        // todo add detailed assertions
     }
 }
