@@ -20,4 +20,12 @@ public class JustJoinItParameters {
              throw new RuntimeException(e);
          }
      }
+
+     public URL getOfferUrl(String slug) {
+         try {
+             return new URL(origin+'/'+slug);
+         } catch (MalformedURLException e) {
+             throw new RuntimeException(e);
+         }
+     }
 }
