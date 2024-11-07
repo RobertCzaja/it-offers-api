@@ -8,6 +8,7 @@ import pl.api.itoffers.offer.application.repository.OfferReadRepository;
 
 import java.util.List;
 
+/** @deprecated todo to remove in #59 */
 @Service
 @RequiredArgsConstructor
 public class ReportSalariesService {

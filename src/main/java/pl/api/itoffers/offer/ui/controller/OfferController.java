@@ -8,10 +8,9 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import pl.api.itoffers.offer.application.dto.outgoing.OfferDto;
 import pl.api.itoffers.offer.application.dto.outgoing.OfferDto2;
-import pl.api.itoffers.offer.application.dto.outgoing.OffersDto;
 import pl.api.itoffers.offer.application.dto.outgoing.OffersDto2;
+import pl.api.itoffers.offer.application.repository.OfferReadRepository;
 
 import java.util.Date;
 import java.util.List;
@@ -20,6 +19,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class OfferController {
     public final static String PATH_OFFERS = "/offers";
+
+    private final OfferReadRepository offerRepository;
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping(PATH_OFFERS)

@@ -6,6 +6,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public interface OfferReadRepository {
+    /** @deprecated todo to remove in #59 */
     List<OfferDto> getBySalary(
         int amountTo,
         String currency,

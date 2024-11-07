@@ -30,12 +30,10 @@ public class OffersEndpointITest extends AbstractITest {
 
     @Test
     public void shouldCorrectlyGetOffers() {
-        this.builder
-            .job("php")
-            .skills("php", "docker")
-            // todo set createdAt/publishedAt/categories
-            .pln(15000, 18000)
-            .save();
+        this.builder.job("java").at("11-01").skills("java", "maven").pln(26500, 30000).save();
+        this.builder.job("php").at("10-31").skills("php", "docker").pln(15000, 18000).save();
+        this.builder.job("php").at("11-02").skills("php", "kubernetes").pln(15500, 19000).save();
+        this.builder.job("java").at("11-03").skills("java", "junit").pln(25000, 29000).save();
 
         ResponseEntity<OffersDto2> response = caller.makeRequest(null, null, null ,null);
 
