@@ -8,6 +8,7 @@ import pl.api.itoffers.offer.domain.Salary;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 /** todo name to change #59 */
 @Value
@@ -28,6 +29,7 @@ public class OfferDto2 {
     //Integer amountFrom;
     //Integer amountTo;
     //String currency;
+    UUID id;
     String technology;
     String title;
     String link;

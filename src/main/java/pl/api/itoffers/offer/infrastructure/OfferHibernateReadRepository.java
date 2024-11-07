@@ -89,6 +89,7 @@ public class OfferHibernateReadRepository implements OfferReadRepository {
         for (Offer offer : offers) {
             dtos.add(
                 new OfferDto2(
+                    offer.getId(),
                     offer.getTechnology(),
                     offer.getTitle(),
                     this.justJoinItParameters.getOfferUrl(offer.getSlug()).toString(),

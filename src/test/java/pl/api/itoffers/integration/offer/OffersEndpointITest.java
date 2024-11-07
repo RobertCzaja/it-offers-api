@@ -9,6 +9,7 @@ import pl.api.itoffers.helper.OfferBuilder;
 import pl.api.itoffers.integration.offer.helper.OfferTestManager;
 import pl.api.itoffers.integration.offer.helper.OffersEndpointCaller;
 import pl.api.itoffers.offer.application.dto.outgoing.OffersDto2;
+import pl.api.itoffers.shared.utils.json.Json;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
