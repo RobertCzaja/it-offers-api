@@ -8,8 +8,10 @@ import pl.api.itoffers.helper.AbstractITest;
 import pl.api.itoffers.helper.OfferBuilder;
 import pl.api.itoffers.integration.offer.helper.OfferTestManager;
 import pl.api.itoffers.integration.offer.helper.OffersEndpointCaller;
+import pl.api.itoffers.offer.application.dto.outgoing.CategoryDto;
 import pl.api.itoffers.offer.application.dto.outgoing.OffersDto2;
-import pl.api.itoffers.shared.utils.json.Json;
+
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -39,6 +41,23 @@ public class OffersEndpointITest extends AbstractITest {
         ResponseEntity<OffersDto2> response = caller.makeRequest(null, null, null ,null);
 
         assertThat(response.getBody().getList()).hasSize(4);
-        // todo add detailed assertions
+
+        List<List> expected = List.of(
+            List.of("java", List.of("java", "junit")),
+            List.of("php", List.of("php", "kubernetes")),
+            List.of("java", List.of("java", "maven")),
+            List.of("php", List.of("php", "docker"))
+        );
+
+        for (int i = 0; i <= (expected.size() - 1); i++) {
+            assertThat(response.getBody().getList().get(0).getTechnology()).isEqualTo(expected.get(0).get(0));
+            // todo assert categories
+            // todo assert publishedAt
+            // todo move to Assert class
+        }
     }
+
+    // todo scenario with dates & technologies filter
+    // todo scenario no records as result
+    // todo scenario forbidden
 }
