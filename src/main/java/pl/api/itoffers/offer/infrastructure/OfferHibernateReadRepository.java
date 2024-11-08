@@ -85,20 +85,12 @@ public class OfferHibernateReadRepository implements OfferReadRepository {
         TypedQuery<Offer> typedQuery = em.createQuery(query);
         List<Offer> offers = typedQuery.getResultList();
 
-        List<OfferDto2> dtos = new ArrayList<OfferDto2>();
+        List<OfferDto2> offersDto = new ArrayList<OfferDto2>();
         for (Offer offer : offers) {
-            dtos.add(
-                new OfferDto2(
-                    offer.getId(),
-                    offer.getTechnology(),
-                    offer.getTitle(),
-                    this.justJoinItParameters.getOfferUrl(offer.getSlug()).toString(),
-                    offer.getPublishedAt()
-                )
-            );
+            offersDto.add(OfferDto2.createFrom(offer, justJoinItParameters.getOfferUrl(offer.getSlug())));
         }
 
-        return dtos;
+        return offersDto;
     }
 
     private static void sortDesc(List<OfferDto> offers) {

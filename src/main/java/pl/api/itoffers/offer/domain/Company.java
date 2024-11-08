@@ -21,6 +21,8 @@ public class Company {
     private UUID id;
     @Getter
     private final String name;
+    @Getter
     private final String city;
+    @Getter
     private final String street;
 }

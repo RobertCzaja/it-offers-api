@@ -5,6 +5,7 @@ import lombok.Value;
 import pl.api.itoffers.offer.domain.Offer;
 import pl.api.itoffers.offer.domain.Salary;
 
+import java.net.URL;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -34,4 +35,32 @@ public class OfferDto2 {
     String title;
     String link;
     LocalDateTime publishedAt;
+    LocalDateTime createdAt;
+    UUID companyId;
+    String companyName;
+    String companyCity;
+    String companyStreet;
+    Boolean remoteInterview;
+    String workplace;
+    String time;
+    String seniority;
+
+    public static OfferDto2 createFrom(Offer offer, URL link) {
+        return new OfferDto2(
+            offer.getId(),
+            offer.getTechnology(),
+            offer.getTitle(),
+            link.toString(),
+            offer.getPublishedAt(),
+            offer.getCreatedAt(),
+            offer.getCompany().getId(),
+            offer.getCompany().getName(),
+            offer.getCompany().getCity(),
+            offer.getCompany().getStreet(),
+            offer.getCharacteristics().getRemoteInterview(),
+            offer.getCharacteristics().getWorkplace(),
+            offer.getCharacteristics().getTime(),
+            offer.getSeniority()
+        );
+    }
 }

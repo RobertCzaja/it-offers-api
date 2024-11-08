@@ -29,6 +29,7 @@ public class Offer {
     @Getter
     private final String seniority;
     @Embedded
+    @Getter
     private final Characteristics characteristics;
     @Getter
     @ManyToMany

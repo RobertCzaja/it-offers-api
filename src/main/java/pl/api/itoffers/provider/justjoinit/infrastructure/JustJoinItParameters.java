@@ -11,6 +11,7 @@ import java.net.URL;
 @Component
 @Data
 public class JustJoinItParameters {
+     private final static String DETAILS_PATH = "/job-offer/";
      private String origin;
 
      public URL getOrigin() {
@@ -23,7 +24,7 @@ public class JustJoinItParameters {
 
      public URL getOfferUrl(String slug) {
          try {
-             return new URL(origin+'/'+slug);
+             return new URL(origin+DETAILS_PATH+slug);
          } catch (MalformedURLException e) {
              throw new RuntimeException(e);
          }
