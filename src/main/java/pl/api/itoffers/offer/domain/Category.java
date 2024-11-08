@@ -22,5 +22,6 @@ public class Category {
     @NotNull
     private final String name;
     @CreationTimestamp
+    @Getter
     private LocalDateTime createdAt;
 }
