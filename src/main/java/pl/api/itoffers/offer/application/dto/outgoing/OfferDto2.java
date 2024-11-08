@@ -16,21 +16,6 @@ import java.util.UUID;
 @Value
 @RequiredArgsConstructor
 public class OfferDto2 {
-    /*
-     * todo #59 add
-     *  Offer uuid
-     *  publishedAt
-     *  createdAt
-     *  requiredSkills/categories {name, id, createdAt}
-     *  companyData - name/city/street
-     *  seniorityLevel
-     *  remoteInterview
-     *  time
-     *  workplace
-     */
-    //Integer amountFrom;
-    //Integer amountTo;
-    //String currency;
     UUID id;
     String technology;
     String title;
@@ -46,12 +31,26 @@ public class OfferDto2 {
     String time;
     String seniority;
     List<OfferCategoryDto> categories;
+    List<OfferSalaryDto> salaries;
 
     public static OfferDto2 createFrom(Offer offer, URL link) {
         List<OfferCategoryDto> categoriesDto = new ArrayList<OfferCategoryDto>();
+        List<OfferSalaryDto> salariesDto = new ArrayList<OfferSalaryDto>();
 
         for (Category category : offer.getCategories()) {
             categoriesDto.add(new OfferCategoryDto(category.getId(), category.getName(), category.getCreatedAt()));
+        }
+
+        for (Salary salary : offer.getSalaries()) {
+            salariesDto.add(
+                new OfferSalaryDto(
+                    salary.getAmount().getFrom(),
+                    salary.getAmount().getTo(),
+                    salary.getAmount().getCurrency(),
+                    salary.getEmploymentType(),
+                    salary.getIsOriginal()
+                )
+            );
         }
 
         return new OfferDto2(
@@ -69,7 +68,8 @@ public class OfferDto2 {
             offer.getCharacteristics().getWorkplace(),
             offer.getCharacteristics().getTime(),
             offer.getSeniority(),
-            categoriesDto
+            categoriesDto,
+            salariesDto
         );
     }
 }
