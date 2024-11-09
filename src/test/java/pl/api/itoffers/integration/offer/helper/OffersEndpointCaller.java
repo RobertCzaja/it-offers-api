@@ -27,13 +27,12 @@ public class OffersEndpointCaller {
     private ApiAuthorizationHelper apiAuthorizationHelper;
 
     public ResponseEntity<OffersDto2> makeRequest(
-        Integer amountTo,
         List<String> technologies,
         String dateFrom,
         String dateTo
     ) {
         return template.exchange(
-            createUri(amountTo, technologies, dateFrom, dateTo),
+            createUri(technologies, dateFrom, dateTo),
             HttpMethod.GET,
             new HttpEntity<>(apiAuthorizationHelper.getHeaders(AuthorizationCredentials.ADMIN)),
             OffersDto2.class
@@ -41,16 +40,11 @@ public class OffersEndpointCaller {
     }
 
     private static URI createUri(
-        Integer amountTo,
         List<String> technologies,
         String dateFrom,
         String dateTo
     ) {
         UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(PATH);
-
-        if (null != amountTo) {
-            builder = builder.queryParam("to", amountTo);
-        }
 
         if (null != technologies) {
             builder = builder.queryParam("technologies", String.join(",", technologies));

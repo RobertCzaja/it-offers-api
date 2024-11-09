@@ -9,7 +9,6 @@ import pl.api.itoffers.helper.OfferBuilder;
 import pl.api.itoffers.integration.offer.helper.OfferTestManager;
 import pl.api.itoffers.integration.offer.helper.OffersAssert;
 import pl.api.itoffers.integration.offer.helper.OffersEndpointCaller;
-import pl.api.itoffers.offer.application.dto.outgoing.CategoryDto;
 import pl.api.itoffers.offer.application.dto.outgoing.OffersDto2;
 
 import java.util.List;
@@ -34,26 +33,40 @@ public class OffersEndpointITest extends AbstractITest {
 
     @Test
     public void shouldCorrectlyGetOffers() {
-        this.builder.job("java").at("11-01").skills("java", "maven").pln(26500, 30000).save();
-        this.builder.job("php").at("10-31").skills("php", "docker").pln(15000, 18000).save();
-        this.builder.job("php").at("11-02").skills("php", "kubernetes").pln(15500, 19000).save();
-        this.builder.job("java").at("11-03").skills("java", "junit").pln(25000, 29000).save();
+        saveOffersInDb();
 
-        ResponseEntity<OffersDto2> response = caller.makeRequest(null, null, null ,null);
+        ResponseEntity<OffersDto2> response = caller.makeRequest(null, null ,null);
 
         assertThat(response.getBody().getList()).hasSize(4);
-
         List<List> expected = List.of(
             List.of("java", List.of("java", "junit"), "2024-11-03"),
             List.of("php", List.of("php", "kubernetes"), "2024-11-02"),
             List.of("java", List.of("java", "maven"), "2024-11-01"),
             List.of("php", List.of("php", "docker"), "2024-10-31")
         );
-
         OffersAssert.hasExactOffers(expected, response.getBody());
     }
 
-    // todo scenario with dates & technologies filter
-    // todo scenario no records as result
+    @Test
+    public void shouldFilterOffers() {
+        saveOffersInDb();
+
+        ResponseEntity<OffersDto2> response = caller.makeRequest(List.of("php"), "2024-11-01" ,"2024-11-02");
+
+        assertThat(response.getBody().getList()).hasSize(1);
+        List<List> expected = List.of(
+            List.of("php", List.of("php", "kubernetes"), "2024-11-02")
+        );
+        OffersAssert.hasExactOffers(expected, response.getBody());
+    }
+
+    public void saveOffersInDb() {
+        this.builder.job("java").at("11-01").skills("java", "maven").pln(26500, 30000).save();
+        this.builder.job("php").at("10-31").skills("php", "docker").pln(15000, 18000).save();
+        this.builder.job("php").at("11-02").skills("php", "kubernetes").pln(15500, 19000).save();
+        this.builder.job("java").at("11-03").skills("java", "junit").pln(25000, 29000).save();
+    }
+
     // todo scenario forbidden
+    // todo scenario invalid QueryParams data e.g. 'from' greater thant 'to'
 }
