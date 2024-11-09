@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import pl.api.itoffers.helper.AbstractITest;
 import pl.api.itoffers.helper.OfferBuilder;
 import pl.api.itoffers.integration.offer.helper.OfferTestManager;
+import pl.api.itoffers.integration.offer.helper.OffersAssert;
 import pl.api.itoffers.integration.offer.helper.OffersEndpointCaller;
 import pl.api.itoffers.offer.application.dto.outgoing.CategoryDto;
 import pl.api.itoffers.offer.application.dto.outgoing.OffersDto2;
@@ -49,12 +50,7 @@ public class OffersEndpointITest extends AbstractITest {
             List.of("php", List.of("php", "docker"))
         );
 
-        for (int i = 0; i <= (expected.size() - 1); i++) {
-            assertThat(response.getBody().getList().get(0).getTechnology()).isEqualTo(expected.get(0).get(0));
-            // todo assert categories
-            // todo assert publishedAt
-            // todo move to Assert class
-        }
+        OffersAssert.hasExactOffers(expected, response.getBody());
     }
 
     // todo scenario with dates & technologies filter
