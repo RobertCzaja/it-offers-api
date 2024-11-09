@@ -44,10 +44,10 @@ public class OffersEndpointITest extends AbstractITest {
         assertThat(response.getBody().getList()).hasSize(4);
 
         List<List> expected = List.of(
-            List.of("java", List.of("java", "junit")),
-            List.of("php", List.of("php", "kubernetes")),
-            List.of("java", List.of("java", "maven")),
-            List.of("php", List.of("php", "docker"))
+            List.of("java", List.of("java", "junit"), "2024-11-03"),
+            List.of("php", List.of("php", "kubernetes"), "2024-11-02"),
+            List.of("java", List.of("java", "maven"), "2024-11-01"),
+            List.of("php", List.of("php", "docker"), "2024-10-31")
         );
 
         OffersAssert.hasExactOffers(expected, response.getBody());

@@ -1,7 +1,9 @@
 package pl.api.itoffers.integration.offer.helper;
 
 import pl.api.itoffers.offer.application.dto.outgoing.OfferCategoryDto;
+import pl.api.itoffers.offer.application.dto.outgoing.OfferDto2;
 import pl.api.itoffers.offer.application.dto.outgoing.OffersDto2;
+import pl.api.itoffers.provider.justjoinit.model.JustJoinItDateTime;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -13,8 +15,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class OffersAssert {
     public static void hasExactOffers(List<List> expected, OffersDto2 offersDto) {
         for (int i = 0; i <= (expected.size() - 1); i++) {
-            assertThat(offersDto.getList().get(i).getTechnology()).isEqualTo(expected.get(i).get(0));
-            hasExpectedCategoriesWithNotSpecifiedOrder((List<String>) expected.get(i).get(1), offersDto.getList().get(i).getCategories());
+            OfferDto2 dto = offersDto.getList().get(i);
+            List expectedData = expected.get(i);
+
+            assertThat(dto.getTechnology()).isEqualTo(expectedData.get(0));
+            hasExpectedCategoriesWithNotSpecifiedOrder((List<String>) expectedData.get(1), dto.getCategories());
+            assertThat(dto.getPublishedAt()).isEqualTo(JustJoinItDateTime.createFromDate((String) expectedData.get(2)).value);
         }
     }
 
