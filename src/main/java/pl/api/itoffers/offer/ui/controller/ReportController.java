@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import pl.api.itoffers.offer.application.dto.incoming.DatesRangeFilter;
 import pl.api.itoffers.offer.application.dto.outgoing.CategoriesStatisticsDto;
 import pl.api.itoffers.offer.application.dto.incoming.CategoriesFilter;
-import pl.api.itoffers.offer.application.dto.outgoing.OffersDto;
+import pl.api.itoffers.offer.application.dto.outgoing.OffersDtoDeprecated;
 import pl.api.itoffers.offer.application.factory.TechnologiesFilterFactory;
 import pl.api.itoffers.offer.application.service.ReportCategoriesService;
 import pl.api.itoffers.offer.application.service.ReportSalariesService;
@@ -45,7 +45,7 @@ public class ReportController {
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping(PATH_SALARIES)
-    public ResponseEntity<OffersDto> salariesReport(
+    public ResponseEntity<OffersDtoDeprecated> salariesReport(
         @RequestParam(required = false, defaultValue = "PLN") String currency,
         @RequestParam(required = false, defaultValue = "b2b") String employmentType,
         @RequestParam(required = false, defaultValue = "0") String to,
@@ -53,8 +53,8 @@ public class ReportController {
         @RequestParam(required = false) @DateTimeFormat(pattern="yyyy-MM-dd") Date dateFrom,
         @RequestParam(required = false) @DateTimeFormat(pattern="yyyy-MM-dd") Date dateTo
     ) {
-        return new ResponseEntity<OffersDto>(
-            new OffersDto(
+        return new ResponseEntity<OffersDtoDeprecated>(
+            new OffersDtoDeprecated(
                 reportSalariesService.getMostPaidOffers(
                     currency,
                     employmentType,

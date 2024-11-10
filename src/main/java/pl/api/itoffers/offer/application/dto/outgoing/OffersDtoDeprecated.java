@@ -1,15 +1,13 @@
 package pl.api.itoffers.offer.application.dto.outgoing;
 
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
-import lombok.Value;
+import lombok.*;
 
 import java.util.List;
 
+/** @deprecated todo remove in #59 */
 @Value
 @RequiredArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PRIVATE, force = true)
-public class OffersDto {
-    List<OfferDto> list;
+public class OffersDtoDeprecated {
+    List<OfferDtoDeprecated> list;
 }

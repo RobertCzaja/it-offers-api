@@ -5,8 +5,8 @@ import jakarta.persistence.TypedQuery;
 import jakarta.persistence.criteria.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
+import pl.api.itoffers.offer.application.dto.outgoing.OfferDtoDeprecated;
 import pl.api.itoffers.offer.application.dto.outgoing.OfferDto;
-import pl.api.itoffers.offer.application.dto.outgoing.OfferDto2;
 import pl.api.itoffers.offer.application.repository.OfferReadRepository;
 import pl.api.itoffers.offer.domain.Offer;
 import pl.api.itoffers.offer.domain.Salary;
@@ -24,7 +24,7 @@ public class OfferHibernateReadRepository implements OfferReadRepository {
     private final EntityManager em;
     private final JustJoinItParameters justJoinItParameters;
 
-    public List<OfferDto> getBySalary(
+    public List<OfferDtoDeprecated> getBySalary(
         int amountTo,
         String currency,
         String employmentType,
@@ -54,14 +54,14 @@ public class OfferHibernateReadRepository implements OfferReadRepository {
         TypedQuery<Offer> typedQuery = em.createQuery(query);
         List<Offer> offers = typedQuery.getResultList();
 
-        List<OfferDto> dtos = new ArrayList<OfferDto>();
-        offers.forEach(offer -> dtos.addAll(OfferDto.createFrom(offer, currency, employmentType)));
+        List<OfferDtoDeprecated> dtos = new ArrayList<OfferDtoDeprecated>();
+        offers.forEach(offer -> dtos.addAll(OfferDtoDeprecated.createFrom(offer, currency, employmentType)));
         sortDesc(dtos);
         return dtos;
     }
 
     @Override
-    public List<OfferDto2> getList(
+    public List<OfferDto> getList(
         List<String> technologies,
         LocalDateTime from,
         LocalDateTime to
@@ -85,18 +85,18 @@ public class OfferHibernateReadRepository implements OfferReadRepository {
         TypedQuery<Offer> typedQuery = em.createQuery(query);
         List<Offer> offers = typedQuery.getResultList();
 
-        List<OfferDto2> offersDto = new ArrayList<OfferDto2>();
+        List<OfferDto> offersDto = new ArrayList<OfferDto>();
         for (Offer offer : offers) {
-            offersDto.add(OfferDto2.createFrom(offer, justJoinItParameters.getOfferUrl(offer.getSlug())));
+            offersDto.add(OfferDto.createFrom(offer, justJoinItParameters.getOfferUrl(offer.getSlug())));
         }
 
         return offersDto;
     }
 
-    private static void sortDesc(List<OfferDto> offers) {
-        offers.sort(new Comparator<OfferDto>() {
+    private static void sortDesc(List<OfferDtoDeprecated> offers) {
+        offers.sort(new Comparator<OfferDtoDeprecated>() {
             @Override
-            public int compare(OfferDto dto1, OfferDto dto2) {
+            public int compare(OfferDtoDeprecated dto1, OfferDtoDeprecated dto2) {
                 return dto2.getAmountTo().compareTo(dto1.getAmountTo());
             }
         });

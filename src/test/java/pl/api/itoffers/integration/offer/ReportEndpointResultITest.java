@@ -25,7 +25,7 @@ public class ReportEndpointResultITest extends AbstractITest {
     public void setUp() {
         super.setUp();
         this.builder = offerTestManager.createOfferBuilder();
-        this.builder.generateId = false;
+        this.builder.notGenerateEntityIdsBecauseTheseShouldBeGeneratedByJPA();
         offerTestManager.clearAll();
     }
 

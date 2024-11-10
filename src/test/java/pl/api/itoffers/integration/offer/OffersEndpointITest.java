@@ -13,7 +13,7 @@ import pl.api.itoffers.integration.offer.helper.OfferTestManager;
 import pl.api.itoffers.integration.offer.helper.OffersAssert;
 import pl.api.itoffers.integration.offer.helper.OffersEndpointCaller;
 import pl.api.itoffers.integration.offer.helper.ReportAssert;
-import pl.api.itoffers.offer.application.dto.outgoing.OffersDto2;
+import pl.api.itoffers.offer.application.dto.outgoing.OffersDto;
 
 import java.util.List;
 
@@ -39,7 +39,7 @@ public class OffersEndpointITest extends AbstractITest {
     public void shouldCorrectlyGetOffers() {
         saveOffersInDb();
 
-        ResponseEntity<OffersDto2> response = caller.makeRequest(null, null ,null);
+        ResponseEntity<OffersDto> response = caller.makeRequest(null, null ,null);
 
         assertThat(response.getBody().getList()).hasSize(4);
         List<List> expected = List.of(
@@ -55,7 +55,7 @@ public class OffersEndpointITest extends AbstractITest {
     public void shouldFilterOffers() {
         saveOffersInDb();
 
-        ResponseEntity<OffersDto2> response = caller.makeRequest(List.of("php"), "2024-11-01" ,"2024-11-02");
+        ResponseEntity<OffersDto> response = caller.makeRequest(List.of("php"), "2024-11-01" ,"2024-11-02");
 
         assertThat(response.getBody().getList()).hasSize(1);
         List<List> expected = List.of(
@@ -70,7 +70,7 @@ public class OffersEndpointITest extends AbstractITest {
         "2026-01-01:"
     }, delimiter = ':')
     public void shouldCheckDatesQueryParamsCorrection(String dateFrom, String dateTo) {
-        ResponseEntity<OffersDto2> response = caller.makeRequest(null, dateFrom ,dateTo);
+        ResponseEntity<OffersDto> response = caller.makeRequest(null, dateFrom ,dateTo);
 
         assertThat(response.getStatusCode()).isEqualTo( HttpStatus.BAD_REQUEST);
         assertThat(response.getBody().getList()).isNull();
@@ -78,7 +78,7 @@ public class OffersEndpointITest extends AbstractITest {
 
     @Test
     public void shouldReturnEmptyListWhenThereIsNoOfferToReturn() {
-        ResponseEntity<OffersDto2> response = caller.makeRequest(null, null ,null);
+        ResponseEntity<OffersDto> response = caller.makeRequest(null, null ,null);
 
         assertThat(response.getBody().getList()).isEmpty();
     }

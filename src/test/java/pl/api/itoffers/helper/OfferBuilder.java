@@ -18,7 +18,6 @@ public class OfferBuilder {
     /**
      * If it's set to true it will generate for each Category entity random UUID. It's important to set it to false
      * in integration testing because Category entity with already set UUID cannot be saved in DB.
-     * TODO #59 that field should be mark as private - use rather a setter method
      */
     public boolean generateId = true;
     private Company company = new Company("creativestyle", "Kraków", "Zabłocie 25/1");
