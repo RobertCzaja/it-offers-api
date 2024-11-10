@@ -12,6 +12,7 @@ import pl.api.itoffers.helper.ApiAuthorizationHelper;
 import pl.api.itoffers.helper.AuthorizationCredentials;
 import pl.api.itoffers.offer.application.dto.outgoing.OffersDto2;
 import pl.api.itoffers.offer.ui.controller.OfferController;
+import pl.api.itoffers.offer.ui.controller.ReportController;
 
 import java.net.URI;
 import java.util.List;
@@ -36,6 +37,15 @@ public class OffersEndpointCaller {
             HttpMethod.GET,
             new HttpEntity<>(apiAuthorizationHelper.getHeaders(AuthorizationCredentials.ADMIN)),
             OffersDto2.class
+        );
+    }
+
+    public ResponseEntity<String> makeRequestAsUser() {
+        return template.exchange(
+            PATH,
+            HttpMethod.GET,
+            new HttpEntity<>(apiAuthorizationHelper.getHeaders(AuthorizationCredentials.USER)),
+            String.class
         );
     }
 

@@ -2,13 +2,17 @@ package pl.api.itoffers.integration.offer;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import pl.api.itoffers.helper.AbstractITest;
 import pl.api.itoffers.helper.OfferBuilder;
 import pl.api.itoffers.integration.offer.helper.OfferTestManager;
 import pl.api.itoffers.integration.offer.helper.OffersAssert;
 import pl.api.itoffers.integration.offer.helper.OffersEndpointCaller;
+import pl.api.itoffers.integration.offer.helper.ReportAssert;
 import pl.api.itoffers.offer.application.dto.outgoing.OffersDto2;
 
 import java.util.List;
@@ -60,13 +64,36 @@ public class OffersEndpointITest extends AbstractITest {
         OffersAssert.hasExactOffers(expected, response.getBody());
     }
 
+    @ParameterizedTest
+    @CsvSource(value = {
+        "2024-09-01:2024-08-01",
+        "2026-01-01:"
+    }, delimiter = ':')
+    public void shouldCheckDatesQueryParamsCorrection(String dateFrom, String dateTo) {
+        ResponseEntity<OffersDto2> response = caller.makeRequest(null, dateFrom ,dateTo);
+
+        assertThat(response.getStatusCode()).isEqualTo( HttpStatus.BAD_REQUEST);
+        assertThat(response.getBody().getList()).isNull();
+    }
+
+    @Test
+    public void shouldReturnEmptyListWhenThereIsNoOfferToReturn() {
+        ResponseEntity<OffersDto2> response = caller.makeRequest(null, null ,null);
+
+        assertThat(response.getBody().getList()).isEmpty();
+    }
+
+    @Test
+    public void shouldUserDifferentThanAdminIsNotAllowToGetOffers() {
+        ResponseEntity<String> response = caller.makeRequestAsUser();
+
+        ReportAssert.responseIs(response, HttpStatus.FORBIDDEN, "Access denied");
+    }
+
     public void saveOffersInDb() {
         this.builder.job("java").at("11-01").skills("java", "maven").pln(26500, 30000).save();
         this.builder.job("php").at("10-31").skills("php", "docker").pln(15000, 18000).save();
         this.builder.job("php").at("11-02").skills("php", "kubernetes").pln(15500, 19000).save();
         this.builder.job("java").at("11-03").skills("java", "junit").pln(25000, 29000).save();
     }
-
-    // todo scenario forbidden
-    // todo scenario invalid QueryParams data e.g. 'from' greater thant 'to'
 }
