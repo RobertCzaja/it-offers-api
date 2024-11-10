@@ -125,7 +125,7 @@
 			"response": []
 		},
 		{
-			"name": "Report Salaries",
+			"name": "Report Salaries (Deprecated)",
 			"request": {
 				"auth": {
 					"type": "bearer",
@@ -153,6 +153,39 @@
 							"key": "technologies",
 							"value": "php",
 							"description": "example php,java,devops"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Offers",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{apiToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{apiUrl}}/offers?technologies=java",
+					"host": [
+						"{{apiUrl}}"
+					],
+					"path": [
+						"offers"
+					],
+					"query": [
+						{
+							"key": "technologies",
+							"value": "java"
 						}
 					]
 				}
