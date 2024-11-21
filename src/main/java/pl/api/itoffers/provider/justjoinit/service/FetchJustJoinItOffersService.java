@@ -1,11 +1,12 @@
 package pl.api.itoffers.provider.justjoinit.service;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.api.itoffers.offer.application.repository.TechnologyRepository;
 import pl.api.itoffers.offer.application.service.OfferService;
 import pl.api.itoffers.provider.justjoinit.JustJoinItProvider;
+import pl.api.itoffers.shared.logger.Logger;
 
 import java.util.Arrays;
 import java.util.List;
@@ -13,14 +14,12 @@ import java.util.UUID;
 
 @Slf4j
 @Service
+@RequiredArgsConstructor
 public class FetchJustJoinItOffersService {
-
-    @Autowired
-    private TechnologyRepository technologyRepository;
-    @Autowired
-    private JustJoinItProvider justJoinItProvider;
-    @Autowired
-    private OfferService offerService;
+    private final TechnologyRepository technologyRepository;
+    private final JustJoinItProvider justJoinItProvider;
+    private final OfferService offerService;
+    private final Logger logger;
 
     public void fetch(String requestedTechnology) {
         List<String> technologies = requestedTechnology.isEmpty()
@@ -29,11 +28,14 @@ public class FetchJustJoinItOffersService {
 
         UUID scrapingId = UUID.randomUUID();
 
+        logger.info("import-jjit", "start fetching");
         for (String technology : technologies) {
             log.info(String.format("[just-join-it] fetching offers from technology: %s", technology));
             justJoinItProvider.fetch(technology, scrapingId);
         }
+        logger.info("import-jjit", "fetched successfully");
 
         offerService.processOffersFromExternalService(scrapingId);
+        logger.info("import-jjit", "imported successfully");
     }
 }

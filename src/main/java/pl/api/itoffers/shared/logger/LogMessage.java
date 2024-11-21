@@ -1,4 +1,4 @@
-package pl.api.itoffers.provider.justjoinit.model;
+package pl.api.itoffers.shared.logger;
 
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
@@ -7,17 +7,13 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
 import java.time.LocalDateTime;
-import java.util.UUID;
 
-/**
- * TODO Should be removed after testing od https://github.com/RobertCzaja/it-offers/issues/56
- */
 @Data
 @RequiredArgsConstructor
 @Document
-public class CronLog {
+public class LogMessage {
     @Field("_id")
     private ObjectId id;
-    private final UUID processId;
+    private final String message;
     private final LocalDateTime createdAt;
 }
