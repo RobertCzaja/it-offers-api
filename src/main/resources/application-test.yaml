@@ -12,8 +12,3 @@ spring:
     user: admin
     baseline-description: "init"
     baseline-version: 0
-logging:
-  level:
-    org:
-      springframework:
-        security: DEBUG
