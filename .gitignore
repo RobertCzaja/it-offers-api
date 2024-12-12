@@ -6,3 +6,4 @@ target/
 /keystore.jks
 /it-offers.log
 /it-offers.pem
+logs/

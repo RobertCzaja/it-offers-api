@@ -21,6 +21,10 @@ public class TestController {
     @PreAuthorize("hasRole('ROLE_USER')")
     public ResponseEntity<String> test() {
         log.info("standard log");
+        log.debug("debug log");
+        log.trace("trace log");
+        log.warn("warn log");
+        log.error("error log");
         logger.info(this.getClass().getName(), "custom log");
         return new ResponseEntity<>("test", HttpStatus.OK);
     }
