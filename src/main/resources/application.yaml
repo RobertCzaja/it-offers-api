@@ -48,5 +48,3 @@ application:
   provider:
     just-join-it:
       origin: https://justjoin.it
-logging:
-  config: file:logback.xml
