@@ -1,5 +1,6 @@
 package pl.api.itoffers.shared.http.exception;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
@@ -12,6 +13,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 
 @ControllerAdvice
+@Slf4j
 public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(ValidationException.class)
@@ -29,7 +31,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
             HttpStatusCode status,
             WebRequest request
     ) {
-        // TODO that error message could contains exact Validation Error (linked to specific Request Body field)
+        log.warn("Error HTTP response {}: {}", ex.getClass().getName(), ex.getMessage());
         return new ResponseEntity<>(new ErrorResponse("Bad payload request!"), HttpStatus.BAD_REQUEST);
     }
 
