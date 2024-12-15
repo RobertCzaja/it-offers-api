@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import pl.api.itoffers.shared.logger.Logger;
 
@@ -19,13 +20,15 @@ public class TestController {
 
     @GetMapping(PATH)
     @PreAuthorize("hasRole('ROLE_USER')")
-    public ResponseEntity<String> test() {
-        log.info("standard log");
-        log.debug("debug log");
-        log.trace("trace log");
-        log.warn("warn log");
-        log.error("error log");
-        logger.info(this.getClass().getName(), "custom log");
+    public ResponseEntity<String> test(
+        @RequestParam(required = false, defaultValue = "") String message
+    ) {
+        if (message.equals("exception")) {
+            throw new RuntimeException("test666");
+        } else {
+            log.info("Test endpoint: {}", message);
+        }
+
         return new ResponseEntity<>("test", HttpStatus.OK);
     }
 }
