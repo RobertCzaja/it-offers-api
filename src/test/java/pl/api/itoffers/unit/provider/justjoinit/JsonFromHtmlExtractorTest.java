@@ -17,7 +17,7 @@ public class JsonFromHtmlExtractorTest {
     @Test
     void shouldParseJJITOffersHtmlIntroducedInDecember2024() throws IOException {
 
-        String jjitHtml = this.fileManager.readFile(JustJoinItParams.ALL_LOCATIONS_PAYLOAD_B1_DECEMBER);
+        String jjitHtml = this.fileManager.readFile(JustJoinItParams.ALL_LOCATIONS_PAYLOAD_B1_DECEMBER_PATH_HTML);
 
         String rawJson = new JsonFromHtmlExtractor().getRawJsonFromHtml(jjitHtml);
 
