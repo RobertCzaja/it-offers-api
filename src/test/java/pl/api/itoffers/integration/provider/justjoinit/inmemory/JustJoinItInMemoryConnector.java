@@ -1,6 +1,6 @@
 package pl.api.itoffers.integration.provider.justjoinit.inmemory;
 
-import pl.api.itoffers.integration.provider.justjoinit.payload.JustJoinItParams;
+import pl.api.itoffers.data.jjit.JustJoinItParams;
 import pl.api.itoffers.provider.justjoinit.JustJoinItConnector;
 import pl.api.itoffers.shared.utils.fileManager.FileManager;
 

@@ -1,7 +1,7 @@
 package pl.api.itoffers.unit.provider.justjoinit;
 
 import org.junit.Test;
-import pl.api.itoffers.integration.provider.justjoinit.payload.JustJoinItParams;
+import pl.api.itoffers.data.jjit.JustJoinItParams;
 import pl.api.itoffers.provider.justjoinit.service.JustJoinItPayloadExtractor;
 import pl.api.itoffers.shared.utils.fileManager.FileManager;
 
