@@ -15,9 +15,9 @@ import java.util.Map;
 @Service
 public class JustJoinItPayloadExtractor {
 
-    private ObjectMapper mapper = new ObjectMapper();
-    private FileManager fileManager = new FileManager();
-    private OffersPayloadMapper offersPayloadMapper = new OffersPayloadMapper();
+    private final ObjectMapper mapper = new ObjectMapper();
+    private final FileManager fileManager = new FileManager();
+    private final OffersPayloadMapper offersPayloadMapper = new OffersPayloadMapper();
 
     public final ArrayList<Map<String, Object>> extract(String rawJsonPayload) {
         if (rawJsonPayload.isEmpty()) {

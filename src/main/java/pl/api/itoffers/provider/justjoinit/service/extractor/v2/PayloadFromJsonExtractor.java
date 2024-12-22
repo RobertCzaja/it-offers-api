@@ -12,8 +12,8 @@ import java.util.Map;
 
 public class PayloadFromJsonExtractor {
 
-    private ObjectMapper mapper = new ObjectMapper();
-    private OffersPayloadMapper payloadMapper = new OffersPayloadMapper();
+    private final ObjectMapper mapper = new ObjectMapper();
+    private final OffersPayloadMapper payloadMapper = new OffersPayloadMapper();
 
     public ArrayList<Map<String, Object>> extractPayload(String rawJsonPayload) {
         if (null == rawJsonPayload || rawJsonPayload.isEmpty()) {
