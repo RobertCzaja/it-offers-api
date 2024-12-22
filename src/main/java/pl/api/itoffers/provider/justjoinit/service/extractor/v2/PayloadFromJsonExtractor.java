@@ -13,11 +13,7 @@ import java.util.Map;
 public class PayloadFromJsonExtractor {
 
     private ObjectMapper mapper = new ObjectMapper();
-    private OffersPayloadMapper payloadMapper;
-
-    public PayloadFromJsonExtractor(OffersPayloadMapper payloadMapper) {
-        this.payloadMapper = payloadMapper;
-    }
+    private OffersPayloadMapper payloadMapper = new OffersPayloadMapper();
 
     public ArrayList<Map<String, Object>> extractPayload(String rawJsonPayload) {
         if (null == rawJsonPayload || rawJsonPayload.isEmpty()) {

@@ -7,12 +7,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 import org.springframework.shell.standard.ShellOption;
+import pl.api.itoffers.provider.justjoinit.service.extractor.OffersPayloadMapper;
 import pl.api.itoffers.shared.utils.cli.CliFixParams;
 import pl.api.itoffers.shared.utils.cli.FixReport;
 import pl.api.itoffers.provider.justjoinit.repository.JustJoinItRepository;
 import pl.api.itoffers.provider.justjoinit.model.JustJoinItDateTime;
 import pl.api.itoffers.provider.justjoinit.model.JustJoinItRawOffer;
-import pl.api.itoffers.provider.justjoinit.service.extractor.v1.JustJoinItPayloadExtractor;
 import pl.api.itoffers.shared.aws.AwsS3Connector;
 
 import java.io.IOException;
@@ -33,7 +33,6 @@ public class ImportJJITOffersFromFileCli {
     private AwsS3Connector awsS3Connector;
     private ObjectMapper mapper;
     private JustJoinItRepository repository;
-    private JustJoinItPayloadExtractor extractor;
 
     @ShellMethod(key="jjit-s3")
     public void saveInMongoDBJJITOffersStoredInS3(
@@ -54,7 +53,7 @@ public class ImportJJITOffersFromFileCli {
         }
 
         log.info("Fetched");
-        ArrayList<Map<String, Object>> rawOffers = extractor.convert(mapper.readTree(justJoinItOffers).elements());
+        ArrayList<Map<String, Object>> rawOffers = new OffersPayloadMapper().convert(mapper.readTree(justJoinItOffers).elements());
         UUID scrappingId = UUID.randomUUID();
         log.info("ScrappingId: {}", scrappingId);
 

@@ -3,14 +3,11 @@ package pl.api.itoffers.provider.justjoinit.service.extractor;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.stereotype.Service;
-import pl.api.itoffers.provider.justjoinit.service.extractor.v1.JustJoinItPayloadExtractor;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Map;
 
-@Service
 public class OffersPayloadMapper {
 
     private ObjectMapper mapper = new ObjectMapper();

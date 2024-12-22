@@ -21,7 +21,7 @@ public class PayloadFromJsonExtractorTest {
 
     @BeforeEach
     void setUp() {
-        this.payloadFromJsonExtractor = new PayloadFromJsonExtractor(new OffersPayloadMapper());
+        this.payloadFromJsonExtractor = new PayloadFromJsonExtractor();
     }
 
     @Test
