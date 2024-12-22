@@ -1,4 +1,4 @@
-package pl.api.itoffers.provider.justjoinit.service;
+package pl.api.itoffers.provider.justjoinit.service.extractor.v1;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;

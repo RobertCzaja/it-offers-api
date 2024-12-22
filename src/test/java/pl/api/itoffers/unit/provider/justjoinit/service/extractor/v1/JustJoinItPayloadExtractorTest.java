@@ -1,8 +1,8 @@
-package pl.api.itoffers.unit.provider.justjoinit;
+package pl.api.itoffers.unit.provider.justjoinit.service.extractor.v1;
 
 import org.junit.Test;
 import pl.api.itoffers.data.jjit.JustJoinItParams;
-import pl.api.itoffers.provider.justjoinit.service.JustJoinItPayloadExtractor;
+import pl.api.itoffers.provider.justjoinit.service.extractor.v1.JustJoinItPayloadExtractor;
 import pl.api.itoffers.shared.utils.fileManager.FileManager;
 
 import java.io.*;

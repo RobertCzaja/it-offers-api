@@ -12,7 +12,7 @@ import pl.api.itoffers.shared.utils.cli.FixReport;
 import pl.api.itoffers.provider.justjoinit.repository.JustJoinItRepository;
 import pl.api.itoffers.provider.justjoinit.model.JustJoinItDateTime;
 import pl.api.itoffers.provider.justjoinit.model.JustJoinItRawOffer;
-import pl.api.itoffers.provider.justjoinit.service.JustJoinItPayloadExtractor;
+import pl.api.itoffers.provider.justjoinit.service.extractor.v1.JustJoinItPayloadExtractor;
 import pl.api.itoffers.shared.aws.AwsS3Connector;
 
 import java.io.IOException;

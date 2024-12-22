@@ -3,7 +3,7 @@ package pl.api.itoffers.provider.justjoinit;
 import org.springframework.stereotype.Service;
 import pl.api.itoffers.provider.justjoinit.model.JustJoinItRawOffer;
 import pl.api.itoffers.provider.justjoinit.repository.JustJoinItRepository;
-import pl.api.itoffers.provider.justjoinit.service.JustJoinItPayloadExtractor;
+import pl.api.itoffers.provider.justjoinit.service.extractor.v1.JustJoinItPayloadExtractor;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
