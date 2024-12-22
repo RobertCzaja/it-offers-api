@@ -1,0 +1,21 @@
+package pl.api.itoffers.provider.justjoinit.service.extractor;
+
+import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
+import pl.api.itoffers.provider.justjoinit.service.extractor.v1.JustJoinItOffersFetcherV1;
+import pl.api.itoffers.provider.justjoinit.service.extractor.v2.JustJoinItOffersFetcherV2;
+
+@Configuration
+@RequiredArgsConstructor
+public class ExtractorVersionConfig {
+    private final JustJoinItOffersFetcherV1 justJoinItOffersFetcherV1;
+    private final JustJoinItOffersFetcherV2 justJoinItOffersFetcherV2;
+
+    @Bean
+    @Primary
+    public JustJoinItOffersFetcherV1 v1() { return justJoinItOffersFetcherV1; }
+    @Bean
+    public JustJoinItOffersFetcherV2 v2() { return justJoinItOffersFetcherV2; }
+}
