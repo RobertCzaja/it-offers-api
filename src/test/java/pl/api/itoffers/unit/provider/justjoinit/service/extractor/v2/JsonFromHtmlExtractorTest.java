@@ -1,4 +1,4 @@
-package pl.api.itoffers.unit.provider.justjoinit;
+package pl.api.itoffers.unit.provider.justjoinit.service.extractor.v2;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
