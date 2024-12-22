@@ -1,6 +1,7 @@
 package pl.api.itoffers.unit.provider.justjoinit.service.extractor.v2;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.jsoup.Jsoup;
 import org.junit.jupiter.api.Test;
 import pl.api.itoffers.data.jjit.JustJoinItParams;
 import pl.api.itoffers.provider.justjoinit.service.extractor.v2.JsonFromHtmlExtractor;
@@ -19,7 +20,7 @@ public class JsonFromHtmlExtractorTest {
 
         String jjitHtml = this.fileManager.readFile(JustJoinItParams.ALL_LOCATIONS_PAYLOAD_B1_DECEMBER_PATH_HTML);
 
-        String rawJson = new JsonFromHtmlExtractor().getRawJsonFromHtml(jjitHtml);
+        String rawJson = new JsonFromHtmlExtractor().getRawJsonFromHtml(Jsoup.parse(jjitHtml));
 
         assertThat(mapper.readTree(rawJson)).isNotNull();
     }

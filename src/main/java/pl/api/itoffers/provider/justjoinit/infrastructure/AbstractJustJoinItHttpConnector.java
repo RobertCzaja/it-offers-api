@@ -17,14 +17,14 @@ public abstract class AbstractJustJoinItHttpConnector implements JustJoinItConne
     @Autowired
     private JustJoinItParameters parameters;
 
-    abstract protected String getOffersPayload(Document responseBody);
+    abstract protected String getRawJsonOffers(Document responseBody);
 
     public final String fetchStringifyJsonPayload(String technology) {
         Document responseBody = null;
 
         try {
             responseBody = Jsoup.parse(fetchSourceHtml(technology));
-            return getOffersPayload(responseBody);
+            return getRawJsonOffers(responseBody);
         } catch (IndexOutOfBoundsException e) {
             throw new JustJoinItException(
                 String.format("Empty \"%s\" response: \n\n%s\n", parameters.getOffersUrl(technology), responseBody),

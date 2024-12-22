@@ -6,12 +6,17 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Service;
 import pl.api.itoffers.provider.justjoinit.exception.JustJoinItException;
 import pl.api.itoffers.provider.justjoinit.service.extractor.OffersPayloadMapper;
+import pl.api.itoffers.provider.justjoinit.service.extractor.v2.PayloadFromJsonExtractor;
 import pl.api.itoffers.shared.utils.fileManager.FileManager;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Map;
 
+/**
+ * @deprecated since 12.2024
+ * @see PayloadFromJsonExtractor
+ */
 @Service
 public class JustJoinItPayloadExtractor {
 
