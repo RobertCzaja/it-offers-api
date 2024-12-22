@@ -12,7 +12,11 @@ import java.net.URL;
 @Data
 public class JustJoinItParameters {
      private final static String DETAILS_PATH = "/job-offer/";
-     private String origin;
+     private final static String LIST_PATH = "/job-offers/all-locations/";     private String origin;
+
+     public String getOffersUrl(String technology) {
+         return this.getOrigin().toString()+LIST_PATH+technology;
+     }
 
      public URL getOrigin() {
          try {

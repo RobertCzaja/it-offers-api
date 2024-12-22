@@ -13,26 +13,21 @@ import java.net.URLConnection;
 import java.util.Scanner;
 
 @Service
-public final class JustJoinItHttpConnector implements JustJoinItConnector
-{
-    private static final String PATH = "/job-offers/all-locations/";
-
+public abstract class AbstractJustJoinItHttpConnector implements JustJoinItConnector {
     @Autowired
     private JustJoinItParameters parameters;
 
-    public String fetchStringifyJsonPayload(String technology) {
+    abstract protected String getOffersPayload(Document responseBody);
+
+    public final String fetchStringifyJsonPayload(String technology) {
         Document responseBody = null;
 
         try {
             responseBody = Jsoup.parse(fetchSourceHtml(technology));
-
-            return responseBody
-                .select("#__NEXT_DATA__")
-                .get(0)
-                .html();
+            return getOffersPayload(responseBody);
         } catch (IndexOutOfBoundsException e) {
             throw new JustJoinItException(
-                String.format("Empty \"%s\" response: \n\n%s\n", createUrl(technology), responseBody),
+                String.format("Empty \"%s\" response: \n\n%s\n", parameters.getOffersUrl(technology), responseBody),
                 e
             );
         } catch (Exception e) {
@@ -41,12 +36,8 @@ public final class JustJoinItHttpConnector implements JustJoinItConnector
         }
     }
 
-    private String createUrl(String technology) {
-        return parameters.getOrigin().toString()+PATH+technology;
-    }
-
     private String fetchSourceHtml(String technology) throws IOException {
-        URLConnection connection =  new URL(createUrl(technology)).openConnection();
+        URLConnection connection = new URL(parameters.getOffersUrl(technology)).openConnection();
         Scanner scanner = new Scanner(connection.getInputStream());
         scanner.useDelimiter("\\Z");
         String htmlSource = scanner.next();
