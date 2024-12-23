@@ -9,7 +9,7 @@ import pl.api.itoffers.provider.justjoinit.service.extractor.v2.JustJoinItOffers
 
 @Configuration
 @RequiredArgsConstructor
-public class ExtractorVersionConfig {
+public class JustJoinItFetcherConfig {
     private final JustJoinItOffersFetcherV1 justJoinItOffersFetcherV1;
     private final JustJoinItOffersFetcherV2 justJoinItOffersFetcherV2;
 

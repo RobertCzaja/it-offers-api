@@ -12,7 +12,7 @@ import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class JustJoinItProviderITest extends AbstractITest {
+public class JustJoinItProviderV1ITest extends AbstractITest {
 
     @Autowired
     private JustJoinItRepository repository;
