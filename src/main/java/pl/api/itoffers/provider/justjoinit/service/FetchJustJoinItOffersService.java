@@ -2,6 +2,7 @@ package pl.api.itoffers.provider.justjoinit.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Service;
 import pl.api.itoffers.offer.application.repository.TechnologyRepository;
 import pl.api.itoffers.offer.application.service.OfferService;
@@ -21,7 +22,7 @@ public class FetchJustJoinItOffersService {
     private final OfferService offerService;
     private final Logger logger;
 
-    public void fetch(String requestedTechnology) {
+    public void fetch(@NotNull String requestedTechnology) {
         List<String> technologies = requestedTechnology.isEmpty()
                 ? technologyRepository.allActive()
                 : Arrays.asList(requestedTechnology);

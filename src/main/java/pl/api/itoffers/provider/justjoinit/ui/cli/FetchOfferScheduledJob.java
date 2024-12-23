@@ -17,7 +17,7 @@ public class FetchOfferScheduledJob {
     @Scheduled(cron="0 0 9 * * *")
     public void fetchJustJoinIt() {
         log.info("[just-join-it][cron][start] fetching JustJoinIt offers");
-        fetchJustJoinItOffersService.fetch(null);
+        fetchJustJoinItOffersService.fetch("");
         log.info("[just-join-it][cron][finish] fetching JustJoinIt offers");
     }
 }
