@@ -29,14 +29,20 @@ public class FetchJustJoinItOffersService {
 
         UUID scrapingId = UUID.randomUUID();
 
-        logger.info("import-jjit", "start fetching");
-        for (String technology : technologies) {
-            log.info(String.format("[just-join-it] fetching offers from technology: %s", technology));
-            justJoinItProvider.fetch(technology, scrapingId);
-        }
-        logger.info("import-jjit", "fetched successfully");
+        try {
+            for (String technology : technologies) {
+                log.info(String.format("[just-join-it] fetching offers from technology: %s", technology));
+                justJoinItProvider.fetch(technology, scrapingId);
+            }
 
-        offerService.processOffersFromExternalService(scrapingId);
-        logger.info("import-jjit", "imported successfully");
+            offerService.processOffersFromExternalService(scrapingId);
+        } catch (Exception e) {
+            log.error(
+                "Error on fetching JustJoinIT offers: {} - {}",
+                e.getClass().getName(),
+                e.getMessage()
+            );
+            throw e;
+        }
     }
 }
