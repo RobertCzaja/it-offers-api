@@ -3,6 +3,7 @@ package pl.api.itoffers.provider.justjoinit.service.extractor.v2;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import pl.api.itoffers.provider.justjoinit.exception.JustJoinItException;
 import pl.api.itoffers.provider.justjoinit.service.extractor.OffersPayloadMapper;
@@ -10,7 +11,9 @@ import pl.api.itoffers.provider.justjoinit.service.extractor.OffersPayloadMapper
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.NoSuchElementException;
 
+@Slf4j
 @Service
 public class PayloadFromJsonExtractor {
 
@@ -46,6 +49,9 @@ public class PayloadFromJsonExtractor {
             throw new JustJoinItException("Could not find offers node in raw JSON payload.");
         } catch (JsonProcessingException e) {
             throw new JustJoinItException("Could not extract offers from raw JSON payload. " + e.getMessage());
+        } catch (NoSuchElementException e) {
+            log.error("{}", rawJsonPayload);
+            throw e;
         }
     }
 }
