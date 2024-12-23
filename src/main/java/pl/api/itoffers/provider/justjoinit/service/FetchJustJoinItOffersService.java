@@ -37,11 +37,7 @@ public class FetchJustJoinItOffersService {
 
             offerService.processOffersFromExternalService(scrapingId);
         } catch (Exception e) {
-            log.error(
-                "Error on fetching JustJoinIT offers: {} - {}",
-                e.getClass().getName(),
-                e.getMessage()
-            );
+            log.error("Error on fetching JustJoinIT offers", e);
             throw e;
         }
     }
