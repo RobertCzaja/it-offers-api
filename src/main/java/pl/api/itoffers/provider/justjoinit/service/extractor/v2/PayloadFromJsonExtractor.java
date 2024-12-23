@@ -23,18 +23,27 @@ public class PayloadFromJsonExtractor {
         }
 
         try {
-            Iterator<JsonNode> offersNode = mapper
+            Iterator<JsonNode> queriesNodes = mapper
                 .readTree(rawJsonPayload)
                 .path("state")
                 .path("queries")
-                .get(0)
-                .path("state")
-                .path("data")
-                .path("pages")
-                .get(0)
-                .path("data")
                 .elements();
-            return payloadMapper.convert(offersNode);
+
+            do {
+                JsonNode queryNode = queriesNodes.next();
+                if (queryNode.get("state").isObject()) {
+                    Iterator<JsonNode> offerNodes = queryNode
+                        .get("state")
+                        .path("data")
+                        .path("pages")
+                        .get(0)
+                        .path("data")
+                        .elements();
+                    return payloadMapper.convert(offerNodes);
+                }
+            } while (queriesNodes.hasNext());
+
+            throw new JustJoinItException("Could not find offers node in raw JSON payload.");
         } catch (JsonProcessingException e) {
             throw new JustJoinItException("Could not extract offers from raw JSON payload. " + e.getMessage());
         }

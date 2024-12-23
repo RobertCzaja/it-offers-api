@@ -13,9 +13,10 @@ public class JustJoinItFetcherConfig {
     private final JustJoinItOffersFetcherV1 justJoinItOffersFetcherV1;
     private final JustJoinItOffersFetcherV2 justJoinItOffersFetcherV2;
 
+    /** @deprecated since december 2024*/
     @Bean
-    @Primary
     public JustJoinItOffersFetcherV1 v1() { return justJoinItOffersFetcherV1; }
     @Bean
+    @Primary
     public JustJoinItOffersFetcherV2 v2() { return justJoinItOffersFetcherV2; }
 }

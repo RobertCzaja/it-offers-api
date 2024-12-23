@@ -11,4 +11,5 @@ public class JustJoinItParams {
     /** in december 2024 JJIT changed structure of the HTML file under that endpoint so it-offers parser needs to be adjusted */
     public final static String ALL_LOCATIONS_PAYLOAD_B1_DECEMBER_PATH_HTML = MAIN_CATALOG + "allLocationsScenarioB1December.html";
     public final static String ALL_LOCATIONS_PAYLOAD_B1_DECEMBER_PATH_JSON = MAIN_CATALOG + "allLocationsScenarioB1December.json";
+    public final static String ALL_LOCATIONS_PAYLOAD_B2_DECEMBER_PATH_JSON = MAIN_CATALOG + "allLocationsScenarioB2December.json";
 }
