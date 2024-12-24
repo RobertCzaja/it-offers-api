@@ -29,6 +29,6 @@ public class TestController {
             log.info("Test endpoint: {}", message);
         }
 
-        return new ResponseEntity<>("test", HttpStatus.OK);
+        return new ResponseEntity<>("test new", HttpStatus.OK);
     }
 }
