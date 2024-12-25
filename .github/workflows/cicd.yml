@@ -26,6 +26,17 @@ jobs:
         distribution: 'temurin'
         cache: maven
 
+    - name: Run PMD
+      run: |
+        mvn clean pmd:check
+
+    - name: Upload PMD Report
+      if: always()
+      uses: actions/upload-artifact@v3
+      with:
+        name: pmd-report
+        path: target/site/pmd.html
+
     - name: Build and test with Maven
       run: |
         mvn clean install
