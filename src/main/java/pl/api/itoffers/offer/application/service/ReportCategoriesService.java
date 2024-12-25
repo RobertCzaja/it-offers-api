@@ -1,7 +1,10 @@
 package pl.api.itoffers.offer.application.service;
 
 import org.springframework.stereotype.Service;
-import pl.api.itoffers.offer.application.dto.outgoing.*;
+import pl.api.itoffers.offer.application.dto.outgoing.CategoriesStatisticsDto;
+import pl.api.itoffers.offer.application.dto.outgoing.CategoryDto;
+import pl.api.itoffers.offer.application.dto.outgoing.FiltersDto;
+import pl.api.itoffers.offer.application.dto.outgoing.TechnologiesCategoriesDto;
 import pl.api.itoffers.offer.application.factory.TechnologiesCategoriesDtoFactory;
 import pl.api.itoffers.offer.application.repository.OfferRepository;
 import pl.api.itoffers.offer.domain.Category;

@@ -4,7 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.api.itoffers.offer.application.repository.CategoryRepository;
 import pl.api.itoffers.offer.application.repository.CompanyRepository;
-import pl.api.itoffers.offer.domain.*;
+import pl.api.itoffers.offer.domain.Company;
+import pl.api.itoffers.offer.domain.Offer;
+import pl.api.itoffers.offer.domain.Origin;
+import pl.api.itoffers.offer.domain.Salary;
+import pl.api.itoffers.offer.domain.Category;
+import pl.api.itoffers.offer.domain.Characteristics;
 import pl.api.itoffers.provider.justjoinit.model.JustJoinItDateTime;
 import pl.api.itoffers.provider.justjoinit.model.JustJoinItRawOffer;
 
