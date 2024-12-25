@@ -30,7 +30,7 @@ public class RemoveDuplicatedOffersCli {
         @ShellOption(defaultValue = "test") String mode,
         @ShellOption(defaultValue = "1") String limit
     ) {
-        CliFixParams params = new CliFixParams(mode, Integer.valueOf(limit));
+        CliFixParams params = new CliFixParams(mode);
 
         log.info("Postgres All Offers - Start Fetching");
         List<Offer> offers = offerRepository.findAllByOrderBySlugAsc();

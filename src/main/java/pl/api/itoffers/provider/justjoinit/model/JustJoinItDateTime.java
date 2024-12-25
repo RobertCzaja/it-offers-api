@@ -5,7 +5,7 @@ import org.jetbrains.annotations.NotNull;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-public class JustJoinItDateTime {
+public final class JustJoinItDateTime {
 
     //todo only for automated tests
     private static final String DEFAULT_DATE_TIME = "2024-07-27T15:00:38.890Z";

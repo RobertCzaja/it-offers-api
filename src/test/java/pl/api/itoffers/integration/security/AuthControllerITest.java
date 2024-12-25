@@ -36,7 +36,7 @@ public class AuthControllerITest extends AbstractITest {
 
     @Test
     public void shouldGetAccessToken() {
-        userService.create(AuthRequestBodyFactory.EMAIL, AuthRequestBodyFactory.PASSWORD, UserRole.getStandardRoles());
+        userService.create(UserRole.getStandardRoles(), AuthRequestBodyFactory.EMAIL, AuthRequestBodyFactory.PASSWORD);
 
         ResponseEntity<AuthResponse> response = template.postForEntity(AuthController.GET_TOKEN_PATH, AuthRequestBodyFactory.create(AuthorizationCredentials.USER), AuthResponse.class);
 
@@ -46,7 +46,7 @@ public class AuthControllerITest extends AbstractITest {
 
     @Test
     public void shouldNotAuthorizeOnInvalidPassword() {
-        userService.create(AuthRequestBodyFactory.EMAIL, AuthRequestBodyFactory.PASSWORD, UserRole.getStandardRoles());
+        userService.create(UserRole.getStandardRoles(), AuthRequestBodyFactory.EMAIL, AuthRequestBodyFactory.PASSWORD);
 
         ResponseEntity<AuthResponse> response = template.postForEntity(
                 AuthController.GET_TOKEN_PATH,

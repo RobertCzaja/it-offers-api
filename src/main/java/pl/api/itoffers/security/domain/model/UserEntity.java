@@ -38,6 +38,6 @@ public class UserEntity {
             enumRoles.add(UserRole.valueOf(role));
         }
 
-        return new User(email, password, "", "", enumRoles.toArray(new UserRole[0]));
+        return new User(enumRoles.toArray(new UserRole[0]), email, password, "", "");
     }
 }

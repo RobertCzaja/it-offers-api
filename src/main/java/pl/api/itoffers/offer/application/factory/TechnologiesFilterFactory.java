@@ -13,7 +13,7 @@ public class TechnologiesFilterFactory {
 
     private final TechnologyRepository technologyRepository;
 
-    public List<String> get(String[] technologies) {
+    public List<String> get(String... technologies) {
         List<String> technologiesList = Arrays.asList(
             null == technologies
                 ? new String[]{}

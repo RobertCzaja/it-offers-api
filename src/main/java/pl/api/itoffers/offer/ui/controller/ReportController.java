@@ -38,7 +38,7 @@ public class ReportController {
         CategoriesFilter filter = new CategoriesFilter(technologies, dateFrom, dateTo);
 
         return new ResponseEntity<CategoriesStatisticsDto>(
-            reportCategoriesService.computeCategoriesStatistics(filter.getFrom(), filter.getTo(), filter.getTechnologies()),
+            reportCategoriesService.computeCategoriesStatistics(filter.getTechnologies(), filter.getFrom(), filter.getTo()),
             HttpStatus.OK
         );
     }

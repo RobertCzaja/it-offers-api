@@ -13,20 +13,23 @@ public class DatesRangeFilter {
     private final Date to;
 
     public DatesRangeFilter(Date from, Date to) {
-        if (null == from) {
-            from = new Date(100, 0, 1);
+        Date fromFilter = from;
+        Date toFilter = to;
+
+        if (null == fromFilter) {
+            fromFilter = new Date(100, 0, 1);
         }
 
-        if (null == to) {
-            to = new Date();
+        if (null == toFilter) {
+            toFilter = new Date();
         }
 
-        if (from.after(to)) {
+        if (fromFilter.after(toFilter)) {
             throw ValidationException.becauseOf("dateFrom cannot be greater thant dateTo");
         }
 
-        this.from = from;
-        this.to = to;
+        this.from = fromFilter;
+        this.to = toFilter;
     }
 
     public LocalDateTime getFrom() {

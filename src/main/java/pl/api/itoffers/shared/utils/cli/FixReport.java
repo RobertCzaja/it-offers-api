@@ -1,8 +1,8 @@
 package pl.api.itoffers.shared.utils.cli;
 
 public class FixReport {
-    private int limit;
-    private int fetchedCount;
+    private final int limit;
+    private final int fetchedCount;
     private int processingStarted = 0;
     private int migrated = 0;
 

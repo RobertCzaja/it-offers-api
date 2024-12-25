@@ -37,11 +37,16 @@ public abstract class AbstractJustJoinItHttpConnector implements JustJoinItConne
     }
 
     private String fetchSourceHtml(String technology) throws IOException {
-        URLConnection connection = new URL(parameters.getOffersUrl(technology)).openConnection();
-        Scanner scanner = new Scanner(connection.getInputStream());
-        scanner.useDelimiter("\\Z");
-        String htmlSource = scanner.next();
-        scanner.close();
-        return htmlSource;
+        Scanner scanner = null;
+        try {
+            URLConnection connection = new URL(parameters.getOffersUrl(technology)).openConnection();
+            scanner = new Scanner(connection.getInputStream());
+            scanner.useDelimiter("\\Z");
+            return scanner.next();
+        } finally {
+            if (null != scanner) {
+                scanner.close();
+            }
+        }
     }
 }

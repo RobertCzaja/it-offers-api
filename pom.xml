@@ -177,6 +177,30 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
+			<plugin>
+				<artifactId>maven-pmd-plugin</artifactId>
+				<version>3.21.0</version>
+				<configuration>
+					<rulesets>
+						<ruleset>/rulesets/java/basic.xml</ruleset>
+						<ruleset>/rulesets/java/braces.xml</ruleset>
+						<ruleset>/rulesets/java/design.xml</ruleset>
+						<ruleset>/rulesets/java/imports.xml</ruleset>
+					</rulesets>
+					<failOnViolation>true</failOnViolation>
+					<excludes>
+						<exclude>pl/api/itoffers/Application.java</exclude>
+					</excludes>
+				</configuration>
+				<executions>
+					<execution>
+						<phase>verify</phase>
+						<goals>
+							<goal>pmd</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
 	</build>
 

@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 
+import java.util.Locale;
 import java.util.UUID;
 
 @Entity
@@ -25,7 +26,7 @@ public class Salary {
 
     public static Salary original(Integer from, Integer to, String currency, String employmentType) {
         return new Salary(
-            new SalaryAmount(from, to, currency.toUpperCase()),
+            new SalaryAmount(from, to, currency.toUpperCase(Locale.getDefault())),
             employmentType,
             true
         );

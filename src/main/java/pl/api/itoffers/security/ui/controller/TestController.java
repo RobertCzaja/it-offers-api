@@ -23,7 +23,7 @@ public class TestController {
     public ResponseEntity<String> test(
         @RequestParam(required = false, defaultValue = "") String message
     ) {
-        if (message.equals("exception")) {
+        if ("exception".equals(message)) {
             throw new RuntimeException("test666");
         } else {
             log.info("Test endpoint: {}", message);

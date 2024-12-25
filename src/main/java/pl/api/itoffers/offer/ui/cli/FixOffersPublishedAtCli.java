@@ -38,7 +38,7 @@ public class FixOffersPublishedAtCli {
         @ShellOption(defaultValue = "test") String mode,
         @ShellOption(defaultValue = "1") String limit
     ) {
-        CliFixParams params = new CliFixParams(mode, Integer.valueOf(limit));
+        CliFixParams params = new CliFixParams(mode);
         log.info("Input: {}", params);
 
         List<Offer> offers = offerRepository.findByPublishedAt(DATETIME_TO_FIX);

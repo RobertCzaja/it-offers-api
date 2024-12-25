@@ -40,7 +40,7 @@ public class ImportJJITOffersFromFileCli {
         @ShellOption(defaultValue = "1") String limit
     ) throws IOException {
 
-        CliFixParams params = new CliFixParams(mode, Integer.valueOf(limit));
+        CliFixParams params = new CliFixParams(mode);
 
         log.info("Start fetching {}", FILE_NAME);
         String justJoinItOffers;

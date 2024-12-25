@@ -19,7 +19,7 @@ public class OfferInMemoryRepository implements OfferRepository {
     public List<Offer> offers = List.of();
 
     @Override
-    public List<Offer> findByCreatedAtBetween(LocalDateTime from, LocalDateTime to, String[] technologies) {
+    public List<Offer> findByCreatedAtBetween(String[] technologies, LocalDateTime from, LocalDateTime to) {
         return offers;
     }
 

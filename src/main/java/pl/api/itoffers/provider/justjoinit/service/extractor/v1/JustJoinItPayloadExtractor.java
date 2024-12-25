@@ -45,7 +45,7 @@ public class JustJoinItPayloadExtractor {
             return offersPayloadMapper.convert(offersNode);
         } catch (JsonProcessingException e) {
             fileManager.saveFile(rawJsonPayload, "json");
-            throw new JustJoinItException("Could not extract offers from raw JSON payload. " + e.getMessage());
+            throw new JustJoinItException("Could not extract offers from raw JSON payload. " + e.getMessage(), e);
         }
     }
 }

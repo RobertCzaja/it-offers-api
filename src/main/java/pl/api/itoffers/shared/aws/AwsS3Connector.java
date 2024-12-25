@@ -31,20 +31,28 @@ public class AwsS3Connector {
 
     public String fetchJson(String fileName) throws IOException {
         log.info(memoryUsage.getLog("before download"));
-        S3ObjectInputStream inputStream = this.download(fileName);
-        BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
 
-        StringBuilder sb = new StringBuilder();
+        S3ObjectInputStream inputStream = null;
+        BufferedReader reader = null;
 
-        log.info(memoryUsage.getLog("after download"));
-        int cp;
-        while ((cp = reader.read()) != -1) {
-            sb.append((char) cp);
+        try {
+            inputStream = this.download(fileName);
+            reader = new BufferedReader(new InputStreamReader(inputStream));
+            StringBuilder sb = new StringBuilder();
+
+            log.info(memoryUsage.getLog("after download"));
+            int cp;
+            while ((cp = reader.read()) != -1) {
+                sb.append((char) cp);
+            }
+            log.info(memoryUsage.getLog("after string builder"));
+
+            log.info(memoryUsage.getLog("after Reader closing"));
+            return sb.toString();
+        } finally {
+            reader.close();
+            inputStream.close();
         }
-        log.info(memoryUsage.getLog("after string builder"));
-        reader.close();
-        log.info(memoryUsage.getLog("after Reader closing"));
-        return sb.toString();
     }
 
     private S3ObjectInputStream download(String fileName) {

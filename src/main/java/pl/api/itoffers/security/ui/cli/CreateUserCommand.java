@@ -21,7 +21,7 @@ public class CreateUserCommand {
             String email,
             String password
     ) {
-        Long userId = userService.create(email, password, new String[]{UserRole.ROLE_ADMIN.toString()});
+        Long userId = userService.create(new String[]{UserRole.ROLE_ADMIN.toString()}, email, password);
         return String.format("User %s created (%s) with ID: %d", email, password, userId);
     }
 }

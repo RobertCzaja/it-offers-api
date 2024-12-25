@@ -48,7 +48,7 @@ public class PayloadFromJsonExtractor {
 
             throw new JustJoinItException("Could not find offers node in raw JSON payload.");
         } catch (JsonProcessingException e) {
-            throw new JustJoinItException("Could not extract offers from raw JSON payload. " + e.getMessage());
+            throw new JustJoinItException("Could not extract offers from raw JSON payload. " + e.getMessage(), e);
         } catch (NoSuchElementException e) {
             log.error("{}", rawJsonPayload);
             throw e;

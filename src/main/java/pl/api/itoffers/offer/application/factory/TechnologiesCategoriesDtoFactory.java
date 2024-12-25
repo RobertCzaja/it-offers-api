@@ -7,7 +7,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-public class TechnologiesCategoriesDtoFactory {
+public final class TechnologiesCategoriesDtoFactory {
+
+    private TechnologiesCategoriesDtoFactory() {
+    }
+
     public static List<CategoryDto> create(Set<Category> offerCategories) {
         List<CategoryDto> categories = new ArrayList<CategoryDto>();
         int technologyCategoriesCount = 0;

@@ -31,7 +31,7 @@ public class SalariesFactory {
         Integer to = (Integer) employmentType.get("to");
         Integer from = (Integer) employmentType.get("from");
         String currency = (String) employmentType.get("currency");
-        boolean isPln = currency.equalsIgnoreCase("pln");
+        boolean isPln = "pln".equalsIgnoreCase(currency);
 
         if (null == to || null == from) {
             return salaries;

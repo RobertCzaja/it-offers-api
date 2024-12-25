@@ -10,7 +10,7 @@ import java.util.Map;
 
 public class OffersPayloadMapper {
 
-    private ObjectMapper mapper = new ObjectMapper();
+    private final ObjectMapper mapper = new ObjectMapper();
 
     public ArrayList<Map<String, Object>> convert(Iterator<JsonNode> offersNode) {
         ArrayList<Map<String, Object>> offers = new ArrayList<>();

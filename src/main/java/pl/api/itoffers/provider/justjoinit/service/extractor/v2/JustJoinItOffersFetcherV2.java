@@ -17,9 +17,9 @@ public class JustJoinItOffersFetcherV2 implements JustJoinItOffersFetcher {
 
     @Autowired
     @Qualifier("connectionV2")
-    private JustJoinItConnector connector;
+    private final JustJoinItConnector connector;
     @Autowired
-    private PayloadFromJsonExtractor extractor;
+    private final PayloadFromJsonExtractor extractor;
 
     public JustJoinItOffersFetcherV2(JustJoinItConnector connector, PayloadFromJsonExtractor extractor) {
         this.connector = connector;

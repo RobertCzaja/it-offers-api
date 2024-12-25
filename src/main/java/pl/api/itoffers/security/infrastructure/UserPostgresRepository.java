@@ -37,7 +37,7 @@ public class UserPostgresRepository implements UserRepository {
             entityManager.persist(user);
             entityManager.flush();
         } catch (ConstraintViolationException e) {
-            throw CouldNotCreateUser.becauseEmailIsAlreadyRegistered(user.getEmail());
+            throw CouldNotCreateUser.becauseEmailIsAlreadyRegistered(user.getEmail(), e);
         }
     }
 

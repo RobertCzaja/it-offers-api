@@ -23,13 +23,13 @@ public class UserService {
 
     public Long create(CreateUserRequest request) throws CouldNotCreateUser {
         return create(
+                UserRole.getStandardRoles(),
                 request.getEmail(),
-                request.getPassword(),
-                UserRole.getStandardRoles()
+                request.getPassword()
         );
     }
 
-    public Long create(String email, String password, String[] roles)  throws CouldNotCreateUser {
+    public Long create(String[] roles, String email, String password)  throws CouldNotCreateUser {
         UserEntity user = new UserEntity();
         user.setEmail(email);
         user.setPassword(passwordEncoder.encode(password));

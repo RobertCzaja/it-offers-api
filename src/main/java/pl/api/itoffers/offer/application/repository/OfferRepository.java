@@ -15,7 +15,7 @@ import java.util.UUID;
 public interface OfferRepository extends JpaRepository<Offer, UUID> {
 
     @Query("SELECT o FROM Offer o WHERE o.technology IN :technologies AND o.createdAt BETWEEN :from AND :to")
-    List<Offer> findByCreatedAtBetween(LocalDateTime from, LocalDateTime to, String[] technologies);
+    List<Offer> findByCreatedAtBetween(String[] technologies, LocalDateTime from, LocalDateTime to);
 
     @Query("SELECT o FROM Offer o WHERE o.slug = :slug AND o.title = :title AND o.company.name = :companyName")
     Offer findByDifferentOffer(String slug, String title, String companyName);

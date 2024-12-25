@@ -4,12 +4,10 @@ import lombok.ToString;
 
 @ToString
 public class CliFixParams {
-    private Mode mode;
-    private Integer limit;
+    private final Mode mode;
 
-    public CliFixParams(String mode, Integer limit) {
+    public CliFixParams(String mode) {
         this.mode = CliFixParams.Mode.valueOf(mode);
-        this.limit = limit;
     }
 
     public boolean isForceMode() {

@@ -79,15 +79,19 @@ public class MigrateOfferSalariesToNewFormatCli {
                     continue;
                 }
 
-                if (!employmentTypes1To.equals(employmentTypes2To) || !employmentTypes1From.equals(employmentTypes2From))
+                if (!employmentTypes1To.equals(employmentTypes2To) || !employmentTypes1From.equals(employmentTypes2From)) {
                     log.warn("{} Different salary: {}-{}->{}-{}", offer.getId(), employmentTypes1From, employmentTypes1To, employmentTypes2From, employmentTypes2To);
-                if (!employmentTypes1Currency.equals(employmentTypes2Currency))
+                }
+                if (!employmentTypes1Currency.equals(employmentTypes2Currency)) {
                     log.warn("{} Different currency", offer.getId());
-                if (!employmentTypes1Type.equals(employmentTypes2Type))
+                }
+                if (!employmentTypes1Type.equals(employmentTypes2Type)) {
                     log.warn("{} Different employmentType", offer.getId());
+                }
             }
 
-            if (false == mode.equals("migrate")) {
+
+            if (! "migrate".equals(mode)) {
                 continue;
             }
 

@@ -19,11 +19,11 @@ public class ReportCategoriesService {
         this.offerRepository = offerRepository;
     }
 
-    public CategoriesStatisticsDto computeCategoriesStatistics(LocalDateTime from, LocalDateTime to, String[] technologies) {
+    public CategoriesStatisticsDto computeCategoriesStatistics(String[] technologies, LocalDateTime from, LocalDateTime to) {
 
         HashMap<String, List<CategoryDto>> technologiesWithCategories = new HashMap<String, List<CategoryDto>>();
 
-        for (Offer offer : offerRepository.findByCreatedAtBetween(from, to, technologies)) {
+        for (Offer offer : offerRepository.findByCreatedAtBetween(technologies, from, to)) {
             List<CategoryDto> technologyWithCategories = technologiesWithCategories.get(offer.getTechnology());
 
             if (null == technologyWithCategories) {

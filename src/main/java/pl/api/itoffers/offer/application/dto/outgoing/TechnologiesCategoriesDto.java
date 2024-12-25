@@ -33,9 +33,9 @@ public class TechnologiesCategoriesDto {
                 public int compare(CategoryDto dto1, CategoryDto dto2) {
                     int countCompare = dto2.getCount().compareTo(dto1.getCount());
 
-                    return countCompare != 0
-                        ? countCompare
-                        : dto1.getCategoryName().compareTo(dto2.getCategoryName());
+                    return countCompare == 0
+                        ? dto1.getCategoryName().compareTo(dto2.getCategoryName())
+                        : countCompare;
                 }
             });
 

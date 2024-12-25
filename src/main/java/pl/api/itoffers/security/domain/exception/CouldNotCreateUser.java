@@ -1,11 +1,11 @@
 package pl.api.itoffers.security.domain.exception;
 
-public class CouldNotCreateUser extends RuntimeException {
-    private CouldNotCreateUser(String message) {
-        super(message);
+public final class CouldNotCreateUser extends RuntimeException {
+    private CouldNotCreateUser(String message, Throwable t) {
+        super(message, t);
     }
-    public static CouldNotCreateUser becauseEmailIsAlreadyRegistered(String email)
+    public static CouldNotCreateUser becauseEmailIsAlreadyRegistered(String email, Throwable t)
     {
-        return new CouldNotCreateUser(String.format("Email %s is already registered", email));
+        return new CouldNotCreateUser(String.format("Email %s is already registered", email), t);
     }
 }
