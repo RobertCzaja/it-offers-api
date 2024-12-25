@@ -194,7 +194,7 @@
 				</configuration>
 				<executions>
 					<execution>
-						<phase>verify</phase>
+						<phase>validate</phase>
 						<goals>
 							<goal>check</goal>
 							<goal>cpd-check</goal>
