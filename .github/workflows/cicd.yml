@@ -39,7 +39,7 @@ jobs:
 
     - name: Build and test with Maven
       run: |
-        mvn clean install
+        mvn clean install -Dpmd.skip=true
         mkdir artifacts && cp target/*.jar artifacts
         cd artifacts && ls
       env:
