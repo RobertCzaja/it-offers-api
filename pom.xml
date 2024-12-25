@@ -196,7 +196,8 @@
 					<execution>
 						<phase>verify</phase>
 						<goals>
-							<goal>pmd</goal>
+							<goal>check</goal>
+							<goal>cpd-check</goal>
 						</goals>
 					</execution>
 				</executions>
