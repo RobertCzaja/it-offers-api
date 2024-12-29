@@ -8,12 +8,13 @@ import lombok.Data;
 
 @Data
 public class CreateUserRequest {
-    @NotBlank
-    @Email(message="Invalid email")
-    private String email;
-    @NotBlank
-    @Size(min = 5, max = 15)
-    private String password;
-    @Valid
-    private UserNameRequest name;
+  @NotBlank
+  @Email(message = "Invalid email")
+  private String email;
+
+  @NotBlank
+  @Size(min = 5, max = 15)
+  private String password;
+
+  @Valid private UserNameRequest name;
 }

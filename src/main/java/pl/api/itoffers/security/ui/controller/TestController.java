@@ -14,21 +14,20 @@ import pl.api.itoffers.shared.logger.Logger;
 @Slf4j
 @RequiredArgsConstructor
 public class TestController {
-    public final static String PATH = "/test";
+  public static final String PATH = "/test";
 
-    private final Logger logger;
+  private final Logger logger;
 
-    @GetMapping(PATH)
-    @PreAuthorize("hasRole('ROLE_USER')")
-    public ResponseEntity<String> test(
-        @RequestParam(required = false, defaultValue = "") String message
-    ) {
-        if ("exception".equals(message)) {
-            throw new RuntimeException("test666");
-        } else {
-            log.info("Test endpoint: {}", message);
-        }
-
-        return new ResponseEntity<>("test new", HttpStatus.OK);
+  @GetMapping(PATH)
+  @PreAuthorize("hasRole('ROLE_USER')")
+  public ResponseEntity<String> test(
+      @RequestParam(required = false, defaultValue = "") String message) {
+    if ("exception".equals(message)) {
+      throw new RuntimeException("test666");
+    } else {
+      log.info("Test endpoint: {}", message);
     }
+
+    return new ResponseEntity<>("test new", HttpStatus.OK);
+  }
 }

@@ -4,10 +4,9 @@ import com.google.gson.Gson;
 
 public final class Json {
 
-    private Json() {
-    }
+  private Json() {}
 
-    public static String convertToString(Object dto) {
-        return new Gson().toJson(dto);
-    }
+  public static String convertToString(Object dto) {
+    return new Gson().toJson(dto);
+  }
 }

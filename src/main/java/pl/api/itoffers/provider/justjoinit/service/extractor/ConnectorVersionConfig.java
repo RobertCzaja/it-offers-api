@@ -10,12 +10,17 @@ import pl.api.itoffers.provider.justjoinit.service.extractor.v2.JustJoinItHttpCo
 @Configuration
 @RequiredArgsConstructor
 public class ConnectorVersionConfig {
-    private final JustJoinItHttpConnectorV1 justJoinItHttpConnectorV1;
-    private final JustJoinItHttpConnectorV2 justJoinItHttpConnectorV2;
+  private final JustJoinItHttpConnectorV1 justJoinItHttpConnectorV1;
+  private final JustJoinItHttpConnectorV2 justJoinItHttpConnectorV2;
 
-    @Bean
-    @Primary
-    public JustJoinItHttpConnectorV1 connectorV1() { return justJoinItHttpConnectorV1; }
-    @Bean
-    public JustJoinItHttpConnectorV2 connectionV2() { return justJoinItHttpConnectorV2; }
+  @Bean
+  @Primary
+  public JustJoinItHttpConnectorV1 connectorV1() {
+    return justJoinItHttpConnectorV1;
+  }
+
+  @Bean
+  public JustJoinItHttpConnectorV2 connectionV2() {
+    return justJoinItHttpConnectorV2;
+  }
 }

@@ -1,5 +1,6 @@
 package pl.api.itoffers.security.application.service;
 
+import java.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -10,34 +11,28 @@ import pl.api.itoffers.security.domain.model.UserEntity;
 import pl.api.itoffers.security.domain.model.UserRole;
 import pl.api.itoffers.security.ui.request.CreateUserRequest;
 
-import java.time.LocalDateTime;
-
 @Component
 public class UserService {
 
-    @Autowired
-    @Qualifier("postgreSQL")
-    private UserRepository repository;
-    @Autowired
-    private BCryptPasswordEncoder passwordEncoder;
+  @Autowired
+  @Qualifier("postgreSQL")
+  private UserRepository repository;
 
-    public Long create(CreateUserRequest request) throws CouldNotCreateUser {
-        return create(
-                UserRole.getStandardRoles(),
-                request.getEmail(),
-                request.getPassword()
-        );
-    }
+  @Autowired private BCryptPasswordEncoder passwordEncoder;
 
-    public Long create(String[] roles, String email, String password)  throws CouldNotCreateUser {
-        UserEntity user = new UserEntity();
-        user.setEmail(email);
-        user.setPassword(passwordEncoder.encode(password));
-        user.setDate(LocalDateTime.now());
-        user.setRoles(roles);
+  public Long create(CreateUserRequest request) throws CouldNotCreateUser {
+    return create(UserRole.getStandardRoles(), request.getEmail(), request.getPassword());
+  }
 
-        repository.save(user);
+  public Long create(String[] roles, String email, String password) throws CouldNotCreateUser {
+    UserEntity user = new UserEntity();
+    user.setEmail(email);
+    user.setPassword(passwordEncoder.encode(password));
+    user.setDate(LocalDateTime.now());
+    user.setRoles(roles);
 
-        return user.getId();
-    }
+    repository.save(user);
+
+    return user.getId();
+  }
 }

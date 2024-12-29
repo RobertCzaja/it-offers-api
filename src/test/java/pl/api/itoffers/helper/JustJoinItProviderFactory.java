@@ -12,20 +12,17 @@ import pl.api.itoffers.provider.justjoinit.service.extractor.v1.JustJoinItPayloa
 @RequiredArgsConstructor
 public class JustJoinItProviderFactory {
 
-    private final JustJoinItPayloadExtractor payloadExtractor;
-    private final JustJoinItRepository repository;
+  private final JustJoinItPayloadExtractor payloadExtractor;
+  private final JustJoinItRepository repository;
 
-    public JustJoinItProvider create() {
-        return new JustJoinItProvider(
-            new JustJoinItOffersFetcherV1(JustJoinItInMemoryConnector.create(), payloadExtractor),
-            repository
-        );
-    }
+  public JustJoinItProvider create() {
+    return new JustJoinItProvider(
+        new JustJoinItOffersFetcherV1(JustJoinItInMemoryConnector.create(), payloadExtractor),
+        repository);
+  }
 
-    public JustJoinItProvider create(JustJoinItInMemoryConnector connector) {
-        return new JustJoinItProvider(
-            new JustJoinItOffersFetcherV1(connector, payloadExtractor),
-            repository
-        );
-    }
+  public JustJoinItProvider create(JustJoinItInMemoryConnector connector) {
+    return new JustJoinItProvider(
+        new JustJoinItOffersFetcherV1(connector, payloadExtractor), repository);
+  }
 }

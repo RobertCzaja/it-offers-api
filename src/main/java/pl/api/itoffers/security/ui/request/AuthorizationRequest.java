@@ -7,10 +7,11 @@ import lombok.Data;
 
 @Data
 public class AuthorizationRequest {
-    @NotBlank
-    @Email(message="Invalid email")
-    private String email;
-    @NotBlank
-    @Size(max = 15, message = "Password is too long")
-    private String password;
+  @NotBlank
+  @Email(message = "Invalid email")
+  private String email;
+
+  @NotBlank
+  @Size(max = 15, message = "Password is too long")
+  private String password;
 }

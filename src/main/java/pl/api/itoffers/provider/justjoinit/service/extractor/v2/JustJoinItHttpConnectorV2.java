@@ -6,8 +6,8 @@ import pl.api.itoffers.provider.justjoinit.infrastructure.AbstractJustJoinItHttp
 
 @Service
 public final class JustJoinItHttpConnectorV2 extends AbstractJustJoinItHttpConnector {
-    @Override
-    protected String getRawJsonOffers(Document responseBody) {
-        return new JsonFromHtmlExtractor().getRawJsonFromHtml(responseBody);
-    }
+  @Override
+  protected String getRawJsonOffers(Document responseBody) {
+    return new JsonFromHtmlExtractor().getRawJsonFromHtml(responseBody);
+  }
 }

@@ -1,5 +1,7 @@
 package pl.api.itoffers.integration.offer.helper;
 
+import java.net.URI;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.context.annotation.Profile;
@@ -13,60 +15,46 @@ import pl.api.itoffers.helper.AuthorizationCredentials;
 import pl.api.itoffers.offer.application.dto.outgoing.OffersDto;
 import pl.api.itoffers.offer.ui.controller.OfferController;
 
-import java.net.URI;
-import java.util.List;
-
 @Service
 @Profile("test")
 public class OffersEndpointCaller {
-    private static final String PATH = OfferController.PATH_OFFERS;
+  private static final String PATH = OfferController.PATH_OFFERS;
 
-    @Autowired
-    private TestRestTemplate template;
-    @Autowired
-    private ApiAuthorizationHelper apiAuthorizationHelper;
+  @Autowired private TestRestTemplate template;
+  @Autowired private ApiAuthorizationHelper apiAuthorizationHelper;
 
-    public ResponseEntity<OffersDto> makeRequest(
-        List<String> technologies,
-        String dateFrom,
-        String dateTo
-    ) {
-        return template.exchange(
-            createUri(technologies, dateFrom, dateTo),
-            HttpMethod.GET,
-            new HttpEntity<>(apiAuthorizationHelper.getHeaders(AuthorizationCredentials.ADMIN)),
-            OffersDto.class
-        );
+  public ResponseEntity<OffersDto> makeRequest(
+      List<String> technologies, String dateFrom, String dateTo) {
+    return template.exchange(
+        createUri(technologies, dateFrom, dateTo),
+        HttpMethod.GET,
+        new HttpEntity<>(apiAuthorizationHelper.getHeaders(AuthorizationCredentials.ADMIN)),
+        OffersDto.class);
+  }
+
+  public ResponseEntity<String> makeRequestAsUser() {
+    return template.exchange(
+        PATH,
+        HttpMethod.GET,
+        new HttpEntity<>(apiAuthorizationHelper.getHeaders(AuthorizationCredentials.USER)),
+        String.class);
+  }
+
+  private static URI createUri(List<String> technologies, String dateFrom, String dateTo) {
+    UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(PATH);
+
+    if (null != technologies) {
+      builder = builder.queryParam("technologies", String.join(",", technologies));
     }
 
-    public ResponseEntity<String> makeRequestAsUser() {
-        return template.exchange(
-            PATH,
-            HttpMethod.GET,
-            new HttpEntity<>(apiAuthorizationHelper.getHeaders(AuthorizationCredentials.USER)),
-            String.class
-        );
+    if (null != dateFrom) {
+      builder = builder.queryParam("dateFrom", dateFrom);
     }
 
-    private static URI createUri(
-        List<String> technologies,
-        String dateFrom,
-        String dateTo
-    ) {
-        UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(PATH);
-
-        if (null != technologies) {
-            builder = builder.queryParam("technologies", String.join(",", technologies));
-        }
-
-        if (null != dateFrom) {
-            builder = builder.queryParam("dateFrom", dateFrom);
-        }
-
-        if (null != dateTo) {
-            builder = builder.queryParam("dateTo", dateTo);
-        }
-
-        return builder.build().toUri();
+    if (null != dateTo) {
+      builder = builder.queryParam("dateTo", dateTo);
     }
+
+    return builder.build().toUri();
+  }
 }

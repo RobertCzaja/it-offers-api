@@ -11,13 +11,12 @@ import pl.api.itoffers.provider.justjoinit.service.FetchJustJoinItOffersService;
 @EnableScheduling
 @Service
 public class FetchOfferScheduledJob {
-    @Autowired
-    private FetchJustJoinItOffersService fetchJustJoinItOffersService;
+  @Autowired private FetchJustJoinItOffersService fetchJustJoinItOffersService;
 
-    @Scheduled(cron="0 0 9 * * *")
-    public void fetchJustJoinIt() {
-        log.info("[just-join-it][cron][start] fetching JustJoinIt offers");
-        fetchJustJoinItOffersService.fetch("");
-        log.info("[just-join-it][cron][finish] fetching JustJoinIt offers");
-    }
+  @Scheduled(cron = "0 0 9 * * *")
+  public void fetchJustJoinIt() {
+    log.info("[just-join-it][cron][start] fetching JustJoinIt offers");
+    fetchJustJoinItOffersService.fetch("");
+    log.info("[just-join-it][cron][finish] fetching JustJoinIt offers");
+  }
 }

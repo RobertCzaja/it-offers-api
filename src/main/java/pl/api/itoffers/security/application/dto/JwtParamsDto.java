@@ -6,8 +6,8 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Data
-@ConfigurationProperties(prefix="jwt.token")
+@ConfigurationProperties(prefix = "jwt.token")
 public class JwtParamsDto {
-    private String secret;
-    private Integer lifetime;
+  private String secret;
+  private Integer lifetime;
 }

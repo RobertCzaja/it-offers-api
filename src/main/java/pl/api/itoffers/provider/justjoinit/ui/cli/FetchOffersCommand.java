@@ -9,13 +9,12 @@ import pl.api.itoffers.provider.justjoinit.service.FetchJustJoinItOffersService;
 @ShellComponent
 @RequiredArgsConstructor
 public class FetchOffersCommand {
-    private final FetchJustJoinItOffersService fetchJustJoinItOffersService;
+  private final FetchJustJoinItOffersService fetchJustJoinItOffersService;
 
-    @ShellMethod(key="fetch")
-    public String fetchJustJoinIt(
-        @ShellOption(value = "-t", defaultValue = "") String requestedTechnology
-    ) {
-        fetchJustJoinItOffersService.fetch(requestedTechnology);
-        return "Fetched";
-    }
+  @ShellMethod(key = "fetch")
+  public String fetchJustJoinIt(
+      @ShellOption(value = "-t", defaultValue = "") String requestedTechnology) {
+    fetchJustJoinItOffersService.fetch(requestedTechnology);
+    return "Fetched";
+  }
 }

@@ -10,21 +10,17 @@ import pl.api.itoffers.security.infrastructure.UserPostgresRepository;
 @Configuration
 public class UserRepositoryConfig {
 
-    @Autowired
-    private UserInMemoryRepository userInMemoryRepository;
-    @Autowired
-    private UserPostgresRepository userPostgresRepository;
+  @Autowired private UserInMemoryRepository userInMemoryRepository;
+  @Autowired private UserPostgresRepository userPostgresRepository;
 
-    @Bean
-    public UserInMemoryRepository inMemory()
-    {
-        return userInMemoryRepository;
-    }
+  @Bean
+  public UserInMemoryRepository inMemory() {
+    return userInMemoryRepository;
+  }
 
-    @Bean
-    @Primary
-    public UserPostgresRepository postgreSQL()
-    {
-        return userPostgresRepository;
-    }
+  @Bean
+  @Primary
+  public UserPostgresRepository postgreSQL() {
+    return userPostgresRepository;
+  }
 }

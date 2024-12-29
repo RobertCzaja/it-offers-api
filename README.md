@@ -7,8 +7,10 @@
    * put password that you've used in `.env` `SSL_PASSWORD`
 2. generate JWT Token secret in `.env` `JWT_SECRET`
 3. run `docker compose up` to start DB
-4. Add to IntelliJ IDEA Application runner active profile `dev`
+4. Add to IntelliJ IDEA Application runner active profile `dev` 
 
 ## Static Analysis/tests tools
+* `mvn spotless:check`
+* `mvn spotless:apply`
 * `mvn pmd:check`
 * `mvn test`

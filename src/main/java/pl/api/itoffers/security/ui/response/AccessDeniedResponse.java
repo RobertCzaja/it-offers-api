@@ -4,5 +4,5 @@ import lombok.Data;
 
 @Data
 public class AccessDeniedResponse {
-    private String message = "Access denied";
+  private String message = "Access denied";
 }

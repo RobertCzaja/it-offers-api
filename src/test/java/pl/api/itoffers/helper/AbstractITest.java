@@ -17,32 +17,32 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @ActiveProfiles(profiles = "test")
 public abstract class AbstractITest {
-    @LocalServerPort
-    private Integer port;
+  @LocalServerPort private Integer port;
 
-    public static PostgreSQLContainer<?> postgres;
+  public static PostgreSQLContainer<?> postgres;
 
-    static {
-        postgres = new PostgreSQLContainer<>("postgres:15.2")
-                .withUsername("admin")
-                .withPassword("admin")
-                .withDatabaseName("it-offers");
-    }
+  static {
+    postgres =
+        new PostgreSQLContainer<>("postgres:15.2")
+            .withUsername("admin")
+            .withPassword("admin")
+            .withDatabaseName("it-offers");
+  }
 
-    @BeforeAll
-    public static void beforeAll() {
-        postgres.start();
-    }
+  @BeforeAll
+  public static void beforeAll() {
+    postgres.start();
+  }
 
-    @BeforeEach
-    public void setUp() {
-        RestAssured.baseURI = "http://localhost:" + port;
-    }
+  @BeforeEach
+  public void setUp() {
+    RestAssured.baseURI = "http://localhost:" + port;
+  }
 
-    @DynamicPropertySource
-    public static void containersProperties(DynamicPropertyRegistry registry) {
-        registry.add("spring.datasource.username", postgres::getUsername);
-        registry.add("spring.datasource.password", postgres::getPassword);
-        registry.add("spring.datasource.url", postgres::getJdbcUrl);
-    }
+  @DynamicPropertySource
+  public static void containersProperties(DynamicPropertyRegistry registry) {
+    registry.add("spring.datasource.username", postgres::getUsername);
+    registry.add("spring.datasource.password", postgres::getPassword);
+    registry.add("spring.datasource.url", postgres::getJdbcUrl);
+  }
 }

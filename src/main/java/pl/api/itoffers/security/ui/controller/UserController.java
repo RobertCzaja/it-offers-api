@@ -14,24 +14,23 @@ import pl.api.itoffers.security.ui.request.CreateUserRequest;
 import pl.api.itoffers.security.ui.response.UserCreated;
 import pl.api.itoffers.shared.http.exception.ErrorResponse;
 
-
 @RestController
 public class UserController {
 
-    public final static String PATH = "/user";
+  public static final String PATH = "/user";
 
-    @Autowired
-    private UserService userService;
+  @Autowired private UserService userService;
 
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @PostMapping(UserController.PATH)
-    public ResponseEntity create(@Valid @RequestBody CreateUserRequest request) throws CouldNotCreateUser {
-        try {
-            UserCreated response = new UserCreated();
-            response.setUserId(userService.create(request));
-            return new ResponseEntity<>(response, HttpStatus.CREATED);
-        } catch (CouldNotCreateUser e) {
-            return new ResponseEntity<>(new ErrorResponse(e.getMessage()), HttpStatus.CONFLICT);
-        }
+  @PreAuthorize("hasRole('ROLE_ADMIN')")
+  @PostMapping(UserController.PATH)
+  public ResponseEntity create(@Valid @RequestBody CreateUserRequest request)
+      throws CouldNotCreateUser {
+    try {
+      UserCreated response = new UserCreated();
+      response.setUserId(userService.create(request));
+      return new ResponseEntity<>(response, HttpStatus.CREATED);
+    } catch (CouldNotCreateUser e) {
+      return new ResponseEntity<>(new ErrorResponse(e.getMessage()), HttpStatus.CONFLICT);
     }
+  }
 }

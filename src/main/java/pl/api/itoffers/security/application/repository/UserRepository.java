@@ -5,9 +5,9 @@ import pl.api.itoffers.security.domain.exception.CouldNotCreateUser;
 import pl.api.itoffers.security.domain.model.UserEntity;
 
 public interface UserRepository {
-    User findUserByEmail(String email);
+  User findUserByEmail(String email);
 
-    void save(UserEntity user) throws CouldNotCreateUser;
+  void save(UserEntity user) throws CouldNotCreateUser;
 
-    void deleteAll();
+  void deleteAll();
 }

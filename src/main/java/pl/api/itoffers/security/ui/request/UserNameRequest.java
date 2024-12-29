@@ -7,10 +7,11 @@ import lombok.Data;
 @Data
 public class UserNameRequest {
 
-    @NotBlank
-    @Size(min = 1, max = 50)
-    private String first;
-    @NotBlank
-    @Size(min = 1, max = 50)
-    private String last;
+  @NotBlank
+  @Size(min = 1, max = 50)
+  private String first;
+
+  @NotBlank
+  @Size(min = 1, max = 50)
+  private String last;
 }

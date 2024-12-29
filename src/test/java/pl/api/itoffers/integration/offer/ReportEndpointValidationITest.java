@@ -11,30 +11,29 @@ import pl.api.itoffers.helper.AbstractITest;
 import pl.api.itoffers.integration.offer.helper.ReportAssert;
 import pl.api.itoffers.integration.offer.helper.ReportCategoriesEndpointCaller;
 
-public class ReportEndpointValidationITest extends AbstractITest  {
-    @Autowired
-    private ReportCategoriesEndpointCaller reportCategoriesEndpointCaller;
+public class ReportEndpointValidationITest extends AbstractITest {
+  @Autowired private ReportCategoriesEndpointCaller reportCategoriesEndpointCaller;
 
-    @BeforeEach
-    public void setUp() {
-        super.setUp();
-    }
+  @BeforeEach
+  public void setUp() {
+    super.setUp();
+  }
 
-    @ParameterizedTest
-    @CsvSource(value = {
-        "2024-09-01:2024-08-01",
-        "2026-01-01:"
-    }, delimiter = ':')
-    public void shouldReturnErrorResponseOnInvalidDatesRange(String dateFrom, String dateTo) {
-        ResponseEntity<String> response = reportCategoriesEndpointCaller.makeRequest(dateFrom, dateTo);
+  @ParameterizedTest
+  @CsvSource(
+      value = {"2024-09-01:2024-08-01", "2026-01-01:"},
+      delimiter = ':')
+  public void shouldReturnErrorResponseOnInvalidDatesRange(String dateFrom, String dateTo) {
+    ResponseEntity<String> response = reportCategoriesEndpointCaller.makeRequest(dateFrom, dateTo);
 
-        ReportAssert.responseIs(response, HttpStatus.BAD_REQUEST, "dateFrom cannot be greater thant dateTo");
-    }
+    ReportAssert.responseIs(
+        response, HttpStatus.BAD_REQUEST, "dateFrom cannot be greater thant dateTo");
+  }
 
-    @Test
-    public void shouldUserDifferentThanAdminIsNotAllowToGetCategoriesReport() {
-        ResponseEntity<String> response = reportCategoriesEndpointCaller.makeRequestAsUser();
+  @Test
+  public void shouldUserDifferentThanAdminIsNotAllowToGetCategoriesReport() {
+    ResponseEntity<String> response = reportCategoriesEndpointCaller.makeRequestAsUser();
 
-        ReportAssert.responseIs(response, HttpStatus.FORBIDDEN, "Access denied");
-    }
+    ReportAssert.responseIs(response, HttpStatus.FORBIDDEN, "Access denied");
+  }
 }

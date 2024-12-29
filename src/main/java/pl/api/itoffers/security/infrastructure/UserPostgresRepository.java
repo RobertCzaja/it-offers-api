@@ -15,34 +15,32 @@ import pl.api.itoffers.security.domain.model.UserEntity;
 @Repository
 public class UserPostgresRepository implements UserRepository {
 
-    @Autowired
-    private EntityManager entityManager;
-    @Autowired
-    private UserJapRepository userJapRepository;
+  @Autowired private EntityManager entityManager;
+  @Autowired private UserJapRepository userJapRepository;
 
-    @Override
-    public User findUserByEmail(String email) {
-        UserEntity userEntity = userJapRepository.findByEmail(email);
+  @Override
+  public User findUserByEmail(String email) {
+    UserEntity userEntity = userJapRepository.findByEmail(email);
 
-        if (null == userEntity ) {
-            throw UserNotFound.with(email);
-        }
-
-        return userEntity.castToUser();
+    if (null == userEntity) {
+      throw UserNotFound.with(email);
     }
 
-    @Override
-    public void save(UserEntity user) throws CouldNotCreateUser {
-        try {
-            entityManager.persist(user);
-            entityManager.flush();
-        } catch (ConstraintViolationException e) {
-            throw CouldNotCreateUser.becauseEmailIsAlreadyRegistered(user.getEmail(), e);
-        }
-    }
+    return userEntity.castToUser();
+  }
 
-    @Override
-    public void deleteAll() {
-        userJapRepository.deleteAll();
+  @Override
+  public void save(UserEntity user) throws CouldNotCreateUser {
+    try {
+      entityManager.persist(user);
+      entityManager.flush();
+    } catch (ConstraintViolationException e) {
+      throw CouldNotCreateUser.becauseEmailIsAlreadyRegistered(user.getEmail(), e);
     }
+  }
+
+  @Override
+  public void deleteAll() {
+    userJapRepository.deleteAll();
+  }
 }

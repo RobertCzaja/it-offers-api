@@ -8,10 +8,11 @@ import pl.api.itoffers.offer.application.repository.OfferRepository;
 
 @Configuration
 public class OfferConfiguration {
-    @Autowired
-    private OfferRepository repository;
+  @Autowired private OfferRepository repository;
 
-    @Bean
-    @Primary
-    public OfferRepository repository() { return repository; }
+  @Bean
+  @Primary
+  public OfferRepository repository() {
+    return repository;
+  }
 }

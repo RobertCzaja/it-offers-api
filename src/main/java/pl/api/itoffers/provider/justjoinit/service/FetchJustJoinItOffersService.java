@@ -1,5 +1,8 @@
 package pl.api.itoffers.provider.justjoinit.service;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
@@ -9,36 +12,33 @@ import pl.api.itoffers.offer.application.service.OfferService;
 import pl.api.itoffers.provider.justjoinit.JustJoinItProvider;
 import pl.api.itoffers.shared.logger.Logger;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.UUID;
-
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class FetchJustJoinItOffersService {
-    private final TechnologyRepository technologyRepository;
-    private final JustJoinItProvider justJoinItProvider;
-    private final OfferService offerService;
-    private final Logger logger;
+  private final TechnologyRepository technologyRepository;
+  private final JustJoinItProvider justJoinItProvider;
+  private final OfferService offerService;
+  private final Logger logger;
 
-    public void fetch(@NotNull String requestedTechnology) {
-        List<String> technologies = requestedTechnology.isEmpty()
-                ? technologyRepository.allActive()
-                : Arrays.asList(requestedTechnology);
+  public void fetch(@NotNull String requestedTechnology) {
+    List<String> technologies =
+        requestedTechnology.isEmpty()
+            ? technologyRepository.allActive()
+            : Arrays.asList(requestedTechnology);
 
-        UUID scrapingId = UUID.randomUUID();
+    UUID scrapingId = UUID.randomUUID();
 
-        try {
-            for (String technology : technologies) {
-                log.info(String.format("[just-join-it] fetching offers from technology: %s", technology));
-                justJoinItProvider.fetch(technology, scrapingId);
-            }
+    try {
+      for (String technology : technologies) {
+        log.info(String.format("[just-join-it] fetching offers from technology: %s", technology));
+        justJoinItProvider.fetch(technology, scrapingId);
+      }
 
-            offerService.processOffersFromExternalService(scrapingId);
-        } catch (Exception e) {
-            log.error("Error on fetching JustJoinIT offers", e);
-            throw e;
-        }
+      offerService.processOffersFromExternalService(scrapingId);
+    } catch (Exception e) {
+      log.error("Error on fetching JustJoinIT offers", e);
+      throw e;
     }
+  }
 }

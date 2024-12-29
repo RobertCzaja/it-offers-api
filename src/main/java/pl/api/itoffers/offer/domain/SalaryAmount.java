@@ -12,9 +12,11 @@ import lombok.RequiredArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PUBLIC, force = true)
 @RequiredArgsConstructor
 public class SalaryAmount {
-    @Column(name = "amount_from")
-    private final Integer from;
-    @Column(name = "amount_to")
-    private final Integer to;
-    private final String currency;
+  @Column(name = "amount_from")
+  private final Integer from;
+
+  @Column(name = "amount_to")
+  private final Integer to;
+
+  private final String currency;
 }

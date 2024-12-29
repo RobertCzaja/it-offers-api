@@ -1,33 +1,31 @@
 package pl.api.itoffers.provider.justjoinit.service.extractor.v2;
 
+import java.util.ArrayList;
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import pl.api.itoffers.provider.justjoinit.JustJoinItConnector;
 import pl.api.itoffers.provider.justjoinit.service.JustJoinItOffersFetcher;
 
-import java.util.ArrayList;
-import java.util.Map;
-
-/**
- * Valid since 12.2024
- */
+/** Valid since 12.2024 */
 @Service
 public class JustJoinItOffersFetcherV2 implements JustJoinItOffersFetcher {
 
-    @Autowired
-    @Qualifier("connectionV2")
-    private final JustJoinItConnector connector;
-    @Autowired
-    private final PayloadFromJsonExtractor extractor;
+  @Autowired
+  @Qualifier("connectionV2")
+  private final JustJoinItConnector connector;
 
-    public JustJoinItOffersFetcherV2(JustJoinItConnector connector, PayloadFromJsonExtractor extractor) {
-        this.connector = connector;
-        this.extractor = extractor;
-    }
+  @Autowired private final PayloadFromJsonExtractor extractor;
 
-    @Override
-    public ArrayList<Map<String, Object>> fetch(String technology) {
-        return extractor.extractPayload(connector.fetchStringifyJsonPayload(technology));
-    }
+  public JustJoinItOffersFetcherV2(
+      JustJoinItConnector connector, PayloadFromJsonExtractor extractor) {
+    this.connector = connector;
+    this.extractor = extractor;
+  }
+
+  @Override
+  public ArrayList<Map<String, Object>> fetch(String technology) {
+    return extractor.extractPayload(connector.fetchStringifyJsonPayload(technology));
+  }
 }

@@ -12,22 +12,17 @@ import pl.api.itoffers.offer.application.repository.OfferRepository;
 @Profile("test")
 public class OfferTestManager {
 
-    @Autowired
-    private CategoryRepository categoryRepository;
-    @Autowired
-    private CompanyRepository companyRepository;
-    @Autowired
-    private OfferRepository offerRepository;
+  @Autowired private CategoryRepository categoryRepository;
+  @Autowired private CompanyRepository companyRepository;
+  @Autowired private OfferRepository offerRepository;
 
-    public OfferBuilder createOfferBuilder() {
-        return new OfferBuilder(
-            categoryRepository, companyRepository, offerRepository
-        );
-    }
+  public OfferBuilder createOfferBuilder() {
+    return new OfferBuilder(categoryRepository, companyRepository, offerRepository);
+  }
 
-    public void clearAll() {
-        offerRepository.deleteAll();
-        categoryRepository.deleteAll();
-        companyRepository.deleteAll();
-    }
+  public void clearAll() {
+    offerRepository.deleteAll();
+    categoryRepository.deleteAll();
+    companyRepository.deleteAll();
+  }
 }

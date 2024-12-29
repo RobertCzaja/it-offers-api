@@ -10,13 +10,20 @@ import pl.api.itoffers.provider.justjoinit.service.extractor.v2.JustJoinItOffers
 @Configuration
 @RequiredArgsConstructor
 public class JustJoinItFetcherConfig {
-    private final JustJoinItOffersFetcherV1 justJoinItOffersFetcherV1;
-    private final JustJoinItOffersFetcherV2 justJoinItOffersFetcherV2;
+  private final JustJoinItOffersFetcherV1 justJoinItOffersFetcherV1;
+  private final JustJoinItOffersFetcherV2 justJoinItOffersFetcherV2;
 
-    /** @deprecated since december 2024*/
-    @Bean
-    public JustJoinItOffersFetcherV1 v1() { return justJoinItOffersFetcherV1; }
-    @Bean
-    @Primary
-    public JustJoinItOffersFetcherV2 v2() { return justJoinItOffersFetcherV2; }
+  /**
+   * @deprecated since december 2024
+   */
+  @Bean
+  public JustJoinItOffersFetcherV1 v1() {
+    return justJoinItOffersFetcherV1;
+  }
+
+  @Bean
+  @Primary
+  public JustJoinItOffersFetcherV2 v2() {
+    return justJoinItOffersFetcherV2;
+  }
 }

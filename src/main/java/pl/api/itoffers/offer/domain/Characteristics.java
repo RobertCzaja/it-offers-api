@@ -11,7 +11,7 @@ import lombok.RequiredArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED, force = true)
 @RequiredArgsConstructor
 public class Characteristics {
-    private final String workplace;
-    private final String time;
-    private final Boolean remoteInterview;
+  private final String workplace;
+  private final String time;
+  private final Boolean remoteInterview;
 }
