@@ -1,11 +1,9 @@
 package pl.api.itoffers.helper;
 
-import org.aspectj.weaver.ast.Or;
 import pl.api.itoffers.offer.application.repository.CategoryRepository;
 import pl.api.itoffers.offer.application.repository.CompanyRepository;
 import pl.api.itoffers.offer.application.repository.OfferRepository;
 import pl.api.itoffers.offer.domain.*;
-import pl.api.itoffers.provider.justjoinit.model.JustJoinItDateTime;
 
 import java.time.LocalDateTime;
 import java.util.*;
@@ -79,7 +77,7 @@ public class OfferBuilder {
 
     /** @param monthAndDay in format MM-dd  */
     public OfferBuilder at(String monthAndDay) {
-        createdAt = JustJoinItDateTime.createFromDate("2024-"+monthAndDay).value;
+        createdAt = LocalDateTimeCustomBuilder.createFromDate("2024-"+monthAndDay);
         publishedAt = createdAt;
         return this;
     }

@@ -1,9 +1,9 @@
 package pl.api.itoffers.integration.offer.helper;
 
+import pl.api.itoffers.helper.LocalDateTimeCustomBuilder;
 import pl.api.itoffers.offer.application.dto.outgoing.OfferCategoryDto;
 import pl.api.itoffers.offer.application.dto.outgoing.OfferDto;
 import pl.api.itoffers.offer.application.dto.outgoing.OffersDto;
-import pl.api.itoffers.provider.justjoinit.model.JustJoinItDateTime;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -20,7 +20,7 @@ public class OffersAssert {
 
             assertThat(dto.getTechnology()).isEqualTo(expectedData.get(0));
             hasExpectedCategoriesWithNotSpecifiedOrder((List<String>) expectedData.get(1), dto.getCategories());
-            assertThat(dto.getPublishedAt()).isEqualTo(JustJoinItDateTime.createFromDate((String) expectedData.get(2)).value);
+            assertThat(dto.getPublishedAt()).isEqualTo(LocalDateTimeCustomBuilder.createFromDate((String) expectedData.get(2)));
         }
     }
 

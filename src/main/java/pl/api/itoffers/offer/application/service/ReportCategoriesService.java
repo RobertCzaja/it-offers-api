@@ -13,7 +13,6 @@ import pl.api.itoffers.offer.domain.Offer;
 import java.time.LocalDateTime;
 import java.util.*;
 
-/* TODO think about refactor of that class */
 @Service
 public class ReportCategoriesService {
     private final OfferRepository offerRepository;
