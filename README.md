@@ -10,7 +10,7 @@
 4. Add to IntelliJ IDEA Application runner active profile `dev` 
 
 ## Static Analysis/tests tools
-* `mvn spotless:check`
-* `mvn spotless:apply`
+* `mvn spotless:check` 
+  * `mvn spotless:apply`
 * `mvn pmd:check`
-* `mvn test`
+* `mvn test -Dpmd.skip=true`
