@@ -31,7 +31,7 @@ public class FetchJustJoinItOffersService {
 
     try {
       for (String technology : technologies) {
-        log.info(String.format("[just-join-it] fetching offers from technology: %s", technology));
+        log.info(String.format("[jjit] fetching category: %s", technology));
         justJoinItProvider.fetch(technology, scrapingId);
       }
 

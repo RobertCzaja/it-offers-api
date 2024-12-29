@@ -47,7 +47,7 @@ public class OfferService {
       categoryRepository.saveAll(categories.get("toSave"));
       offerRepository.save(offer);
       log.info(
-          "[just-join-it][import][{}] '{}' from {} at {}",
+          "[jjit][{}] '{}' from {} at {}",
           offer.getTechnology(),
           offer.getTitle(),
           offer.getCompany().getName(),
