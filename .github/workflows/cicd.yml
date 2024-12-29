@@ -26,6 +26,9 @@ jobs:
         distribution: 'temurin'
         cache: maven
 
+    - name: Run Spotless Check
+      run: mvn spotless:check
+
     - name: Run PMD
       run: |
         mvn clean pmd:check
