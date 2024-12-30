@@ -28,6 +28,10 @@ public class PayloadFromJsonExtractor {
       Iterator<JsonNode> queriesNodes =
           mapper.readTree(rawJsonPayload).path("state").path("queries").elements();
 
+      if (!queriesNodes.hasNext()) {
+        return new ArrayList<>();
+      }
+
       do {
         JsonNode queryNode = queriesNodes.next();
         if (queryNode.get("state").isObject()) {

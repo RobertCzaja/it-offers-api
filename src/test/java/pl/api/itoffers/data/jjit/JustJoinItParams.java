@@ -25,4 +25,6 @@ public class JustJoinItParams {
       MAIN_CATALOG + "allLocationsScenarioB1December.json";
   public static final String ALL_LOCATIONS_PAYLOAD_B2_DECEMBER_PATH_JSON =
       MAIN_CATALOG + "allLocationsScenarioB2December.json";
+  public static final String ALL_LOCATIONS_PAYLOAD_B3_DECEMBER_PATH_JSON =
+      MAIN_CATALOG + "allLocationsScenarioB3December.json";
 }

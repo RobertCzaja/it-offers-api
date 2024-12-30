@@ -44,6 +44,17 @@ public class PayloadFromJsonExtractorTest {
   }
 
   @Test
+  public void testShouldCorrectlyExtractEmptyOfferListWhenThereIsNothingInRawPayload()
+      throws IOException {
+    String jjitJson =
+        this.fileManager.readFile(JustJoinItParams.ALL_LOCATIONS_PAYLOAD_B3_DECEMBER_PATH_JSON);
+
+    ArrayList<Map<String, Object>> offers = payloadFromJsonExtractor.extractPayload(jjitJson);
+
+    JjitOffersAssert.expectsSize(0, offers);
+  }
+
+  @Test
   public void testCannotExtractOffersFromJsonWhenJsonIsAnEmptyString() throws IOException {
     assertThrows(JustJoinItException.class, () -> payloadFromJsonExtractor.extractPayload(""));
     assertThrows(JustJoinItException.class, () -> payloadFromJsonExtractor.extractPayload(null));

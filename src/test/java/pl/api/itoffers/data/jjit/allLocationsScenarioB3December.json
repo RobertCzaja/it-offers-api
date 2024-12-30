@@ -1,0 +1,17 @@
+{
+  "state": {
+    "mutations": []
+  },
+  "children": [
+    "$",
+    "$L2f",
+    null,
+    {
+      "selectedFilters": {
+        "categories": "$30"
+      },
+      "tenant": "JJIT",
+      "theme": "justjoinit"
+    }
+  ]
+}
