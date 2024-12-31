@@ -29,6 +29,7 @@ public class PayloadFromJsonExtractor {
           mapper.readTree(rawJsonPayload).path("state").path("queries").elements();
 
       if (!queriesNodes.hasNext()) {
+        log.info("Empty JJIT payload: \n{}", rawJsonPayload);
         return new ArrayList<>();
       }
 
