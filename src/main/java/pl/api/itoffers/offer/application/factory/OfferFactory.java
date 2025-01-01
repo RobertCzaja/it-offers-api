@@ -2,7 +2,7 @@ package pl.api.itoffers.offer.application.factory;
 
 import java.time.LocalDateTime;
 import java.util.*;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import pl.api.itoffers.offer.application.repository.CategoryRepository;
 import pl.api.itoffers.offer.application.repository.CompanyRepository;
@@ -16,9 +16,10 @@ import pl.api.itoffers.provider.justjoinit.model.JustJoinItDateTime;
 import pl.api.itoffers.provider.justjoinit.model.JustJoinItRawOffer;
 
 @Service
+@AllArgsConstructor
 public class OfferFactory {
-  @Autowired private CompanyRepository companyRepository;
-  @Autowired private CategoryRepository categoryRepository;
+  private final CompanyRepository companyRepository;
+  private final CategoryRepository categoryRepository;
 
   public Offer createOffer(
       JustJoinItRawOffer rawOffer,

@@ -32,8 +32,8 @@ public class OfferDto {
   List<OfferSalaryDto> salaries;
 
   public static OfferDto createFrom(Offer offer, URL link) {
-    List<OfferCategoryDto> categoriesDto = new ArrayList<OfferCategoryDto>();
-    List<OfferSalaryDto> salariesDto = new ArrayList<OfferSalaryDto>();
+    List<OfferCategoryDto> categoriesDto = new ArrayList<>();
+    List<OfferSalaryDto> salariesDto = new ArrayList<>();
 
     for (Category category : offer.getCategories()) {
       categoriesDto.add(
