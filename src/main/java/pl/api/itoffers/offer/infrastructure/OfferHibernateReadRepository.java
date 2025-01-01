@@ -50,7 +50,7 @@ public class OfferHibernateReadRepository implements OfferReadRepository {
     TypedQuery<Offer> typedQuery = em.createQuery(query);
     List<Offer> offers = typedQuery.getResultList();
 
-    List<OfferDtoDeprecated> dtos = new ArrayList<OfferDtoDeprecated>();
+    List<OfferDtoDeprecated> dtos = new ArrayList<>();
     offers.forEach(
         offer -> dtos.addAll(OfferDtoDeprecated.createFrom(offer, currency, employmentType)));
     sortDesc(dtos);
@@ -74,7 +74,7 @@ public class OfferHibernateReadRepository implements OfferReadRepository {
     TypedQuery<Offer> typedQuery = em.createQuery(query);
     List<Offer> offers = typedQuery.getResultList();
 
-    List<OfferDto> offersDto = new ArrayList<OfferDto>();
+    List<OfferDto> offersDto = new ArrayList<>();
     for (Offer offer : offers) {
       offersDto.add(OfferDto.createFrom(offer, justJoinItParameters.getOfferUrl(offer.getSlug())));
     }
