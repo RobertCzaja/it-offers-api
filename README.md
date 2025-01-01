@@ -14,4 +14,4 @@
   * `mvn spotless:apply`
 * `mvn pmd:check`
 * `mvn test -Dpmd.skip=true`
-* SonarQube is available on http://localhost:9000/
+* `mvn sonar:sonar -Dsonar.login=admin -Dsonar.password=Admin1!admin` http://localhost:9000/
