@@ -84,6 +84,9 @@ jobs:
     timeout-minutes: 2
     steps:
 
+      - name: Remove not used images
+        run: sudo docker image prune -a -f
+
       - name: Pull image from docker hub
         run: sudo docker pull ${{ secrets.DOCKERHUB_USERNAME }}/it-offers:latest
 
