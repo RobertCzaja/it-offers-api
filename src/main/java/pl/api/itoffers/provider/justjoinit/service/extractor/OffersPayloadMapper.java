@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Map;
 
+/** TODO move to unified provider namespace */
 public class OffersPayloadMapper {
 
   private final ObjectMapper mapper = new ObjectMapper();
