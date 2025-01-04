@@ -6,19 +6,18 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Map;
+import pl.api.itoffers.provider.nofluffjobs.exception.NoFluffJobsException;
 import pl.api.itoffers.shared.utils.json.JsonNodeMapper;
 
-/** TODO name of the class to figure out */
 public class PayloadFromJsonExtractor {
 
   private final ObjectMapper mapper = new ObjectMapper();
   private final JsonNodeMapper jsonNodeMapper = new JsonNodeMapper();
 
-  /** TODO add custom exception */
   public ArrayList<Map<String, Object>> extractOffers(String rawJsonPayload) {
 
     if (null == rawJsonPayload || rawJsonPayload.isEmpty()) {
-      throw new RuntimeException("Empty body payload"); // todo test that
+      throw NoFluffJobsException.payloadIsEmpty();
     }
 
     try {
@@ -30,6 +29,7 @@ public class PayloadFromJsonExtractor {
       return jsonNodeMapper.map(list);
     } catch (JsonProcessingException e) {
       // todo log whole raw payload?
+      /** TODO add custom exception */
       throw new RuntimeException(e);
     }
   }
