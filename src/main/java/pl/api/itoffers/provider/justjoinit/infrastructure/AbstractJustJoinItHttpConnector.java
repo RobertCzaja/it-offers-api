@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.api.itoffers.provider.justjoinit.JustJoinItConnector;
 import pl.api.itoffers.provider.justjoinit.exception.JustJoinItException;
+import pl.api.itoffers.shared.http.connector.HttpConnector;
 
 @Service
 public abstract class AbstractJustJoinItHttpConnector implements JustJoinItConnector {
@@ -34,6 +35,10 @@ public abstract class AbstractJustJoinItHttpConnector implements JustJoinItConne
     }
   }
 
+  /**
+   * @deprecated todo extract to another class with Shared namespace
+   * @see HttpConnector
+   */
   private String fetchSourceHtml(String technology) throws IOException {
     Scanner scanner = null;
     try {
