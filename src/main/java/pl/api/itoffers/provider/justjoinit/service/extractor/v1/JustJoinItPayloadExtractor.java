@@ -8,9 +8,9 @@ import java.util.Iterator;
 import java.util.Map;
 import org.springframework.stereotype.Service;
 import pl.api.itoffers.provider.justjoinit.exception.JustJoinItException;
-import pl.api.itoffers.provider.justjoinit.service.extractor.OffersPayloadMapper;
 import pl.api.itoffers.provider.justjoinit.service.extractor.v2.PayloadFromJsonExtractor;
 import pl.api.itoffers.shared.utils.fileManager.FileManager;
+import pl.api.itoffers.shared.utils.json.JsonNodeMapper;
 
 /**
  * @deprecated since 12.2024
@@ -21,7 +21,7 @@ public class JustJoinItPayloadExtractor {
 
   private final ObjectMapper mapper = new ObjectMapper();
   private final FileManager fileManager = new FileManager();
-  private final OffersPayloadMapper offersPayloadMapper = new OffersPayloadMapper();
+  private final JsonNodeMapper jsonNodeMapper = new JsonNodeMapper();
 
   public final ArrayList<Map<String, Object>> extract(String rawJsonPayload) {
     if (rawJsonPayload.isEmpty()) {
@@ -43,7 +43,7 @@ public class JustJoinItPayloadExtractor {
               .get(0)
               .path("data")
               .elements();
-      return offersPayloadMapper.convert(offersNode);
+      return jsonNodeMapper.map(offersNode);
     } catch (JsonProcessingException e) {
       fileManager.saveFile(rawJsonPayload, "json");
       throw new JustJoinItException(

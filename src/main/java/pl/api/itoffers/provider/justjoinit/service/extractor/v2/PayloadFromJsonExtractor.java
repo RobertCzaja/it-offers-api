@@ -10,14 +10,14 @@ import java.util.NoSuchElementException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import pl.api.itoffers.provider.justjoinit.exception.JustJoinItException;
-import pl.api.itoffers.provider.justjoinit.service.extractor.OffersPayloadMapper;
+import pl.api.itoffers.shared.utils.json.JsonNodeMapper;
 
 @Slf4j
 @Service
 public class PayloadFromJsonExtractor {
 
   private final ObjectMapper mapper = new ObjectMapper();
-  private final OffersPayloadMapper payloadMapper = new OffersPayloadMapper();
+  private final JsonNodeMapper payloadMapper = new JsonNodeMapper();
 
   public ArrayList<Map<String, Object>> extractPayload(String rawJsonPayload) {
     if (null == rawJsonPayload || rawJsonPayload.isEmpty()) {
@@ -38,7 +38,7 @@ public class PayloadFromJsonExtractor {
         if (queryNode.get("state").isObject()) {
           Iterator<JsonNode> offerNodes =
               queryNode.get("state").path("data").path("pages").get(0).path("data").elements();
-          return payloadMapper.convert(offerNodes);
+          return payloadMapper.map(offerNodes);
         }
       } while (queriesNodes.hasNext());
 

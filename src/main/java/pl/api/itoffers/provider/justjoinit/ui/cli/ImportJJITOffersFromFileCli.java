@@ -13,10 +13,10 @@ import org.springframework.shell.standard.ShellOption;
 import pl.api.itoffers.provider.justjoinit.model.JustJoinItDateTime;
 import pl.api.itoffers.provider.justjoinit.model.JustJoinItRawOffer;
 import pl.api.itoffers.provider.justjoinit.repository.JustJoinItRepository;
-import pl.api.itoffers.provider.justjoinit.service.extractor.OffersPayloadMapper;
 import pl.api.itoffers.shared.aws.AwsS3Connector;
 import pl.api.itoffers.shared.utils.cli.CliFixParams;
 import pl.api.itoffers.shared.utils.cli.FixReport;
+import pl.api.itoffers.shared.utils.json.JsonNodeMapper;
 
 /**
  * OneUse - remove after usage
@@ -54,7 +54,7 @@ public class ImportJJITOffersFromFileCli {
 
     log.info("Fetched");
     ArrayList<Map<String, Object>> rawOffers =
-        new OffersPayloadMapper().convert(mapper.readTree(justJoinItOffers).elements());
+        new JsonNodeMapper().map(mapper.readTree(justJoinItOffers).elements());
     UUID scrappingId = UUID.randomUUID();
     log.info("ScrappingId: {}", scrappingId);
 
