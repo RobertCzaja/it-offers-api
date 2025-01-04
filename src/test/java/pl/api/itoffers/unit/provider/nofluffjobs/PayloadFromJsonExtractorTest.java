@@ -33,8 +33,10 @@ public class PayloadFromJsonExtractorTest {
   }
 
   @Test
-  public void cannotExtractAnythingWhenRawJsonIsAnEmptyString() {
+  public void cannotExtractAnythingWhenRawPayloadIsEmpty() {
     assertThrows(NoFluffJobsException.class, () -> extractor.extractOffers(""));
     assertThrows(NoFluffJobsException.class, () -> extractor.extractOffers(null));
+    assertThrows(NoFluffJobsException.class, () -> extractor.extractOffers("{}"));
+    assertThrows(NoFluffJobsException.class, () -> extractor.extractOffers("\"STORE_KEY\":{}"));
   }
 }

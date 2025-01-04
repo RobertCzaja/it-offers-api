@@ -27,10 +27,8 @@ public class PayloadFromJsonExtractor {
           node.get("STORE_KEY").get("searchResponse").get("postings").elements();
 
       return jsonNodeMapper.map(list);
-    } catch (JsonProcessingException e) {
-      // todo log whole raw payload?
-      /** TODO add custom exception */
-      throw new RuntimeException(e);
+    } catch (JsonProcessingException | NullPointerException e) {
+      throw NoFluffJobsException.onExtractingOffers(rawJsonPayload, e);
     }
   }
 }
