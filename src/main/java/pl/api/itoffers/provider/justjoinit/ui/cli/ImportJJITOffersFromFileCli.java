@@ -54,7 +54,7 @@ public class ImportJJITOffersFromFileCli {
 
     log.info("Fetched");
     ArrayList<Map<String, Object>> rawOffers =
-        new JsonNodeMapper().map(mapper.readTree(justJoinItOffers).elements());
+        new JsonNodeMapper().mapToList(mapper.readTree(justJoinItOffers).elements());
     UUID scrappingId = UUID.randomUUID();
     log.info("ScrappingId: {}", scrappingId);
 

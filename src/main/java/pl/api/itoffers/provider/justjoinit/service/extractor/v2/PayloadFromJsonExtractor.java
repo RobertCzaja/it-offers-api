@@ -38,7 +38,7 @@ public class PayloadFromJsonExtractor {
         if (queryNode.get("state").isObject()) {
           Iterator<JsonNode> offerNodes =
               queryNode.get("state").path("data").path("pages").get(0).path("data").elements();
-          return payloadMapper.map(offerNodes);
+          return payloadMapper.mapToList(offerNodes);
         }
       } while (queriesNodes.hasNext());
 

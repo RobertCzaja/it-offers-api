@@ -13,7 +13,7 @@ import pl.api.itoffers.provider.justjoinit.exception.JustJoinItException;
 import pl.api.itoffers.provider.justjoinit.service.extractor.v2.PayloadFromJsonExtractor;
 import pl.api.itoffers.shared.utils.fileManager.FileManager;
 
-public class PayloadFromJsonExtractorTest {
+public class OffersListFromJsonPayloadExtractorTest {
   private FileManager fileManager = new FileManager();
   private PayloadFromJsonExtractor payloadFromJsonExtractor;
 

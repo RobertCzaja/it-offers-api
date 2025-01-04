@@ -11,7 +11,7 @@ public class JsonNodeMapper {
 
   private final ObjectMapper mapper = new ObjectMapper();
 
-  public ArrayList<Map<String, Object>> map(Iterator<JsonNode> jsonNodeIterator) {
+  public ArrayList<Map<String, Object>> mapToList(Iterator<JsonNode> jsonNodeIterator) {
     ArrayList<Map<String, Object>> offers = new ArrayList<>();
     while (jsonNodeIterator.hasNext()) {
       offers.add(mapper.convertValue(jsonNodeIterator.next(), new TypeReference<>() {}));

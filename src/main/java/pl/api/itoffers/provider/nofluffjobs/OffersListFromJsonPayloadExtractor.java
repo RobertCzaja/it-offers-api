@@ -9,7 +9,7 @@ import java.util.Map;
 import pl.api.itoffers.provider.nofluffjobs.exception.NoFluffJobsException;
 import pl.api.itoffers.shared.utils.json.JsonNodeMapper;
 
-public class PayloadFromJsonExtractor {
+public class OffersListFromJsonPayloadExtractor {
 
   private final ObjectMapper mapper = new ObjectMapper();
   private final JsonNodeMapper jsonNodeMapper = new JsonNodeMapper();
@@ -23,10 +23,10 @@ public class PayloadFromJsonExtractor {
     try {
       JsonNode node = mapper.readTree(rawJsonPayload);
 
-      Iterator<JsonNode> list =
+      Iterator<JsonNode> offersNodes =
           node.get("STORE_KEY").get("searchResponse").get("postings").elements();
 
-      return jsonNodeMapper.map(list);
+      return jsonNodeMapper.mapToList(offersNodes);
     } catch (JsonProcessingException | NullPointerException e) {
       throw NoFluffJobsException.onExtractingOffers(rawJsonPayload, e);
     }

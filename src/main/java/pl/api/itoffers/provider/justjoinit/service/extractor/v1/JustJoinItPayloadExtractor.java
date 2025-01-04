@@ -43,7 +43,7 @@ public class JustJoinItPayloadExtractor {
               .get(0)
               .path("data")
               .elements();
-      return jsonNodeMapper.map(offersNode);
+      return jsonNodeMapper.mapToList(offersNode);
     } catch (JsonProcessingException e) {
       fileManager.saveFile(rawJsonPayload, "json");
       throw new JustJoinItException(
