@@ -14,9 +14,13 @@ public class NoFluffJobsParameters {
   private static final String LIST_PATH_TEMPLATE = "/pl/{0}?sort=newest";
   private String origin;
 
-  public URL listPatch(String technology) {
+  public String listPath(String technology) {
+    return MessageFormat.format(LIST_PATH_TEMPLATE, technology);
+  }
+
+  public URL listUrl(String technology) {
     try {
-      return new URL(origin + MessageFormat.format(LIST_PATH_TEMPLATE, technology));
+      return new URL(origin + listPath(technology));
     } catch (MalformedURLException e) {
       throw new RuntimeException(e);
     }

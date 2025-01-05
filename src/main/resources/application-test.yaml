@@ -13,3 +13,9 @@ spring:
     user: admin
     baseline-description: "init"
     baseline-version: 0
+application:
+  provider:
+    just-join-it:
+      origin: http://localhost:8080
+    no-fluff-jobs:
+      origin: http://localhost:8080
