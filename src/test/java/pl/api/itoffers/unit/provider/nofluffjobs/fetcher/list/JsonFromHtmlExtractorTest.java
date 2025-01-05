@@ -1,4 +1,4 @@
-package pl.api.itoffers.unit.provider.nofluffjobs;
+package pl.api.itoffers.unit.provider.nofluffjobs.fetcher.list;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -7,7 +7,7 @@ import java.io.IOException;
 import org.jsoup.Jsoup;
 import org.junit.jupiter.api.Test;
 import pl.api.itoffers.data.nfj.NoFluffJobsParams;
-import pl.api.itoffers.provider.nofluffjobs.JsonFromHtmlExtractor;
+import pl.api.itoffers.provider.nofluffjobs.fetcher.list.JsonFromHtmlExtractor;
 import pl.api.itoffers.shared.utils.fileManager.FileManager;
 
 public class JsonFromHtmlExtractorTest {

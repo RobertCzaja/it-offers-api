@@ -9,8 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import pl.api.itoffers.data.nfj.NoFluffJobsParams;
 import pl.api.itoffers.helper.AbstractITest;
 import pl.api.itoffers.helper.WireMockOrchestrator;
-import pl.api.itoffers.provider.nofluffjobs.NoFluffJobsConnector;
-import pl.api.itoffers.provider.nofluffjobs.NoFluffJobsParameters;
+import pl.api.itoffers.provider.nofluffjobs.fetcher.NoFluffJobsParameters;
+import pl.api.itoffers.provider.nofluffjobs.fetcher.list.NoFluffJobsConnector;
 
 public class NoFluffJobsConnectorITest extends AbstractITest {
 

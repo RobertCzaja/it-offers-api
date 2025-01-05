@@ -1,4 +1,4 @@
-package pl.api.itoffers.unit.provider.nofluffjobs;
+package pl.api.itoffers.unit.provider.nofluffjobs.fetcher.list;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -9,8 +9,8 @@ import org.junit.Before;
 import org.junit.Test;
 import pl.api.itoffers.data.nfj.NoFluffJobsParams;
 import pl.api.itoffers.helper.assertions.NfjOffersAssert;
-import pl.api.itoffers.provider.nofluffjobs.OffersListFromJsonPayloadExtractor;
 import pl.api.itoffers.provider.nofluffjobs.exception.NoFluffJobsException;
+import pl.api.itoffers.provider.nofluffjobs.fetcher.list.OffersListFromJsonPayloadExtractor;
 import pl.api.itoffers.shared.utils.fileManager.FileManager;
 
 public class OffersListFromJsonPayloadExtractorTest {

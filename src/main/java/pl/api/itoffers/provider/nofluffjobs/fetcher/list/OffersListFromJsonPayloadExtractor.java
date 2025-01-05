@@ -1,4 +1,4 @@
-package pl.api.itoffers.provider.nofluffjobs;
+package pl.api.itoffers.provider.nofluffjobs.fetcher.list;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;

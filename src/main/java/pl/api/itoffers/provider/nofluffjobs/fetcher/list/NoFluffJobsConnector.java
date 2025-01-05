@@ -1,10 +1,11 @@
-package pl.api.itoffers.provider.nofluffjobs;
+package pl.api.itoffers.provider.nofluffjobs.fetcher.list;
 
 import java.io.IOException;
 import lombok.AllArgsConstructor;
 import org.jsoup.Jsoup;
 import org.springframework.stereotype.Service;
 import pl.api.itoffers.provider.nofluffjobs.exception.NoFluffJobsException;
+import pl.api.itoffers.provider.nofluffjobs.fetcher.NoFluffJobsParameters;
 import pl.api.itoffers.shared.http.connector.HttpConnector;
 
 @Service

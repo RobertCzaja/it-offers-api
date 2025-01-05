@@ -1,4 +1,4 @@
-package pl.api.itoffers.provider.nofluffjobs;
+package pl.api.itoffers.provider.nofluffjobs.fetcher.list;
 
 import org.jsoup.nodes.Document;
 

@@ -1,4 +1,4 @@
-package pl.api.itoffers.provider.nofluffjobs;
+package pl.api.itoffers.provider.nofluffjobs.fetcher;
 
 import java.net.MalformedURLException;
 import java.net.URL;
