@@ -1,9 +1,10 @@
 package pl.api.itoffers.provider.nofluffjobs;
 
 import java.io.IOException;
-import java.net.URL;
 import lombok.AllArgsConstructor;
+import org.jsoup.Jsoup;
 import org.springframework.stereotype.Service;
+import pl.api.itoffers.provider.nofluffjobs.exception.NoFluffJobsException;
 import pl.api.itoffers.shared.http.connector.HttpConnector;
 
 @Service
@@ -14,17 +15,15 @@ public class NoFluffJobsConnector {
   private final NoFluffJobsParameters parameters;
 
   public String fetchStringifyJsonPayload(String technology) {
-    URL listPath = parameters.listUrl("php");
-
     try {
-      String htmlPage = httpConnector.fetchSourceHtml(listPath);
-
-      int a = 1;
+      return Jsoup.parse(httpConnector.fetchSourceHtml(parameters.listUrl(technology)))
+          .select("body")
+          .last()
+          .children()
+          .last()
+          .html();
     } catch (IOException e) {
-      throw new RuntimeException(e); // todo add custom exception
+      throw NoFluffJobsException.onFetchingHtmlPage(e);
     }
-
-    // todo add implementation
-    return "";
   }
 }

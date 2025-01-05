@@ -16,4 +16,8 @@ public class NoFluffJobsException extends RuntimeException {
   public static NoFluffJobsException onExtractingOffers(String json, Throwable t) {
     return new NoFluffJobsException(String.format("Error on extracting offers from: %s", json), t);
   }
+
+  public static NoFluffJobsException onFetchingHtmlPage(Throwable t) {
+    return new NoFluffJobsException("On fetching HTML page", t);
+  }
 }
