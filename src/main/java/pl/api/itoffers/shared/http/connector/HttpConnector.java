@@ -9,16 +9,10 @@ import org.springframework.stereotype.Service;
 @Service
 public class HttpConnector {
   public String fetchSourceHtml(URL url) throws IOException {
-    Scanner scanner = null;
-    try {
-      URLConnection connection = url.openConnection();
-      scanner = new Scanner(connection.getInputStream());
+    URLConnection connection = url.openConnection();
+    try (Scanner scanner = new Scanner(connection.getInputStream())) {
       scanner.useDelimiter("\\Z");
       return scanner.next();
-    } finally {
-      if (null != scanner) {
-        scanner.close();
-      }
     }
   }
 }
