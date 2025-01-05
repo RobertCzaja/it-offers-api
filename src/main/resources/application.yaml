@@ -48,3 +48,5 @@ application:
   provider:
     just-join-it:
       origin: https://justjoin.it
+    no-fluff-jobs:
+      origin: https://nofluffjobs.com
