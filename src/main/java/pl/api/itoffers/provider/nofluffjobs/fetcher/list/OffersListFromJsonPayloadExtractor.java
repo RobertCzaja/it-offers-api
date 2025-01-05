@@ -6,9 +6,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Map;
+import org.springframework.stereotype.Service;
 import pl.api.itoffers.provider.nofluffjobs.exception.NoFluffJobsException;
 import pl.api.itoffers.shared.utils.json.JsonNodeMapper;
 
+@Service
 public class OffersListFromJsonPayloadExtractor {
 
   private final ObjectMapper mapper = new ObjectMapper();
