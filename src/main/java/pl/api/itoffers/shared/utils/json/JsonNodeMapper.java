@@ -14,8 +14,12 @@ public class JsonNodeMapper {
   public ArrayList<Map<String, Object>> mapToList(Iterator<JsonNode> jsonNodeIterator) {
     ArrayList<Map<String, Object>> offers = new ArrayList<>();
     while (jsonNodeIterator.hasNext()) {
-      offers.add(mapper.convertValue(jsonNodeIterator.next(), new TypeReference<>() {}));
+      offers.add(this.mapToHash(jsonNodeIterator.next()));
     }
     return offers;
+  }
+
+  public Map<String, Object> mapToHash(JsonNode jsonNode) {
+    return mapper.convertValue(jsonNode, new TypeReference<>() {});
   }
 }

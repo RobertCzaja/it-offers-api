@@ -17,6 +17,10 @@ public class NoFluffJobsException extends RuntimeException {
     return new NoFluffJobsException(String.format("Error on extracting offers from: %s", json), t);
   }
 
+  public static NoFluffJobsException onIncompleteStructure(String json, String missingField) {
+    return new NoFluffJobsException(String.format("Missing %s in: %s", missingField, json));
+  }
+
   public static NoFluffJobsException onFetchingHtmlPage(Throwable t) {
     return new NoFluffJobsException("On fetching HTML page", t);
   }
