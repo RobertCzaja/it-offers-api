@@ -8,7 +8,7 @@ import java.util.Map;
 import pl.api.itoffers.provider.nofluffjobs.exception.NoFluffJobsException;
 import pl.api.itoffers.shared.utils.json.JsonNodeMapper;
 
-public class OffersDetailsFromJsonPayloadExtractor {
+public class OfferDetailsFromJsonPayloadExtractor {
 
   private final ObjectMapper mapper = new ObjectMapper();
   private final JsonNodeMapper jsonNodeMapper = new JsonNodeMapper();

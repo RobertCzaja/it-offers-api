@@ -9,16 +9,16 @@ import org.junit.Before;
 import org.junit.Test;
 import pl.api.itoffers.data.nfj.NoFluffJobsParams;
 import pl.api.itoffers.provider.nofluffjobs.exception.NoFluffJobsException;
-import pl.api.itoffers.provider.nofluffjobs.fetcher.details.OffersDetailsFromJsonPayloadExtractor;
+import pl.api.itoffers.provider.nofluffjobs.fetcher.details.OfferDetailsFromJsonPayloadExtractor;
 import pl.api.itoffers.shared.utils.fileManager.FileManager;
 
-public class OffersDetailsFromJsonPayloadExtractorTest {
+public class OfferDetailsFromJsonPayloadExtractorTest {
 
-  private OffersDetailsFromJsonPayloadExtractor extractor;
+  private OfferDetailsFromJsonPayloadExtractor extractor;
 
   @Before
   public void setUp() throws Exception {
-    this.extractor = new OffersDetailsFromJsonPayloadExtractor();
+    this.extractor = new OfferDetailsFromJsonPayloadExtractor();
   }
 
   @Test

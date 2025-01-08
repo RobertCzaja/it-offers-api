@@ -12,4 +12,5 @@ public class NoFluffJobsParams {
   public static final String LIST_PHP_HTML_PATH = MAIN_CATALOG + "listPhpAsHtml.txt";
 
   public static final String LIST_JAVA_HTML_PATH = MAIN_CATALOG + "listJavaAsHtml.txt";
+  public static final String DETAILS_JAVA_HTML_PATH = MAIN_CATALOG + "detailsJavaAsHtml.txt";
 }
