@@ -1,6 +1,5 @@
 package pl.api.itoffers.unit.provider.nofluffjobs.fetcher.details;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.io.IOException;
@@ -8,6 +7,7 @@ import java.util.Map;
 import org.junit.Before;
 import org.junit.Test;
 import pl.api.itoffers.data.nfj.NoFluffJobsParams;
+import pl.api.itoffers.helper.assertions.NfjOfferDetailsAssert;
 import pl.api.itoffers.provider.nofluffjobs.exception.NoFluffJobsException;
 import pl.api.itoffers.provider.nofluffjobs.fetcher.details.OfferDetailsFromJsonPayloadExtractor;
 import pl.api.itoffers.shared.utils.fileManager.FileManager;
@@ -27,23 +27,7 @@ public class OfferDetailsFromJsonPayloadExtractorTest {
 
     Map<String, Object> extractedJsonOfferDetails = extractor.extractOffer(detailsJavaPayload);
 
-    assertThat(extractedJsonOfferDetails)
-        .hasFieldOrProperty("title")
-        .hasFieldOrProperty("description")
-        .hasFieldOrProperty("industry")
-        .hasFieldOrProperty("occupationalCategory")
-        .hasFieldOrProperty("jobImmediateStart")
-        .hasFieldOrProperty("datePosted")
-        .hasFieldOrProperty("validThrough")
-        .hasFieldOrProperty("employmentType")
-        .hasFieldOrProperty("directApply")
-        .hasFieldOrProperty("hiringOrganization")
-        .hasFieldOrProperty("experienceRequirements")
-        .hasFieldOrProperty("jobLocationType")
-        .hasFieldOrProperty("jobBenefits")
-        .hasFieldOrProperty("baseSalary")
-        .hasFieldOrProperty("skills")
-        .hasSize(16);
+    NfjOfferDetailsAssert.expects(extractedJsonOfferDetails, 16);
   }
 
   @Test
