@@ -39,7 +39,7 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
 
       Claims claims = jwtService.resolveClaims(request, accessToken);
 
-      if (null != claims & jwtService.validateClaims(claims)) {
+      if (null != claims && jwtService.validateClaims(claims)) {
         SecurityContextHolder.getContext()
             .setAuthentication(
                 new UsernamePasswordAuthenticationToken(
