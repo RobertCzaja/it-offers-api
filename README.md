@@ -11,9 +11,8 @@
 5. Install IntelliJ IDEA plugins:
    * WireMock
 
-## Static Analysis/tests tools
-* `mvn spotless:check` 
-  * `mvn spotless:apply`
+## Static Analysis/tests tools 
+* `mvn spotless:apply`
 * `mvn pmd:check`
 * `mvn test -Dpmd.skip=true`
 * `mvn sonar:sonar -Dsonar.login=admin -Dsonar.password=Admin1!admin` http://localhost:9000/

@@ -13,10 +13,10 @@ public class OffersDetailsFromJsonPayloadExtractor {
   private final ObjectMapper mapper = new ObjectMapper();
   private final JsonNodeMapper jsonNodeMapper = new JsonNodeMapper();
 
-  public Map<String, Object> extractOffers(String rawJsonPayload) {
+  public Map<String, Object> extractOffer(String rawJsonPayload) {
 
     if (null == rawJsonPayload || rawJsonPayload.isEmpty()) {
-      throw NoFluffJobsException.payloadIsEmpty(); // todo test that path
+      throw NoFluffJobsException.payloadIsEmpty();
     }
 
     try {
@@ -34,10 +34,9 @@ public class OffersDetailsFromJsonPayloadExtractor {
         }
       }
 
-      throw NoFluffJobsException.onIncompleteStructure(
-          rawJsonPayload, "@type: JobPosting"); // todo test that
+      throw NoFluffJobsException.onIncompleteStructure(rawJsonPayload, "@type: JobPosting");
 
-    } catch (JsonProcessingException e) {
+    } catch (JsonProcessingException | NullPointerException e) {
       throw NoFluffJobsException.onExtractingOffers(rawJsonPayload, e);
     }
   }
