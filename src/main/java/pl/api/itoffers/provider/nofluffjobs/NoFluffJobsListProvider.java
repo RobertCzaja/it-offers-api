@@ -12,7 +12,7 @@ import pl.api.itoffers.shared.utils.clock.ClockInterface;
 
 @Service
 @RequiredArgsConstructor
-public class NoFluffJobsProvider {
+public class NoFluffJobsListProvider {
   private final NoFluffJobsListOfferRepository repository;
   private final NoFluffJobsListFetcher fetcher;
   private final ClockInterface clock;

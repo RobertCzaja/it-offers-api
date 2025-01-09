@@ -10,14 +10,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import pl.api.itoffers.data.nfj.NoFluffJobsParams;
 import pl.api.itoffers.helper.AbstractITest;
 import pl.api.itoffers.helper.WireMockOrchestrator;
-import pl.api.itoffers.provider.nofluffjobs.NoFluffJobsProvider;
+import pl.api.itoffers.provider.nofluffjobs.NoFluffJobsListProvider;
 import pl.api.itoffers.provider.nofluffjobs.fetcher.NoFluffJobsParameters;
 import pl.api.itoffers.provider.nofluffjobs.repository.NoFluffJobsListOfferRepository;
 
-public class NoFluffJobsProviderITest extends AbstractITest {
+public class NoFluffJobsListProviderITest extends AbstractITest {
 
   private static final String TECHNOLOGY = "java";
-  @Autowired private NoFluffJobsProvider noFluffJobsProvider;
+  @Autowired private NoFluffJobsListProvider noFluffJobsListProvider;
   @Autowired private NoFluffJobsParameters parameters;
   @Autowired private NoFluffJobsListOfferRepository repository;
 
@@ -33,7 +33,7 @@ public class NoFluffJobsProviderITest extends AbstractITest {
     WireMockOrchestrator.pathWillReturn(
         parameters.listPath(TECHNOLOGY), NoFluffJobsParams.LIST_JAVA_HTML_PATH);
 
-    noFluffJobsProvider.fetch(TECHNOLOGY, UUID.randomUUID());
+    noFluffJobsListProvider.fetch(TECHNOLOGY, UUID.randomUUID());
 
     assertThat(repository.findAll()).hasSize(20);
   }
