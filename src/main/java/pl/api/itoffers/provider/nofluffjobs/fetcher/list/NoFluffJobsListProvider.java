@@ -1,11 +1,10 @@
-package pl.api.itoffers.provider.nofluffjobs;
+package pl.api.itoffers.provider.nofluffjobs.fetcher.list;
 
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import pl.api.itoffers.provider.nofluffjobs.fetcher.list.NoFluffJobsListFetcher;
 import pl.api.itoffers.provider.nofluffjobs.model.NoFluffJobsRawListOffer;
 import pl.api.itoffers.provider.nofluffjobs.repository.NoFluffJobsListOfferRepository;
 import pl.api.itoffers.shared.utils.clock.ClockInterface;
