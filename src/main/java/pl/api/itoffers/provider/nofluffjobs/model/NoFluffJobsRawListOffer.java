@@ -17,6 +17,7 @@ public class NoFluffJobsRawListOffer {
   private ObjectId id;
 
   private final UUID scrapingId;
+  private final UUID offerId;
   private final String technology;
   private final Map<String, Object> offer;
   private final LocalDateTime createdAt;

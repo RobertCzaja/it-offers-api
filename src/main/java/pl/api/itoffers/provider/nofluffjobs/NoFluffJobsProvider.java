@@ -22,6 +22,7 @@ public class NoFluffJobsProvider {
     offers.forEach(
         offer ->
             repository.save(
-                new NoFluffJobsRawListOffer(scrapingId, technology, offer, clock.now())));
+                new NoFluffJobsRawListOffer(
+                    scrapingId, UUID.randomUUID(), technology, offer, clock.now())));
   }
 }
