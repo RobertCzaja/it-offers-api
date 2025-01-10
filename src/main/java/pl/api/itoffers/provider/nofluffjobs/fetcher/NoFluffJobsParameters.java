@@ -28,7 +28,7 @@ public class NoFluffJobsParameters {
   }
 
   public String detailsPath(String slug) {
-    return MessageFormat.format(LIST_PATH_TEMPLATE, slug);
+    return MessageFormat.format(DETAILS_PATH_TEMPLATE, slug);
   }
 
   public URL detailsUrl(String slug) {

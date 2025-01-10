@@ -20,9 +20,10 @@ public class NoFluffJobsDetailsFetcher {
 
   public Map<String, Object> fetch(String slug) {
     try {
+      String htmlPage = httpConnector.fetchSourceHtml(parameters.detailsUrl(slug));
+
       return offerExtractor.extractOffer(
-          jsonPayloadExtractor.getRawJsonFromHtml(
-              Jsoup.parse(httpConnector.fetchSourceHtml(parameters.detailsUrl(slug)))));
+          jsonPayloadExtractor.getRawJsonFromHtml(Jsoup.parse(htmlPage)));
     } catch (IOException e) {
       throw NoFluffJobsException.onFetchingHtmlPage(e);
     }
