@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class NoFluffJobsProvider {
 
-  private final NoFluffJobsSingleTechnologyOfferWorker worker;
+  private final TechnologyOffersCollector collector;
 
   /** TODO under construction */
   public void fetch() {
@@ -21,7 +21,7 @@ public class NoFluffJobsProvider {
         .forEach(
             technology -> {
               log.info("[{}] start import", technology);
-              worker.fetchOffers(technology);
+              collector.fetchOffers(technology);
               log.info("[{}] import successfully delegated", technology);
             });
   }

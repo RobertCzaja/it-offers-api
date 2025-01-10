@@ -13,7 +13,7 @@ import pl.api.itoffers.provider.nofluffjobs.repository.NoFluffJobsListOfferRepos
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class NoFluffJobsSingleTechnologyOfferWorker {
+public class TechnologyOffersCollector {
   private final NoFluffJobsListOfferRepository listOfferRepository;
   private final NoFluffJobsDetailsProvider detailsProvider;
   private final NoFluffJobsListProvider listProvider;
