@@ -1,7 +1,7 @@
 [![it-offers ci/cd](https://github.com/RobertCzaja/it-offers/actions/workflows/cicd.yml/badge.svg)](https://github.com/RobertCzaja/it-offers/actions/workflows/cicd.yml)
 # Installation
 
-1. set GitHub token `git remote set-url origin https://RobertCzaja:<<TOKEN>>@github.com/RobertCzaja/it-offers.git`
+1. set GitHub token `git remote set-url origin https://RobertCzaja:<<TOKEN>>@github.com/RobertCzaja/it-offers-api.git`
 2. create SSL `jks` key in main catalog 
    * `keytool -keystore keystore.jks -genkey -alias tomcat -keyalg RSA`
    * put password that you've used in `.env` `SSL_PASSWORD`
