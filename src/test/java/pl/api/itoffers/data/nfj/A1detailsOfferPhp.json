@@ -1,0 +1,111 @@
+{
+  "@type": "JobPosting",
+  "title": "Sr Network Security Architect / Pre-sales Engineer",
+  "description": "<h3>The project and the team</h3>\n<p>We are a team of Devops/Network Engineers working on automated firewall configuration migration workflow and client implementations. Our Engineers support projects with their knowledge of networks and hands-on experience to deliver a working service from start to finish.</p>\n<p>Other things to know:</p>\n<ul>\n<li>Every team member gets onboarded via an online training course which includes a case study, live training sessions, lab and individual assignments</li>\n<li>We are working in a multi-vendor environment</li>\n<li>We collaborate closely with Professional Services engineers on the customer side</li>\n<li>The client is based in the US</li>\n</ul>\n<p>We work on multiple interesting projects at a time, so we may invite you to an interview for another project if we see that your competencies and profile are well suited for it.</p>\n<h3><strong>Your role</strong></h3>\n<p>As a part of the project team, you will be responsible for:</p>\n<ul>\n<li>Helping Professional Services team with business growth based on tools and capabilities available within the team</li>\n<li>Working with clients to understand their requirements and creating solutions for clients, based on the scope and available tools and products</li>\n<li>Conducting PoCs (Proof of Concept) for clients to present the proposed solution</li>\n<li>Defining the timeline, deliverables and risks and estimating the level of effort and resources required to deliver the solution</li>\n<li>Promoting an automation approach to deliver client projects and collaborating with the development team to improve the existing automation framework</li>\n</ul>\n<h3>More reasons to join us</h3>\n<ul>\n<li>Flexible working hours and approach to work: fully remotely, in the office or hybrid</li>\n<li>Professional growth supported by internal training sessions and a training budget</li>\n<li>Solid onboarding with a hands-on approach to give you an easy start</li>\n<li>A great atmosphere among professionals who are passionate about their work</li>\n<li>The ability to change the project you work on</li>\n</ul>",
+  "industry": "security",
+  "occupationalCategory": "security",
+  "jobImmediateStart": true,
+  "datePosted": "2025-01-10",
+  "validThrough": null,
+  "employmentType": "CONTRACTOR",
+  "directApply": false,
+  "hiringOrganization": {
+    "@type": "Organization",
+    "name": "CodiLime",
+    "logo": "companies/logos/jobs_listing/pozostale_kanaly_20211005_124140.png",
+    "sameAs": "https://static-dev.nofluffjobs.com/http://www.codilime.com"
+  },
+  "experienceRequirements": {
+    "@type": "OccupationalExperienceRequirements",
+    "description": "Senior"
+  },
+  "jobLocationType": "TELECOMMUTE",
+  "jobBenefits": [
+    "Sport subscription",
+    "Training budget",
+    "Private healthcare",
+    "Flat structure",
+    "Small teams",
+    "International projects",
+    "Masterclazz training"
+  ],
+  "baseSalary": {
+    "@type": "MonetaryAmount",
+    "currency": "PLN",
+    "value": {
+      "@type": "QuantitativeValue",
+      "value": 27000,
+      "unitText": "Month"
+    }
+  },
+  "skills": [
+    {
+      "value": "Network Security",
+      "type": "other"
+    },
+    {
+      "value": "BS",
+      "type": "main"
+    },
+    {
+      "value": "Python",
+      "type": "main"
+    },
+    {
+      "value": "Ansible",
+      "type": "main"
+    },
+    {
+      "value": "Terraform",
+      "type": "main"
+    },
+    {
+      "value": "Azure",
+      "type": "main"
+    },
+    {
+      "value": "Windows",
+      "type": "main"
+    },
+    {
+      "value": "DevOps",
+      "type": "main"
+    },
+    {
+      "value": "AWS",
+      "type": "main"
+    },
+    {
+      "value": "GCP",
+      "type": "main"
+    },
+    {
+      "value": "PHP",
+      "type": "main"
+    },
+    {
+      "value": "SSL",
+      "type": "main"
+    },
+    {
+      "value": "JavaScript",
+      "type": "main"
+    },
+    {
+      "value": "CI",
+      "type": "main"
+    },
+    {
+      "value": "Docker",
+      "type": "main"
+    },
+    {
+      "value": "CD pipelines",
+      "type": "main"
+    },
+    {
+      "value": "VMware",
+      "type": "main"
+    }
+  ]
+}

@@ -4,10 +4,16 @@ import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 import lombok.RequiredArgsConstructor;
-import pl.api.itoffers.offer.domain.*;
+import pl.api.itoffers.offer.domain.Category;
+import pl.api.itoffers.offer.domain.Characteristics;
+import pl.api.itoffers.offer.domain.Company;
+import pl.api.itoffers.offer.domain.Offer;
+import pl.api.itoffers.offer.domain.Origin;
+import pl.api.itoffers.offer.domain.Salary;
 import pl.api.itoffers.provider.nofluffjobs.model.NoFluffJobsRawDetailsOffer;
 import pl.api.itoffers.provider.nofluffjobs.model.NoFluffJobsRawListOffer;
 
@@ -23,10 +29,11 @@ public class OfferFactory {
         listOffer.getTechnology(),
         (String) listOffer.getOffer().get("url"),
         (String) listOffer.getOffer().get("title"),
-        "Senior", // todo "seniority"[0]; map to the same ones like in jjit
+        "Senior", // todo "seniority"[0]; map to the same ones like in jjit[c_level, senior, mid,
+        // junior]; nfj[]
         new Characteristics( // todo where get that values?; map to the same ones like in jjit
-            "workplace", // todo
-            "time", // todo
+            "workplace", // todo jjit[remote,office,hybrid]; nfj[]
+            "time", // todo jjit[Undetermined,full_time,freelance,internship,part_time]; nfj[]
             true // todo
             ),
         new HashSet<Category>(), // todo
@@ -36,7 +43,10 @@ public class OfferFactory {
             "Warsaw", // todo
             "Opolska 34/2" // todo
             ), // todo
-        Instant.ofEpochMilli((Long) listOffer.getOffer().get("posted"))
+        Instant.ofEpochMilli(
+                Long.parseLong(
+                    (String)
+                        ((LinkedHashMap) listOffer.getOffer().get("posted")).get("$numberLong")))
             .atZone(ZoneId.systemDefault())
             .toLocalDateTime(),
         LocalDateTime.now());
