@@ -22,6 +22,7 @@ public class Origin {
   private final Provider provider;
 
   public enum Provider {
-    JUST_JOIN_IT
+    JUST_JOIN_IT,
+    NO_FLUFF_JOBS
   }
 }
