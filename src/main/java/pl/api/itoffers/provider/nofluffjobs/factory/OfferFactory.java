@@ -3,10 +3,7 @@ package pl.api.itoffers.provider.nofluffjobs.factory;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.util.HashSet;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import lombok.RequiredArgsConstructor;
 import pl.api.itoffers.offer.domain.Category;
 import pl.api.itoffers.offer.domain.Characteristics;
@@ -14,35 +11,34 @@ import pl.api.itoffers.offer.domain.Company;
 import pl.api.itoffers.offer.domain.Offer;
 import pl.api.itoffers.offer.domain.Origin;
 import pl.api.itoffers.offer.domain.Salary;
+import pl.api.itoffers.provider.nofluffjobs.exception.NoFluffJobsException;
 import pl.api.itoffers.provider.nofluffjobs.model.NoFluffJobsRawDetailsOffer;
 import pl.api.itoffers.provider.nofluffjobs.model.NoFluffJobsRawListOffer;
 
 @RequiredArgsConstructor
 public class OfferFactory {
 
-  /** todo to implement */
+  /** todo to implement; refactor it when functionality it's done */
   public Offer createOffer(
       NoFluffJobsRawListOffer listOffer, NoFluffJobsRawDetailsOffer detailsOffer) {
+    Boolean isFullyRemote =
+        (Boolean) ((Map) listOffer.getOffer().get("location")).get("fullyRemote");
+
     return new Offer(
         new Origin(
             listOffer.getId().toString(), listOffer.getScrapingId(), Origin.Provider.NO_FLUFF_JOBS),
         listOffer.getTechnology(),
         (String) listOffer.getOffer().get("url"),
         (String) listOffer.getOffer().get("title"),
-        "Senior", // todo "seniority"[0]; map to the same ones like in jjit[c_level, senior, mid,
-        // junior]; nfj[]
-        new Characteristics( // todo where get that values?; map to the same ones like in jjit
-            "workplace", // todo jjit[remote,office,hybrid]; nfj[]
-            "time", // todo jjit[Undetermined,full_time,freelance,internship,part_time]; nfj[]
-            true // todo
-            ),
+        ((String) ((List) listOffer.getOffer().get("seniority")).get(0))
+            .toLowerCase(Locale.getDefault()),
+        new Characteristics(
+            isFullyRemote ? "remote" : "hybrid" /*todo test both paths*/,
+            (String) detailsOffer.getOffer().get("employmentType"),
+            (Boolean) listOffer.getOffer().get("onlineInterviewAvailable")),
         new HashSet<Category>(), // todo
         new HashSet<Salary>(), // todo
-        new Company(
-            "company name", // todo
-            "Warsaw", // todo
-            "Opolska 34/2" // todo
-            ), // todo
+        evaluateCompany(listOffer),
         Instant.ofEpochMilli(
                 Long.parseLong(
                     (String)
@@ -50,6 +46,27 @@ public class OfferFactory {
             .atZone(ZoneId.systemDefault())
             .toLocalDateTime(),
         LocalDateTime.now());
+  }
+
+  private static Company evaluateCompany(NoFluffJobsRawListOffer listOffer) {
+
+    var locations = (List<Map>) ((Map) listOffer.getOffer().get("location")).get("places");
+    var filtered =
+        locations.stream()
+            .filter(
+                location ->
+                    null == location.get("provinceOnly") && !"Remote".equals(location.get("city")))
+            .toList();
+
+    if (filtered.size() != 1) {
+      throw NoFluffJobsException.onMappingToDomainModel(
+          "company", listOffer.toString()); // todo test that path
+    }
+
+    return new Company(
+        (String) listOffer.getOffer().get("name"),
+        (String) filtered.get(0).get("city"),
+        (String) filtered.get(0).get("street"));
   }
 
   /** todo to implement */

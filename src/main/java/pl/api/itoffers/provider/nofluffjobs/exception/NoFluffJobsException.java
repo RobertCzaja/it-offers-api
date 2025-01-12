@@ -24,4 +24,8 @@ public class NoFluffJobsException extends RuntimeException {
   public static NoFluffJobsException onFetchingHtmlPage(Throwable t) {
     return new NoFluffJobsException("On fetching HTML page", t);
   }
+
+  public static NoFluffJobsException onMappingToDomainModel(String field, String json) {
+    return new NoFluffJobsException(String.format("Cannot map filed %s from: %s", field, json));
+  }
 }
