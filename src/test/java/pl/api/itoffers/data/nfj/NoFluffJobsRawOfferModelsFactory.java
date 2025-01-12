@@ -25,7 +25,7 @@ public class NoFluffJobsRawOfferModelsFactory {
         new NoFluffJobsRawListOffer(
             scrapingId,
             offerId,
-            "java",
+            "php",
             mapper.mapToHash(FileManager.readFile(NoFluffJobsParams.A1_PHP_JSON_OFFER.LIST)),
             LocalDateTime.of(2025, 1, 11, 15, 30, 0));
     var details =
