@@ -1,13 +1,15 @@
 package pl.api.itoffers.data.nfj;
 
 public class NoFluffJobsParams {
+  public record JsonOffer(String list, String details) {}
+
   private static final String MAIN_CATALOG = "src/test/java/pl/api/itoffers/data/nfj/";
   public static final String LIST_PHP_JSON_PATH = MAIN_CATALOG + "listPhp.json";
 
-  public static class A1_PHP_JSON_OFFER {
-    public static final String LIST = NoFluffJobsParams.MAIN_CATALOG + "A1listOfferPhp.json";
-    public static final String DETAILS = NoFluffJobsParams.MAIN_CATALOG + "A1detailsOfferPhp.json";
-  }
+  public static JsonOffer A1_PHP =
+      new JsonOffer(
+          NoFluffJobsParams.MAIN_CATALOG + "A1listOfferPhp.json",
+          NoFluffJobsParams.MAIN_CATALOG + "A1detailsOfferPhp.json");
 
   public static final String DETAILS_JAVA_JSON_PATH = MAIN_CATALOG + "detailsJava.json";
 

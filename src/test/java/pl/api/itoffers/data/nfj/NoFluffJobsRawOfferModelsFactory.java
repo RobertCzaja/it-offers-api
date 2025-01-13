@@ -16,7 +16,7 @@ public class NoFluffJobsRawOfferModelsFactory {
   public record NoFluffJobsRawModels(
       NoFluffJobsRawListOffer list, NoFluffJobsRawDetailsOffer details) {}
 
-  public static NoFluffJobsRawModels create()
+  public static NoFluffJobsRawModels create(NoFluffJobsParams.JsonOffer jsonOffer)
       throws IOException, NoSuchFieldException, IllegalAccessException {
     var scrapingId = UUID.fromString("f8d7f4d7-b463-4a1a-9446-d2e3eb4a3c3a");
     var offerId = UUID.fromString("2a253bea-c3c7-4873-ab55-aa197b0d8670");
@@ -26,13 +26,13 @@ public class NoFluffJobsRawOfferModelsFactory {
             scrapingId,
             offerId,
             "php",
-            mapper.mapToHash(FileManager.readFile(NoFluffJobsParams.A1_PHP_JSON_OFFER.LIST)),
+            mapper.mapToHash(FileManager.readFile(jsonOffer.list())),
             LocalDateTime.of(2025, 1, 11, 15, 30, 0));
     var details =
         new NoFluffJobsRawDetailsOffer(
             scrapingId,
             offerId,
-            mapper.mapToHash(FileManager.readFile(NoFluffJobsParams.A1_PHP_JSON_OFFER.DETAILS)),
+            mapper.mapToHash(FileManager.readFile(jsonOffer.details())),
             LocalDateTime.of(2025, 1, 11, 15, 30, 2));
 
     setId(list, new ObjectId());
