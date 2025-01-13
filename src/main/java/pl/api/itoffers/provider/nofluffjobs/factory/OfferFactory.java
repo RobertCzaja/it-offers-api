@@ -21,7 +21,6 @@ public class OfferFactory {
 
   private final ClockInterface clock;
 
-  /** todo refactor it when functionality it's done */
   public Offer createOffer(
       NoFluffJobsRawListOffer listOffer,
       NoFluffJobsRawDetailsOffer detailsOffer,
@@ -64,8 +63,7 @@ public class OfferFactory {
             .toList();
 
     if (filtered.size() != 1) {
-      throw NoFluffJobsException.onMappingToDomainModel(
-          "company", listOffer.toString()); // todo test that path
+      throw NoFluffJobsException.onMappingToDomainModel("company", listOffer.toString());
     }
 
     return new Company(

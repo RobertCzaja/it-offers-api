@@ -1,6 +1,7 @@
 package pl.api.itoffers.unit.provider.nofluffjobs.factory;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -10,6 +11,7 @@ import pl.api.itoffers.data.nfj.NoFluffJobsParams;
 import pl.api.itoffers.data.nfj.NoFluffJobsRawOfferModelsFactory;
 import pl.api.itoffers.helper.FrozenClock;
 import pl.api.itoffers.offer.domain.Offer;
+import pl.api.itoffers.provider.nofluffjobs.exception.NoFluffJobsException;
 import pl.api.itoffers.provider.nofluffjobs.factory.OfferFactory;
 
 public class OfferFactoryTest {
@@ -49,6 +51,22 @@ public class OfferFactoryTest {
             OfferFactory.createCategories(noFluffJobsModels.details()));
 
     assertExpectedOffer(offer, "hybrid");
+  }
+
+  @Test
+  void cannotBuildOfferModelWhenThereIsNoCompanyAddress()
+      throws IOException, NoSuchFieldException, IllegalAccessException {
+    var noFluffJobsModels = NoFluffJobsRawOfferModelsFactory.create(NoFluffJobsParams.A3_PHP);
+
+    assertThrows(
+        NoFluffJobsException.class,
+        () -> {
+          offerFactory.createOffer(
+              noFluffJobsModels.list(),
+              noFluffJobsModels.details(),
+              OfferFactory.createSalaries(noFluffJobsModels.list()),
+              OfferFactory.createCategories(noFluffJobsModels.details()));
+        });
   }
 
   private static void assertExpectedOffer(Offer offer, String workplace) {

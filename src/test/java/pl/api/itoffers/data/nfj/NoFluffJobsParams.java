@@ -14,6 +14,10 @@ public class NoFluffJobsParams {
       new JsonOffer(
           NoFluffJobsParams.MAIN_CATALOG + "A2listOfferPhp.json",
           NoFluffJobsParams.MAIN_CATALOG + "A1detailsOfferPhp.json");
+  public static JsonOffer A3_PHP =
+      new JsonOffer(
+          NoFluffJobsParams.MAIN_CATALOG + "A3listOfferPhp.json",
+          NoFluffJobsParams.MAIN_CATALOG + "A1detailsOfferPhp.json");
 
   public static final String DETAILS_JAVA_JSON_PATH = MAIN_CATALOG + "detailsJava.json";
 
