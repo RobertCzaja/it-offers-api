@@ -62,16 +62,13 @@ public class OfferFactoryTest {
     assertThat(offer.getCharacteristics().getRemoteInterview()).isTrue();
     assertThat(offer.getCategories()).hasSize(17);
     assertThat(offer.getSalaries()).hasSize(1);
-    offer.getSalaries().stream()
-        .findFirst()
-        .ifPresent( // todo make it check always even is not present (to catch a bug)
-            salary -> {
-              assertThat(salary.getAmount().getCurrency()).isEqualTo("PLN");
-              assertThat(salary.getAmount().getFrom()).isEqualTo(18000);
-              assertThat(salary.getAmount().getTo()).isEqualTo(27000);
-              assertThat(salary.getEmploymentType()).isEqualTo("b2b");
-              assertThat(salary.getIsOriginal()).isTrue();
-            });
+    var salary = offer.getSalaries().stream().findFirst().get();
+    assertThat(salary).isNotNull();
+    assertThat(salary.getAmount().getCurrency()).isEqualTo("PLN");
+    assertThat(salary.getAmount().getFrom()).isEqualTo(18000);
+    assertThat(salary.getAmount().getTo()).isEqualTo(27000);
+    assertThat(salary.getEmploymentType()).isEqualTo("b2b");
+    assertThat(salary.getIsOriginal()).isTrue();
     assertThat(offer.getPublishedAt())
         .isEqualTo(LocalDateTime.of(2025, 1, 10, 17, 27, 5, 231000000));
     assertThat(offer.getCreatedAt()).isEqualTo(LocalDateTime.of(2025, 1, 10, 17, 28, 5));
