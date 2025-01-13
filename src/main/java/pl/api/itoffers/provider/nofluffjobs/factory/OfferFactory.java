@@ -36,9 +36,7 @@ public class OfferFactory {
         ((String) ((List) listOffer.getOffer().get("seniority")).get(0))
             .toLowerCase(Locale.getDefault()),
         new Characteristics(
-            (Boolean)
-                    ((Map) listOffer.getOffer().get("location"))
-                        .get("fullyRemote") /*todo test both paths*/
+            (Boolean) ((Map) listOffer.getOffer().get("location")).get("fullyRemote")
                 ? "remote"
                 : "hybrid",
             (String) detailsOffer.getOffer().get("employmentType"),

@@ -36,6 +36,21 @@ public class OfferFactoryTest {
     assertExpectedOffer(offer, "remote");
   }
 
+  @Test
+  void shouldSetOfferAsAHybridTypeWhenItIsNotFullyRemote()
+      throws IOException, NoSuchFieldException, IllegalAccessException {
+    var noFluffJobsModels = NoFluffJobsRawOfferModelsFactory.create(NoFluffJobsParams.A2_PHP);
+
+    var offer =
+        offerFactory.createOffer(
+            noFluffJobsModels.list(),
+            noFluffJobsModels.details(),
+            OfferFactory.createSalaries(noFluffJobsModels.list()),
+            OfferFactory.createCategories(noFluffJobsModels.details()));
+
+    assertExpectedOffer(offer, "hybrid");
+  }
+
   private static void assertExpectedOffer(Offer offer, String workplace) {
     assertThat(offer.getTechnology()).isEqualTo("php");
     assertThat(offer.getSlug())
