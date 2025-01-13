@@ -43,9 +43,9 @@ public class OfferFactory {
 
   public Map<String, Set<Category>> createCategories(JustJoinItRawOffer rawOffer) {
     List<String> requiredSkills = (List<String>) rawOffer.getOffer().get("requiredSkills");
-    Map<String, Set<Category>> result = new HashMap<String, Set<Category>>();
-    Set<Category> categories = new HashSet<Category>();
-    Set<Category> categoriesToSave = new HashSet<Category>();
+    Map<String, Set<Category>> result = new HashMap<>();
+    Set<Category> categories = new HashSet<>();
+    Set<Category> categoriesToSave = new HashSet<>();
 
     for (String requiredSkill : requiredSkills) {
       Category category = categoryRepository.findByName(requiredSkill);
