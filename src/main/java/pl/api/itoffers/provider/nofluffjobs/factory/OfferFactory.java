@@ -48,7 +48,7 @@ public class OfferFactory {
                 Long.parseLong(
                     (String)
                         ((LinkedHashMap) listOffer.getOffer().get("posted")).get("$numberLong")))
-            .atZone(ZoneId.systemDefault())
+            .atZone(ZoneId.of("Europe/Warsaw"))
             .toLocalDateTime(),
         clock.now());
   }
