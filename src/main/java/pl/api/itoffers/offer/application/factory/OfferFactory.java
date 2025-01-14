@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import pl.api.itoffers.offer.application.repository.CategoryRepository;
 import pl.api.itoffers.offer.application.repository.CompanyRepository;
+import pl.api.itoffers.offer.application.service.CategoryCollections;
 import pl.api.itoffers.offer.domain.Category;
 import pl.api.itoffers.offer.domain.Characteristics;
 import pl.api.itoffers.offer.domain.Company;
@@ -41,9 +42,8 @@ public class OfferFactory {
         LocalDateTime.now());
   }
 
-  public Map<String, Set<Category>> createCategories(JustJoinItRawOffer rawOffer) {
+  public CategoryCollections createCategories(JustJoinItRawOffer rawOffer) {
     List<String> requiredSkills = (List<String>) rawOffer.getOffer().get("requiredSkills");
-    Map<String, Set<Category>> result = new HashMap<>();
     Set<Category> categories = new HashSet<>();
     Set<Category> categoriesToSave = new HashSet<>();
 
@@ -56,9 +56,7 @@ public class OfferFactory {
       }
       categories.add(category);
     }
-    result.put("forEntity", categories);
-    result.put("toSave", categoriesToSave);
-    return result;
+    return new CategoryCollections(categories, categoriesToSave);
   }
 
   public Company createCompany(JustJoinItRawOffer rawOffer) {

@@ -26,7 +26,10 @@ public class Offer {
   @Getter private final String title;
   @Getter private final String seniority;
   @Embedded @Getter private final Characteristics characteristics;
-  @Getter @ManyToMany private final Set<Category> categories;
+
+  @Getter
+  @ManyToMany(fetch = FetchType.EAGER)
+  private final Set<Category> categories;
 
   @NonNull
   @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
