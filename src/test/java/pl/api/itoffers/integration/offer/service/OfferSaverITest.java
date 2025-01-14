@@ -35,7 +35,8 @@ public class OfferSaverITest extends AbstractITest {
 
     var categories = OfferFactory.createCategories(noFluffJobsModels.details());
     var salaries = OfferFactory.createSalaries(noFluffJobsModels.list());
-    offerSaver.save(categories, salaries);
+    var company = OfferFactory.createCompany(noFluffJobsModels.list());
+    offerSaver.save(categories, salaries, company);
 
     // todo under the development
 
