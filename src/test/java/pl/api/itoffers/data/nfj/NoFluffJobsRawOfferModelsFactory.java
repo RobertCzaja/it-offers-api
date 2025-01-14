@@ -16,6 +16,7 @@ public class NoFluffJobsRawOfferModelsFactory {
   public record NoFluffJobsRawModels(
       NoFluffJobsRawListOffer list, NoFluffJobsRawDetailsOffer details) {}
 
+  /** TODO catch here all these exceptions */
   public static NoFluffJobsRawModels create(NoFluffJobsParams.JsonOffer jsonOffer)
       throws IOException, NoSuchFieldException, IllegalAccessException {
     var scrapingId = UUID.fromString("f8d7f4d7-b463-4a1a-9446-d2e3eb4a3c3a");

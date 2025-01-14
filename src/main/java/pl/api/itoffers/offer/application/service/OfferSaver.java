@@ -6,15 +6,20 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import pl.api.itoffers.offer.application.repository.CategoryRepository;
 import pl.api.itoffers.offer.domain.Category;
+import pl.api.itoffers.offer.domain.Salary;
 
-/** todo add integration tests */
 @Service
 @RequiredArgsConstructor
 public class OfferSaver {
 
   private final CategoryRepository categoryRepository;
 
-  public void save(Set<Category> categories) {
+  /**
+   * base on:
+   *
+   * @see OfferService
+   */
+  public void save(Set<Category> categories, Set<Salary> salaries) {
 
     var categoriesForEntity = new HashSet<Category>();
     var categoriesToSave = new HashSet<Category>();
@@ -31,6 +36,6 @@ public class OfferSaver {
     }
     var CategoryCollections = new CategoryCollections(categoriesForEntity, categoriesToSave);
 
-    // todo wip
+    // todo under the development
   }
 }
