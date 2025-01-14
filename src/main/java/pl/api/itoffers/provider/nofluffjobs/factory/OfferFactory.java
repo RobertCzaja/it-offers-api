@@ -25,7 +25,8 @@ public class OfferFactory {
       NoFluffJobsRawListOffer listOffer,
       NoFluffJobsRawDetailsOffer detailsOffer,
       Set<Salary> salaries,
-      Set<Category> categories) {
+      Set<Category> categories,
+      Company company) {
     return new Offer(
         new Origin(
             listOffer.getId().toString(), listOffer.getScrapingId(), Origin.Provider.NO_FLUFF_JOBS),
@@ -42,7 +43,7 @@ public class OfferFactory {
             (Boolean) listOffer.getOffer().get("onlineInterviewAvailable")),
         categories,
         salaries,
-        createCompany(listOffer),
+        company,
         Instant.ofEpochMilli(
                 Long.parseLong(
                     (String)
@@ -52,7 +53,7 @@ public class OfferFactory {
         clock.now());
   }
 
-  private static Company createCompany(NoFluffJobsRawListOffer listOffer) {
+  public static Company createCompany(NoFluffJobsRawListOffer listOffer) {
 
     var locations = (List<Map>) ((Map) listOffer.getOffer().get("location")).get("places");
     var filtered =

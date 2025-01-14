@@ -33,7 +33,8 @@ public class OfferFactoryTest {
             noFluffJobsModels.list(),
             noFluffJobsModels.details(),
             OfferFactory.createSalaries(noFluffJobsModels.list()),
-            OfferFactory.createCategories(noFluffJobsModels.details()));
+            OfferFactory.createCategories(noFluffJobsModels.details()),
+            OfferFactory.createCompany(noFluffJobsModels.list()));
 
     assertExpectedOffer(offer, "remote");
   }
@@ -48,7 +49,8 @@ public class OfferFactoryTest {
             noFluffJobsModels.list(),
             noFluffJobsModels.details(),
             OfferFactory.createSalaries(noFluffJobsModels.list()),
-            OfferFactory.createCategories(noFluffJobsModels.details()));
+            OfferFactory.createCategories(noFluffJobsModels.details()),
+            OfferFactory.createCompany(noFluffJobsModels.list()));
 
     assertExpectedOffer(offer, "hybrid");
   }
@@ -65,7 +67,8 @@ public class OfferFactoryTest {
               noFluffJobsModels.list(),
               noFluffJobsModels.details(),
               OfferFactory.createSalaries(noFluffJobsModels.list()),
-              OfferFactory.createCategories(noFluffJobsModels.details()));
+              OfferFactory.createCategories(noFluffJobsModels.details()),
+              OfferFactory.createCompany(noFluffJobsModels.list()));
         });
   }
 
