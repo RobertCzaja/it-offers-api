@@ -12,6 +12,7 @@ import pl.api.itoffers.data.nfj.NoFluffJobsRawOfferModelsFactory;
 import pl.api.itoffers.helper.FrozenClock;
 import pl.api.itoffers.offer.domain.Offer;
 import pl.api.itoffers.offer.domain.OfferMetadata;
+import pl.api.itoffers.offer.domain.Origin;
 import pl.api.itoffers.provider.nofluffjobs.exception.NoFluffJobsException;
 import pl.api.itoffers.provider.nofluffjobs.factory.OfferFactory;
 
@@ -39,7 +40,9 @@ public class OfferFactoryTest {
 
     var offerMetadata =
         offerFactory.createOfferMetadata(noFluffJobsModels.list(), noFluffJobsModels.details());
+    var origin = offerFactory.createOrigin(noFluffJobsModels.list());
 
+    assertOrigin(origin);
     assertExpectedOfferMetadata(offerMetadata, "remote");
     assertExpectedOffer(offer, "remote");
   }
@@ -58,7 +61,9 @@ public class OfferFactoryTest {
             OfferFactory.createCompany(noFluffJobsModels.list()));
     var offerMetadata =
         offerFactory.createOfferMetadata(noFluffJobsModels.list(), noFluffJobsModels.details());
+    var origin = offerFactory.createOrigin(noFluffJobsModels.list());
 
+    assertOrigin(origin);
     assertExpectedOfferMetadata(offerMetadata, "hybrid");
     assertExpectedOffer(offer, "hybrid");
   }
@@ -78,6 +83,10 @@ public class OfferFactoryTest {
               OfferFactory.createCategories(noFluffJobsModels.details()),
               OfferFactory.createCompany(noFluffJobsModels.list()));
         });
+  }
+
+  private static void assertOrigin(Origin origin) {
+    assertThat(origin.getProvider()).isEqualTo(Origin.Provider.NO_FLUFF_JOBS);
   }
 
   /** todo move to separated asser class */

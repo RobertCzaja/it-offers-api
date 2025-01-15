@@ -5,7 +5,13 @@ import java.time.ZoneId;
 import java.util.*;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
-import pl.api.itoffers.offer.domain.*;
+import pl.api.itoffers.offer.domain.Category;
+import pl.api.itoffers.offer.domain.Characteristics;
+import pl.api.itoffers.offer.domain.Company;
+import pl.api.itoffers.offer.domain.Offer;
+import pl.api.itoffers.offer.domain.OfferMetadata;
+import pl.api.itoffers.offer.domain.Origin;
+import pl.api.itoffers.offer.domain.Salary;
 import pl.api.itoffers.provider.nofluffjobs.exception.NoFluffJobsException;
 import pl.api.itoffers.provider.nofluffjobs.model.NoFluffJobsRawDetailsOffer;
 import pl.api.itoffers.provider.nofluffjobs.model.NoFluffJobsRawListOffer;
@@ -16,6 +22,11 @@ public class OfferFactory {
 
   // todo to remove
   private final ClockInterface clock;
+
+  public Origin createOrigin(NoFluffJobsRawListOffer listOffer) {
+    return new Origin(
+        listOffer.getId().toString(), listOffer.getScrapingId(), Origin.Provider.NO_FLUFF_JOBS);
+  }
 
   public OfferMetadata createOfferMetadata(
       NoFluffJobsRawListOffer listOffer, NoFluffJobsRawDetailsOffer detailsOffer) {
