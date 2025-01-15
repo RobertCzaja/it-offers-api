@@ -3,39 +3,85 @@ package pl.api.itoffers.offer.application.service;
 import java.util.HashSet;
 import java.util.Set;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import pl.api.itoffers.offer.application.repository.CategoryRepository;
 import pl.api.itoffers.offer.application.repository.CompanyRepository;
+import pl.api.itoffers.offer.application.repository.OfferRepository;
 import pl.api.itoffers.offer.domain.Category;
+import pl.api.itoffers.offer.domain.Characteristics;
 import pl.api.itoffers.offer.domain.Company;
+import pl.api.itoffers.offer.domain.Offer;
+import pl.api.itoffers.offer.domain.OfferMetadata;
+import pl.api.itoffers.offer.domain.Origin;
 import pl.api.itoffers.offer.domain.Salary;
+import pl.api.itoffers.shared.utils.clock.ClockInterface;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class OfferSaver {
 
   private final CategoryRepository categoryRepository;
   private final CompanyRepository companyRepository;
-
-  // private final OfferFactory offerFactory; // todo it has ClockInterface which is problematic to
-  // inject by Spring - to figure out!
+  private final OfferRepository offerRepository;
+  private final ClockInterface clock;
 
   /**
    * todo under the development, base on:
    *
    * @see OfferService
    */
-  public void save(Set<Category> categories, Set<Salary> salaries, Company company) {
+  public void save(
+      Origin origin,
+      OfferMetadata offerMetadata,
+      Set<Category> categories,
+      Set<Salary> salaries,
+      Company company) {
 
     var categoryCollections = prepareCategories(categories);
     var preparedCompany = prepareCompany(company);
 
-    // todo create offer object
-    // todo check if it isn't already exist in DB
-    // todo if soo abort execution
-    // todo save company
-    // todo save categories
-    // todo save offer
+    var offer =
+        new Offer(
+            origin,
+            offerMetadata.technology(),
+            offerMetadata.slug(),
+            offerMetadata.title(),
+            offerMetadata.seniority(),
+            new Characteristics(
+                offerMetadata.workplace(), offerMetadata.time(), offerMetadata.remoteInterview()),
+            categoryCollections.forEntity(),
+            salaries,
+            preparedCompany,
+            offerMetadata.publishedAt(),
+            clock.now());
+
+    Offer alreadyStoredOffer = findAlreadyStoredOffer(offer); // todo it will work for NoFluffJobs?
+
+    if (null != alreadyStoredOffer) {
+      return; // todo should I log that?
+    }
+
+    companyRepository.save(company);
+    categoryRepository.saveAll(categoryCollections.toSave());
+    offerRepository.save(offer);
+    log.info(
+        "[jjit][{}] '{}' from {} at {}",
+        offer.getTechnology(),
+        offer.getTitle(),
+        offer.getCompany().getName(),
+        offer.getPublishedAt());
+  }
+
+  /**
+   * TODO remove duplication from:
+   *
+   * @see OfferService
+   */
+  private Offer findAlreadyStoredOffer(Offer offer) {
+    return offerRepository.findByDifferentOffer(
+        offer.getSlug(), offer.getTitle(), offer.getCompany().getName());
   }
 
   private CategoryCollections prepareCategories(Set<Category> categories) {

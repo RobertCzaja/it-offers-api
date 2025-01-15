@@ -32,13 +32,14 @@ public class OfferSaverITest extends AbstractITest {
   public void shouldCorrectlySaveOffers()
       throws IOException, NoSuchFieldException, IllegalAccessException {
     var noFluffJobsModels = NoFluffJobsRawOfferModelsFactory.create(NoFluffJobsParams.A1_PHP);
-
+    var origin = OfferFactory.createOrigin(noFluffJobsModels.list());
+    var offerMetadata =
+        OfferFactory.createOfferMetadata(noFluffJobsModels.list(), noFluffJobsModels.details());
     var categories = OfferFactory.createCategories(noFluffJobsModels.details());
     var salaries = OfferFactory.createSalaries(noFluffJobsModels.list());
     var company = OfferFactory.createCompany(noFluffJobsModels.list());
-    offerSaver.save(categories, salaries, company);
 
-    // todo under the development
+    offerSaver.save(origin, offerMetadata, categories, salaries, company);
 
     assertThat("").isNotNull(); // todo add real assertions
   }
