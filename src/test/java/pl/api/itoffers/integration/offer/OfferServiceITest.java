@@ -12,8 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import pl.api.itoffers.data.jjit.JustJoinItParams;
 import pl.api.itoffers.helper.AbstractITest;
 import pl.api.itoffers.helper.JustJoinItProviderFactory;
-import pl.api.itoffers.helper.assertions.OfferSalaryAssert;
 import pl.api.itoffers.integration.offer.helper.OfferTestManager;
+import pl.api.itoffers.integration.offer.helper.OffersAssert;
 import pl.api.itoffers.integration.provider.justjoinit.inmemory.JustJoinItInMemoryConnector;
 import pl.api.itoffers.offer.application.repository.CategoryRepository;
 import pl.api.itoffers.offer.application.repository.CompanyRepository;
@@ -72,20 +72,18 @@ public class OfferServiceITest extends AbstractITest {
     companyRepository.findAll().forEach((company) -> companyNames.add(company.getName()));
     assertThat(companyNames).hasSize(7);
 
-    Offer offer = offers.get(0);
-    assertThat(offer.getTechnology()).isEqualTo("php");
-    assertThat(offer.getTitle()).isEqualTo("Senior Full Stack Developer (React & PHP)");
-    assertThat(offer.getSlug())
-        .isEqualTo("iteamly-senior-full-stack-developer-react-php--krakow-php");
-    assertThat(offer.getCompany().getName()).isEqualTo("iTeamly");
-    assertThat(offer.getCategories()).hasSize(3);
-    assertThat(offer.getPublishedAt())
-        .isEqualTo(JustJoinItDateTime.createFrom("2024-08-25T07:00:56.216Z").value);
-    assertThat(offer.getSalaries().size()).isEqualTo(3);
-    OfferSalaryAssert.collectionContains(offer.getSalaries(), "b2b", "PLN", 26000, 33000, true);
-    OfferSalaryAssert.collectionContains(offer.getSalaries(), "permanent", "USD", 6553, 8388, true);
-    OfferSalaryAssert.collectionContains(
-        offer.getSalaries(), "permanent", "PLN", 25000, 32000, false);
+    OffersAssert.hasExpectedOfferModel(
+        offers.get(0),
+        "php",
+        "Senior Full Stack Developer (React & PHP)",
+        "iteamly-senior-full-stack-developer-react-php--krakow-php",
+        "iTeamly",
+        3,
+        3,
+        JustJoinItDateTime.createFrom("2024-08-25T07:00:56.216Z").value,
+        new OffersAssert.ExpectedSalary("b2b", "PLN", 26000, 33000, true),
+        new OffersAssert.ExpectedSalary("permanent", "USD", 6553, 8388, true),
+        new OffersAssert.ExpectedSalary("permanent", "PLN", 25000, 32000, false));
   }
 
   @Test
