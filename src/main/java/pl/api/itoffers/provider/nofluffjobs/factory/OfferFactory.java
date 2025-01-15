@@ -4,31 +4,25 @@ import java.time.Instant;
 import java.time.ZoneId;
 import java.util.*;
 import java.util.stream.Collectors;
-import lombok.RequiredArgsConstructor;
 import pl.api.itoffers.offer.domain.Category;
-import pl.api.itoffers.offer.domain.Characteristics;
 import pl.api.itoffers.offer.domain.Company;
-import pl.api.itoffers.offer.domain.Offer;
 import pl.api.itoffers.offer.domain.OfferMetadata;
 import pl.api.itoffers.offer.domain.Origin;
 import pl.api.itoffers.offer.domain.Salary;
 import pl.api.itoffers.provider.nofluffjobs.exception.NoFluffJobsException;
 import pl.api.itoffers.provider.nofluffjobs.model.NoFluffJobsRawDetailsOffer;
 import pl.api.itoffers.provider.nofluffjobs.model.NoFluffJobsRawListOffer;
-import pl.api.itoffers.shared.utils.clock.ClockInterface;
 
-@RequiredArgsConstructor
-public class OfferFactory {
+public final class OfferFactory {
 
-  // todo to remove
-  private final ClockInterface clock;
+  private OfferFactory() {}
 
-  public Origin createOrigin(NoFluffJobsRawListOffer listOffer) {
+  public static Origin createOrigin(NoFluffJobsRawListOffer listOffer) {
     return new Origin(
         listOffer.getId().toString(), listOffer.getScrapingId(), Origin.Provider.NO_FLUFF_JOBS);
   }
 
-  public OfferMetadata createOfferMetadata(
+  public static OfferMetadata createOfferMetadata(
       NoFluffJobsRawListOffer listOffer, NoFluffJobsRawDetailsOffer detailsOffer) {
     return new OfferMetadata(
         listOffer.getTechnology(),
@@ -47,41 +41,6 @@ public class OfferFactory {
                         ((LinkedHashMap) listOffer.getOffer().get("posted")).get("$numberLong")))
             .atZone(ZoneId.of("Europe/Warsaw"))
             .toLocalDateTime());
-  }
-
-  /**
-   * @deprecated to remove
-   */
-  public Offer createOffer(
-      NoFluffJobsRawListOffer listOffer,
-      NoFluffJobsRawDetailsOffer detailsOffer,
-      Set<Salary> salaries,
-      Set<Category> categories,
-      Company company) {
-    return new Offer(
-        new Origin(
-            listOffer.getId().toString(), listOffer.getScrapingId(), Origin.Provider.NO_FLUFF_JOBS),
-        listOffer.getTechnology(),
-        (String) listOffer.getOffer().get("url"),
-        (String) listOffer.getOffer().get("title"),
-        ((String) ((List) listOffer.getOffer().get("seniority")).get(0))
-            .toLowerCase(Locale.getDefault()),
-        new Characteristics(
-            (Boolean) ((Map) listOffer.getOffer().get("location")).get("fullyRemote")
-                ? "remote"
-                : "hybrid",
-            (String) detailsOffer.getOffer().get("employmentType"),
-            (Boolean) listOffer.getOffer().get("onlineInterviewAvailable")),
-        categories,
-        salaries,
-        company,
-        Instant.ofEpochMilli(
-                Long.parseLong(
-                    (String)
-                        ((LinkedHashMap) listOffer.getOffer().get("posted")).get("$numberLong")))
-            .atZone(ZoneId.of("Europe/Warsaw"))
-            .toLocalDateTime(),
-        clock.now());
   }
 
   public static Company createCompany(NoFluffJobsRawListOffer listOffer) {
