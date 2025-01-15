@@ -5,12 +5,7 @@ import java.time.ZoneId;
 import java.util.*;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
-import pl.api.itoffers.offer.domain.Category;
-import pl.api.itoffers.offer.domain.Characteristics;
-import pl.api.itoffers.offer.domain.Company;
-import pl.api.itoffers.offer.domain.Offer;
-import pl.api.itoffers.offer.domain.Origin;
-import pl.api.itoffers.offer.domain.Salary;
+import pl.api.itoffers.offer.domain.*;
 import pl.api.itoffers.provider.nofluffjobs.exception.NoFluffJobsException;
 import pl.api.itoffers.provider.nofluffjobs.model.NoFluffJobsRawDetailsOffer;
 import pl.api.itoffers.provider.nofluffjobs.model.NoFluffJobsRawListOffer;
@@ -19,8 +14,33 @@ import pl.api.itoffers.shared.utils.clock.ClockInterface;
 @RequiredArgsConstructor
 public class OfferFactory {
 
+  // todo to remove
   private final ClockInterface clock;
 
+  public OfferMetadata createOfferMetadata(
+      NoFluffJobsRawListOffer listOffer, NoFluffJobsRawDetailsOffer detailsOffer) {
+    return new OfferMetadata(
+        listOffer.getTechnology(),
+        (String) listOffer.getOffer().get("url"),
+        (String) listOffer.getOffer().get("title"),
+        ((String) ((List) listOffer.getOffer().get("seniority")).get(0))
+            .toLowerCase(Locale.getDefault()),
+        (Boolean) ((Map) listOffer.getOffer().get("location")).get("fullyRemote")
+            ? "remote"
+            : "hybrid",
+        (String) detailsOffer.getOffer().get("employmentType"),
+        (Boolean) listOffer.getOffer().get("onlineInterviewAvailable"),
+        Instant.ofEpochMilli(
+                Long.parseLong(
+                    (String)
+                        ((LinkedHashMap) listOffer.getOffer().get("posted")).get("$numberLong")))
+            .atZone(ZoneId.of("Europe/Warsaw"))
+            .toLocalDateTime());
+  }
+
+  /**
+   * @deprecated to remove
+   */
   public Offer createOffer(
       NoFluffJobsRawListOffer listOffer,
       NoFluffJobsRawDetailsOffer detailsOffer,

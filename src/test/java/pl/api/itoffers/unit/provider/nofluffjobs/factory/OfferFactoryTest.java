@@ -11,6 +11,7 @@ import pl.api.itoffers.data.nfj.NoFluffJobsParams;
 import pl.api.itoffers.data.nfj.NoFluffJobsRawOfferModelsFactory;
 import pl.api.itoffers.helper.FrozenClock;
 import pl.api.itoffers.offer.domain.Offer;
+import pl.api.itoffers.offer.domain.OfferMetadata;
 import pl.api.itoffers.provider.nofluffjobs.exception.NoFluffJobsException;
 import pl.api.itoffers.provider.nofluffjobs.factory.OfferFactory;
 
@@ -36,6 +37,10 @@ public class OfferFactoryTest {
             OfferFactory.createCategories(noFluffJobsModels.details()),
             OfferFactory.createCompany(noFluffJobsModels.list()));
 
+    var offerMetadata =
+        offerFactory.createOfferMetadata(noFluffJobsModels.list(), noFluffJobsModels.details());
+
+    assertExpectedOfferMetadata(offerMetadata, "remote");
     assertExpectedOffer(offer, "remote");
   }
 
@@ -51,7 +56,10 @@ public class OfferFactoryTest {
             OfferFactory.createSalaries(noFluffJobsModels.list()),
             OfferFactory.createCategories(noFluffJobsModels.details()),
             OfferFactory.createCompany(noFluffJobsModels.list()));
+    var offerMetadata =
+        offerFactory.createOfferMetadata(noFluffJobsModels.list(), noFluffJobsModels.details());
 
+    assertExpectedOfferMetadata(offerMetadata, "hybrid");
     assertExpectedOffer(offer, "hybrid");
   }
 
@@ -70,6 +78,21 @@ public class OfferFactoryTest {
               OfferFactory.createCategories(noFluffJobsModels.details()),
               OfferFactory.createCompany(noFluffJobsModels.list()));
         });
+  }
+
+  /** todo move to separated asser class */
+  private static void assertExpectedOfferMetadata(OfferMetadata offerMetadata, String workplace) {
+    assertThat(offerMetadata.technology()).isEqualTo("php");
+    assertThat(offerMetadata.slug())
+        .isEqualTo("sr-network-security-architect-pre-sales-engineer-codilime-remote");
+    assertThat(offerMetadata.title())
+        .isEqualTo("Sr Network Security Architect / Pre-sales Engineer");
+    assertThat(offerMetadata.seniority()).isEqualTo("senior");
+    assertThat(offerMetadata.workplace()).isEqualTo(workplace);
+    assertThat(offerMetadata.time()).isEqualTo("CONTRACTOR");
+    assertThat(offerMetadata.remoteInterview()).isTrue();
+    assertThat(offerMetadata.publishedAt())
+        .isEqualTo(LocalDateTime.of(2025, 1, 10, 17, 27, 5, 231000000));
   }
 
   private static void assertExpectedOffer(Offer offer, String workplace) {
