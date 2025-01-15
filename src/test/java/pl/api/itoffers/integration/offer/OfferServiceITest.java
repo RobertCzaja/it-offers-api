@@ -2,9 +2,7 @@ package pl.api.itoffers.integration.offer;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.UUID;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -63,14 +61,8 @@ public class OfferServiceITest extends AbstractITest {
 
     List<Offer> offers = offerRepository.findAll();
     assertThat(offers).hasSize(7);
-
-    Set<String> categoryNames = new HashSet<>();
-    categoryRepository.findAll().forEach((category) -> categoryNames.add(category.getName()));
-    assertThat(categoryNames).hasSize(25);
-
-    Set<String> companyNames = new HashSet<>();
-    companyRepository.findAll().forEach((company) -> companyNames.add(company.getName()));
-    assertThat(companyNames).hasSize(7);
+    assertThat(categoryRepository.findAll()).hasSize(25);
+    assertThat(companyRepository.findAll()).hasSize(7);
 
     OffersAssert.hasExpectedOfferModel(
         offers.get(0),
@@ -78,7 +70,6 @@ public class OfferServiceITest extends AbstractITest {
         "Senior Full Stack Developer (React & PHP)",
         "iteamly-senior-full-stack-developer-react-php--krakow-php",
         "iTeamly",
-        3,
         3,
         JustJoinItDateTime.createFrom("2024-08-25T07:00:56.216Z").value,
         new OffersAssert.ExpectedSalary("b2b", "PLN", 26000, 33000, true),

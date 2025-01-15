@@ -1,5 +1,7 @@
 package pl.api.itoffers.integration.offer.service;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import java.io.IOException;
 import java.time.LocalDateTime;
 import org.junit.jupiter.api.BeforeEach;
@@ -11,6 +13,8 @@ import pl.api.itoffers.helper.AbstractITest;
 import pl.api.itoffers.helper.OfferBuilder;
 import pl.api.itoffers.integration.offer.helper.OfferTestManager;
 import pl.api.itoffers.integration.offer.helper.OffersAssert;
+import pl.api.itoffers.offer.application.repository.CategoryRepository;
+import pl.api.itoffers.offer.application.repository.CompanyRepository;
 import pl.api.itoffers.offer.application.repository.OfferRepository;
 import pl.api.itoffers.offer.application.service.OfferSaver;
 import pl.api.itoffers.provider.nofluffjobs.factory.OfferFactory;
@@ -20,6 +24,8 @@ public class OfferSaverITest extends AbstractITest {
   @Autowired private OfferSaver offerSaver;
   @Autowired private OfferTestManager offerTestManager;
   @Autowired private OfferRepository offerRepository;
+  @Autowired private CategoryRepository categoryRepository;
+  @Autowired private CompanyRepository companyRepository;
   private OfferBuilder builder;
 
   @BeforeEach
@@ -44,6 +50,9 @@ public class OfferSaverITest extends AbstractITest {
     offerSaver.save(origin, offerMetadata, categories, salaries, company);
 
     var offers = offerRepository.findAll();
+    assertThat(offers).hasSize(1);
+    assertThat(categoryRepository.findAll()).hasSize(17);
+    assertThat(companyRepository.findAll()).hasSize(1);
 
     OffersAssert.hasExpectedOfferModel(
         offers.get(0),
@@ -52,7 +61,6 @@ public class OfferSaverITest extends AbstractITest {
         "sr-network-security-architect-pre-sales-engineer-codilime-remote",
         "CodiLime",
         17,
-        1,
         LocalDateTime.of(2025, 1, 10, 17, 27, 5, 231000000),
         new OffersAssert.ExpectedSalary("b2b", "PLN", 18000, 27000, true));
   }

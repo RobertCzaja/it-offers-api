@@ -30,7 +30,6 @@ public class OffersAssert {
       String expectedSlug,
       String expectedCompanyName,
       int expectedCategoriesSize,
-      int expectedSalariesSize,
       LocalDateTime expectedPublishedAt,
       ExpectedSalary... expectedSalaries) {
     assertThat(offer.getTechnology()).isEqualTo(expectedTechnology);
@@ -39,7 +38,7 @@ public class OffersAssert {
     assertThat(offer.getCompany().getName()).isEqualTo(expectedCompanyName);
     assertThat(offer.getCategories()).hasSize(expectedCategoriesSize);
     assertThat(offer.getPublishedAt()).isEqualTo(expectedPublishedAt);
-    assertThat(offer.getSalaries().size()).isEqualTo(expectedSalariesSize);
+    assertThat(offer.getSalaries().size()).isEqualTo(expectedSalaries.length);
     for (ExpectedSalary expectedSalary : expectedSalaries) {
       OfferSalaryAssert.collectionContains(
           offer.getSalaries(),
