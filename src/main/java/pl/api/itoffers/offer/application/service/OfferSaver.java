@@ -27,11 +27,6 @@ public class OfferSaver {
   private final OfferRepository offerRepository;
   private final ClockInterface clock;
 
-  /**
-   * todo under the development, base on:
-   *
-   * @see OfferService
-   */
   public void save(
       Origin origin,
       OfferMetadata offerMetadata,
