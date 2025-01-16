@@ -57,10 +57,10 @@ public class OfferSaver {
             offerMetadata.publishedAt(),
             clock.now());
 
-    Offer alreadyStoredOffer = findAlreadyStoredOffer(offer); // todo it will work for NoFluffJobs?
+    Offer alreadyStoredOffer = findAlreadyStoredOffer(offer);
 
     if (null != alreadyStoredOffer) {
-      return; // todo should I log that?
+      return;
     }
 
     companyRepository.save(company);

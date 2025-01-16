@@ -64,4 +64,24 @@ public class OfferSaverITest extends AbstractITest {
         LocalDateTime.of(2025, 1, 10, 17, 27, 5, 231000000),
         new OffersAssert.ExpectedSalary("b2b", "PLN", 18000, 27000, true));
   }
+
+  @Test
+  public void shouldDetectDuplications()
+      throws IOException, NoSuchFieldException, IllegalAccessException {
+    var noFluffJobsModels = NoFluffJobsRawOfferModelsFactory.create(NoFluffJobsParams.A1_PHP);
+    var origin = OfferFactory.createOrigin(noFluffJobsModels.list());
+    var offerMetadata =
+        OfferFactory.createOfferMetadata(noFluffJobsModels.list(), noFluffJobsModels.details());
+    var categories = OfferFactory.createCategories(noFluffJobsModels.details());
+    var salaries = OfferFactory.createSalaries(noFluffJobsModels.list());
+    var company = OfferFactory.createCompany(noFluffJobsModels.list());
+
+    offerSaver.save(origin, offerMetadata, categories, salaries, company);
+    offerSaver.save(origin, offerMetadata, categories, salaries, company);
+
+    var offers = offerRepository.findAll();
+    assertThat(offers).hasSize(1);
+    assertThat(categoryRepository.findAll()).hasSize(17);
+    assertThat(companyRepository.findAll()).hasSize(1);
+  }
 }
