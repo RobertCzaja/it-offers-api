@@ -69,11 +69,6 @@ public class OfferSaver {
         offer.getPublishedAt());
   }
 
-  /**
-   * TODO remove duplication from:
-   *
-   * @see OfferService
-   */
   private Offer findAlreadyStoredOffer(Offer offer) {
     return offerRepository.findByDifferentOffer(
         offer.getSlug(), offer.getTitle(), offer.getCompany().getName());
