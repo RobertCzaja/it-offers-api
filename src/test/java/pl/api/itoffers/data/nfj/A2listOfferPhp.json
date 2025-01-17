@@ -160,9 +160,7 @@
     "fullyRemote": false,
     "covidTimeRemotely": false
   },
-  "posted": {
-    "$numberLong": "1736526425231"
-  },
+  "posted": 1736526425231,
   "title": "Sr Network Security Architect / Pre-sales Engineer",
   "logo": {
     "original": "companies/logos/original/pozostale_kanaly_20211005_124140.png",
