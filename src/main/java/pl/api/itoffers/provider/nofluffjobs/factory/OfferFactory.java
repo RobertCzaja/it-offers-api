@@ -35,10 +35,7 @@ public final class OfferFactory {
             : "hybrid",
         (String) detailsOffer.getOffer().get("employmentType"),
         (Boolean) listOffer.getOffer().get("onlineInterviewAvailable"),
-        Instant.ofEpochMilli(
-                Long.parseLong(
-                    (String)
-                        ((LinkedHashMap) listOffer.getOffer().get("posted")).get("$numberLong")))
+        Instant.ofEpochMilli(((Long) listOffer.getOffer().get("posted")).longValue())
             .atZone(ZoneId.of("Europe/Warsaw"))
             .toLocalDateTime());
   }

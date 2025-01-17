@@ -28,4 +28,8 @@ public class NoFluffJobsException extends RuntimeException {
   public static NoFluffJobsException onMappingToDomainModel(String field, String json) {
     return new NoFluffJobsException(String.format("Cannot map filed %s from: %s", field, json));
   }
+
+  public static NoFluffJobsException becauseFetchingResultIsIncompatible(String message) {
+    return new NoFluffJobsException(String.format("Fetching result is incompatible - %s", message));
+  }
 }

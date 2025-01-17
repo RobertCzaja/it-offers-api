@@ -1,5 +1,6 @@
 package pl.api.itoffers.provider.nofluffjobs.repository;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import org.springframework.data.mongodb.repository.MongoRepository;
@@ -10,4 +11,6 @@ import pl.api.itoffers.provider.nofluffjobs.model.NoFluffJobsRawDetailsOffer;
 public interface NoFluffJobsDetailsOfferRepository
     extends MongoRepository<NoFluffJobsRawDetailsOffer, UUID> {
   Optional<NoFluffJobsRawDetailsOffer> findByOfferId(UUID offerId);
+
+  List<NoFluffJobsRawDetailsOffer> findByOfferIdIn(List<UUID> offerIds);
 }
