@@ -22,12 +22,20 @@ public class OfferService {
     List<JustJoinItRawOffer> rawOffers = jjitRawOffersRepository.findByScrapingId(scrappingId);
 
     for (JustJoinItRawOffer rawOffer : rawOffers) {
-      offerSaver.save(
-          OfferFactory.createOrigin(rawOffer),
-          OfferFactory.createOfferMetadata(rawOffer),
-          OfferFactory.createCategories(rawOffer),
-          salariesFactory.create(rawOffer),
-          OfferFactory.createCompany(rawOffer));
+      try {
+        offerSaver.save(
+            OfferFactory.createOrigin(rawOffer),
+            OfferFactory.createOfferMetadata(rawOffer),
+            OfferFactory.createCategories(rawOffer),
+            salariesFactory.create(rawOffer),
+            OfferFactory.createCompany(rawOffer));
+      } catch (Exception e) {
+        log.error(
+            "Error on saving JJIT offer ({}) as domain model: {}",
+            rawOffer.getId(),
+            rawOffer.getOffer());
+        throw e;
+      }
     }
   }
 }

@@ -58,7 +58,7 @@ public class OfferSaver {
       return;
     }
 
-    companyRepository.save(company);
+    companyRepository.save(preparedCompany);
     categoryRepository.saveAll(categoryCollections.toSave());
     offerRepository.save(offer);
     log.info(

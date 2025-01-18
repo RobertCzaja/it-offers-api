@@ -11,6 +11,8 @@ import pl.api.itoffers.data.nfj.NoFluffJobsParams;
 import pl.api.itoffers.data.nfj.NoFluffJobsRawOfferModelsFactory;
 import pl.api.itoffers.helper.AbstractITest;
 import pl.api.itoffers.helper.OfferBuilder;
+import pl.api.itoffers.helper.OfferMetadataFactory;
+import pl.api.itoffers.helper.OfferSubObjectsFactory;
 import pl.api.itoffers.integration.offer.helper.OfferTestManager;
 import pl.api.itoffers.integration.offer.helper.OffersAssert;
 import pl.api.itoffers.offer.application.repository.CategoryRepository;
@@ -80,6 +82,33 @@ public class OfferSaverITest extends AbstractITest {
     var offers = offerRepository.findAll();
     assertThat(offers).hasSize(1);
     assertThat(categoryRepository.findAll()).hasSize(17);
+    assertThat(companyRepository.findAll()).hasSize(1);
+  }
+
+  @Test
+  public void shouldNotSaveDuplicatedCompany() throws IOException {
+    var noFluffJobsModels = NoFluffJobsRawOfferModelsFactory.create(NoFluffJobsParams.A1_PHP);
+    var categories = OfferFactory.createCategories(noFluffJobsModels.details());
+
+    offerSaver.save(
+        OfferSubObjectsFactory.createOrigin("100001"),
+        OfferMetadataFactory.create("title1"),
+        categories,
+        OfferSubObjectsFactory.createSalaries(),
+        OfferSubObjectsFactory.createCompany());
+    offerSaver.save(
+        OfferSubObjectsFactory.createOrigin("100002"),
+        OfferMetadataFactory.create("title2"),
+        categories,
+        OfferSubObjectsFactory.createSalaries(),
+        OfferSubObjectsFactory.createCompany());
+    offerSaver.save(
+        OfferSubObjectsFactory.createOrigin("100003"),
+        OfferMetadataFactory.create("title3"),
+        categories,
+        OfferSubObjectsFactory.createSalaries(),
+        OfferSubObjectsFactory.createCompany());
+
     assertThat(companyRepository.findAll()).hasSize(1);
   }
 }
