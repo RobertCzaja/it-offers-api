@@ -9,7 +9,6 @@ import pl.api.itoffers.offer.domain.Company;
 import pl.api.itoffers.offer.domain.OfferMetadata;
 import pl.api.itoffers.offer.domain.Origin;
 import pl.api.itoffers.offer.domain.Salary;
-import pl.api.itoffers.provider.nofluffjobs.exception.NoFluffJobsException;
 import pl.api.itoffers.provider.nofluffjobs.model.NoFluffJobsRawDetailsOffer;
 import pl.api.itoffers.provider.nofluffjobs.model.NoFluffJobsRawListOffer;
 
@@ -43,6 +42,7 @@ public final class OfferFactory {
   public static Company createCompany(NoFluffJobsRawListOffer listOffer) {
 
     var locations = (List<Map>) ((Map) listOffer.getOffer().get("location")).get("places");
+    var companyName = (String) listOffer.getOffer().get("name");
     var filtered =
         locations.stream()
             .filter(
@@ -50,14 +50,12 @@ public final class OfferFactory {
                     null == location.get("provinceOnly") && !"Remote".equals(location.get("city")))
             .toList();
 
-    if (filtered.size() != 1) {
-      throw NoFluffJobsException.onMappingToDomainModel("company", listOffer.toString());
-    }
-
-    return new Company(
-        (String) listOffer.getOffer().get("name"),
-        (String) filtered.get(0).get("city"),
-        (String) filtered.get(0).get("street"));
+    return filtered.isEmpty()
+        ? Company.createWithNoAddress(companyName)
+        : new Company(
+            companyName,
+            (String) filtered.get(0).get("city"),
+            (String) filtered.get(0).get("street"));
   }
 
   public static Set<Category> createCategories(NoFluffJobsRawDetailsOffer detailsOffer) {

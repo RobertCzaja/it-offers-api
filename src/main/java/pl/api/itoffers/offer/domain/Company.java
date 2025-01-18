@@ -22,4 +22,8 @@ public class Company {
   @Getter private final String name;
   @Getter private final String city;
   @Getter private final String street;
+
+  public static Company createWithNoAddress(String name) {
+    return new Company(name, null, null);
+  }
 }

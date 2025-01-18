@@ -19,6 +19,7 @@ import pl.api.itoffers.offer.application.repository.CategoryRepository;
 import pl.api.itoffers.offer.application.repository.CompanyRepository;
 import pl.api.itoffers.offer.application.repository.OfferRepository;
 import pl.api.itoffers.offer.application.service.OfferSaver;
+import pl.api.itoffers.offer.domain.Company;
 import pl.api.itoffers.provider.nofluffjobs.factory.OfferFactory;
 
 public class OfferSaverITest extends AbstractITest {
@@ -110,5 +111,21 @@ public class OfferSaverITest extends AbstractITest {
         OfferSubObjectsFactory.createCompany());
 
     assertThat(companyRepository.findAll()).hasSize(1);
+  }
+
+  @Test
+  public void shouldSaveCompanyWithNoAddress() throws IOException {
+    offerSaver.save(
+        OfferSubObjectsFactory.createOrigin("100001"),
+        OfferMetadataFactory.create("title1"),
+        OfferFactory.createCategories(
+            NoFluffJobsRawOfferModelsFactory.create(NoFluffJobsParams.A1_PHP).details()),
+        OfferSubObjectsFactory.createSalaries(),
+        Company.createWithNoAddress("a"));
+
+    var offer = offerRepository.findAll().get(0);
+    assertThat(offer.getCompany().getName()).isEqualTo("a");
+    assertThat(offer.getCompany().getCity()).isNull();
+    assertThat(offer.getCompany().getStreet()).isNull();
   }
 }

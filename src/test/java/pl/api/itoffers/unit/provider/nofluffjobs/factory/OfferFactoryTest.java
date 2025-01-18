@@ -1,7 +1,6 @@
 package pl.api.itoffers.unit.provider.nofluffjobs.factory;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -10,7 +9,6 @@ import org.junit.jupiter.api.Test;
 import pl.api.itoffers.data.nfj.NoFluffJobsParams;
 import pl.api.itoffers.data.nfj.NoFluffJobsRawOfferModelsFactory;
 import pl.api.itoffers.offer.domain.*;
-import pl.api.itoffers.provider.nofluffjobs.exception.NoFluffJobsException;
 import pl.api.itoffers.provider.nofluffjobs.factory.OfferFactory;
 
 public class OfferFactoryTest {
@@ -44,14 +42,14 @@ public class OfferFactoryTest {
   }
 
   @Test
-  void cannotBuildOfferModelWhenThereIsNoCompanyAddress() throws IOException {
+  void whenThereIsNotCompanyAddressThenShouldCreateCompanyObjectAnyway() throws IOException {
     var noFluffJobsModels = NoFluffJobsRawOfferModelsFactory.create(NoFluffJobsParams.A3_PHP);
 
-    assertThrows(
-        NoFluffJobsException.class,
-        () -> {
-          OfferFactory.createCompany(noFluffJobsModels.list());
-        });
+    var company = OfferFactory.createCompany(noFluffJobsModels.list());
+
+    assertThat(company.getName()).isEqualTo("CodiLime");
+    assertThat(company.getCity()).isNull();
+    assertThat(company.getStreet()).isNull();
   }
 
   private static void assertOffer(
