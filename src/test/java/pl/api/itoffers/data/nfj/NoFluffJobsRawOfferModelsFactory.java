@@ -2,6 +2,7 @@ package pl.api.itoffers.data.nfj;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.UUID;
 import org.bson.types.ObjectId;
 import pl.api.itoffers.provider.nofluffjobs.model.NoFluffJobsRawDetailsOffer;
@@ -16,9 +17,8 @@ public class NoFluffJobsRawOfferModelsFactory {
   public record NoFluffJobsRawModels(
       NoFluffJobsRawListOffer list, NoFluffJobsRawDetailsOffer details) {}
 
-  /** TODO catch here all these exceptions */
   public static NoFluffJobsRawModels create(NoFluffJobsParams.JsonOffer jsonOffer)
-      throws IOException, NoSuchFieldException, IllegalAccessException {
+      throws IOException {
     var scrapingId = UUID.fromString("f8d7f4d7-b463-4a1a-9446-d2e3eb4a3c3a");
     var offerId = UUID.fromString("2a253bea-c3c7-4873-ab55-aa197b0d8670");
 
@@ -50,5 +50,21 @@ public class NoFluffJobsRawOfferModelsFactory {
     } catch (Exception e) {
       throw new RuntimeException("Could not construct testing data");
     }
+  }
+
+  public static NoFluffJobsRawListOffer createOfferList(UUID offerId) {
+    var offer =
+        new NoFluffJobsRawListOffer(
+            UUID.randomUUID(), offerId, "java", new HashMap<>(), LocalDateTime.now());
+
+    return offer;
+  }
+
+  public static NoFluffJobsRawDetailsOffer createDetailsList(UUID offerId) {
+    var offer =
+        new NoFluffJobsRawDetailsOffer(
+            UUID.randomUUID(), offerId, new HashMap<>(), LocalDateTime.now());
+
+    return offer;
   }
 }

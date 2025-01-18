@@ -1,7 +1,5 @@
 package pl.api.itoffers.provider.nofluffjobs.service;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -10,11 +8,10 @@ import org.springframework.stereotype.Service;
 import pl.api.itoffers.offer.application.service.OfferSaver;
 import pl.api.itoffers.provider.nofluffjobs.exception.NoFluffJobsException;
 import pl.api.itoffers.provider.nofluffjobs.factory.OfferFactory;
+import pl.api.itoffers.provider.nofluffjobs.fetcher.RawDataMatcher;
 import pl.api.itoffers.provider.nofluffjobs.fetcher.details.NoFluffJobsDetailsProvider;
 import pl.api.itoffers.provider.nofluffjobs.fetcher.list.NoFluffJobsListProvider;
-import pl.api.itoffers.provider.nofluffjobs.model.NoFluffJobsRawDetailsOffer;
 import pl.api.itoffers.provider.nofluffjobs.model.NoFluffJobsRawListOffer;
-import pl.api.itoffers.provider.nofluffjobs.model.NoFluffJobsRawOffer;
 import pl.api.itoffers.provider.nofluffjobs.repository.NoFluffJobsDetailsOfferRepository;
 import pl.api.itoffers.provider.nofluffjobs.repository.NoFluffJobsListOfferRepository;
 
@@ -56,7 +53,7 @@ public class TechnologyOffersCollector {
     var detailsOffers =
         detailsOfferRepository.findByOfferIdIn(
             listOffers.stream().map(NoFluffJobsRawListOffer::getOfferId).toList());
-    var matchedOffers = match(listOffers, detailsOffers);
+    var matchedOffers = RawDataMatcher.match(listOffers, detailsOffers);
 
     for (var matchedOffer : matchedOffers) {
       offerSaver.save(
@@ -68,30 +65,5 @@ public class TechnologyOffersCollector {
     }
 
     log.info("[{}] domain offers successfully saved", technology);
-  }
-
-  /** todo delegate to separated class todo add unit tests for class above */
-  private static List<NoFluffJobsRawOffer> match(
-      List<NoFluffJobsRawListOffer> listOffers, List<NoFluffJobsRawDetailsOffer> detailsOffers) {
-    if (listOffers.size() != detailsOffers.size()) {
-      throw NoFluffJobsException.becauseFetchingResultIsIncompatible("initial collections");
-    }
-
-    var matched = new ArrayList<NoFluffJobsRawOffer>();
-
-    for (var listOffer : listOffers) {
-      for (var detailsOffer : detailsOffers) {
-        if (listOffer.getOfferId().equals(detailsOffer.getOfferId())) {
-          matched.add(new NoFluffJobsRawOffer(listOffer, detailsOffer));
-          break;
-        }
-      }
-    }
-
-    if (matched.size() != listOffers.size()) {
-      throw NoFluffJobsException.becauseFetchingResultIsIncompatible("could not match each offer");
-    }
-
-    return matched;
   }
 }

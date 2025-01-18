@@ -16,8 +16,7 @@ import pl.api.itoffers.provider.nofluffjobs.factory.OfferFactory;
 public class OfferFactoryTest {
 
   @Test
-  void shouldMapRawNoFluffJobsModelsToDomainOfferModel()
-      throws IOException, NoSuchFieldException, IllegalAccessException {
+  void shouldMapRawNoFluffJobsModelsToDomainOfferModel() throws IOException {
     var noFluffJobsModels = NoFluffJobsRawOfferModelsFactory.create(NoFluffJobsParams.A1_PHP);
 
     var offerMetadata =
@@ -31,8 +30,7 @@ public class OfferFactoryTest {
   }
 
   @Test
-  void shouldSetOfferAsAHybridTypeWhenItIsNotFullyRemote()
-      throws IOException, NoSuchFieldException, IllegalAccessException {
+  void shouldSetOfferAsAHybridTypeWhenItIsNotFullyRemote() throws IOException {
     var noFluffJobsModels = NoFluffJobsRawOfferModelsFactory.create(NoFluffJobsParams.A2_PHP);
 
     var offerMetadata =
@@ -46,8 +44,7 @@ public class OfferFactoryTest {
   }
 
   @Test
-  void cannotBuildOfferModelWhenThereIsNoCompanyAddress()
-      throws IOException, NoSuchFieldException, IllegalAccessException {
+  void cannotBuildOfferModelWhenThereIsNoCompanyAddress() throws IOException {
     var noFluffJobsModels = NoFluffJobsRawOfferModelsFactory.create(NoFluffJobsParams.A3_PHP);
 
     assertThrows(

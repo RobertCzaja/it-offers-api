@@ -37,8 +37,7 @@ public class OfferSaverITest extends AbstractITest {
   }
 
   @Test
-  public void shouldCorrectlySaveOffers()
-      throws IOException, NoSuchFieldException, IllegalAccessException {
+  public void shouldCorrectlySaveOffers() throws IOException {
     var noFluffJobsModels = NoFluffJobsRawOfferModelsFactory.create(NoFluffJobsParams.A1_PHP);
     var origin = OfferFactory.createOrigin(noFluffJobsModels.list());
     var offerMetadata =
@@ -66,8 +65,7 @@ public class OfferSaverITest extends AbstractITest {
   }
 
   @Test
-  public void shouldDetectDuplications()
-      throws IOException, NoSuchFieldException, IllegalAccessException {
+  public void shouldDetectDuplications() throws IOException {
     var noFluffJobsModels = NoFluffJobsRawOfferModelsFactory.create(NoFluffJobsParams.A1_PHP);
     var origin = OfferFactory.createOrigin(noFluffJobsModels.list());
     var offerMetadata =
