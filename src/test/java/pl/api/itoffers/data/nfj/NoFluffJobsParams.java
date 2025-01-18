@@ -19,6 +19,13 @@ public class NoFluffJobsParams {
           NoFluffJobsParams.MAIN_CATALOG + "A3listOfferPhp.json",
           NoFluffJobsParams.MAIN_CATALOG + "A1detailsOfferPhp.json");
 
+  public static String B1_E2E_PHP_LIST = MAIN_CATALOG + "listPhpAsHtml.txt";
+  public static String B1_E2E_PHP_1_DETAILS = MAIN_CATALOG + "detailsPhp1AsHtml.txt";
+  public static String B1_E2E_PHP_2_DETAILS = MAIN_CATALOG + "detailsPhp2AsHtml.txt";
+  public static String B1_E2E_JAVA_LIST = MAIN_CATALOG + "listJavaAsHtml.txt";
+  public static String B1_E2E_JAVA_1_DETAILS = MAIN_CATALOG + "detailsJava1AsHtml.txt";
+  public static String B1_E2E_JAVA_2_DETAILS = MAIN_CATALOG + "detailsJava2AsHtml.txt";
+
   public static final String DETAILS_JAVA_JSON_PATH = MAIN_CATALOG + "detailsJava.json";
 
   /**
