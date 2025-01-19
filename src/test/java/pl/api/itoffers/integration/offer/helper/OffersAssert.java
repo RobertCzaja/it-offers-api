@@ -7,14 +7,33 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
+import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Profile;
+import org.springframework.stereotype.Service;
 import pl.api.itoffers.helper.LocalDateTimeCustomBuilder;
 import pl.api.itoffers.helper.assertions.OfferSalaryAssert;
 import pl.api.itoffers.offer.application.dto.outgoing.OfferCategoryDto;
 import pl.api.itoffers.offer.application.dto.outgoing.OfferDto;
 import pl.api.itoffers.offer.application.dto.outgoing.OffersDto;
+import pl.api.itoffers.offer.application.repository.CategoryRepository;
+import pl.api.itoffers.offer.application.repository.CompanyRepository;
+import pl.api.itoffers.offer.application.repository.OfferRepository;
 import pl.api.itoffers.offer.domain.Offer;
 
+@Service
+@RequiredArgsConstructor
+@Profile("test")
 public class OffersAssert {
+
+  private final OfferRepository offerRepository;
+  private final CategoryRepository categoryRepository;
+  private final CompanyRepository companyRepository;
+
+  public void expects(int expectOffersCount, int expectCategoriesCount, int expectCompaniesCount) {
+    assertThat(offerRepository.findAll()).hasSize(expectOffersCount);
+    assertThat(categoryRepository.findAll()).hasSize(expectCategoriesCount);
+    assertThat(companyRepository.findAll()).hasSize(expectCompaniesCount);
+  }
 
   public record ExpectedSalary(
       String expectedType,

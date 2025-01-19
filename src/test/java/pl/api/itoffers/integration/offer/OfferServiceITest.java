@@ -29,10 +29,11 @@ public class OfferServiceITest extends AbstractITest {
   @Autowired private OfferTestManager offerTestManager;
   @Autowired private OfferService offerService;
   @Autowired private OfferRepository offerRepository;
-  @Autowired private CategoryRepository categoryRepository;
-  @Autowired private CompanyRepository companyRepository;
+  @Autowired private CategoryRepository categoryRepository; // todo should i clear this state?
+  @Autowired private CompanyRepository companyRepository; // todo should i clear this state?
   @Autowired private JustJoinItProviderFactory justJoinItProviderFactory;
   @Autowired private JustJoinItRepository jjitRawOffersRepository;
+  @Autowired private OffersAssert offersAssert;
   private JustJoinItInMemoryConnector jjitConnector;
   private JustJoinItProvider jjitProvider;
 
@@ -59,13 +60,9 @@ public class OfferServiceITest extends AbstractITest {
     offerService.processOffersFromExternalService(scrappingId1);
     offerService.processOffersFromExternalService(scrappingId2);
 
-    List<Offer> offers = offerRepository.findAll();
-    assertThat(offers).hasSize(7);
-    assertThat(categoryRepository.findAll()).hasSize(25);
-    assertThat(companyRepository.findAll()).hasSize(7);
-
+    offersAssert.expects(7, 25, 7);
     OffersAssert.hasExpectedOfferModel(
-        offers.get(0),
+        offerRepository.findAll().get(0),
         "php",
         "Senior Full Stack Developer (React & PHP)",
         "iteamly-senior-full-stack-developer-react-php--krakow-php",
