@@ -1,4 +1,4 @@
-package pl.api.itoffers.integration.provider.nofluffjobs;
+package pl.api.itoffers.integration.provider.nofluffjobs.fetcher;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

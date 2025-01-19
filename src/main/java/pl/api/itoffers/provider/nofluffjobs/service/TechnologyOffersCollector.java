@@ -3,7 +3,6 @@ package pl.api.itoffers.provider.nofluffjobs.service;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import pl.api.itoffers.offer.application.service.OfferSaver;
 import pl.api.itoffers.provider.nofluffjobs.exception.NoFluffJobsException;
@@ -25,9 +24,7 @@ public class TechnologyOffersCollector {
   private final NoFluffJobsListProvider listProvider;
   private final OfferSaver offerSaver;
 
-  /** todo write integration test for that full fetching and saving class */
-  @Async
-  public void fetchOffers(String technology) {
+  public void fetchOffers(final String technology) {
     UUID scrapingId = UUID.randomUUID();
 
     log.info("[{}] fetching offer list", technology);
@@ -53,9 +50,8 @@ public class TechnologyOffersCollector {
     var detailsOffers =
         detailsOfferRepository.findByOfferIdIn(
             listOffers.stream().map(NoFluffJobsRawListOffer::getOfferId).toList());
-    var matchedOffers = RawDataMatcher.match(listOffers, detailsOffers);
 
-    for (var matchedOffer : matchedOffers) {
+    for (var matchedOffer : RawDataMatcher.match(listOffers, detailsOffers)) {
       offerSaver.save(
           OfferFactory.createOrigin(matchedOffer.listOffer()),
           OfferFactory.createOfferMetadata(matchedOffer.listOffer(), matchedOffer.detailsOffer()),

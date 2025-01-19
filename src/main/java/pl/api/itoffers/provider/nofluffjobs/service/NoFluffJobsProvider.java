@@ -12,10 +12,9 @@ public class NoFluffJobsProvider {
 
   private final TechnologyOffersCollector collector;
 
-  /** TODO under construction */
   public void fetch() {
 
-    String[] technologies = {"java", "php"};
+    String[] technologies = {"java", "php"}; // todo gets it from some repository
 
     Arrays.stream(technologies)
         .forEach(
