@@ -19,6 +19,7 @@ import pl.api.itoffers.offer.domain.Offer;
 import pl.api.itoffers.provider.justjoinit.JustJoinItProvider;
 import pl.api.itoffers.provider.justjoinit.model.JustJoinItDateTime;
 import pl.api.itoffers.provider.justjoinit.repository.JustJoinItRepository;
+import pl.api.itoffers.report.ImportSummary;
 
 public class OfferServiceITest extends AbstractITest {
 
@@ -52,8 +53,8 @@ public class OfferServiceITest extends AbstractITest {
     fetchOffersFromExternalService(
         scrappingId2, JustJoinItParams.ALL_LOCATIONS_PAYLOAD_A2_PATH); // duplicates two Offers
 
-    offerService.processOffersFromExternalService(scrappingId1);
-    offerService.processOffersFromExternalService(scrappingId2);
+    offerService.processOffersFromExternalService(scrappingId1, ImportSummary.create());
+    offerService.processOffersFromExternalService(scrappingId2, ImportSummary.create());
 
     offersAssert.expects(7, 25, 7);
     OffersAssert.hasExpectedOfferModel(
@@ -84,9 +85,9 @@ public class OfferServiceITest extends AbstractITest {
     fetchOffersFromExternalService(
         scrappingId3, JustJoinItParams.ALL_LOCATIONS_PAYLOAD_DUPLICATED_3_PATH);
 
-    offerService.processOffersFromExternalService(scrappingId1);
-    offerService.processOffersFromExternalService(scrappingId2);
-    offerService.processOffersFromExternalService(scrappingId3);
+    offerService.processOffersFromExternalService(scrappingId1, ImportSummary.create());
+    offerService.processOffersFromExternalService(scrappingId2, ImportSummary.create());
+    offerService.processOffersFromExternalService(scrappingId3, ImportSummary.create());
 
     List<Offer> offers = offerRepository.findAll();
     assertThat(offers).hasSize(1);

@@ -8,6 +8,7 @@ import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 import org.springframework.shell.standard.ShellOption;
 import pl.api.itoffers.offer.application.service.OfferService;
+import pl.api.itoffers.report.ImportSummary;
 
 @Slf4j
 @ShellComponent
@@ -22,6 +23,7 @@ public class ImportOffersFromMongoDbCLI {
       @ShellOption(defaultValue = "") String rawScrappingId,
       @ShellOption(defaultValue = "test") String mode,
       @ShellOption(defaultValue = "1") String limit) {
-    offerService.processOffersFromExternalService(UUID.fromString(rawScrappingId));
+    offerService.processOffersFromExternalService(
+        UUID.fromString(rawScrappingId), ImportSummary.create());
   }
 }
