@@ -1,16 +1,21 @@
 package pl.api.itoffers.integration.provider.nofluffjobs.service;
 
+import static org.mockito.Mockito.when;
+
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import pl.api.itoffers.data.nfj.NoFluffJobsParams;
 import pl.api.itoffers.helper.AbstractITest;
 import pl.api.itoffers.helper.WireMockOrchestrator;
 import pl.api.itoffers.integration.offer.helper.OfferTestManager;
 import pl.api.itoffers.integration.offer.helper.OffersAssert;
 import pl.api.itoffers.offer.application.repository.OfferRepository;
+import pl.api.itoffers.offer.application.repository.TechnologyRepository;
 import pl.api.itoffers.provider.nofluffjobs.fetcher.NoFluffJobsParameters;
 import pl.api.itoffers.provider.nofluffjobs.service.NoFluffJobsProvider;
 
@@ -21,6 +26,7 @@ public class NoFluffJobsProviderITest extends AbstractITest {
   @Autowired private OfferRepository offerRepository;
   @Autowired private OffersAssert offersAssert;
   @Autowired private OfferTestManager offerTestManager;
+  @MockBean private TechnologyRepository technologyRepository;
 
   @BeforeEach
   public void setUp() {
@@ -31,6 +37,7 @@ public class NoFluffJobsProviderITest extends AbstractITest {
   @Test
   void shouldFetchDataFromExternalServiceAndSaveTheseInItOffersService() throws IOException {
     setUpMockedNoFluffJobsService();
+    when(technologyRepository.allActive()).thenReturn(List.of("java", "php"));
 
     noFluffJobsProvider.fetch();
 

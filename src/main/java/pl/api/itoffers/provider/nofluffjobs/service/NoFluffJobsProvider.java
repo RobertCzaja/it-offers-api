@@ -1,9 +1,9 @@
 package pl.api.itoffers.provider.nofluffjobs.service;
 
-import java.util.Arrays;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import pl.api.itoffers.offer.application.repository.TechnologyRepository;
 
 @Slf4j
 @Service
@@ -11,12 +11,11 @@ import org.springframework.stereotype.Service;
 public class NoFluffJobsProvider {
 
   private final TechnologyOffersCollector collector;
+  private final TechnologyRepository technologyRepository;
 
   public void fetch() {
-
-    String[] technologies = {"java", "php"}; // todo gets it from some repository
-
-    Arrays.stream(technologies)
+    technologyRepository
+        .allActive()
         .forEach(
             technology -> {
               log.info("[{}] start import", technology);
