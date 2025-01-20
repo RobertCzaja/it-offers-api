@@ -3,6 +3,9 @@ package pl.api.itoffers.report;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * @deprecated
+ */
 public class ImportSummary {
 
   private final Map<String, Integer> newOffersCounter = new HashMap<>();

@@ -5,6 +5,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.jupiter.api.Test;
 import pl.api.itoffers.report.ImportSummary;
 
+/**
+ * @deprecated
+ */
 public class ImportSummaryTest {
 
   @Test
