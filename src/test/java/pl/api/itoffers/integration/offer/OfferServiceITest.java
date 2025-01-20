@@ -13,8 +13,6 @@ import pl.api.itoffers.helper.JustJoinItProviderFactory;
 import pl.api.itoffers.integration.offer.helper.OfferTestManager;
 import pl.api.itoffers.integration.offer.helper.OffersAssert;
 import pl.api.itoffers.integration.provider.justjoinit.inmemory.JustJoinItInMemoryConnector;
-import pl.api.itoffers.offer.application.repository.CategoryRepository;
-import pl.api.itoffers.offer.application.repository.CompanyRepository;
 import pl.api.itoffers.offer.application.repository.OfferRepository;
 import pl.api.itoffers.offer.application.service.OfferService;
 import pl.api.itoffers.offer.domain.Offer;
@@ -29,8 +27,6 @@ public class OfferServiceITest extends AbstractITest {
   @Autowired private OfferTestManager offerTestManager;
   @Autowired private OfferService offerService;
   @Autowired private OfferRepository offerRepository;
-  @Autowired private CategoryRepository categoryRepository; // todo should i clear this state?
-  @Autowired private CompanyRepository companyRepository; // todo should i clear this state?
   @Autowired private JustJoinItProviderFactory justJoinItProviderFactory;
   @Autowired private JustJoinItRepository jjitRawOffersRepository;
   @Autowired private OffersAssert offersAssert;
@@ -40,7 +36,6 @@ public class OfferServiceITest extends AbstractITest {
   @BeforeEach
   public void setUp() {
     super.setUp();
-    jjitRawOffersRepository.deleteAll();
     offerTestManager.clearAll();
     this.jjitConnector = JustJoinItInMemoryConnector.create();
     this.jjitProvider = justJoinItProviderFactory.create(jjitConnector);

@@ -8,43 +8,24 @@ import org.springframework.beans.factory.annotation.Autowired;
 import pl.api.itoffers.data.nfj.NoFluffJobsParams;
 import pl.api.itoffers.helper.AbstractITest;
 import pl.api.itoffers.helper.WireMockOrchestrator;
-import pl.api.itoffers.integration.offer.OfferServiceITest;
+import pl.api.itoffers.integration.offer.helper.OfferTestManager;
 import pl.api.itoffers.integration.offer.helper.OffersAssert;
-import pl.api.itoffers.offer.application.repository.CategoryRepository;
-import pl.api.itoffers.offer.application.repository.CompanyRepository;
 import pl.api.itoffers.offer.application.repository.OfferRepository;
 import pl.api.itoffers.provider.nofluffjobs.fetcher.NoFluffJobsParameters;
-import pl.api.itoffers.provider.nofluffjobs.repository.NoFluffJobsDetailsOfferRepository;
-import pl.api.itoffers.provider.nofluffjobs.repository.NoFluffJobsListOfferRepository;
 import pl.api.itoffers.provider.nofluffjobs.service.NoFluffJobsProvider;
 
-/**
- * todo: Check what is checked in here, make common abstraction
- *
- * @see OfferServiceITest
- */
 public class NoFluffJobsProviderITest extends AbstractITest {
 
-  @Autowired private NoFluffJobsDetailsOfferRepository detailsRepository;
-  @Autowired private NoFluffJobsListOfferRepository listRepository;
   @Autowired private NoFluffJobsParameters parameters;
   @Autowired private NoFluffJobsProvider noFluffJobsProvider;
   @Autowired private OfferRepository offerRepository;
-  @Autowired private CategoryRepository categoryRepository;
-  @Autowired private CompanyRepository companyRepository;
   @Autowired private OffersAssert offersAssert;
+  @Autowired private OfferTestManager offerTestManager;
 
   @BeforeEach
   public void setUp() {
     super.setUp();
-    detailsRepository
-        .deleteAll(); // todo think about orchestrator which will keep it all those repositories
-    // clean
-    // todo OfferTestManager
-    listRepository.deleteAll();
-    offerRepository.deleteAll();
-    categoryRepository.deleteAll();
-    companyRepository.deleteAll();
+    offerTestManager.clearAll();
   }
 
   @Test
