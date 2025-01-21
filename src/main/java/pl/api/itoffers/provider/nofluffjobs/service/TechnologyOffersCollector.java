@@ -52,14 +52,20 @@ public class TechnologyOffersCollector {
             listOffers.stream().map(NoFluffJobsRawListOffer::getOfferId).toList());
 
     for (var matchedOffer : RawDataMatcher.match(listOffers, detailsOffers)) {
-      offerSaver.save(
-          OfferFactory.createOrigin(matchedOffer.listOffer()),
-          OfferFactory.createOfferMetadata(matchedOffer.listOffer(), matchedOffer.detailsOffer()),
-          OfferFactory.createCategories(matchedOffer.detailsOffer()),
-          OfferFactory.createSalaries(matchedOffer.listOffer()),
-          OfferFactory.createCompany(matchedOffer.listOffer()));
+      try {
+        offerSaver.save(
+            OfferFactory.createOrigin(matchedOffer.listOffer()),
+            OfferFactory.createOfferMetadata(matchedOffer.listOffer(), matchedOffer.detailsOffer()),
+            OfferFactory.createCategories(matchedOffer.detailsOffer()),
+            OfferFactory.createSalaries(matchedOffer.listOffer()),
+            OfferFactory.createCompany(matchedOffer.listOffer()));
+        log.info("[{}] domain offers successfully saved", technology);
+      } catch (Exception e) {
+        log.error(
+            "Error on saving JJIT offer ({}) in scrapping: {}",
+            matchedOffer.listOffer().getId(),
+            matchedOffer.listOffer().getScrapingId());
+      }
     }
-
-    log.info("[{}] domain offers successfully saved", technology);
   }
 }
