@@ -62,7 +62,8 @@ public class OfferSaver {
     categoryRepository.saveAll(categoryCollections.toSave());
     offerRepository.save(offer);
     log.info(
-        "[jjit][{}] '{}' from {} at {}",
+        "[{}][{}] '{}' from {} at {}",
+        origin.getProvider().name(),
         offer.getTechnology(),
         offer.getTitle(),
         offer.getCompany().getName(),
