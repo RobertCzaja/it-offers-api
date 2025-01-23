@@ -1,9 +1,9 @@
 package pl.api.itoffers.report;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
 import org.springframework.stereotype.Service;
 import pl.api.itoffers.offer.domain.Origin;
 import pl.api.itoffers.shared.utils.clock.ClockInterface;
@@ -12,13 +12,17 @@ import pl.api.itoffers.shared.utils.clock.ClockInterface;
  * todo test it somehow todo this class should be the only one class available from the package
  * outside
  */
-@Slf4j
 @Service
-@RequiredArgsConstructor
 public class ImportStatisticsCollector {
 
   private final ClockInterface clock;
-  private Map<UUID, ScrapingStats> scrapingStats;
+  private final Logger log;
+  private final Map<UUID, ScrapingStats> scrapingStats = new HashMap<>();
+
+  public ImportStatisticsCollector(ClockInterface clock, Logger log) {
+    this.clock = clock;
+    this.log = log;
+  }
 
   public void start(UUID scrapingId, Origin.Provider provider) {
     if (scrapingStats.containsKey(scrapingId)) {
