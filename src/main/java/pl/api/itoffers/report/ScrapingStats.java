@@ -1,5 +1,6 @@
 package pl.api.itoffers.report;
 
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
@@ -39,10 +40,14 @@ public class ScrapingStats {
   private String createReport() {
     var sb = new StringBuilder();
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMMM yyyy, HH:mm:ss");
-    sb.append(String.format("Provider: %s", provider));
-    sb.append(String.format("Started at: %s", startedAt.format(formatter)));
-    sb.append(String.format("Finished at: %s", endedAt.format(formatter)));
-    // todo calculate how long the scraping takes
+    sb.append(String.format("Provider: %s\n", provider));
+    sb.append(String.format("Started at: %s\n", startedAt.format(formatter)));
+    sb.append(String.format("Finished at: %s\n", endedAt.format(formatter)));
+
+    Duration duration = Duration.between(startedAt, endedAt);
+    sb.append(String.format("Time: %dm %ds\n", duration.toMinutes(), duration.getSeconds() % 60));
+
+    sb.append("New offers for technologies:\n");
     newOffersCounter.forEach(
         (technology, counter) -> {
           sb.append(String.format("%s: %s \n", technology, counter));
