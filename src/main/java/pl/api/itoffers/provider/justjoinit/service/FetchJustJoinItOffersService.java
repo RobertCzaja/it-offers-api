@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import pl.api.itoffers.offer.application.repository.TechnologyRepository;
 import pl.api.itoffers.offer.application.service.OfferService;
 import pl.api.itoffers.provider.justjoinit.JustJoinItProvider;
-import pl.api.itoffers.report.ImportSummary;
 
 @Slf4j
 @Service
@@ -27,7 +26,6 @@ public class FetchJustJoinItOffersService {
             : Arrays.asList(requestedTechnology);
 
     UUID scrapingId = UUID.randomUUID();
-    var importSummary = ImportSummary.create();
 
     try {
       for (String technology : technologies) {
@@ -35,11 +33,10 @@ public class FetchJustJoinItOffersService {
         justJoinItProvider.fetch(technology, scrapingId);
       }
 
-      offerService.processOffersFromExternalService(scrapingId, importSummary);
+      offerService.processOffersFromExternalService(scrapingId);
     } catch (Exception e) {
       log.error("Error on fetching JustJoinIT offers", e);
       throw e;
     }
-    log.info(importSummary.getReport());
   }
 }
