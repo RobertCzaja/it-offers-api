@@ -39,7 +39,7 @@ public class ScrapingStats {
 
   private String createReport() {
     var sb = new StringBuilder();
-    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMMM yyyy, HH:mm:ss");
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss (dd-MM-yyyy)");
     sb.append(String.format("Provider: %s\n", provider));
     sb.append(String.format("Started at: %s\n", startedAt.format(formatter)));
     sb.append(String.format("Finished at: %s\n", endedAt.format(formatter)));
