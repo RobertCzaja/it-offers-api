@@ -1,5 +1,6 @@
 package pl.api.itoffers.provider.nofluffjobs.service;
 
+import java.util.List;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -11,6 +12,7 @@ import pl.api.itoffers.provider.nofluffjobs.fetcher.RawDataMatcher;
 import pl.api.itoffers.provider.nofluffjobs.fetcher.details.NoFluffJobsDetailsProvider;
 import pl.api.itoffers.provider.nofluffjobs.fetcher.list.NoFluffJobsListProvider;
 import pl.api.itoffers.provider.nofluffjobs.model.NoFluffJobsRawListOffer;
+import pl.api.itoffers.provider.nofluffjobs.model.NoFluffJobsRawOffer;
 import pl.api.itoffers.provider.nofluffjobs.repository.NoFluffJobsDetailsOfferRepository;
 import pl.api.itoffers.provider.nofluffjobs.repository.NoFluffJobsListOfferRepository;
 
@@ -28,9 +30,20 @@ public class TechnologyOffersCollector {
     UUID scrapingId = UUID.randomUUID();
 
     listProvider.fetch(technology, scrapingId);
-
     var listOffers = listOfferRepository.findByScrapingIdAndTechnology(scrapingId, technology);
+    fetchDetailsOffers(listOffers);
 
+    for (var offerToSave : getOfferToSave(listOffers)) {
+      offerSaver.save(
+          OfferFactory.createOrigin(offerToSave.listOffer()),
+          OfferFactory.createOfferMetadata(offerToSave.listOffer(), offerToSave.detailsOffer()),
+          OfferFactory.createCategories(offerToSave.detailsOffer()),
+          OfferFactory.createSalaries(offerToSave.listOffer()),
+          OfferFactory.createCompany(offerToSave.listOffer()));
+    }
+  }
+
+  private void fetchDetailsOffers(List<NoFluffJobsRawListOffer> listOffers) {
     listOffers.forEach(
         listOffer -> {
           String slug = (String) listOffer.getOffer().get("url");
@@ -38,21 +51,15 @@ public class TechnologyOffersCollector {
           try {
             detailsProvider.fetch(slug, listOffer.getScrapingId(), listOffer.getOfferId());
           } catch (NoFluffJobsException e) {
-            log.warn(e.getMessage());
+            log.warn("Error on fetching details offer: {}", e.getMessage());
           }
         });
+  }
 
-    var detailsOffers =
+  private List<NoFluffJobsRawOffer> getOfferToSave(List<NoFluffJobsRawListOffer> listOffers) {
+    return RawDataMatcher.match(
+        listOffers,
         detailsOfferRepository.findByOfferIdIn(
-            listOffers.stream().map(NoFluffJobsRawListOffer::getOfferId).toList());
-
-    for (var matchedOffer : RawDataMatcher.match(listOffers, detailsOffers)) {
-      offerSaver.save(
-          OfferFactory.createOrigin(matchedOffer.listOffer()),
-          OfferFactory.createOfferMetadata(matchedOffer.listOffer(), matchedOffer.detailsOffer()),
-          OfferFactory.createCategories(matchedOffer.detailsOffer()),
-          OfferFactory.createSalaries(matchedOffer.listOffer()),
-          OfferFactory.createCompany(matchedOffer.listOffer()));
-    }
+            listOffers.stream().map(NoFluffJobsRawListOffer::getOfferId).toList()));
   }
 }

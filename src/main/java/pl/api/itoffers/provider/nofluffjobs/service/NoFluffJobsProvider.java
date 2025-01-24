@@ -14,13 +14,6 @@ public class NoFluffJobsProvider {
   private final TechnologyRepository technologyRepository;
 
   public void fetch() {
-    technologyRepository
-        .allActive()
-        .forEach(
-            technology -> {
-              log.info("[{}] start import", technology);
-              collector.fetchOffers(technology);
-              log.info("[{}] import successfully delegated", technology);
-            });
+    technologyRepository.allActive().forEach(collector::fetchOffers);
   }
 }
