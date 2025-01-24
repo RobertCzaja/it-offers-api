@@ -42,9 +42,9 @@ public class RawDataMatcherTest {
     List<NoFluffJobsRawDetailsOffer> detailsOfferCollection =
         new ArrayList<>(
             List.of(
-                NoFluffJobsRawOfferModelsFactory.createDetailsList(UUID.fromString(ID_3)),
-                NoFluffJobsRawOfferModelsFactory.createDetailsList(UUID.fromString(ID_1)),
-                NoFluffJobsRawOfferModelsFactory.createDetailsList(UUID.fromString(ID_2))));
+                NoFluffJobsRawOfferModelsFactory.createOfferDetails(UUID.fromString(ID_3)),
+                NoFluffJobsRawOfferModelsFactory.createOfferDetails(UUID.fromString(ID_1)),
+                NoFluffJobsRawOfferModelsFactory.createOfferDetails(UUID.fromString(ID_2))));
 
     var result = RawDataMatcher.match(listOfferCollection, detailsOfferCollection);
 
@@ -68,8 +68,8 @@ public class RawDataMatcherTest {
     List<NoFluffJobsRawDetailsOffer> detailsOfferCollection =
         new ArrayList<>(
             List.of(
-                NoFluffJobsRawOfferModelsFactory.createDetailsList(UUID.fromString(ID_3)),
-                NoFluffJobsRawOfferModelsFactory.createDetailsList(UUID.fromString(ID_1))
+                NoFluffJobsRawOfferModelsFactory.createOfferDetails(UUID.fromString(ID_3)),
+                NoFluffJobsRawOfferModelsFactory.createOfferDetails(UUID.fromString(ID_1))
                 // there is no details offer with ID_2
                 ));
 

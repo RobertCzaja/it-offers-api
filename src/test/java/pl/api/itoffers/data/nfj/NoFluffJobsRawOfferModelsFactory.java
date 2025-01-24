@@ -2,7 +2,9 @@ package pl.api.itoffers.data.nfj;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.UUID;
 import org.bson.types.ObjectId;
 import pl.api.itoffers.provider.nofluffjobs.model.NoFluffJobsRawDetailsOffer;
@@ -60,10 +62,28 @@ public class NoFluffJobsRawOfferModelsFactory {
     return offer;
   }
 
-  public static NoFluffJobsRawDetailsOffer createDetailsList(UUID offerId) {
+  public static NoFluffJobsRawDetailsOffer createOfferDetails(UUID offerId) {
     var offer =
         new NoFluffJobsRawDetailsOffer(
             UUID.randomUUID(), offerId, new HashMap<>(), LocalDateTime.now());
+
+    return offer;
+  }
+
+  public static NoFluffJobsRawDetailsOffer createDetailsOfferWith(List<String> categories) {
+    var nfjOffer = new HashMap<String, Object>();
+    var skills = new ArrayList<>();
+    categories.forEach(
+        categoryName -> {
+          var skill = new HashMap<>();
+          skill.put("value", categoryName);
+          skills.add(skill);
+        });
+    nfjOffer.put("skills", skills);
+
+    var offer =
+        new NoFluffJobsRawDetailsOffer(
+            UUID.randomUUID(), UUID.randomUUID(), nfjOffer, LocalDateTime.now());
 
     return offer;
   }

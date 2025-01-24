@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Set;
 import org.junit.jupiter.api.Test;
 import pl.api.itoffers.data.nfj.NoFluffJobsParams;
@@ -50,6 +51,17 @@ public class OfferFactoryTest {
     assertThat(company.getName()).isEqualTo("CodiLime");
     assertThat(company.getCity()).isNull();
     assertThat(company.getStreet()).isNull();
+  }
+
+  @Test
+  void shouldGetsOnlyUniqueCategoriesFromRawOffer() {
+    var detailsOffer =
+        NoFluffJobsRawOfferModelsFactory.createDetailsOfferWith(
+            List.of("php", "java", "php", "ruby"));
+
+    var categories = OfferFactory.createCategories(detailsOffer);
+
+    assertThat(categories).hasSize(3);
   }
 
   private static void assertOffer(
