@@ -27,16 +27,13 @@ public class TechnologyOffersCollector {
   public void fetchOffers(final String technology) {
     UUID scrapingId = UUID.randomUUID();
 
-    log.info("[{}] fetching offer list", technology);
     listProvider.fetch(technology, scrapingId);
-    log.info("[{}] successfully fetched offer list", technology);
 
     var listOffers = listOfferRepository.findByScrapingIdAndTechnology(scrapingId, technology);
 
     listOffers.forEach(
         listOffer -> {
           String slug = (String) listOffer.getOffer().get("url");
-          log.info("[{}] {}", technology, slug);
 
           try {
             detailsProvider.fetch(slug, listOffer.getScrapingId(), listOffer.getOfferId());
@@ -45,27 +42,17 @@ public class TechnologyOffersCollector {
           }
         });
 
-    log.info("[{}] saving domain offers", technology);
-
     var detailsOffers =
         detailsOfferRepository.findByOfferIdIn(
             listOffers.stream().map(NoFluffJobsRawListOffer::getOfferId).toList());
 
     for (var matchedOffer : RawDataMatcher.match(listOffers, detailsOffers)) {
-      try {
-        offerSaver.save(
-            OfferFactory.createOrigin(matchedOffer.listOffer()),
-            OfferFactory.createOfferMetadata(matchedOffer.listOffer(), matchedOffer.detailsOffer()),
-            OfferFactory.createCategories(matchedOffer.detailsOffer()),
-            OfferFactory.createSalaries(matchedOffer.listOffer()),
-            OfferFactory.createCompany(matchedOffer.listOffer()));
-        log.info("[{}] domain offers successfully saved", technology);
-      } catch (Exception e) {
-        log.error(
-            "Error on saving JJIT offer ({}) in scrapping: {}",
-            matchedOffer.listOffer().getId(),
-            matchedOffer.listOffer().getScrapingId());
-      }
+      offerSaver.save(
+          OfferFactory.createOrigin(matchedOffer.listOffer()),
+          OfferFactory.createOfferMetadata(matchedOffer.listOffer(), matchedOffer.detailsOffer()),
+          OfferFactory.createCategories(matchedOffer.detailsOffer()),
+          OfferFactory.createSalaries(matchedOffer.listOffer()),
+          OfferFactory.createCompany(matchedOffer.listOffer()));
     }
   }
 }

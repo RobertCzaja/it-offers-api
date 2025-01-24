@@ -5,6 +5,7 @@ import java.util.Set;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import pl.api.itoffers.offer.application.exception.DuplicatedOfferException;
 import pl.api.itoffers.offer.application.repository.CategoryRepository;
 import pl.api.itoffers.offer.application.repository.CompanyRepository;
 import pl.api.itoffers.offer.application.repository.OfferRepository;
@@ -33,7 +34,31 @@ public class OfferSaver {
       Set<Category> categories,
       Set<Salary> salaries,
       Company company) {
+    try {
+      var offer = prepareAndSave(origin, offerMetadata, categories, salaries, company);
+      log.info(
+          "[{}][{}] '{}' from {} at {}",
+          origin.getProvider().name(),
+          offer.getTechnology(),
+          offer.getTitle(),
+          offer.getCompany().getName(),
+          offer.getPublishedAt());
+    } catch (DuplicatedOfferException ignored) {
+    } catch (Exception e) {
+      log.error(
+          "Error on saving {} offer ({}) in scrapping: {}",
+          origin.getProvider().name(),
+          origin.getId(),
+          origin.getScrappingId());
+    }
+  }
 
+  private Offer prepareAndSave(
+      Origin origin,
+      OfferMetadata offerMetadata,
+      Set<Category> categories,
+      Set<Salary> salaries,
+      Company company) {
     var categoryCollections = prepareCategories(categories);
     var preparedCompany = prepareCompany(company);
 
@@ -55,19 +80,13 @@ public class OfferSaver {
     Offer alreadyStoredOffer = findAlreadyStoredOffer(offer);
 
     if (null != alreadyStoredOffer) {
-      return;
+      throw new DuplicatedOfferException();
     }
 
     companyRepository.save(preparedCompany);
     categoryRepository.saveAll(categoryCollections.toSave());
     offerRepository.save(offer);
-    log.info(
-        "[{}][{}] '{}' from {} at {}",
-        origin.getProvider().name(),
-        offer.getTechnology(),
-        offer.getTitle(),
-        offer.getCompany().getName(),
-        offer.getPublishedAt());
+    return offer;
   }
 
   private Offer findAlreadyStoredOffer(Offer offer) {

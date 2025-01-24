@@ -13,11 +13,11 @@ import lombok.RequiredArgsConstructor;
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED, force = true)
 @RequiredArgsConstructor
+@Getter
 public class Origin {
   @Id private final String id;
   private final UUID scrappingId;
 
-  @Getter
   @Enumerated(value = EnumType.STRING)
   private final Provider provider;
 
