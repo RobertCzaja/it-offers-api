@@ -10,7 +10,8 @@ import pl.api.itoffers.shared.utils.clock.ClockInterface;
 
 /**
  * todo test it somehow todo this class should be the only one class available from the package
- * outside
+ *  outside
+ * todo make sure in integration test that Spring produces only one instance (test it by integration test)
  */
 @Service
 public class ImportStatisticsCollector {

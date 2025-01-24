@@ -6,7 +6,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Map;
 
-/** TODO write unit test */
 public class ScrapingStats {
 
   private final String provider;
