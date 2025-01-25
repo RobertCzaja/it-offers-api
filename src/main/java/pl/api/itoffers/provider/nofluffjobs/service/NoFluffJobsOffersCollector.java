@@ -35,8 +35,12 @@ public class NoFluffJobsOffersCollector implements OffersCollector {
     UUID scrapingId = UUID.randomUUID();
 
     for (var technology : technologies) {
-      listProvider.fetch(technology, scrapingId);
-      var listOffers = listOfferRepository.findByScrapingIdAndTechnology(scrapingId, technology);
+      var listOffers = fetchNoFluffJobsRawListOffers(technology, scrapingId);
+
+      if (null == listOffers) {
+        continue;
+      }
+
       fetchDetailsOffers(listOffers);
 
       for (var offerToSave : getOfferToSave(listOffers)) {
@@ -50,6 +54,17 @@ public class NoFluffJobsOffersCollector implements OffersCollector {
     }
   }
 
+  private List<NoFluffJobsRawListOffer> fetchNoFluffJobsRawListOffers(
+      String technology, UUID scrapingId) {
+    try {
+      listProvider.fetch(technology, scrapingId);
+    } catch (Exception e) {
+      log.error("Error on fetching list of {}: {}", technology, e.getMessage());
+      return null;
+    }
+    return listOfferRepository.findByScrapingIdAndTechnology(scrapingId, technology);
+  }
+
   private void fetchDetailsOffers(List<NoFluffJobsRawListOffer> listOffers) {
     listOffers.forEach(
         listOffer -> {
@@ -58,7 +73,7 @@ public class NoFluffJobsOffersCollector implements OffersCollector {
           try {
             detailsProvider.fetch(slug, listOffer.getScrapingId(), listOffer.getOfferId());
           } catch (NoFluffJobsException e) {
-            log.warn("Error on fetching details offer: {}", e.getMessage());
+            log.error("Error on fetching details offer: {}", e.getMessage());
           }
         });
   }

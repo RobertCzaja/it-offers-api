@@ -12,15 +12,24 @@ public class WireMockOrchestrator {
 
   public static void pathWillReturn(String urlPath, String responseBodyFileName)
       throws IOException {
-
-    if (null == server) {
-      server = new WireMockServer(8080);
-      server.start();
-    }
+    setUpServer();
 
     server.stubFor(
         get(urlEqualTo(urlPath))
             .willReturn(
                 aResponse().withStatus(200).withBody(FileManager.readFile(responseBodyFileName))));
+  }
+
+  public static void pathWillReturn(String urlPath, int statusCode) {
+    setUpServer();
+
+    server.stubFor(get(urlEqualTo(urlPath)).willReturn(aResponse().withStatus(statusCode)));
+  }
+
+  private static void setUpServer() {
+    if (null == server) {
+      server = new WireMockServer(8080);
+      server.start();
+    }
   }
 }

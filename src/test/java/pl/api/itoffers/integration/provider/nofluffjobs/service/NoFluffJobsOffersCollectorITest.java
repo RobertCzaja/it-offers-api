@@ -71,4 +71,23 @@ public class NoFluffJobsOffersCollectorITest extends AbstractITest {
         parameters.detailsPath(NoFluffJobsParams.B1_E2E_PHP_2_SLUG),
         NoFluffJobsParams.B1_E2E_PHP_2_DETAILS);
   }
+
+  @Test
+  void onResponseDifferentThan200OKFromProviderOnFetchingListOffersShouldContinueImport()
+      throws IOException {
+    when(technologyRepository.allActive()).thenReturn(List.of("php", "java"));
+    WireMockOrchestrator.pathWillReturn(parameters.listPath("php"), 502);
+    WireMockOrchestrator.pathWillReturn(
+        parameters.listPath("java"), NoFluffJobsParams.B1_E2E_JAVA_LIST);
+    WireMockOrchestrator.pathWillReturn(
+        parameters.detailsPath(NoFluffJobsParams.B1_E2E_JAVA_1_SLUG),
+        NoFluffJobsParams.B1_E2E_JAVA_1_DETAILS);
+    WireMockOrchestrator.pathWillReturn(
+        parameters.detailsPath(NoFluffJobsParams.B1_E2E_JAVA_2_SLUG),
+        NoFluffJobsParams.B1_E2E_JAVA_2_DETAILS);
+
+    collector.collectFromProvider("");
+
+    offersAssert.expects(2, 16, 2);
+  }
 }
