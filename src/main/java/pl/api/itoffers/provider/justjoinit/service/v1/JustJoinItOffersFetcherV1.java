@@ -1,4 +1,4 @@
-package pl.api.itoffers.provider.justjoinit.service.extractor.v1;
+package pl.api.itoffers.provider.justjoinit.service.v1;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -6,7 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import pl.api.itoffers.provider.justjoinit.service.JustJoinItConnector;
 import pl.api.itoffers.provider.justjoinit.service.JustJoinItOffersFetcher;
-import pl.api.itoffers.provider.justjoinit.service.extractor.v2.JustJoinItOffersFetcherV2;
+import pl.api.itoffers.provider.justjoinit.service.v2.JustJoinItOffersFetcherV2;
 
 /**
  * Valid between 08.2024 and 12.2024 then JJIT changed returned HTML structure, and it required V2

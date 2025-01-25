@@ -1,11 +1,11 @@
-package pl.api.itoffers.provider.justjoinit.service.extractor;
+package pl.api.itoffers.provider.justjoinit.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
-import pl.api.itoffers.provider.justjoinit.service.extractor.v1.JustJoinItHttpConnectorV1;
-import pl.api.itoffers.provider.justjoinit.service.extractor.v2.JustJoinItHttpConnectorV2;
+import pl.api.itoffers.provider.justjoinit.service.v1.JustJoinItHttpConnectorV1;
+import pl.api.itoffers.provider.justjoinit.service.v2.JustJoinItHttpConnectorV2;
 
 @Configuration
 @RequiredArgsConstructor

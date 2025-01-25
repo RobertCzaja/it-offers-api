@@ -1,10 +1,10 @@
-package pl.api.itoffers.provider.justjoinit.service.extractor.v1;
+package pl.api.itoffers.provider.justjoinit.service.v1;
 
 import org.jsoup.nodes.Document;
 import org.springframework.stereotype.Service;
 import pl.api.itoffers.provider.justjoinit.infrastructure.AbstractJustJoinItHttpConnector;
 import pl.api.itoffers.provider.justjoinit.infrastructure.JustJoinItParameters;
-import pl.api.itoffers.provider.justjoinit.service.extractor.v2.JustJoinItHttpConnectorV2;
+import pl.api.itoffers.provider.justjoinit.service.v2.JustJoinItHttpConnectorV2;
 import pl.api.itoffers.shared.http.connector.HttpConnector;
 
 /**

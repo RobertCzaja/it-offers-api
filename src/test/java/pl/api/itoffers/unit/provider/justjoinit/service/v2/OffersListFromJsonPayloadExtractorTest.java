@@ -1,4 +1,4 @@
-package pl.api.itoffers.unit.provider.justjoinit.service.extractor.v2;
+package pl.api.itoffers.unit.provider.justjoinit.service.v2;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 import pl.api.itoffers.data.jjit.JustJoinItParams;
 import pl.api.itoffers.helper.assertions.JjitOffersAssert;
 import pl.api.itoffers.provider.justjoinit.exception.JustJoinItException;
-import pl.api.itoffers.provider.justjoinit.service.extractor.v2.PayloadFromJsonExtractor;
+import pl.api.itoffers.provider.justjoinit.service.v2.PayloadFromJsonExtractor;
 import pl.api.itoffers.shared.utils.fileManager.FileManager;
 
 public class OffersListFromJsonPayloadExtractorTest {

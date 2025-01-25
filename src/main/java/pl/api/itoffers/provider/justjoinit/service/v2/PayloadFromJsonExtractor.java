@@ -1,4 +1,4 @@
-package pl.api.itoffers.provider.justjoinit.service.extractor.v2;
+package pl.api.itoffers.provider.justjoinit.service.v2;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;

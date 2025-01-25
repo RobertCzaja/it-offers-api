@@ -5,8 +5,8 @@ import org.springframework.stereotype.Service;
 import pl.api.itoffers.integration.provider.justjoinit.inmemory.JustJoinItInMemoryConnector;
 import pl.api.itoffers.provider.justjoinit.repository.JustJoinItRepository;
 import pl.api.itoffers.provider.justjoinit.service.JustJoinItProvider;
-import pl.api.itoffers.provider.justjoinit.service.extractor.v1.JustJoinItOffersFetcherV1;
-import pl.api.itoffers.provider.justjoinit.service.extractor.v1.JustJoinItPayloadExtractor;
+import pl.api.itoffers.provider.justjoinit.service.v1.JustJoinItOffersFetcherV1;
+import pl.api.itoffers.provider.justjoinit.service.v1.JustJoinItPayloadExtractor;
 
 @Service
 @RequiredArgsConstructor

@@ -13,8 +13,8 @@ import pl.api.itoffers.integration.provider.justjoinit.inmemory.JustJoinItInMemo
 import pl.api.itoffers.provider.justjoinit.repository.JustJoinItRepository;
 import pl.api.itoffers.provider.justjoinit.service.JustJoinItOffersFetcher;
 import pl.api.itoffers.provider.justjoinit.service.JustJoinItProvider;
-import pl.api.itoffers.provider.justjoinit.service.extractor.v2.JustJoinItOffersFetcherV2;
-import pl.api.itoffers.provider.justjoinit.service.extractor.v2.PayloadFromJsonExtractor;
+import pl.api.itoffers.provider.justjoinit.service.v2.JustJoinItOffersFetcherV2;
+import pl.api.itoffers.provider.justjoinit.service.v2.PayloadFromJsonExtractor;
 
 public class JustJoinItProviderV2ITest extends AbstractITest {
 

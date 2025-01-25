@@ -1,4 +1,4 @@
-package pl.api.itoffers.provider.justjoinit.service.extractor.v2;
+package pl.api.itoffers.provider.justjoinit.service.v2;
 
 import org.jsoup.nodes.Document;
 import org.springframework.stereotype.Service;

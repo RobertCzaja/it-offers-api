@@ -1,4 +1,4 @@
-package pl.api.itoffers.provider.justjoinit.service.extractor.v1;
+package pl.api.itoffers.provider.justjoinit.service.v1;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -8,7 +8,7 @@ import java.util.Iterator;
 import java.util.Map;
 import org.springframework.stereotype.Service;
 import pl.api.itoffers.provider.justjoinit.exception.JustJoinItException;
-import pl.api.itoffers.provider.justjoinit.service.extractor.v2.PayloadFromJsonExtractor;
+import pl.api.itoffers.provider.justjoinit.service.v2.PayloadFromJsonExtractor;
 import pl.api.itoffers.shared.utils.fileManager.FileManager;
 import pl.api.itoffers.shared.utils.json.JsonNodeMapper;
 
