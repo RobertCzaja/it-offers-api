@@ -11,17 +11,17 @@ public class CliFixParams {
   }
 
   public boolean isForceMode() {
-    return this.mode == Mode.migrationforce || this.mode == Mode.testforce;
+    return this.mode == Mode.MIGRATION_FORCE || this.mode == Mode.TEST_FORCE;
   }
 
   public boolean isMigration() {
-    return this.mode == Mode.migration || this.mode == Mode.migrationforce;
+    return this.mode == Mode.MIGRATION || this.mode == Mode.MIGRATION_FORCE;
   }
 
   public enum Mode {
-    test,
-    testforce,
-    migration,
-    migrationforce
+    TEST,
+    TEST_FORCE,
+    MIGRATION,
+    MIGRATION_FORCE
   }
 }
