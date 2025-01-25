@@ -39,7 +39,9 @@ public class OfferInMemoryRepository implements OfferRepository {
   }
 
   @Override
-  public void flush() {}
+  public void flush() {
+    throw new UnsupportedOperationException("Not implemented");
+  }
 
   @Override
   public <S extends Offer> S saveAndFlush(S entity) {
@@ -52,13 +54,19 @@ public class OfferInMemoryRepository implements OfferRepository {
   }
 
   @Override
-  public void deleteAllInBatch(Iterable<Offer> entities) {}
+  public void deleteAllInBatch(Iterable<Offer> entities) {
+    throw new UnsupportedOperationException("Not implemented");
+  }
 
   @Override
-  public void deleteAllByIdInBatch(Iterable<UUID> uuids) {}
+  public void deleteAllByIdInBatch(Iterable<UUID> uuids) {
+    throw new UnsupportedOperationException("Not implemented");
+  }
 
   @Override
-  public void deleteAllInBatch() {}
+  public void deleteAllInBatch() {
+    throw new UnsupportedOperationException("Not implemented");
+  }
 
   @Override
   public Offer getOne(UUID uuid) {
@@ -147,19 +155,29 @@ public class OfferInMemoryRepository implements OfferRepository {
   }
 
   @Override
-  public void deleteById(UUID uuid) {}
+  public void deleteById(UUID uuid) {
+    throw new UnsupportedOperationException("Not implemented");
+  }
 
   @Override
-  public void delete(Offer entity) {}
+  public void delete(Offer entity) {
+    throw new UnsupportedOperationException("Not implemented");
+  }
 
   @Override
-  public void deleteAllById(Iterable<? extends UUID> uuids) {}
+  public void deleteAllById(Iterable<? extends UUID> uuids) {
+    throw new UnsupportedOperationException("Not implemented");
+  }
 
   @Override
-  public void deleteAll(Iterable<? extends Offer> entities) {}
+  public void deleteAll(Iterable<? extends Offer> entities) {
+    throw new UnsupportedOperationException("Not implemented");
+  }
 
   @Override
-  public void deleteAll() {}
+  public void deleteAll() {
+    throw new UnsupportedOperationException("Not implemented");
+  }
 
   @Override
   public List<Offer> findAll(Sort sort) {
