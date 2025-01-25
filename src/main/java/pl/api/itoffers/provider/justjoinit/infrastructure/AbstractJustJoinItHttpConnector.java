@@ -1,6 +1,6 @@
 package pl.api.itoffers.provider.justjoinit.infrastructure;
 
-import java.net.URL;
+import java.net.URI;
 import lombok.AllArgsConstructor;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -22,12 +22,14 @@ public abstract class AbstractJustJoinItHttpConnector implements JustJoinItConne
 
     try {
       responseBody =
-          Jsoup.parse(httpConnector.fetchSourceHtml(new URL(parameters.getOffersUrl(technology))));
+          Jsoup.parse(
+              httpConnector.fetchSourceHtml(new URI(parameters.getOffersUrl(technology)).toURL()));
       return getRawJsonOffers(responseBody);
     } catch (IndexOutOfBoundsException e) {
       throw new JustJoinItException(
           String.format(
-              "Empty \"%s\" response: \n\n%s\n", parameters.getOffersUrl(technology), responseBody),
+              "Empty \"%s\" response: %n %n %s %n",
+              parameters.getOffersUrl(technology), responseBody),
           e);
     } catch (Exception e) {
       throw new JustJoinItException("Error occurred fetching raw HTML", e);
