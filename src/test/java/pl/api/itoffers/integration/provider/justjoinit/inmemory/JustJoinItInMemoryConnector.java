@@ -2,7 +2,7 @@ package pl.api.itoffers.integration.provider.justjoinit.inmemory;
 
 import java.io.IOException;
 import pl.api.itoffers.data.jjit.JustJoinItParams;
-import pl.api.itoffers.provider.justjoinit.JustJoinItConnector;
+import pl.api.itoffers.provider.justjoinit.service.JustJoinItConnector;
 import pl.api.itoffers.shared.utils.fileManager.FileManager;
 
 public class JustJoinItInMemoryConnector implements JustJoinItConnector {

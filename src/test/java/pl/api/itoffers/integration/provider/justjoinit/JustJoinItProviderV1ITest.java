@@ -8,8 +8,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import pl.api.itoffers.helper.AbstractITest;
 import pl.api.itoffers.helper.JustJoinItProviderFactory;
-import pl.api.itoffers.provider.justjoinit.JustJoinItProvider;
 import pl.api.itoffers.provider.justjoinit.repository.JustJoinItRepository;
+import pl.api.itoffers.provider.justjoinit.service.JustJoinItProvider;
 
 public class JustJoinItProviderV1ITest extends AbstractITest {
 

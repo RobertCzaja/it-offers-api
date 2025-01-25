@@ -5,8 +5,8 @@ import lombok.AllArgsConstructor;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.springframework.stereotype.Service;
-import pl.api.itoffers.provider.justjoinit.JustJoinItConnector;
 import pl.api.itoffers.provider.justjoinit.exception.JustJoinItException;
+import pl.api.itoffers.provider.justjoinit.service.JustJoinItConnector;
 import pl.api.itoffers.shared.http.connector.HttpConnector;
 
 @Service

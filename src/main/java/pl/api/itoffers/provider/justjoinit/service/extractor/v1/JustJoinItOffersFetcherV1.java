@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import pl.api.itoffers.provider.justjoinit.JustJoinItConnector;
+import pl.api.itoffers.provider.justjoinit.service.JustJoinItConnector;
 import pl.api.itoffers.provider.justjoinit.service.JustJoinItOffersFetcher;
 import pl.api.itoffers.provider.justjoinit.service.extractor.v2.JustJoinItOffersFetcherV2;
 

@@ -1,4 +1,4 @@
-package pl.api.itoffers.provider.justjoinit;
+package pl.api.itoffers.provider.justjoinit.service;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -8,7 +8,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import pl.api.itoffers.provider.justjoinit.model.JustJoinItRawOffer;
 import pl.api.itoffers.provider.justjoinit.repository.JustJoinItRepository;
-import pl.api.itoffers.provider.justjoinit.service.JustJoinItOffersFetcher;
 
 @Service
 @RequiredArgsConstructor
