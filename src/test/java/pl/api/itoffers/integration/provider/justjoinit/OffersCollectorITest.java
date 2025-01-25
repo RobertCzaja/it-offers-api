@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import pl.api.itoffers.data.jjit.JustJoinItParams;
 import pl.api.itoffers.helper.AbstractITest;
 import pl.api.itoffers.helper.WireMockOrchestrator;
-import pl.api.itoffers.integration.offer.OfferServiceITest;
 import pl.api.itoffers.integration.offer.helper.OfferTestManager;
 import pl.api.itoffers.integration.offer.helper.OffersAssert;
 import pl.api.itoffers.offer.application.repository.OfferRepository;
@@ -15,9 +14,6 @@ import pl.api.itoffers.provider.justjoinit.infrastructure.JustJoinItParameters;
 import pl.api.itoffers.provider.justjoinit.model.JustJoinItDateTime;
 import pl.api.itoffers.provider.justjoinit.service.OffersCollector;
 
-/**
- * @see OfferServiceITest
- */
 public class OffersCollectorITest extends AbstractITest {
   @Autowired private OfferTestManager offerTestManager;
   @Autowired private OffersCollector jjitOffersCollector;
