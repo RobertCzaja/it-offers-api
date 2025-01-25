@@ -21,7 +21,7 @@ import pl.api.itoffers.provider.justjoinit.model.JustJoinItDateTime;
 import pl.api.itoffers.provider.justjoinit.repository.JustJoinItRepository;
 
 /**
- * @deprecated todo to remove
+ * @deprecated todo to remove in #83
  */
 public class OfferServiceITest extends AbstractITest {
 

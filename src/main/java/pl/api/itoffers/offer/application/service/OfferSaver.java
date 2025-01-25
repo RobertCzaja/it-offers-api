@@ -77,9 +77,7 @@ public class OfferSaver {
             offerMetadata.publishedAt(),
             clock.now());
 
-    Offer alreadyStoredOffer = findAlreadyStoredOffer(offer);
-
-    if (null != alreadyStoredOffer) {
+    if (null != findAlreadyStoredOffer(offer)) {
       throw new DuplicatedOfferException();
     }
 
