@@ -44,13 +44,13 @@ public class OffersCollectorITest extends AbstractITest {
 
     offersAssert.expects(6, 28, 6);
     OffersAssert.hasExpectedOfferModel(
-        offerRepository.findAll().get(0),
+        offerRepository.findAll().get(3),
         "php",
-        "PHP Developer (Marketplace Integrations)",
-        "baselinker-software-php-developer-warszawa-php",
-        "Baselinker",
-        2,
-        JustJoinItDateTime.createFrom("2025-01-24T20:02:48.163Z").value,
-        new OffersAssert.ExpectedSalary("b2b", "PLN", 17000, 22000, true));
+        "Senior PHP Developer - Symfony",
+        "the-software-house-senior-php-developer---symfony-gliwice-php",
+        "The Software House",
+        7,
+        JustJoinItDateTime.createFrom("2025-01-24T16:01:44.851Z").value,
+        new OffersAssert.ExpectedSalary("b2b", "PLN", 15500, 24000, true));
   }
 }
