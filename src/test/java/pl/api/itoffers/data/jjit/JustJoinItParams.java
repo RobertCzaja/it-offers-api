@@ -27,4 +27,9 @@ public class JustJoinItParams {
       MAIN_CATALOG + "allLocationsScenarioB2December.json";
   public static final String ALL_LOCATIONS_PAYLOAD_B3_DECEMBER_PATH_JSON =
       MAIN_CATALOG + "allLocationsScenarioB3December.json";
+
+  public static final String V2_ALL_LOCATIONS_PHP_DUPLICATED_1_HTML =
+      MAIN_CATALOG + "v2/allLocationsPhpDuplicated1AsHtml.txt";
+  public static final String V2_ALL_LOCATIONS_PHP_DUPLICATED_2_HTML =
+      MAIN_CATALOG + "v2/allLocationsPhpDuplicated2AsHtml.txt";
 }

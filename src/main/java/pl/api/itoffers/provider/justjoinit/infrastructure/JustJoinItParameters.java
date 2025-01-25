@@ -15,7 +15,11 @@ public class JustJoinItParameters {
   private String origin;
 
   public String getOffersUrl(String technology) {
-    return this.getOrigin().toString() + LIST_PATH + technology;
+    return this.getOrigin().toString() + getOffersPath(technology);
+  }
+
+  public String getOffersPath(String technology) {
+    return LIST_PATH + technology;
   }
 
   public URL getOrigin() {

@@ -20,6 +20,9 @@ import pl.api.itoffers.provider.justjoinit.JustJoinItProvider;
 import pl.api.itoffers.provider.justjoinit.model.JustJoinItDateTime;
 import pl.api.itoffers.provider.justjoinit.repository.JustJoinItRepository;
 
+/**
+ * @deprecated todo to remove
+ */
 public class OfferServiceITest extends AbstractITest {
 
   private static final String TECHNOLOGY = "php";

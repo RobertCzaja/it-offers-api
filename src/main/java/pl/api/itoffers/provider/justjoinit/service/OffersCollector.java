@@ -10,15 +10,21 @@ import org.springframework.stereotype.Service;
 import pl.api.itoffers.offer.application.repository.TechnologyRepository;
 import pl.api.itoffers.offer.application.service.OfferService;
 import pl.api.itoffers.provider.justjoinit.JustJoinItProvider;
+import pl.api.itoffers.provider.nofluffjobs.service.TechnologyOffersCollector;
 
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class FetchJustJoinItOffersService {
+public class OffersCollector {
   private final TechnologyRepository technologyRepository;
   private final JustJoinItProvider justJoinItProvider;
   private final OfferService offerService;
 
+  /**
+   * todo make it looks like (interface?)
+   *
+   * @see TechnologyOffersCollector
+   */
   public void fetch(@NotNull String requestedTechnology) {
     List<String> technologies =
         requestedTechnology.isEmpty()

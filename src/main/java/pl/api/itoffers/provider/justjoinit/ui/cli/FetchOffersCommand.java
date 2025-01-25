@@ -4,17 +4,17 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 import org.springframework.shell.standard.ShellOption;
-import pl.api.itoffers.provider.justjoinit.service.FetchJustJoinItOffersService;
+import pl.api.itoffers.provider.justjoinit.service.OffersCollector;
 
 @ShellComponent
 @RequiredArgsConstructor
 public class FetchOffersCommand {
-  private final FetchJustJoinItOffersService fetchJustJoinItOffersService;
+  private final OffersCollector offersCollector;
 
   @ShellMethod(key = "fetch")
   public String fetchJustJoinIt(
       @ShellOption(value = "-t", defaultValue = "") String requestedTechnology) {
-    fetchJustJoinItOffersService.fetch(requestedTechnology);
+    offersCollector.fetch(requestedTechnology);
     return "Fetched";
   }
 }

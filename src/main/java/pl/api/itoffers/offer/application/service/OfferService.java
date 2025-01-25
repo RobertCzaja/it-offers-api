@@ -9,6 +9,9 @@ import pl.api.itoffers.offer.application.factory.SalariesFactory;
 import pl.api.itoffers.provider.justjoinit.model.JustJoinItRawOffer;
 import pl.api.itoffers.provider.justjoinit.repository.JustJoinItRepository;
 
+/**
+ * @deprecated todo to remove
+ */
 @Slf4j
 @Service
 @RequiredArgsConstructor

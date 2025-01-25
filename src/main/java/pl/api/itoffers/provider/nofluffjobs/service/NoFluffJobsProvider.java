@@ -14,6 +14,11 @@ public class NoFluffJobsProvider {
   private final TechnologyRepository technologyRepository;
 
   public void fetch() {
+    /**
+     * todo useless layer of an abstraction, to remove todo use only:
+     *
+     * @see TechnologyOffersCollector
+     */
     technologyRepository.allActive().forEach(collector::fetchOffers);
   }
 }
