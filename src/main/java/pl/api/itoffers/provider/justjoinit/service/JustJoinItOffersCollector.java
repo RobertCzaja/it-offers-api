@@ -8,30 +8,25 @@ import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Service;
 import pl.api.itoffers.offer.application.factory.OfferFactory;
 import pl.api.itoffers.offer.application.factory.SalariesFactory;
-import pl.api.itoffers.offer.application.repository.TechnologyRepository;
 import pl.api.itoffers.offer.application.service.OfferSaver;
+import pl.api.itoffers.offer.application.service.TechnologiesProvider;
+import pl.api.itoffers.provider.general.OffersCollector;
 import pl.api.itoffers.provider.justjoinit.JustJoinItProvider;
 import pl.api.itoffers.provider.justjoinit.model.JustJoinItRawOffer;
 import pl.api.itoffers.provider.justjoinit.repository.JustJoinItRepository;
-import pl.api.itoffers.provider.nofluffjobs.service.TechnologyOffersCollector;
 
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class OffersCollector {
-  private final TechnologyRepository technologyRepository;
+public class JustJoinItOffersCollector implements OffersCollector {
   private final JustJoinItProvider justJoinItProvider;
   private final JustJoinItRepository jjitRawOffersRepository;
   private final SalariesFactory salariesFactory;
   private final OfferSaver offerSaver;
+  private final TechnologiesProvider technologiesProvider;
 
-  /**
-   * todo make it looks like (interface?)
-   *
-   * @see TechnologyOffersCollector
-   */
-  public void fetch(@NotNull String requestedTechnology) {
-    List<String> technologies = getTechnologies(requestedTechnology);
+  public void collectFromProvider(@NotNull String technology) {
+    List<String> technologies = technologiesProvider.getTechnologies(technology);
     UUID scrapingId = UUID.randomUUID();
 
     fetchOffersFromExternalService(technologies, scrapingId);
@@ -44,12 +39,6 @@ public class OffersCollector {
           salariesFactory.create(rawOffer),
           OfferFactory.createCompany(rawOffer));
     }
-  }
-
-  private List<String> getTechnologies(@NotNull String requestedTechnology) {
-    return requestedTechnology.isEmpty()
-        ? technologyRepository.allActive()
-        : List.of(requestedTechnology);
   }
 
   private void fetchOffersFromExternalService(List<String> technologies, UUID scrapingId) {

@@ -12,11 +12,11 @@ import pl.api.itoffers.integration.offer.helper.OffersAssert;
 import pl.api.itoffers.offer.application.repository.OfferRepository;
 import pl.api.itoffers.provider.justjoinit.infrastructure.JustJoinItParameters;
 import pl.api.itoffers.provider.justjoinit.model.JustJoinItDateTime;
-import pl.api.itoffers.provider.justjoinit.service.OffersCollector;
+import pl.api.itoffers.provider.justjoinit.service.JustJoinItOffersCollector;
 
-public class OffersCollectorITest extends AbstractITest {
+public class JustJoinItOffersCollectorITest extends AbstractITest {
   @Autowired private OfferTestManager offerTestManager;
-  @Autowired private OffersCollector jjitOffersCollector;
+  @Autowired private JustJoinItOffersCollector jjitOffersCollector;
   @Autowired private OffersAssert offersAssert;
   @Autowired private OfferRepository offerRepository;
   @Autowired private JustJoinItParameters parameters;
@@ -32,11 +32,11 @@ public class OffersCollectorITest extends AbstractITest {
 
     WireMockOrchestrator.pathWillReturn(
         parameters.getOffersPath("php"), JustJoinItParams.V2_ALL_LOCATIONS_PHP_DUPLICATED_1_HTML);
-    jjitOffersCollector.fetch("php");
+    jjitOffersCollector.collectFromProvider("php");
 
     WireMockOrchestrator.pathWillReturn(
         parameters.getOffersPath("php"), JustJoinItParams.V2_ALL_LOCATIONS_PHP_DUPLICATED_2_HTML);
-    jjitOffersCollector.fetch("php");
+    jjitOffersCollector.collectFromProvider("php");
 
     offersAssert.expects(6, 28, 6);
     OffersAssert.hasExpectedOfferModel(

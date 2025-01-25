@@ -17,15 +17,15 @@ import pl.api.itoffers.integration.offer.helper.OffersAssert;
 import pl.api.itoffers.offer.application.repository.OfferRepository;
 import pl.api.itoffers.offer.application.repository.TechnologyRepository;
 import pl.api.itoffers.provider.nofluffjobs.fetcher.NoFluffJobsParameters;
-import pl.api.itoffers.provider.nofluffjobs.service.NoFluffJobsProvider;
+import pl.api.itoffers.provider.nofluffjobs.service.NoFluffJobsOffersCollector;
 
-public class NoFluffJobsProviderITest extends AbstractITest {
+public class NoFluffJobsOffersCollectorITest extends AbstractITest {
 
   @Autowired private NoFluffJobsParameters parameters;
-  @Autowired private NoFluffJobsProvider noFluffJobsProvider;
   @Autowired private OfferRepository offerRepository;
   @Autowired private OffersAssert offersAssert;
   @Autowired private OfferTestManager offerTestManager;
+  @Autowired private NoFluffJobsOffersCollector collector;
   @MockBean private TechnologyRepository technologyRepository;
 
   @BeforeEach
@@ -39,7 +39,7 @@ public class NoFluffJobsProviderITest extends AbstractITest {
     setUpMockedNoFluffJobsService();
     when(technologyRepository.allActive()).thenReturn(List.of("java", "php"));
 
-    noFluffJobsProvider.fetch();
+    collector.collectFromProvider("");
 
     offersAssert.expects(4, 22, 3);
     OffersAssert.hasExpectedOfferModel(
