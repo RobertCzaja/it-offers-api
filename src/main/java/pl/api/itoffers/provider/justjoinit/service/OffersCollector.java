@@ -31,19 +31,10 @@ public class OffersCollector {
    * @see TechnologyOffersCollector
    */
   public void fetch(@NotNull String requestedTechnology) {
-    List<String> technologies =
-        requestedTechnology.isEmpty()
-            ? technologyRepository.allActive()
-            : List.of(requestedTechnology);
-
+    List<String> technologies = getTechnologies(requestedTechnology);
     UUID scrapingId = UUID.randomUUID();
 
-    try {
-      technologies.forEach(technology -> justJoinItProvider.fetch(technology, scrapingId));
-    } catch (Exception e) {
-      log.error("Error on fetching JustJoinIT offers", e);
-      throw e;
-    }
+    fetchOffersFromExternalService(technologies, scrapingId);
 
     for (JustJoinItRawOffer rawOffer : jjitRawOffersRepository.findByScrapingId(scrapingId)) {
       offerSaver.save(
@@ -52,6 +43,21 @@ public class OffersCollector {
           OfferFactory.createCategories(rawOffer),
           salariesFactory.create(rawOffer),
           OfferFactory.createCompany(rawOffer));
+    }
+  }
+
+  private List<String> getTechnologies(@NotNull String requestedTechnology) {
+    return requestedTechnology.isEmpty()
+        ? technologyRepository.allActive()
+        : List.of(requestedTechnology);
+  }
+
+  private void fetchOffersFromExternalService(List<String> technologies, UUID scrapingId) {
+    try {
+      technologies.forEach(technology -> justJoinItProvider.fetch(technology, scrapingId));
+    } catch (Exception e) {
+      log.error("Error on fetching JustJoinIT offers", e);
+      throw e;
     }
   }
 }
