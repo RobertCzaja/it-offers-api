@@ -8,7 +8,7 @@ import pl.api.itoffers.offer.domain.Offer;
 import pl.api.itoffers.offer.domain.Salary;
 
 /**
- * @deprecated todo remove in #59
+ * @deprecated
  */
 @Value
 @RequiredArgsConstructor

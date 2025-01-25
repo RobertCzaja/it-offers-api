@@ -4,7 +4,7 @@ import java.util.List;
 import lombok.*;
 
 /**
- * @deprecated todo remove in #59
+ * @deprecated
  */
 @Value
 @RequiredArgsConstructor

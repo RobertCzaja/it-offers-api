@@ -1,6 +1,5 @@
 package pl.api.itoffers.security.framework;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
@@ -10,17 +9,14 @@ import pl.api.itoffers.security.infrastructure.UserPostgresRepository;
 @Configuration
 public class UserRepositoryConfig {
 
-  @Autowired private UserInMemoryRepository userInMemoryRepository;
-  @Autowired private UserPostgresRepository userPostgresRepository;
-
   @Bean
   public UserInMemoryRepository inMemory() {
-    return userInMemoryRepository;
+    return new UserInMemoryRepository();
   }
 
   @Bean
   @Primary
-  public UserPostgresRepository postgreSQL() {
+  public UserPostgresRepository postgreSQL(UserPostgresRepository userPostgresRepository) {
     return userPostgresRepository;
   }
 }

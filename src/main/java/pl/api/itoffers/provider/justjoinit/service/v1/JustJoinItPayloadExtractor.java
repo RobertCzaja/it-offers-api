@@ -9,7 +9,6 @@ import java.util.Map;
 import org.springframework.stereotype.Service;
 import pl.api.itoffers.provider.justjoinit.exception.JustJoinItException;
 import pl.api.itoffers.provider.justjoinit.service.v2.PayloadFromJsonExtractor;
-import pl.api.itoffers.shared.utils.fileManager.FileManager;
 import pl.api.itoffers.shared.utils.json.JsonNodeMapper;
 
 /**
@@ -20,7 +19,6 @@ import pl.api.itoffers.shared.utils.json.JsonNodeMapper;
 public class JustJoinItPayloadExtractor {
 
   private final ObjectMapper mapper = new ObjectMapper();
-  private final FileManager fileManager = new FileManager();
   private final JsonNodeMapper jsonNodeMapper = new JsonNodeMapper();
 
   public final ArrayList<Map<String, Object>> extract(String rawJsonPayload) {
@@ -45,7 +43,6 @@ public class JustJoinItPayloadExtractor {
               .elements();
       return jsonNodeMapper.mapToList(offersNode);
     } catch (JsonProcessingException e) {
-      fileManager.saveFile(rawJsonPayload, "json");
       throw new JustJoinItException(
           "Could not extract offers from raw JSON payload. " + e.getMessage(), e);
     }

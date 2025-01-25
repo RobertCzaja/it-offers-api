@@ -7,21 +7,16 @@ import pl.api.itoffers.shared.utils.fileManager.FileManager;
 
 public class JustJoinItInMemoryConnector implements JustJoinItConnector {
 
-  private final FileManager fileManager;
   public String payloadPath = JustJoinItParams.ALL_LOCATIONS_PAYLOAD_PATH;
 
-  public JustJoinItInMemoryConnector(FileManager fileManager) {
-    this.fileManager = fileManager;
-  }
-
   public static JustJoinItInMemoryConnector create() {
-    return new JustJoinItInMemoryConnector(new FileManager());
+    return new JustJoinItInMemoryConnector();
   }
 
   @Override
   public String fetchStringifyJsonPayload(String technology) {
     try {
-      return this.fileManager.readFile(payloadPath);
+      return FileManager.readFile(payloadPath);
     } catch (IOException e) {
       throw new RuntimeException(e);
     }

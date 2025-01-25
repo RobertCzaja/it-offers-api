@@ -14,7 +14,6 @@ import pl.api.itoffers.provider.justjoinit.service.v2.PayloadFromJsonExtractor;
 import pl.api.itoffers.shared.utils.fileManager.FileManager;
 
 public class OffersListFromJsonPayloadExtractorTest {
-  private FileManager fileManager = new FileManager();
   private PayloadFromJsonExtractor payloadFromJsonExtractor;
 
   @BeforeEach
@@ -25,7 +24,7 @@ public class OffersListFromJsonPayloadExtractorTest {
   @Test
   public void testShouldCorrectlyExtractOffersFromJson() throws IOException {
     String jjitJson =
-        this.fileManager.readFile(JustJoinItParams.ALL_LOCATIONS_PAYLOAD_B1_DECEMBER_PATH_JSON);
+        FileManager.readFile(JustJoinItParams.ALL_LOCATIONS_PAYLOAD_B1_DECEMBER_PATH_JSON);
 
     ArrayList<Map<String, Object>> offers = payloadFromJsonExtractor.extractPayload(jjitJson);
 
@@ -36,7 +35,7 @@ public class OffersListFromJsonPayloadExtractorTest {
   public void testShouldCorrectlyExtractOffersFromJsonThatHaveMultipleQueriesElements()
       throws IOException {
     String jjitJson =
-        this.fileManager.readFile(JustJoinItParams.ALL_LOCATIONS_PAYLOAD_B2_DECEMBER_PATH_JSON);
+        FileManager.readFile(JustJoinItParams.ALL_LOCATIONS_PAYLOAD_B2_DECEMBER_PATH_JSON);
 
     ArrayList<Map<String, Object>> offers = payloadFromJsonExtractor.extractPayload(jjitJson);
 
@@ -47,7 +46,7 @@ public class OffersListFromJsonPayloadExtractorTest {
   public void testShouldCorrectlyExtractEmptyOfferListWhenThereIsNothingInRawPayload()
       throws IOException {
     String jjitJson =
-        this.fileManager.readFile(JustJoinItParams.ALL_LOCATIONS_PAYLOAD_B3_DECEMBER_PATH_JSON);
+        FileManager.readFile(JustJoinItParams.ALL_LOCATIONS_PAYLOAD_B3_DECEMBER_PATH_JSON);
 
     ArrayList<Map<String, Object>> offers = payloadFromJsonExtractor.extractPayload(jjitJson);
 

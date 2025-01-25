@@ -1,7 +1,6 @@
 package pl.api.itoffers.security.framework;
 
 import java.util.Arrays;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -29,9 +28,6 @@ public class SecurityConfig {
   @Value("${application.security.cors.origin}")
   private String corsOrigin;
 
-  @Autowired private JwtAuthorizationFilter jwtAuthorizationFilter;
-  @Autowired private CustomAccessDeniedHandler customAccessDeniedHandler;
-
   @Bean
   public AuthenticationManager authenticationManager(
       HttpSecurity http, BCryptPasswordEncoder passwordEncoder) throws Exception {
@@ -41,7 +37,11 @@ public class SecurityConfig {
   }
 
   @Bean
-  public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+  public SecurityFilterChain securityFilterChain(
+      HttpSecurity http,
+      JwtAuthorizationFilter jwtAuthorizationFilter,
+      CustomAccessDeniedHandler customAccessDeniedHandler)
+      throws Exception {
 
     http.authorizeHttpRequests(
             auth -> {
