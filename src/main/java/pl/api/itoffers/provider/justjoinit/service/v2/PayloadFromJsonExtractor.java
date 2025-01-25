@@ -15,6 +15,7 @@ import pl.api.itoffers.shared.utils.json.JsonNodeMapper;
 @Slf4j
 @Service
 public class PayloadFromJsonExtractor {
+  private static final String KEY_STATE = "state";
 
   private final ObjectMapper mapper = new ObjectMapper();
   private final JsonNodeMapper payloadMapper = new JsonNodeMapper();
@@ -26,7 +27,7 @@ public class PayloadFromJsonExtractor {
 
     try {
       Iterator<JsonNode> queriesNodes =
-          mapper.readTree(rawJsonPayload).path("state").path("queries").elements();
+          mapper.readTree(rawJsonPayload).path(KEY_STATE).path("queries").elements();
 
       if (!queriesNodes.hasNext()) {
         log.info("Empty JJIT payload: \n{}", rawJsonPayload);
@@ -35,9 +36,9 @@ public class PayloadFromJsonExtractor {
 
       do {
         JsonNode queryNode = queriesNodes.next();
-        if (queryNode.get("state").isObject()) {
+        if (queryNode.get(KEY_STATE).isObject()) {
           Iterator<JsonNode> offerNodes =
-              queryNode.get("state").path("data").path("pages").get(0).path("data").elements();
+              queryNode.get(KEY_STATE).path("data").path("pages").get(0).path("data").elements();
           return payloadMapper.mapToList(offerNodes);
         }
       } while (queriesNodes.hasNext());
