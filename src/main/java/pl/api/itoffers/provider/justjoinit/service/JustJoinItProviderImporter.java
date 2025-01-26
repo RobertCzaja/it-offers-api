@@ -13,10 +13,10 @@ import pl.api.itoffers.provider.ProviderImporter;
 @Service
 @RequiredArgsConstructor
 public class JustJoinItProviderImporter implements ProviderImporter {
-  private final JustJoinItProvider justJoinItProvider;
   private final JustJoinItOfferDraftProvider offerDraftProvider;
   private final OfferSaver offerSaver;
   private final TechnologiesProvider technologiesProvider;
+  private final JustJoinItProviderCollector collector;
 
   public void importOffers(@NotNull String customTechnology) {
     UUID scrapingId = UUID.randomUUID();
@@ -24,7 +24,7 @@ public class JustJoinItProviderImporter implements ProviderImporter {
     for (var technology : technologiesProvider.getTechnologies(customTechnology)) {
 
       try {
-        justJoinItProvider.fetch(technology, scrapingId);
+        collector.collectOffers(scrapingId, technology);
       } catch (Exception e) {
         log.error("Error on fetching JustJoinIT offers", e);
         continue;
