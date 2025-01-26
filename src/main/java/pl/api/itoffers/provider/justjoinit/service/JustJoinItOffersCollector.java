@@ -25,27 +25,26 @@ public class JustJoinItOffersCollector implements OffersCollector {
   private final TechnologiesProvider technologiesProvider;
 
   public void collectFromProvider(@NotNull String customTechnology) {
-    List<String> technologies =
-        technologiesProvider.getTechnologies(customTechnology); // todo to remove
     UUID scrapingId = UUID.randomUUID();
 
-    fetchOffersFromExternalService(technologies, scrapingId); // todo to remove
-
     for (var technology : technologiesProvider.getTechnologies(customTechnology)) {
-      // todo to implement
-    }
 
-    for (var draft : getDraftList(scrapingId)) {
-      offerSaver.save(draft);
+      try {
+        justJoinItProvider.fetch(technology, scrapingId);
+      } catch (Exception e) {
+        log.error("Error on fetching JustJoinIT offers", e);
+        continue; // todo add integration test
+      }
+
+      for (var draft : getDraftList(scrapingId, technology)) {
+        offerSaver.save(draft);
+      }
     }
   }
 
-  /**
-   * todo move to separated class & add common interface todo needs to get offers also by
-   * "technology"
-   */
-  private List<OfferDraft> getDraftList(UUID scrapingId) {
-    return jjitRawOffersRepository.findByScrapingId(scrapingId).stream()
+  /** todo move to separated class & add common interface */
+  private List<OfferDraft> getDraftList(UUID scrapingId, String technology) {
+    return jjitRawOffersRepository.findByScrapingIdAndTechnology(scrapingId, technology).stream()
         .map(
             rawOffer ->
                 new OfferDraft(
@@ -55,14 +54,5 @@ public class JustJoinItOffersCollector implements OffersCollector {
                     salariesFactory.create(rawOffer),
                     OfferFactory.createCompany(rawOffer)))
         .toList();
-  }
-
-  private void fetchOffersFromExternalService(List<String> technologies, UUID scrapingId) {
-    try {
-      technologies.forEach(technology -> justJoinItProvider.fetch(technology, scrapingId));
-    } catch (Exception e) {
-      log.error("Error on fetching JustJoinIT offers", e);
-      throw e;
-    }
   }
 }
