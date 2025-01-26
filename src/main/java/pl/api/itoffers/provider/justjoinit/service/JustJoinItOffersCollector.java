@@ -24,11 +24,16 @@ public class JustJoinItOffersCollector implements OffersCollector {
   private final OfferSaver offerSaver;
   private final TechnologiesProvider technologiesProvider;
 
-  public void collectFromProvider(@NotNull String technology) {
-    List<String> technologies = technologiesProvider.getTechnologies(technology);
+  public void collectFromProvider(@NotNull String customTechnology) {
+    List<String> technologies =
+        technologiesProvider.getTechnologies(customTechnology); // todo to remove
     UUID scrapingId = UUID.randomUUID();
 
-    fetchOffersFromExternalService(technologies, scrapingId);
+    fetchOffersFromExternalService(technologies, scrapingId); // todo to remove
+
+    for (var technology : technologiesProvider.getTechnologies(customTechnology)) {
+      // todo to implement
+    }
 
     for (var draft : getDraftList(scrapingId)) {
       offerSaver.save(draft);

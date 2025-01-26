@@ -32,10 +32,9 @@ public class NoFluffJobsOffersCollector implements OffersCollector {
   private final TechnologiesProvider technologiesProvider;
 
   public void collectFromProvider(@NotNull final String customTechnology) {
-    List<String> technologies = technologiesProvider.getTechnologies(customTechnology);
     UUID scrapingId = UUID.randomUUID();
 
-    for (var technology : technologies) {
+    for (var technology : technologiesProvider.getTechnologies(customTechnology)) {
       var listOffers = fetchNoFluffJobsRawListOffers(technology, scrapingId);
 
       if (null == listOffers) {
