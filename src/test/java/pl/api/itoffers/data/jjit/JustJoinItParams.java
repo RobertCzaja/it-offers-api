@@ -9,7 +9,7 @@ public class JustJoinItParams {
    * parser needs to be adjusted
    */
   public static final String V2_ALL_LOCATIONS_PAYLOAD_B1_DECEMBER_PATH_HTML =
-      MAIN_CATALOG + "v2/allLocationsScenarioB1December.html";
+      MAIN_CATALOG + "v2/allLocationsScenarioB1DecemberAsHtml.txt";
 
   public static final String ALL_LOCATIONS_PAYLOAD_B1_DECEMBER_PATH_JSON =
       MAIN_CATALOG + "allLocationsScenarioB1December.json";
