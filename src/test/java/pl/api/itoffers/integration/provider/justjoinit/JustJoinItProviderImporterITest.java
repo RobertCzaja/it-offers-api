@@ -67,7 +67,7 @@ public class JustJoinItProviderImporterITest extends AbstractITest {
     WireMockOrchestrator.pathWillReturn(
         parameters.getOffersPath("php"), JustJoinItParams.V2_ALL_LOCATIONS_PHP_DUPLICATED_1_HTML);
 
-    justJoinItProviderImporterFactory.create().importOffers("");
+    justJoinItProviderImporterFactory.create().importOffers(null);
 
     offersAssert.expects(4, 19, 4);
   }

@@ -14,6 +14,6 @@ public class FetchNoFluffJobsOffersScheduledJob {
 
   @Scheduled(cron = "0 0 */6 * * *")
   public void fetchNoFluffJobsOffers() {
-    importerFactory.create().importOffers("");
+    importerFactory.create().importOffers(null);
   }
 }

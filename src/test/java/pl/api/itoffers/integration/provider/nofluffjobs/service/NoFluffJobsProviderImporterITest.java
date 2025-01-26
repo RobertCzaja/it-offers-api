@@ -42,7 +42,7 @@ public class NoFluffJobsProviderImporterITest extends AbstractITest {
     providerOfferOrchestrator.addSomeStateToMongoDbThatShouldBeAvoided();
     when(technologyRepository.allActive()).thenReturn(List.of("java", "php"));
 
-    noFluffJobsProviderImporterFactory.create().importOffers("");
+    noFluffJobsProviderImporterFactory.create().importOffers(null);
 
     offersAssert.expects(4, 22, 3);
     OffersAssert.hasExpectedOfferModel(
@@ -89,7 +89,7 @@ public class NoFluffJobsProviderImporterITest extends AbstractITest {
         parameters.detailsPath(NoFluffJobsParams.B1_E2E_JAVA_2_SLUG),
         NoFluffJobsParams.B1_E2E_JAVA_2_DETAILS);
 
-    noFluffJobsProviderImporterFactory.create().importOffers("");
+    noFluffJobsProviderImporterFactory.create().importOffers(null);
 
     offersAssert.expects(2, 16, 2);
   }

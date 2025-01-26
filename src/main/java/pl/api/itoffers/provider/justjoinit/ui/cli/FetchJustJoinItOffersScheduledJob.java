@@ -14,6 +14,6 @@ public class FetchJustJoinItOffersScheduledJob {
 
   @Scheduled(cron = "0 0 9 * * *")
   public void fetchJustJoinIt() {
-    importerFactory.create().importOffers("");
+    importerFactory.create().importOffers(null);
   }
 }

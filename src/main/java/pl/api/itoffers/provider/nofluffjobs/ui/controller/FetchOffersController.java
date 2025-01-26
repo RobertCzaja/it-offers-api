@@ -13,6 +13,6 @@ public class FetchOffersController {
 
   @PostMapping("/no-fluff-jobs/fetch")
   public void fetch() {
-    importerFactory.create().importOffers("");
+    importerFactory.create().importOffers(null);
   }
 }

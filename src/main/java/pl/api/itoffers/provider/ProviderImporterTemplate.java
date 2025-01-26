@@ -3,7 +3,6 @@ package pl.api.itoffers.provider;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.jetbrains.annotations.NotNull;
 import pl.api.itoffers.offer.application.service.OfferSaver;
 import pl.api.itoffers.offer.application.service.TechnologiesProvider;
 
@@ -16,7 +15,7 @@ public class ProviderImporterTemplate implements ProviderImporter {
   private final TechnologiesProvider technologiesProvider;
 
   @Override
-  public void importOffers(@NotNull String customTechnology) {
+  public void importOffers(String customTechnology) {
     UUID scrapingId = UUID.randomUUID();
 
     for (var technology : technologiesProvider.getTechnologies(customTechnology)) {
