@@ -7,7 +7,7 @@ import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Service;
 import pl.api.itoffers.offer.application.service.OfferSaver;
 import pl.api.itoffers.offer.application.service.TechnologiesProvider;
-import pl.api.itoffers.provider.OffersCollector;
+import pl.api.itoffers.provider.ProviderImporter;
 import pl.api.itoffers.provider.nofluffjobs.exception.NoFluffJobsException;
 import pl.api.itoffers.provider.nofluffjobs.fetcher.details.NoFluffJobsDetailsProvider;
 import pl.api.itoffers.provider.nofluffjobs.fetcher.list.NoFluffJobsListProvider;
@@ -16,7 +16,7 @@ import pl.api.itoffers.provider.nofluffjobs.repository.NoFluffJobsListOfferRepos
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class NoFluffJobsOffersCollector implements OffersCollector {
+public class NoFluffJobsProviderImporter implements ProviderImporter {
   private final NoFluffJobsListOfferRepository listOfferRepository;
   private final NoFluffJobsOfferDraftProvider offerDraftProvider;
   private final NoFluffJobsDetailsProvider detailsProvider;
@@ -24,7 +24,7 @@ public class NoFluffJobsOffersCollector implements OffersCollector {
   private final OfferSaver offerSaver;
   private final TechnologiesProvider technologiesProvider;
 
-  public void collectFromProvider(@NotNull final String customTechnology) {
+  public void importOffers(@NotNull final String customTechnology) {
     UUID scrapingId = UUID.randomUUID();
 
     for (var technology : technologiesProvider.getTechnologies(customTechnology)) {

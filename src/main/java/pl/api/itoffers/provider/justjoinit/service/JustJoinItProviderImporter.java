@@ -7,18 +7,18 @@ import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Service;
 import pl.api.itoffers.offer.application.service.OfferSaver;
 import pl.api.itoffers.offer.application.service.TechnologiesProvider;
-import pl.api.itoffers.provider.OffersCollector;
+import pl.api.itoffers.provider.ProviderImporter;
 
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class JustJoinItOffersCollector implements OffersCollector {
+public class JustJoinItProviderImporter implements ProviderImporter {
   private final JustJoinItProvider justJoinItProvider;
   private final JustJoinItOfferDraftProvider offerDraftProvider;
   private final OfferSaver offerSaver;
   private final TechnologiesProvider technologiesProvider;
 
-  public void collectFromProvider(@NotNull String customTechnology) {
+  public void importOffers(@NotNull String customTechnology) {
     UUID scrapingId = UUID.randomUUID();
 
     for (var technology : technologiesProvider.getTechnologies(customTechnology)) {
