@@ -20,6 +20,7 @@ import pl.api.itoffers.offer.application.repository.CompanyRepository;
 import pl.api.itoffers.offer.application.repository.OfferRepository;
 import pl.api.itoffers.offer.application.service.OfferSaver;
 import pl.api.itoffers.offer.domain.Company;
+import pl.api.itoffers.offer.domain.OfferDraft;
 import pl.api.itoffers.provider.nofluffjobs.factory.OfferFactory;
 
 public class OfferSaverITest extends AbstractITest {
@@ -49,7 +50,7 @@ public class OfferSaverITest extends AbstractITest {
     var salaries = OfferFactory.createSalaries(noFluffJobsModels.list());
     var company = OfferFactory.createCompany(noFluffJobsModels.list());
 
-    offerSaver.save(origin, offerMetadata, categories, salaries, company);
+    offerSaver.save(new OfferDraft(origin, offerMetadata, categories, salaries, company));
 
     var offers = offerRepository.findAll();
     assertThat(offers).hasSize(1);
@@ -76,9 +77,10 @@ public class OfferSaverITest extends AbstractITest {
     var categories = OfferFactory.createCategories(noFluffJobsModels.details());
     var salaries = OfferFactory.createSalaries(noFluffJobsModels.list());
     var company = OfferFactory.createCompany(noFluffJobsModels.list());
+    var draft = new OfferDraft(origin, offerMetadata, categories, salaries, company);
 
-    offerSaver.save(origin, offerMetadata, categories, salaries, company);
-    offerSaver.save(origin, offerMetadata, categories, salaries, company);
+    offerSaver.save(draft);
+    offerSaver.save(draft);
 
     var offers = offerRepository.findAll();
     assertThat(offers).hasSize(1);
@@ -92,23 +94,26 @@ public class OfferSaverITest extends AbstractITest {
     var categories = OfferFactory.createCategories(noFluffJobsModels.details());
 
     offerSaver.save(
-        OfferSubObjectsFactory.createOrigin("100001"),
-        OfferMetadataFactory.create("title1"),
-        categories,
-        OfferSubObjectsFactory.createSalaries(),
-        OfferSubObjectsFactory.createCompany());
+        new OfferDraft(
+            OfferSubObjectsFactory.createOrigin("100001"),
+            OfferMetadataFactory.create("title1"),
+            categories,
+            OfferSubObjectsFactory.createSalaries(),
+            OfferSubObjectsFactory.createCompany()));
     offerSaver.save(
-        OfferSubObjectsFactory.createOrigin("100002"),
-        OfferMetadataFactory.create("title2"),
-        categories,
-        OfferSubObjectsFactory.createSalaries(),
-        OfferSubObjectsFactory.createCompany());
+        new OfferDraft(
+            OfferSubObjectsFactory.createOrigin("100002"),
+            OfferMetadataFactory.create("title2"),
+            categories,
+            OfferSubObjectsFactory.createSalaries(),
+            OfferSubObjectsFactory.createCompany()));
     offerSaver.save(
-        OfferSubObjectsFactory.createOrigin("100003"),
-        OfferMetadataFactory.create("title3"),
-        categories,
-        OfferSubObjectsFactory.createSalaries(),
-        OfferSubObjectsFactory.createCompany());
+        new OfferDraft(
+            OfferSubObjectsFactory.createOrigin("100003"),
+            OfferMetadataFactory.create("title3"),
+            categories,
+            OfferSubObjectsFactory.createSalaries(),
+            OfferSubObjectsFactory.createCompany()));
 
     assertThat(companyRepository.findAll()).hasSize(1);
   }
@@ -116,12 +121,13 @@ public class OfferSaverITest extends AbstractITest {
   @Test
   public void shouldSaveCompanyWithNoAddress() throws IOException {
     offerSaver.save(
-        OfferSubObjectsFactory.createOrigin("100001"),
-        OfferMetadataFactory.create("title1"),
-        OfferFactory.createCategories(
-            NoFluffJobsRawOfferModelsFactory.create(NoFluffJobsParams.A1_PHP).details()),
-        OfferSubObjectsFactory.createSalaries(),
-        Company.createWithNoAddress("a"));
+        new OfferDraft(
+            OfferSubObjectsFactory.createOrigin("100001"),
+            OfferMetadataFactory.create("title1"),
+            OfferFactory.createCategories(
+                NoFluffJobsRawOfferModelsFactory.create(NoFluffJobsParams.A1_PHP).details()),
+            OfferSubObjectsFactory.createSalaries(),
+            Company.createWithNoAddress("a")));
 
     var offer = offerRepository.findAll().get(0);
     assertThat(offer.getCompany().getName()).isEqualTo("a");

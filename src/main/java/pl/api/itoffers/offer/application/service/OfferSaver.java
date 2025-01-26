@@ -9,12 +9,7 @@ import pl.api.itoffers.offer.application.exception.DuplicatedOfferException;
 import pl.api.itoffers.offer.application.repository.CategoryRepository;
 import pl.api.itoffers.offer.application.repository.CompanyRepository;
 import pl.api.itoffers.offer.application.repository.OfferRepository;
-import pl.api.itoffers.offer.domain.Category;
-import pl.api.itoffers.offer.domain.Characteristics;
-import pl.api.itoffers.offer.domain.Company;
-import pl.api.itoffers.offer.domain.Offer;
-import pl.api.itoffers.offer.domain.OfferMetadata;
-import pl.api.itoffers.offer.domain.Salary;
+import pl.api.itoffers.offer.domain.*;
 import pl.api.itoffers.provider.Origin;
 import pl.api.itoffers.shared.utils.clock.ClockInterface;
 
@@ -28,17 +23,18 @@ public class OfferSaver {
   private final OfferRepository offerRepository;
   private final ClockInterface clock;
 
-  public void save(
-      Origin origin,
-      OfferMetadata offerMetadata,
-      Set<Category> categories,
-      Set<Salary> salaries,
-      Company company) {
+  public void save(OfferDraft draft) {
     try {
-      var offer = prepareAndSave(origin, offerMetadata, categories, salaries, company);
+      var offer =
+          prepareAndSave(
+              draft.origin(),
+              draft.metadata(),
+              draft.categories(),
+              draft.salaries(),
+              draft.company());
       log.info(
           "[{}][{}] '{}' from {} at {}",
-          origin.getProvider().name(),
+          draft.origin().getProvider().name(),
           offer.getTechnology(),
           offer.getTitle(),
           offer.getCompany().getName(),
@@ -47,9 +43,9 @@ public class OfferSaver {
     } catch (Exception e) {
       log.error(
           "Error on saving {} offer ({}) in scrapping: {}",
-          origin.getProvider().name(),
-          origin.getId(),
-          origin.getScrappingId());
+          draft.origin().getProvider().name(),
+          draft.origin().getId(),
+          draft.origin().getScrappingId());
     }
   }
 

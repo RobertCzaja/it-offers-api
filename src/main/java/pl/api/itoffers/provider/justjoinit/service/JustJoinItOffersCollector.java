@@ -8,10 +8,10 @@ import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Service;
 import pl.api.itoffers.offer.application.service.OfferSaver;
 import pl.api.itoffers.offer.application.service.TechnologiesProvider;
+import pl.api.itoffers.offer.domain.OfferDraft;
 import pl.api.itoffers.provider.OffersCollector;
 import pl.api.itoffers.provider.justjoinit.factory.OfferFactory;
 import pl.api.itoffers.provider.justjoinit.factory.SalariesFactory;
-import pl.api.itoffers.provider.justjoinit.model.JustJoinItRawOffer;
 import pl.api.itoffers.provider.justjoinit.repository.JustJoinItRepository;
 
 @Slf4j
@@ -30,14 +30,26 @@ public class JustJoinItOffersCollector implements OffersCollector {
 
     fetchOffersFromExternalService(technologies, scrapingId);
 
-    for (JustJoinItRawOffer rawOffer : jjitRawOffersRepository.findByScrapingId(scrapingId)) {
-      offerSaver.save(
-          OfferFactory.createOrigin(rawOffer),
-          OfferFactory.createOfferMetadata(rawOffer),
-          OfferFactory.createCategories(rawOffer),
-          salariesFactory.create(rawOffer),
-          OfferFactory.createCompany(rawOffer));
+    for (var draft : getDraftList(scrapingId)) {
+      offerSaver.save(draft);
     }
+  }
+
+  /**
+   * todo move to separated class & add common interface todo needs to get offers also by
+   * "technology"
+   */
+  private List<OfferDraft> getDraftList(UUID scrapingId) {
+    return jjitRawOffersRepository.findByScrapingId(scrapingId).stream()
+        .map(
+            rawOffer ->
+                new OfferDraft(
+                    OfferFactory.createOrigin(rawOffer),
+                    OfferFactory.createOfferMetadata(rawOffer),
+                    OfferFactory.createCategories(rawOffer),
+                    salariesFactory.create(rawOffer),
+                    OfferFactory.createCompany(rawOffer)))
+        .toList();
   }
 
   private void fetchOffersFromExternalService(List<String> technologies, UUID scrapingId) {

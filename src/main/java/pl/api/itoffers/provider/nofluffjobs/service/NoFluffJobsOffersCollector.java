@@ -8,6 +8,7 @@ import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Service;
 import pl.api.itoffers.offer.application.service.OfferSaver;
 import pl.api.itoffers.offer.application.service.TechnologiesProvider;
+import pl.api.itoffers.offer.domain.OfferDraft;
 import pl.api.itoffers.provider.OffersCollector;
 import pl.api.itoffers.provider.nofluffjobs.exception.NoFluffJobsException;
 import pl.api.itoffers.provider.nofluffjobs.factory.OfferFactory;
@@ -43,15 +44,32 @@ public class NoFluffJobsOffersCollector implements OffersCollector {
 
       fetchDetailsOffers(listOffers);
 
-      for (var offerToSave : getOfferToSave(listOffers)) {
-        offerSaver.save(
-            OfferFactory.createOrigin(offerToSave.listOffer()),
-            OfferFactory.createOfferMetadata(offerToSave.listOffer(), offerToSave.detailsOffer()),
-            OfferFactory.createCategories(offerToSave.detailsOffer()),
-            OfferFactory.createSalaries(offerToSave.listOffer()),
-            OfferFactory.createCompany(offerToSave.listOffer()));
+      for (var draft : getDraftList(listOffers)) {
+        offerSaver.save(draft);
       }
     }
+  }
+
+  /**
+   * todo move to separated class & add common interface todo needs to get by "scrapingId" and
+   * "technology"
+   */
+  private List<OfferDraft> getDraftList(List<NoFluffJobsRawListOffer> listOffers) {
+    return RawDataMatcher.match(
+            listOffers,
+            detailsOfferRepository.findByOfferIdIn(
+                listOffers.stream().map(NoFluffJobsRawListOffer::getOfferId).toList()))
+        .stream()
+        .map(
+            offerToSave ->
+                new OfferDraft(
+                    OfferFactory.createOrigin(offerToSave.listOffer()),
+                    OfferFactory.createOfferMetadata(
+                        offerToSave.listOffer(), offerToSave.detailsOffer()),
+                    OfferFactory.createCategories(offerToSave.detailsOffer()),
+                    OfferFactory.createSalaries(offerToSave.listOffer()),
+                    OfferFactory.createCompany(offerToSave.listOffer())))
+        .toList();
   }
 
   private List<NoFluffJobsRawListOffer> fetchNoFluffJobsRawListOffers(
