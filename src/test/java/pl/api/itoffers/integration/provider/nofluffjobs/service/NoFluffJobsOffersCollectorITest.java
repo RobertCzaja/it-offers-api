@@ -12,6 +12,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import pl.api.itoffers.data.nfj.NoFluffJobsParams;
 import pl.api.itoffers.helper.AbstractITest;
 import pl.api.itoffers.helper.WireMockOrchestrator;
+import pl.api.itoffers.helper.provider.ProviderOfferOrchestrator;
 import pl.api.itoffers.integration.offer.helper.OfferTestManager;
 import pl.api.itoffers.integration.offer.helper.OffersAssert;
 import pl.api.itoffers.offer.application.repository.OfferRepository;
@@ -26,6 +27,7 @@ public class NoFluffJobsOffersCollectorITest extends AbstractITest {
   @Autowired private OffersAssert offersAssert;
   @Autowired private OfferTestManager offerTestManager;
   @Autowired private NoFluffJobsOffersCollector collector;
+  @Autowired private ProviderOfferOrchestrator providerOfferOrchestrator;
   @MockBean private TechnologyRepository technologyRepository;
 
   @BeforeEach
@@ -37,6 +39,7 @@ public class NoFluffJobsOffersCollectorITest extends AbstractITest {
   @Test
   void shouldFetchDataFromExternalServiceAndSaveTheseInItOffersService() throws IOException {
     setUpMockedNoFluffJobsService();
+    providerOfferOrchestrator.addSomeStateToMongoDbThatShouldBeAvoided();
     when(technologyRepository.allActive()).thenReturn(List.of("java", "php"));
 
     collector.collectFromProvider("");

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import pl.api.itoffers.data.jjit.JustJoinItParams;
 import pl.api.itoffers.helper.AbstractITest;
 import pl.api.itoffers.helper.WireMockOrchestrator;
+import pl.api.itoffers.helper.provider.ProviderOfferOrchestrator;
 import pl.api.itoffers.integration.offer.helper.OfferTestManager;
 import pl.api.itoffers.integration.offer.helper.OffersAssert;
 import pl.api.itoffers.offer.application.repository.OfferRepository;
@@ -20,6 +21,7 @@ public class JustJoinItOffersCollectorITest extends AbstractITest {
   @Autowired private OffersAssert offersAssert;
   @Autowired private OfferRepository offerRepository;
   @Autowired private JustJoinItParameters parameters;
+  @Autowired private ProviderOfferOrchestrator providerOfferOrchestrator;
 
   @BeforeEach
   public void setUp() {
@@ -29,6 +31,7 @@ public class JustJoinItOffersCollectorITest extends AbstractITest {
 
   @Test
   public void shouldSaveOffersToRelationalDataBaseWithoutDuplications() throws IOException {
+    providerOfferOrchestrator.addSomeStateToMongoDbThatShouldBeAvoided();
 
     WireMockOrchestrator.pathWillReturn(
         parameters.getOffersPath("php"), JustJoinItParams.V2_ALL_LOCATIONS_PHP_DUPLICATED_1_HTML);
