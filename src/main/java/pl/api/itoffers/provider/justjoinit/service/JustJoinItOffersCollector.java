@@ -33,7 +33,7 @@ public class JustJoinItOffersCollector implements OffersCollector {
         justJoinItProvider.fetch(technology, scrapingId);
       } catch (Exception e) {
         log.error("Error on fetching JustJoinIT offers", e);
-        continue; // todo add integration test
+        continue;
       }
 
       for (var draft : getDraftList(scrapingId, technology)) {
