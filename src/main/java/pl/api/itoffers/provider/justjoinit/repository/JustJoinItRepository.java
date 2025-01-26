@@ -9,11 +9,6 @@ import pl.api.itoffers.provider.justjoinit.model.JustJoinItRawOffer;
 
 @Repository
 public interface JustJoinItRepository extends MongoRepository<JustJoinItRawOffer, UUID> {
-  /**
-   * @deprecated
-   */
-  List<JustJoinItRawOffer> findByScrapingId(UUID scrapingId);
-
   List<JustJoinItRawOffer> findByScrapingIdAndTechnology(UUID scrapingId, String technology);
 
   @Query(
