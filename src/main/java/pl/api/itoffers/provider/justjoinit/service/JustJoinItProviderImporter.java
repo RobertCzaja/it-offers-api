@@ -9,6 +9,10 @@ import pl.api.itoffers.offer.application.service.OfferSaver;
 import pl.api.itoffers.offer.application.service.TechnologiesProvider;
 import pl.api.itoffers.provider.ProviderImporter;
 
+/**
+ * @deprecated to remove, use the
+ * @see pl.api.itoffers.provider.ProviderImporterTemplate
+ */
 @Slf4j
 @Service
 @RequiredArgsConstructor

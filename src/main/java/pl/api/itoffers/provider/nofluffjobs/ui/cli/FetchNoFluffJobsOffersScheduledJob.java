@@ -4,16 +4,16 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
-import pl.api.itoffers.provider.nofluffjobs.service.NoFluffJobsProviderImporter;
+import pl.api.itoffers.provider.nofluffjobs.factory.NoFluffJobsProviderImporterFactory;
 
 @EnableScheduling
 @Service
 @RequiredArgsConstructor
 public class FetchNoFluffJobsOffersScheduledJob {
-  private final NoFluffJobsProviderImporter importer;
+  private final NoFluffJobsProviderImporterFactory importerFactory;
 
   @Scheduled(cron = "0 0 */6 * * *")
   public void fetchNoFluffJobsOffers() {
-    importer.importOffers("");
+    importerFactory.create().importOffers("");
   }
 }

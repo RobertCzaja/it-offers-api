@@ -16,17 +16,17 @@ import pl.api.itoffers.integration.offer.helper.OfferTestManager;
 import pl.api.itoffers.integration.offer.helper.OffersAssert;
 import pl.api.itoffers.offer.application.repository.OfferRepository;
 import pl.api.itoffers.offer.application.repository.TechnologyRepository;
+import pl.api.itoffers.provider.justjoinit.factory.JustJoinItProviderImporterFactory;
 import pl.api.itoffers.provider.justjoinit.infrastructure.JustJoinItParameters;
 import pl.api.itoffers.provider.justjoinit.model.JustJoinItDateTime;
-import pl.api.itoffers.provider.justjoinit.service.JustJoinItProviderImporter;
 
 public class JustJoinItProviderImporterITest extends AbstractITest {
   @Autowired private OfferTestManager offerTestManager;
-  @Autowired private JustJoinItProviderImporter jjitOffersCollector;
   @Autowired private OffersAssert offersAssert;
   @Autowired private OfferRepository offerRepository;
   @Autowired private JustJoinItParameters parameters;
   @Autowired private ProviderOfferOrchestrator providerOfferOrchestrator;
+  @Autowired private JustJoinItProviderImporterFactory justJoinItProviderImporterFactory;
   @MockBean private TechnologyRepository technologyRepository;
 
   @BeforeEach
@@ -41,11 +41,11 @@ public class JustJoinItProviderImporterITest extends AbstractITest {
 
     WireMockOrchestrator.pathWillReturn(
         parameters.getOffersPath("php"), JustJoinItParams.V2_ALL_LOCATIONS_PHP_DUPLICATED_1_HTML);
-    jjitOffersCollector.importOffers("php");
+    justJoinItProviderImporterFactory.create().importOffers("php");
 
     WireMockOrchestrator.pathWillReturn(
         parameters.getOffersPath("php"), JustJoinItParams.V2_ALL_LOCATIONS_PHP_DUPLICATED_2_HTML);
-    jjitOffersCollector.importOffers("php");
+    justJoinItProviderImporterFactory.create().importOffers("php");
 
     offersAssert.expects(6, 28, 6);
     OffersAssert.hasExpectedOfferModel(
@@ -67,7 +67,7 @@ public class JustJoinItProviderImporterITest extends AbstractITest {
     WireMockOrchestrator.pathWillReturn(
         parameters.getOffersPath("php"), JustJoinItParams.V2_ALL_LOCATIONS_PHP_DUPLICATED_1_HTML);
 
-    jjitOffersCollector.importOffers("");
+    justJoinItProviderImporterFactory.create().importOffers("");
 
     offersAssert.expects(4, 19, 4);
   }

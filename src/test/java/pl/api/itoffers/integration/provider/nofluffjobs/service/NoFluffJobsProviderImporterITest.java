@@ -17,8 +17,8 @@ import pl.api.itoffers.integration.offer.helper.OfferTestManager;
 import pl.api.itoffers.integration.offer.helper.OffersAssert;
 import pl.api.itoffers.offer.application.repository.OfferRepository;
 import pl.api.itoffers.offer.application.repository.TechnologyRepository;
+import pl.api.itoffers.provider.nofluffjobs.factory.NoFluffJobsProviderImporterFactory;
 import pl.api.itoffers.provider.nofluffjobs.fetcher.NoFluffJobsParameters;
-import pl.api.itoffers.provider.nofluffjobs.service.NoFluffJobsProviderImporter;
 
 public class NoFluffJobsProviderImporterITest extends AbstractITest {
 
@@ -26,8 +26,8 @@ public class NoFluffJobsProviderImporterITest extends AbstractITest {
   @Autowired private OfferRepository offerRepository;
   @Autowired private OffersAssert offersAssert;
   @Autowired private OfferTestManager offerTestManager;
-  @Autowired private NoFluffJobsProviderImporter collector;
   @Autowired private ProviderOfferOrchestrator providerOfferOrchestrator;
+  @Autowired private NoFluffJobsProviderImporterFactory noFluffJobsProviderImporterFactory;
   @MockBean private TechnologyRepository technologyRepository;
 
   @BeforeEach
@@ -42,7 +42,7 @@ public class NoFluffJobsProviderImporterITest extends AbstractITest {
     providerOfferOrchestrator.addSomeStateToMongoDbThatShouldBeAvoided();
     when(technologyRepository.allActive()).thenReturn(List.of("java", "php"));
 
-    collector.importOffers("");
+    noFluffJobsProviderImporterFactory.create().importOffers("");
 
     offersAssert.expects(4, 22, 3);
     OffersAssert.hasExpectedOfferModel(
@@ -89,7 +89,7 @@ public class NoFluffJobsProviderImporterITest extends AbstractITest {
         parameters.detailsPath(NoFluffJobsParams.B1_E2E_JAVA_2_SLUG),
         NoFluffJobsParams.B1_E2E_JAVA_2_DETAILS);
 
-    collector.importOffers("");
+    noFluffJobsProviderImporterFactory.create().importOffers("");
 
     offersAssert.expects(2, 16, 2);
   }

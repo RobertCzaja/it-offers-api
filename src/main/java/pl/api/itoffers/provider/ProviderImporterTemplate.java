@@ -1,33 +1,27 @@
-package pl.api.itoffers.provider.nofluffjobs.service;
+package pl.api.itoffers.provider;
 
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
-import org.springframework.stereotype.Service;
 import pl.api.itoffers.offer.application.service.OfferSaver;
 import pl.api.itoffers.offer.application.service.TechnologiesProvider;
-import pl.api.itoffers.provider.ProviderImporter;
 
-/**
- * @deprecated to remove, use the
- * @see pl.api.itoffers.provider.ProviderImporterTemplate
- */
 @Slf4j
-@Service
 @RequiredArgsConstructor
-public class NoFluffJobsProviderImporter implements ProviderImporter {
-  private final NoFluffJobsProviderCollector collector;
-  private final NoFluffJobsOfferDraftProvider offerDraftProvider;
+public class ProviderImporterTemplate implements ProviderImporter {
+  private final ProviderCollector providerCollector;
+  private final OfferDraftProvider offerDraftProvider;
   private final OfferSaver offerSaver;
   private final TechnologiesProvider technologiesProvider;
 
-  public void importOffers(@NotNull final String customTechnology) {
+  @Override
+  public void importOffers(@NotNull String customTechnology) {
     UUID scrapingId = UUID.randomUUID();
 
     for (var technology : technologiesProvider.getTechnologies(customTechnology)) {
       try {
-        collector.collectOffers(scrapingId, technology);
+        providerCollector.collectOffers(scrapingId, technology);
       } catch (Exception e) {
         log.error("Error on fetching list of {}: {}", technology, e.getMessage());
         continue;
