@@ -3,8 +3,8 @@ package pl.api.itoffers.helper;
 import java.util.Set;
 import java.util.UUID;
 import pl.api.itoffers.offer.domain.Company;
-import pl.api.itoffers.offer.domain.Origin;
 import pl.api.itoffers.offer.domain.Salary;
+import pl.api.itoffers.provider.Origin;
 
 public class OfferSubObjectsFactory {
   public static Origin createOrigin(String id) {

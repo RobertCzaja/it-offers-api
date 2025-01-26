@@ -6,6 +6,7 @@ import pl.api.itoffers.offer.application.repository.CategoryRepository;
 import pl.api.itoffers.offer.application.repository.CompanyRepository;
 import pl.api.itoffers.offer.application.repository.OfferRepository;
 import pl.api.itoffers.offer.domain.*;
+import pl.api.itoffers.provider.Origin;
 
 public class OfferBuilder {
 

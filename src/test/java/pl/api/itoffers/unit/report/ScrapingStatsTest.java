@@ -5,7 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.time.LocalDateTime;
 import org.junit.jupiter.api.Test;
 import pl.api.itoffers.helper.assertions.ReportAssert;
-import pl.api.itoffers.offer.domain.Origin;
+import pl.api.itoffers.provider.Origin;
 import pl.api.itoffers.report.ScrapingStats;
 
 public class ScrapingStatsTest {

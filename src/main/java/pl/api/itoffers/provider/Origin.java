@@ -1,4 +1,4 @@
-package pl.api.itoffers.offer.domain;
+package pl.api.itoffers.provider;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;

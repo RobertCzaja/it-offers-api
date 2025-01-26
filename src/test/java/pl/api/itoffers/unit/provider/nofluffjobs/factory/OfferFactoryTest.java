@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 import pl.api.itoffers.data.nfj.NoFluffJobsParams;
 import pl.api.itoffers.data.nfj.NoFluffJobsRawOfferModelsFactory;
 import pl.api.itoffers.offer.domain.*;
+import pl.api.itoffers.provider.Origin;
 import pl.api.itoffers.provider.nofluffjobs.factory.OfferFactory;
 
 public class OfferFactoryTest {

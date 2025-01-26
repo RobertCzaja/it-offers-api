@@ -6,11 +6,11 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Service;
-import pl.api.itoffers.offer.application.factory.OfferFactory;
-import pl.api.itoffers.offer.application.factory.SalariesFactory;
 import pl.api.itoffers.offer.application.service.OfferSaver;
 import pl.api.itoffers.offer.application.service.TechnologiesProvider;
-import pl.api.itoffers.provider.general.OffersCollector;
+import pl.api.itoffers.provider.OffersCollector;
+import pl.api.itoffers.provider.justjoinit.factory.OfferFactory;
+import pl.api.itoffers.provider.justjoinit.factory.SalariesFactory;
 import pl.api.itoffers.provider.justjoinit.model.JustJoinItRawOffer;
 import pl.api.itoffers.provider.justjoinit.repository.JustJoinItRepository;
 

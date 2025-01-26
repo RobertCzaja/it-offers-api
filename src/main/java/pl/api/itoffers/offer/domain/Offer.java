@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import java.util.Set;
 import java.util.UUID;
 import lombok.*;
+import pl.api.itoffers.provider.Origin;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED, force = true)

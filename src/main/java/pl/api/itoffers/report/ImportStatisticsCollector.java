@@ -5,7 +5,7 @@ import java.util.Map;
 import java.util.UUID;
 import org.slf4j.Logger;
 import org.springframework.stereotype.Service;
-import pl.api.itoffers.offer.domain.Origin;
+import pl.api.itoffers.provider.Origin;
 import pl.api.itoffers.shared.utils.clock.ClockInterface;
 
 /**

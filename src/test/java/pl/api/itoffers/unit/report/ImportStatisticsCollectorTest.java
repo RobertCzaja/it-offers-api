@@ -11,7 +11,7 @@ import org.mockito.Mockito;
 import org.slf4j.Logger;
 import pl.api.itoffers.helper.FrozenClock;
 import pl.api.itoffers.helper.assertions.ReportAssert;
-import pl.api.itoffers.offer.domain.Origin;
+import pl.api.itoffers.provider.Origin;
 import pl.api.itoffers.report.ImportStatisticsCollector;
 import pl.api.itoffers.report.ImportStatisticsException;
 

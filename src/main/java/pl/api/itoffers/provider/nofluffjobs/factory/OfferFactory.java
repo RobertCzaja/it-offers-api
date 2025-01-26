@@ -7,8 +7,8 @@ import java.util.stream.Collectors;
 import pl.api.itoffers.offer.domain.Category;
 import pl.api.itoffers.offer.domain.Company;
 import pl.api.itoffers.offer.domain.OfferMetadata;
-import pl.api.itoffers.offer.domain.Origin;
 import pl.api.itoffers.offer.domain.Salary;
+import pl.api.itoffers.provider.Origin;
 import pl.api.itoffers.provider.nofluffjobs.model.NoFluffJobsRawDetailsOffer;
 import pl.api.itoffers.provider.nofluffjobs.model.NoFluffJobsRawListOffer;
 

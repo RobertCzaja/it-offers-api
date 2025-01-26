@@ -14,14 +14,14 @@ import pl.api.itoffers.offer.application.dto.outgoing.OfferDtoDeprecated;
 import pl.api.itoffers.offer.application.repository.OfferReadRepository;
 import pl.api.itoffers.offer.domain.Offer;
 import pl.api.itoffers.offer.domain.Salary;
-import pl.api.itoffers.provider.justjoinit.infrastructure.JustJoinItParameters;
+import pl.api.itoffers.provider.ProviderFacade;
 
 @Repository
 @RequiredArgsConstructor
 public class OfferHibernateReadRepository implements OfferReadRepository {
 
   private final EntityManager em;
-  private final JustJoinItParameters justJoinItParameters;
+  private final ProviderFacade providerFacade;
 
   public List<OfferDtoDeprecated> getBySalary(
       int amountTo,
@@ -76,7 +76,7 @@ public class OfferHibernateReadRepository implements OfferReadRepository {
 
     List<OfferDto> offersDto = new ArrayList<>();
     for (Offer offer : offers) {
-      offersDto.add(OfferDto.createFrom(offer, justJoinItParameters.getOfferUrl(offer.getSlug())));
+      offersDto.add(OfferDto.createFrom(offer, providerFacade.getOfferUrl(offer)));
     }
 
     return offersDto;

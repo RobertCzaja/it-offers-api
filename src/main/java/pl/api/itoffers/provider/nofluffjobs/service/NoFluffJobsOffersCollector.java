@@ -8,7 +8,7 @@ import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Service;
 import pl.api.itoffers.offer.application.service.OfferSaver;
 import pl.api.itoffers.offer.application.service.TechnologiesProvider;
-import pl.api.itoffers.provider.general.OffersCollector;
+import pl.api.itoffers.provider.OffersCollector;
 import pl.api.itoffers.provider.nofluffjobs.exception.NoFluffJobsException;
 import pl.api.itoffers.provider.nofluffjobs.factory.OfferFactory;
 import pl.api.itoffers.provider.nofluffjobs.fetcher.RawDataMatcher;

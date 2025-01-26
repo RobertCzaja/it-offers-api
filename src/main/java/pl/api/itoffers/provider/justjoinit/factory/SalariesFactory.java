@@ -1,4 +1,4 @@
-package pl.api.itoffers.offer.application.factory;
+package pl.api.itoffers.provider.justjoinit.factory;
 
 import java.util.*;
 import org.springframework.stereotype.Service;

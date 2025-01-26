@@ -1,4 +1,4 @@
-package pl.api.itoffers.unit.offer;
+package pl.api.itoffers.unit.provider.justjoinit.factory;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -8,8 +8,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import pl.api.itoffers.helper.assertions.OfferSalaryAssert;
 import pl.api.itoffers.helper.provider.JustJoinItRawOfferBuilder;
-import pl.api.itoffers.offer.application.factory.SalariesFactory;
 import pl.api.itoffers.offer.domain.Salary;
+import pl.api.itoffers.provider.justjoinit.factory.SalariesFactory;
 import pl.api.itoffers.provider.justjoinit.model.JustJoinItRawOffer;
 
 public class SalariesFactoryTest {

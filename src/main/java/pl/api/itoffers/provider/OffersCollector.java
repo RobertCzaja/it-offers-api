@@ -1,4 +1,4 @@
-package pl.api.itoffers.provider.general;
+package pl.api.itoffers.provider;
 
 import org.jetbrains.annotations.NotNull;
 

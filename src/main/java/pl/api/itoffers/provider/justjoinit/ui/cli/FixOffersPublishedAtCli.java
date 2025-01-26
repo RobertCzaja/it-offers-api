@@ -1,4 +1,4 @@
-package pl.api.itoffers.offer.ui.cli;
+package pl.api.itoffers.provider.justjoinit.ui.cli;
 
 import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;

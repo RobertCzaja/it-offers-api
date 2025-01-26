@@ -11,6 +11,7 @@ import pl.api.itoffers.helper.OfferBuilder;
 import pl.api.itoffers.integration.offer.helper.OfferTestManager;
 import pl.api.itoffers.offer.application.repository.OfferRepository;
 import pl.api.itoffers.offer.domain.*;
+import pl.api.itoffers.provider.Origin;
 
 public class OfferModelITest extends AbstractITest {
 

@@ -14,8 +14,8 @@ import pl.api.itoffers.offer.domain.Characteristics;
 import pl.api.itoffers.offer.domain.Company;
 import pl.api.itoffers.offer.domain.Offer;
 import pl.api.itoffers.offer.domain.OfferMetadata;
-import pl.api.itoffers.offer.domain.Origin;
 import pl.api.itoffers.offer.domain.Salary;
+import pl.api.itoffers.provider.Origin;
 import pl.api.itoffers.shared.utils.clock.ClockInterface;
 
 @Service
