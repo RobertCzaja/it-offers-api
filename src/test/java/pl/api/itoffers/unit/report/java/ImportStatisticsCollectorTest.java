@@ -1,4 +1,4 @@
-package pl.api.itoffers.unit.report;
+package pl.api.itoffers.unit.report.java;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.verify;
@@ -12,8 +12,8 @@ import org.slf4j.Logger;
 import pl.api.itoffers.helper.FrozenClock;
 import pl.api.itoffers.helper.assertions.ReportAssert;
 import pl.api.itoffers.provider.Origin;
-import pl.api.itoffers.report.ImportStatisticsCollector;
-import pl.api.itoffers.report.ImportStatisticsException;
+import pl.api.itoffers.report.java.ImportStatisticsCollector;
+import pl.api.itoffers.report.java.ImportStatisticsException;
 
 class ImportStatisticsCollectorTest {
   private static final UUID SCRAPING_ID = UUID.randomUUID();

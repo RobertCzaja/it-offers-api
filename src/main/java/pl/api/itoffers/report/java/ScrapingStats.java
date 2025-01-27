@@ -1,4 +1,4 @@
-package pl.api.itoffers.report;
+package pl.api.itoffers.report.java;
 
 import java.time.Duration;
 import java.time.LocalDateTime;

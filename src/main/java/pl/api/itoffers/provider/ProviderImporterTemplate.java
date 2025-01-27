@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import pl.api.itoffers.offer.application.service.OfferSaver;
 import pl.api.itoffers.offer.application.service.TechnologiesProvider;
+import pl.api.itoffers.report.ImportStatistics;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -13,12 +14,15 @@ public class ProviderImporterTemplate implements ProviderImporter {
   private final OfferDraftProvider offerDraftProvider;
   private final OfferSaver offerSaver;
   private final TechnologiesProvider technologiesProvider;
+  private final ImportStatistics importStatistics;
 
   @Override
   public void importOffers(String customTechnology) {
     UUID scrapingId = UUID.randomUUID();
+    var technologies = technologiesProvider.getTechnologies(customTechnology);
+    importStatistics.start(scrapingId, technologies);
 
-    for (var technology : technologiesProvider.getTechnologies(customTechnology)) {
+    for (var technology : technologies) {
       try {
         providerCollector.collectOffers(scrapingId, technology);
       } catch (Exception e) {

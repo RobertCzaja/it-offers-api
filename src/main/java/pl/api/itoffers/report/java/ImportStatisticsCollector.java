@@ -1,4 +1,4 @@
-package pl.api.itoffers.report;
+package pl.api.itoffers.report.java;
 
 import java.util.HashMap;
 import java.util.Map;

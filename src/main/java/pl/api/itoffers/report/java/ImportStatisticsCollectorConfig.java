@@ -1,4 +1,4 @@
-package pl.api.itoffers.report;
+package pl.api.itoffers.report.java;
 
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
