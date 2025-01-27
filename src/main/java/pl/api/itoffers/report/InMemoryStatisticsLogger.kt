@@ -4,7 +4,7 @@ import org.springframework.stereotype.Service
 
 @Service
 class InMemoryStatisticsLogger : StatisticsLogger {
-    override fun info() {
-        TODO("Not yet implemented")
+    override fun info(message: String) {
+        //todo
     }
 }

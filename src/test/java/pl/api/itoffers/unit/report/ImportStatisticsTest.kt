@@ -19,6 +19,7 @@ class ImportStatisticsTest {
         val technologies = listOf("php","java","ruby")
 
         importStatistics.start(scrapingId, technologies)
+        importStatistics.provider(scrapingId, "JUST_JOIN_IT")
 
         assertEquals("a","a") // todo add real assertions
     }
