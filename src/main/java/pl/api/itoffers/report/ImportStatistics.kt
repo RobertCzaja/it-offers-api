@@ -12,7 +12,7 @@ class ImportStatistics (
     private val metadata: MutableMap<UUID, ImportMetadata> = mutableMapOf()
 
     fun start(scrapingId: UUID, technologies: List<String>) {
-        // todo check if its not already initialized for that UUID
+        importIsNotInitialized(scrapingId)
         val technologiesStats: MutableMap<String, TechnologyStats> = mutableMapOf()
         technologies.forEach { technology ->
             technologiesStats.put(technology, TechnologyStats(technology))
@@ -24,14 +24,18 @@ class ImportStatistics (
 
     fun provider(scrapingId: UUID, providerName: String) {
         importIsInitialized(scrapingId)
-        metadata[scrapingId]?.setProvider(providerName);
+        metadata[scrapingId]?.setProvider(providerName)
     }
 
     private fun importIsInitialized(scrapingId: UUID) {
         if (!metadata.containsKey(scrapingId)) {
-            throw RuntimeException("Import $scrapingId not initialized") // todo switch to custom exception
+            throw ImportStatisticsException.importIsNotInitialized(scrapingId)
         }
     }
 
-
+    private fun importIsNotInitialized(scrapingId: UUID) {
+        if (metadata.containsKey(scrapingId)) {
+            throw ImportStatisticsException.importIsAlreadyInitialized(scrapingId)
+        }
+    }
 }
