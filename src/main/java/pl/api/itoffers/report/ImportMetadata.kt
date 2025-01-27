@@ -12,4 +12,20 @@ class ImportMetadata (
     fun setProvider(providerName: String) {
         this.providerName = providerName;
     }
+
+    fun registerFetchedOffer(technology: String) {
+        technologyExists(technology)
+        technologiesStats[technology]?.registerFetchedOffer()
+    }
+
+    fun registerNewOffer(technology: String) {
+        technologyExists(technology)
+        technologiesStats[technology]?.registerNewOffer()
+    }
+
+    private fun technologyExists(technology: String) {
+        if (!technologiesStats.containsKey(technology)) {
+            throw ImportStatisticsException.technologyDoesNotExist(technology)
+        }
+    }
 }

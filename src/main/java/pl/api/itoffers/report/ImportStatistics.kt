@@ -27,6 +27,16 @@ class ImportStatistics (
         metadata[scrapingId]?.setProvider(providerName)
     }
 
+    fun registerFetchedOffer(scrapingId: UUID, technology: String) {
+        importIsInitialized(scrapingId)
+        metadata[scrapingId]?.registerFetchedOffer(technology);
+    }
+
+    fun registerNewOffer(scrapingId: UUID, technology: String) {
+        importIsInitialized(scrapingId)
+        metadata[scrapingId]?.registerNewOffer(technology);
+    }
+
     private fun importIsInitialized(scrapingId: UUID) {
         if (!metadata.containsKey(scrapingId)) {
             throw ImportStatisticsException.importIsNotInitialized(scrapingId)

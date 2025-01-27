@@ -10,5 +10,8 @@ class ImportStatisticsException(message: String) : Exception(message) {
         fun importIsAlreadyInitialized(scrapingId: UUID): ImportStatisticsException {
             return ImportStatisticsException("Import $scrapingId already initialized")
         }
+        fun technologyDoesNotExist(technology: String): ImportStatisticsException {
+            return ImportStatisticsException("Technology $technology does not exist")
+        }
     }
 }

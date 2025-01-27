@@ -20,6 +20,18 @@ class ImportStatisticsTest {
 
         importStatistics.start(scrapingId, technologies)
         importStatistics.provider(scrapingId, "JUST_JOIN_IT")
+        importStatistics.registerFetchedOffer(scrapingId, "php")
+        importStatistics.registerFetchedOffer(scrapingId, "php")
+        importStatistics.registerFetchedOffer(scrapingId, "php")
+        importStatistics.registerFetchedOffer(scrapingId, "java")
+        importStatistics.registerFetchedOffer(scrapingId, "java")
+        importStatistics.registerFetchedOffer(scrapingId, "java")
+        importStatistics.registerFetchedOffer(scrapingId, "java")
+        importStatistics.registerNewOffer(scrapingId, "php")
+        importStatistics.registerNewOffer(scrapingId, "php")
+        importStatistics.registerNewOffer(scrapingId, "java")
+        importStatistics.registerNewOffer(scrapingId, "java")
+        importStatistics.registerNewOffer(scrapingId, "java")
 
         assertEquals("a","a") // todo add real assertions
     }
