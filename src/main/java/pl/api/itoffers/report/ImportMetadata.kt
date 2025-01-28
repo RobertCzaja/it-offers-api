@@ -8,9 +8,23 @@ class ImportMetadata (
     val technologiesStats: MutableMap<String, TechnologyStats>,
     var providerName: String? = null,
 ) {
-
     fun setProvider(providerName: String) {
         this.providerName = providerName;
+    }
+
+    fun finish(finishedAt: LocalDateTime): String {
+
+        var report = buildString {
+            append("Started at: $startedAt\n")
+            append("Finished at: $finishedAt\n")
+            append("Technologies:\n")
+        }
+
+        for ((technology, stats) in technologiesStats) {
+            report += "$technology: fetched: ${stats.fetchedOffersCount}, new: ${stats.savedNewOffersCount}\n"
+        }
+
+        return report
     }
 
     fun registerFetchedOffer(technology: String) {

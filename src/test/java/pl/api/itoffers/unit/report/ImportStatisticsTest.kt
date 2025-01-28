@@ -1,16 +1,18 @@
 package pl.api.itoffers.unit.report;
 
-import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Test
 import pl.api.itoffers.helper.FrozenClock
 import pl.api.itoffers.report.ImportStatistics
 import pl.api.itoffers.report.InMemoryStatisticsLogger
-import java.util.UUID
+import java.time.LocalDateTime
+import java.util.*
 
 
 class ImportStatisticsTest {
 
-    private val importStatistics = ImportStatistics(FrozenClock(), InMemoryStatisticsLogger());
+    private val frozenClock = FrozenClock()
+    private val importStatistics = ImportStatistics(frozenClock, InMemoryStatisticsLogger())
 
     @Test
     fun `is able to generate report from gathered statistics`() {
@@ -32,6 +34,8 @@ class ImportStatisticsTest {
         importStatistics.registerNewOffer(scrapingId, "java")
         importStatistics.registerNewOffer(scrapingId, "java")
         importStatistics.registerNewOffer(scrapingId, "java")
+        frozenClock.setNow(LocalDateTime.of(2025, 1, 10, 17, 31, 28))
+        val report = importStatistics.finish(scrapingId)
 
         assertEquals("a","a") // todo add real assertions
     }

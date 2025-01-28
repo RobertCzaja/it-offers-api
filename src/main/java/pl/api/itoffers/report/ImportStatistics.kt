@@ -22,6 +22,14 @@ class ImportStatistics (
         log.info("Import started: $scrapingId")
     }
 
+    fun finish(scrapingId: UUID) {
+        importIsInitialized(scrapingId)
+        val report = metadata[scrapingId]?.finish(clock.now())
+        metadata.remove(scrapingId)
+
+        // todo log/send email
+    }
+
     fun provider(scrapingId: UUID, providerName: String) {
         importIsInitialized(scrapingId)
         metadata[scrapingId]?.setProvider(providerName)

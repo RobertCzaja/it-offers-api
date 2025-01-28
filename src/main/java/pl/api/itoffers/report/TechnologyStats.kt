@@ -3,8 +3,10 @@ package pl.api.itoffers.report
 class TechnologyStats (
     val name: String
 ) {
-    private var fetchedOffersCount: Int = 0;
-    private var savedNewOffersCount: Int = 0;
+    var fetchedOffersCount: Int = 0
+        private set
+    var savedNewOffersCount: Int = 0
+        private set
 
     fun registerFetchedOffer() {
         fetchedOffersCount++;
