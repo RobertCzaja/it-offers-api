@@ -6,8 +6,8 @@ import java.util.UUID
 
 @Service
 class ImportStatistics (
-    val clock: ClockInterface,
-    val log: StatisticsLogger
+    private val clock: ClockInterface,
+    private val log: StatisticsNotifier
 ) {
     private val metadata: MutableMap<UUID, ImportMetadata> = mutableMapOf()
 
@@ -18,16 +18,16 @@ class ImportStatistics (
             technologiesStats.put(technology, TechnologyStats(technology))
         }
 
-        metadata[scrapingId] = ImportMetadata(clock.now(), technologiesStats)
-        log.info("Import started: $scrapingId")
+        metadata[scrapingId] = ImportMetadata(scrapingId, clock.now(), technologiesStats)
     }
 
     fun finish(scrapingId: UUID) {
         importIsInitialized(scrapingId)
         val report = metadata[scrapingId]?.finish(clock.now())
+        if (null != report) {
+            log.notify(report)
+        }
         metadata.remove(scrapingId)
-
-        // todo log/send email
     }
 
     fun provider(scrapingId: UUID, providerName: String) {

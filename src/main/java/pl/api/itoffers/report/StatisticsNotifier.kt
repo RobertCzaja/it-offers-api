@@ -1,5 +1,7 @@
 package pl.api.itoffers.report
 
-interface StatisticsLogger {
+interface StatisticsNotifier {
     fun info (message: String)
+
+    fun notify(report: String)
 }

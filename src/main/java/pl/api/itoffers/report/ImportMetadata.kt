@@ -1,22 +1,28 @@
 package pl.api.itoffers.report
 
+import java.time.Duration
 import java.time.LocalDateTime
 import java.util.*
 
 class ImportMetadata (
-    val startedAt: LocalDateTime,
-    val technologiesStats: MutableMap<String, TechnologyStats>,
-    var providerName: String? = null,
+    private val scrapingId: UUID,
+    private val startedAt: LocalDateTime,
+    private val technologiesStats: MutableMap<String, TechnologyStats>,
+    private var providerName: String? = null,
 ) {
     fun setProvider(providerName: String) {
         this.providerName = providerName;
     }
 
     fun finish(finishedAt: LocalDateTime): String {
-
+        val duration = Duration.between(startedAt, finishedAt)
         var report = buildString {
+            append("Scraping ID: $scrapingId\n")
+            append("Provider: $providerName\n")
             append("Started at: $startedAt\n")
             append("Finished at: $finishedAt\n")
+            append("Duration: ${duration.toMinutes()}m ${duration.toSeconds() % 60}s\n")
+            append("\n")
             append("Technologies:\n")
         }
 
