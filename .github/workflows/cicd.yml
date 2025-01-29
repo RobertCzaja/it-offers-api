@@ -54,6 +54,8 @@ jobs:
         AWS_S3_SECRET_KEY: someSecret
         AWS_S3_BUCKET: someBucket
         CORS_ORIGIN: "*"
+        APP_EMAIL_ADDRESS: some@email.com
+        APP_EMAIL_PASSWORD: example
 
     - name: Save artifact
       uses: actions/upload-artifact@v4
