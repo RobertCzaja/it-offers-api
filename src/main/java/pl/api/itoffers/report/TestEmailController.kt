@@ -1,6 +1,5 @@
 package pl.api.itoffers.report
 
-import org.springframework.mail.javamail.JavaMailSender
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RestController
 
@@ -9,11 +8,11 @@ import org.springframework.web.bind.annotation.RestController
  */
 @RestController
 class TestEmailController (
-    private val mailSender: JavaMailSender
+    private val emailNotifier: EmailStatisticsNotifier
 ) {
-
     @GetMapping("/email")
     fun sendEmail(): String {
+        emailNotifier.notify("TestEmail")
         return "Email sent";
     }
 }

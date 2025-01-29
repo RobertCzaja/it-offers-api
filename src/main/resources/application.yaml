@@ -61,3 +61,5 @@ application:
       origin: https://justjoin.it
     no-fluff-jobs:
       origin: https://nofluffjobs.com
+  report:
+    destinationEmail: ${REPORT_TO_EMAIL}
