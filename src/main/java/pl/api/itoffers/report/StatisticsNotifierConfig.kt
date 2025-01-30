@@ -9,14 +9,19 @@ import pl.api.itoffers.shared.utils.clock.ClockInterface
 @Configuration
 open class StatisticsNotifierConfig {
 
-    @Bean
-    open fun inMemoryStatisticsNotifier(): InMemoryStatisticsNotifier {
-        return InMemoryStatisticsNotifier()
-    }
+//    @Bean
+//    open fun inMemoryStatisticsNotifier(): InMemoryStatisticsNotifier {
+//        return InMemoryStatisticsNotifier()
+//    }
+//
+//    @Bean
+//    @Primary
+//    open fun emailStatisticsNotifier(mailSender: JavaMailSender): EmailStatisticsNotifier {
+//        return EmailStatisticsNotifier(mailSender)
+//    }
 
     @Bean
-    @Primary
-    open fun emailStatisticsNotifier(mailSender: JavaMailSender): EmailStatisticsNotifier {
+    open fun statisticsNotifier(mailSender: JavaMailSender): StatisticsNotifier {
         return EmailStatisticsNotifier(mailSender)
     }
 
@@ -24,5 +29,4 @@ open class StatisticsNotifierConfig {
     open fun importStatistics(emailStatisticsNotifier: EmailStatisticsNotifier, clock: ClockInterface): ImportStatistics {
         return ImportStatistics(clock, emailStatisticsNotifier)
     }
-
 }
