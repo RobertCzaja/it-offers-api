@@ -6,7 +6,6 @@ import org.springframework.mail.javamail.JavaMailSender
 import org.springframework.mail.javamail.MimeMessageHelper
 import org.springframework.stereotype.Service
 
-@Primary
 @Service
 class EmailStatisticsNotifier(
     private val mailSender: JavaMailSender
