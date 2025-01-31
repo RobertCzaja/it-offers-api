@@ -56,6 +56,7 @@ jobs:
         CORS_ORIGIN: "*"
         APP_EMAIL_ADDRESS: some@email.com
         APP_EMAIL_PASSWORD: example
+        REPORT_TO_EMAIL: some@email.com
 
     - name: Save artifact
       uses: actions/upload-artifact@v4
