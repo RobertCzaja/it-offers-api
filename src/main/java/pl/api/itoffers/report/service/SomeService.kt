@@ -7,5 +7,5 @@ import org.springframework.stereotype.Service
 class SomeService {
 
     @Value("\${application.report.destinationEmail}")
-    private val reportToEmail: String? = null
+    lateinit var reportToEmail: String
 }
