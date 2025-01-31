@@ -14,8 +14,8 @@ open class StatisticsNotifierConfig {
 //    }
 
     @Bean
-    open fun emailStatisticsNotifier(javaMailSender: JavaMailSender): EmailStatisticsNotifier {
-        return EmailStatisticsNotifier(javaMailSender)
+    open fun emailStatisticsNotifier(/*javaMailSender: JavaMailSender*/): EmailStatisticsNotifier {
+        return EmailStatisticsNotifier(/*javaMailSender*/)
     }
 
     @Bean
