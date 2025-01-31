@@ -8,12 +8,12 @@ import org.springframework.stereotype.Service
 @Service
 class EmailStatisticsNotifier(
     //private val mailSender: JavaMailSender
-) : StatisticsNotifier {
+) /*: StatisticsNotifier*/ {
 
     @Value("\${application.report.destinationEmail}")
     private val reportToEmail: String? = null
 
-    override fun notify(report: String) {
+    /*override*/ fun notify(report: String) {
 
 //        val emailTitle = "It Offers Import"
 //        if (null == reportToEmail) {
