@@ -9,16 +9,16 @@ import pl.api.itoffers.shared.utils.clock.ClockInterface
 @Configuration
 open class StatisticsNotifierConfig {
 
-//    @Bean
-//    open fun inMemoryStatisticsNotifier(): InMemoryStatisticsNotifier {
-//        return InMemoryStatisticsNotifier()
-//    }
-//
-//    @Bean
-//    @Primary
-//    open fun emailStatisticsNotifier(mailSender: JavaMailSender): EmailStatisticsNotifier {
-//        return EmailStatisticsNotifier(mailSender)
-//    }
+    @Bean
+    open fun inMemoryStatisticsNotifier(): InMemoryStatisticsNotifier {
+        return InMemoryStatisticsNotifier()
+    }
+
+    @Bean
+    @Primary
+    open fun emailStatisticsNotifier(mailSender: JavaMailSender): EmailStatisticsNotifier {
+        return EmailStatisticsNotifier(mailSender)
+    }
 
     @Bean
     open fun statisticsNotifier(mailSender: JavaMailSender): StatisticsNotifier {
