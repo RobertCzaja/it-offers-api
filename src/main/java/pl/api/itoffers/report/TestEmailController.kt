@@ -8,11 +8,11 @@ import org.springframework.web.bind.annotation.RestController
  */
 @RestController
 class TestEmailController (
-    private val statisticsNotifier: StatisticsNotifier
+    //private val statisticsNotifier: StatisticsNotifier
 ) {
     @GetMapping("/email")
     fun sendEmail(): String {
-        statisticsNotifier.notify("TestEmail")
+        //statisticsNotifier.notify("TestEmail")
         return "Email sent";
     }
 }
