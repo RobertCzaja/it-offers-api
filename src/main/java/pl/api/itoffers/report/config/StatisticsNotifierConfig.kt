@@ -15,13 +15,13 @@ open class StatisticsNotifierConfig {
 //        return TestEmailController(InMemoryStatisticsNotifier());
 //    }
 
-    @Bean
-    open fun emailStatisticsNotifier(/*javaMailSender: JavaMailSender*/): EmailStatisticsNotifier {
-        return EmailStatisticsNotifier(/*javaMailSender*/)
-    }
-
-    @Bean
-    open fun importStatistics(clock: ClockInterface): ImportStatistics {
-        return ImportStatistics(clock, InMemoryStatisticsNotifier())
-    }
+//    @Bean
+//    open fun emailStatisticsNotifier(/*javaMailSender: JavaMailSender*/): EmailStatisticsNotifier {
+//        return EmailStatisticsNotifier(/*javaMailSender*/)
+//    }
+//
+//    @Bean
+//    open fun importStatistics(clock: ClockInterface): ImportStatistics {
+//        return ImportStatistics(clock, InMemoryStatisticsNotifier())
+//    }
 }
