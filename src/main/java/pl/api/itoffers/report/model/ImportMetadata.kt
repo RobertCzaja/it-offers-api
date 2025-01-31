@@ -1,5 +1,6 @@
-package pl.api.itoffers.report
+package pl.api.itoffers.report.model
 
+import pl.api.itoffers.report.exception.ImportStatisticsException
 import java.time.Duration
 import java.time.LocalDateTime
 import java.util.*

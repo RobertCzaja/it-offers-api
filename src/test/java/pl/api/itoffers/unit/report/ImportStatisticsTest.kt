@@ -4,9 +4,9 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import pl.api.itoffers.helper.FrozenClock
-import pl.api.itoffers.report.ImportStatistics
-import pl.api.itoffers.report.ImportStatisticsException
-import pl.api.itoffers.report.InMemoryStatisticsNotifier
+import pl.api.itoffers.report.service.ImportStatistics
+import pl.api.itoffers.report.exception.ImportStatisticsException
+import pl.api.itoffers.report.service.InMemoryStatisticsNotifier
 import java.time.LocalDateTime
 import java.util.*
 

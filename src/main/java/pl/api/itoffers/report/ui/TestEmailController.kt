@@ -1,4 +1,4 @@
-package pl.api.itoffers.report
+package pl.api.itoffers.report.ui
 
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RestController

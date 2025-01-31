@@ -1,4 +1,4 @@
-package pl.api.itoffers.report;
+package pl.api.itoffers.report.exception;
 
 import java.util.UUID
 

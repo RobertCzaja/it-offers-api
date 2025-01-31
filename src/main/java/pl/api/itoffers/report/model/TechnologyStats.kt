@@ -1,4 +1,4 @@
-package pl.api.itoffers.report
+package pl.api.itoffers.report.model
 
 class TechnologyStats (
     val name: String

@@ -1,11 +1,12 @@
-package pl.api.itoffers.report
+package pl.api.itoffers.report.service
 
 import org.springframework.stereotype.Component
-import org.springframework.stereotype.Service
+import pl.api.itoffers.report.exception.ImportStatisticsException
+import pl.api.itoffers.report.model.TechnologyStats
+import pl.api.itoffers.report.model.ImportMetadata
 import pl.api.itoffers.shared.utils.clock.ClockInterface
 import java.util.UUID
 
-@Component
 class ImportStatistics (
     private val clock: ClockInterface,
     private val log: StatisticsNotifier

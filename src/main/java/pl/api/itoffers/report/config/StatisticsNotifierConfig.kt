@@ -1,8 +1,10 @@
-package pl.api.itoffers.report
+package pl.api.itoffers.report.config
 
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
-import org.springframework.mail.javamail.JavaMailSender
+import pl.api.itoffers.report.service.EmailStatisticsNotifier
+import pl.api.itoffers.report.service.ImportStatistics
+import pl.api.itoffers.report.service.InMemoryStatisticsNotifier
 import pl.api.itoffers.shared.utils.clock.ClockInterface
 
 @Configuration
