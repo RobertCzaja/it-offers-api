@@ -22,7 +22,11 @@ public class NoFluffJobsException extends RuntimeException {
   }
 
   public static NoFluffJobsException onFetchingHtmlPage(Throwable t) {
-    return new NoFluffJobsException("On fetching HTML page", t);
+    return new NoFluffJobsException(
+        String.format(
+            "On fetching HTML page - %s with a message: %s",
+            t.getClass().getName(), t.getMessage()),
+        t);
   }
 
   public static NoFluffJobsException onMappingToDomainModel(String field, String json) {

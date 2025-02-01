@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.util.UUID;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import pl.api.itoffers.data.jjit.JustJoinItParams;
@@ -15,6 +16,7 @@ import pl.api.itoffers.provider.justjoinit.service.JustJoinItOffersFetcher;
 import pl.api.itoffers.provider.justjoinit.service.JustJoinItProvider;
 import pl.api.itoffers.provider.justjoinit.service.v2.JustJoinItOffersFetcherV2;
 import pl.api.itoffers.provider.justjoinit.service.v2.PayloadFromJsonExtractor;
+import pl.api.itoffers.report.service.ImportStatistics;
 
 public class JustJoinItProviderV2ITest extends AbstractITest {
 
@@ -34,7 +36,8 @@ public class JustJoinItProviderV2ITest extends AbstractITest {
     this.provider =
         new JustJoinItProvider(
             new JustJoinItOffersFetcherV2(this.connector, new PayloadFromJsonExtractor()),
-            this.repository);
+            this.repository,
+            Mockito.mock(ImportStatistics.class));
   }
 
   @Test

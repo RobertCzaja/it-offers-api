@@ -9,6 +9,7 @@ import pl.api.itoffers.provider.nofluffjobs.exception.NoFluffJobsException;
 import pl.api.itoffers.provider.nofluffjobs.fetcher.details.NoFluffJobsDetailsProvider;
 import pl.api.itoffers.provider.nofluffjobs.fetcher.list.NoFluffJobsListProvider;
 import pl.api.itoffers.provider.nofluffjobs.repository.NoFluffJobsListOfferRepository;
+import pl.api.itoffers.report.service.ImportStatistics;
 
 @Slf4j
 @Service
@@ -18,6 +19,7 @@ public class NoFluffJobsProviderCollector implements ProviderCollector {
   private final NoFluffJobsListProvider listProvider;
   private final NoFluffJobsListOfferRepository listOfferRepository;
   private final NoFluffJobsDetailsProvider detailsProvider;
+  private final ImportStatistics importStatistics;
 
   @Override
   public void collectOffers(UUID scrapingId, String technology) {
@@ -30,6 +32,7 @@ public class NoFluffJobsProviderCollector implements ProviderCollector {
 
               try {
                 detailsProvider.fetch(slug, listOffer.getScrapingId(), listOffer.getOfferId());
+                importStatistics.registerFetchedOffer(listOffer.getScrapingId(), technology);
               } catch (NoFluffJobsException e) {
                 log.error("Error on fetching details offer: {}", e.getMessage());
               }
