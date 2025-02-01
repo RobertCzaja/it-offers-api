@@ -4,6 +4,7 @@ import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import pl.api.itoffers.provider.Origin;
 import pl.api.itoffers.provider.ProviderCollector;
 import pl.api.itoffers.provider.nofluffjobs.exception.NoFluffJobsException;
 import pl.api.itoffers.provider.nofluffjobs.fetcher.details.NoFluffJobsDetailsProvider;
@@ -37,5 +38,10 @@ public class NoFluffJobsProviderCollector implements ProviderCollector {
                 log.error("Error on fetching details offer: {}", e.getMessage());
               }
             });
+  }
+
+  @Override
+  public String providerName() {
+    return Origin.Provider.NO_FLUFF_JOBS.name();
   }
 }

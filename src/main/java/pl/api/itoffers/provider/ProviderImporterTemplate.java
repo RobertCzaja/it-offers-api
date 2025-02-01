@@ -21,6 +21,7 @@ public class ProviderImporterTemplate implements ProviderImporter {
     UUID scrapingId = UUID.randomUUID();
     var technologies = technologiesProvider.getTechnologies(customTechnology);
     importStatistics.start(scrapingId, technologies);
+    importStatistics.provider(scrapingId, providerCollector.providerName());
 
     for (var technology : technologies) {
       try {
