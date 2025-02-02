@@ -43,6 +43,9 @@ spring:
           auth: true
           starttls:
             enable: true
+  freemarker:
+    template-loader-path: classpath:/templates/
+    suffix: .ftl
 jwt:
   token:
     secret: ${JWT_SECRET}
