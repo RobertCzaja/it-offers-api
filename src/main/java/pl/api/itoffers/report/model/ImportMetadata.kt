@@ -3,6 +3,7 @@ package pl.api.itoffers.report.model
 import pl.api.itoffers.report.exception.ImportStatisticsException
 import java.time.Duration
 import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 import java.util.*
 
 class ImportMetadata (
@@ -11,11 +12,18 @@ class ImportMetadata (
     private val technologiesStats: MutableMap<String, TechnologyStats>,
     private var providerName: String? = null,
 ) {
+    companion object {
+        const val DATE_FORMAT = "yyyy-MM-dd"
+        const val TIME_FORMAT = "HH:mm:ss"
+    }
+
+    @Deprecated("to remove - pass through constructor")
     fun setProvider(providerName: String) {
         this.providerName = providerName;
     }
 
-    fun finish(finishedAt: LocalDateTime): String {
+    @Deprecated("to remove - use the new version")
+    fun finishDeprecated(finishedAt: LocalDateTime): String {
         val duration = Duration.between(startedAt, finishedAt)
         var report = buildString {
             append("Scraping ID: $scrapingId\n")
@@ -31,6 +39,23 @@ class ImportMetadata (
             report += "$technology: fetched: ${stats.fetchedOffersCount}, new: ${stats.savedNewOffersCount}\n"
         }
 
+        return report
+    }
+
+    fun finish(finishedAt: LocalDateTime): Map<String, Any> {
+        val duration = Duration.between(startedAt, finishedAt)
+
+        val report = mapOf<String, Any>(
+            "title" to "✅ $providerName Import",
+            "scrapingId" to scrapingId.toString(),
+            "day" to startedAt.format(DateTimeFormatter.ofPattern(DATE_FORMAT)),
+            "from" to startedAt.format(DateTimeFormatter.ofPattern(TIME_FORMAT)),
+            "to" to finishedAt.format(DateTimeFormatter.ofPattern(TIME_FORMAT)),
+            "duration" to "${duration.toMinutes()}m ${duration.toSeconds() % 60}s",
+            "technologies" to technologiesStats.mapValues {
+                mapOf("fetched" to it.value.fetchedOffersCount, "new" to it.value.savedNewOffersCount)
+            }.toMutableMap(),
+        )
         return report
     }
 
