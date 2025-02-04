@@ -25,6 +25,17 @@
 </table>
 <br />
 <table style="border:1px solid black;">
+    <tr style="border:1px solid black;">
+        <th style="border:1px solid black;">
+            <strong>technology</strong>
+        </th>
+        <th style="border:1px solid black;">
+            <strong>fetched</strong>
+        </th>
+        <th style="border:1px solid black;">
+            <strong>new</strong>
+        </th>
+    </tr>
     <#list technologies?keys as technology>
         <tr style="border:1px solid black; <#if technologies[technology].new != 0>background-color: limegreen;</#if>">
             <td style="border:1px solid black; min-width: 50px">
