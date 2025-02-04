@@ -1,5 +1,8 @@
 package pl.api.itoffers.report.service
 
 interface StatisticsNotifier {
-    fun notify(report: String)
+    @Deprecated("to remove")
+    fun notifyDeprecated(report: String)
+
+    fun notify(reportDetails: Map<String, Any>);
 }

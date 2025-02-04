@@ -6,15 +6,15 @@ import org.junit.jupiter.api.assertThrows
 import pl.api.itoffers.helper.FrozenClock
 import pl.api.itoffers.report.service.ImportStatistics
 import pl.api.itoffers.report.exception.ImportStatisticsException
-import pl.api.itoffers.report.service.InMemoryStatisticsNotifier
+import pl.api.itoffers.report.service.statisticsNotifier.InMemoryStatisticsNotifier
 import java.time.LocalDateTime
 import java.util.*
 
 
 class ImportStatisticsTest {
 
-    private val scrapingId = UUID.fromString("10098463-49d1-4794-95ed-cf0cda286002")
-    private val technologies = listOf("php","java","ruby")
+    private val scrapingId = UUID.fromString("12994bf4-a862-4f3f-8458-df8c3c10d765")
+    private val technologies = listOf("php","java","go", "devops")
     private val frozenClock = FrozenClock()
     private val inMemoryNotifier = InMemoryStatisticsNotifier()
     private val importStatistics = ImportStatistics(frozenClock, inMemoryNotifier)
@@ -22,36 +22,20 @@ class ImportStatisticsTest {
     @Test
     fun `is able to generate report from gathered statistics`() {
 
+        frozenClock.setNow(LocalDateTime.of(2025,2,1,6,0,0,680000000))
         importStatistics.start(scrapingId, technologies)
-        importStatistics.provider(scrapingId, "JUST_JOIN_IT")
-        importStatistics.registerFetchedOffer(scrapingId, "php")
-        importStatistics.registerFetchedOffer(scrapingId, "php")
-        importStatistics.registerFetchedOffer(scrapingId, "php")
-        importStatistics.registerFetchedOffer(scrapingId, "java")
-        importStatistics.registerFetchedOffer(scrapingId, "java")
-        importStatistics.registerFetchedOffer(scrapingId, "java")
-        importStatistics.registerFetchedOffer(scrapingId, "java")
-        importStatistics.registerNewOffer(scrapingId, "php")
-        importStatistics.registerNewOffer(scrapingId, "php")
-        importStatistics.registerNewOffer(scrapingId, "java")
-        importStatistics.registerNewOffer(scrapingId, "java")
-        importStatistics.registerNewOffer(scrapingId, "java")
-        frozenClock.setNow(LocalDateTime.of(2025, 1, 10, 17, 31, 28))
+        importStatistics.provider(scrapingId, "NO_FLUFF_JOBS")
+        repeat(20) { importStatistics.registerFetchedOffer(scrapingId, "php") }
+        repeat(20) { importStatistics.registerFetchedOffer(scrapingId, "java") }
+        repeat(20) { importStatistics.registerFetchedOffer(scrapingId, "go") }
+        repeat(20) { importStatistics.registerFetchedOffer(scrapingId, "devops") }
+        repeat(2) { importStatistics.registerNewOffer(scrapingId, "java") }
+        repeat(20) { importStatistics.registerNewOffer(scrapingId, "devops") }
+        frozenClock.setNow(LocalDateTime.of(2025,2,1,6,0,44,680000000))
         importStatistics.finish(scrapingId)
         importStatistics.start(scrapingId, technologies)
 
-        assertEquals(
-            "Scraping ID: 10098463-49d1-4794-95ed-cf0cda286002\n"+
-                    "Provider: JUST_JOIN_IT\n"+
-                    "Started at: 2025-01-10T17:28:05\n"+
-                    "Finished at: 2025-01-10T17:31:28\n"+
-                    "Duration: 3m 23s\n\n"+
-                    "Technologies:\n"+
-                    "php: fetched: 3, new: 2\n"+
-                    "java: fetched: 4, new: 3\n"+
-                    "ruby: fetched: 0, new: 0\n",
-            inMemoryNotifier.report
-        )
+        assertEquals(ImportMetadataResult.getMap(), inMemoryNotifier.reportDetails)
     }
 
     @Test

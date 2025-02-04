@@ -27,8 +27,10 @@ open class ImportStatistics (
     fun finish(scrapingId: UUID) {
         importIsInitialized(scrapingId)
         val report = metadata[scrapingId]?.finishDeprecated(clock.now())
-        if (null != report) {
-            log.notify(report)
+        var newReport = metadata[scrapingId]?.finish(clock.now())
+        if (null != report && null != newReport) {
+            //log.notifyDeprecated(report)
+            log.notify(newReport)
         }
         metadata.remove(scrapingId)
     }

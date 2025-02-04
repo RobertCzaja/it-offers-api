@@ -1,4 +1,4 @@
-package pl.api.itoffers.report.service
+package pl.api.itoffers.report.service.statisticsNotifier
 
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Primary
@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Profile
 import org.springframework.mail.javamail.JavaMailSender
 import org.springframework.mail.javamail.MimeMessageHelper
 import org.springframework.stereotype.Service
+import pl.api.itoffers.report.service.StatisticsNotifier
 
 @Primary
 @Service
@@ -17,7 +18,8 @@ class EmailStatisticsNotifier(
     @Value("\${application.report.destinationEmail}")
     private val reportToEmail: String? = null
 
-    override fun notify(report: String) {
+    @Deprecated("to remove")
+    override fun notifyDeprecated(report: String) {
         val emailTitle = "It Offers Import"
         if (null == reportToEmail) {
             throw RuntimeException("Reporter email needs to be provided")
@@ -31,5 +33,15 @@ class EmailStatisticsNotifier(
         helper.setText(report, true)
 
         mailSender.send(message)
+    }
+
+    override fun notify(reportDetails: Map<String, Any>) {
+        if (null == reportToEmail) {
+            throw RuntimeException("Reporter email needs to be provided")
+        }
+
+        val title = reportDetails["title"]
+
+        // todo
     }
 }
