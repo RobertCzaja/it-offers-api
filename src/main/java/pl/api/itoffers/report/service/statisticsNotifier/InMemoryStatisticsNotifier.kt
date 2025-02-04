@@ -7,14 +7,7 @@ import pl.api.itoffers.report.service.StatisticsNotifier
 @Service
 @Profile("test")
 class InMemoryStatisticsNotifier : StatisticsNotifier {
-
-    var report: String? = null
     var reportDetails: Map<String, Any>? = null
-
-    @Deprecated("to remove")
-    override fun notifyDeprecated(report: String) {
-        this.report = report
-    }
 
     override fun notify(reportDetails: Map<String, Any>) {
         this.reportDetails = reportDetails

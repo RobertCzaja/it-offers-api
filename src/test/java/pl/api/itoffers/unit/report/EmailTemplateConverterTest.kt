@@ -3,17 +3,13 @@ package pl.api.itoffers.unit.report
 import org.junit.Test
 import org.junit.Assert.assertTrue
 import pl.api.itoffers.report.factory.FreeMakerFactory
-import java.io.StringWriter
+import pl.api.itoffers.report.service.EmailTemplateConverter
 
-class GenerateEmailHtmlTest {
+class EmailTemplateConverterTest {
 
     @Test
     fun `generates email content based on html template`() {
-        val freemarkerConfig = FreeMakerFactory.create()
-        val template = freemarkerConfig.getTemplate("import-report.ftl")
-        val writer = StringWriter()
-        template.process(ImportMetadataResult.getMap(), writer)
-        val emailHtmlContent = writer.toString()
+        val emailHtmlContent = EmailTemplateConverter(FreeMakerFactory.create()).convert(ImportMetadataResult.getMap())
 
         assertTrue(emailHtmlContent.contains("✅ NO_FLUFF_JOBS Import"))
         assertTrue(emailHtmlContent.contains("12994bf4-a862-4f3f-8458-df8c3c10d765"))

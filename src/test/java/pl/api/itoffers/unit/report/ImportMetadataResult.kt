@@ -15,6 +15,6 @@ object ImportMetadataResult {
                 "go" to mapOf("fetched" to 20, "new" to 0),
                 "devops" to mapOf("fetched" to 20, "new" to 20),
             ),
-        );
+        )
     }
 }

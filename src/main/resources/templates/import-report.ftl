@@ -12,7 +12,6 @@
     <title>${title}</title>
 </head>
 <body>
-<h1>${title}</h1>
 <table>
     <tr>
         <td>Scraping ID</td>

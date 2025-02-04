@@ -6,42 +6,34 @@ import org.springframework.context.annotation.Profile
 import org.springframework.mail.javamail.JavaMailSender
 import org.springframework.mail.javamail.MimeMessageHelper
 import org.springframework.stereotype.Service
+import pl.api.itoffers.report.service.EmailTemplateConverter
 import pl.api.itoffers.report.service.StatisticsNotifier
 
 @Primary
 @Service
 @Profile("!test")
 class EmailStatisticsNotifier(
-    private val mailSender: JavaMailSender
+    private val mailSender: JavaMailSender,
+    private val emailTemplateConverter: EmailTemplateConverter
 ): StatisticsNotifier {
 
     @Value("\${application.report.destinationEmail}")
     private val reportToEmail: String? = null
-
-    @Deprecated("to remove")
-    override fun notifyDeprecated(report: String) {
-        val emailTitle = "It Offers Import"
-        if (null == reportToEmail) {
-            throw RuntimeException("Reporter email needs to be provided")
-        }
-
-        val message = mailSender.createMimeMessage()
-        val helper = MimeMessageHelper(message, true)
-
-        helper.setTo(reportToEmail)
-        helper.setSubject(emailTitle)
-        helper.setText(report, true)
-
-        mailSender.send(message)
-    }
 
     override fun notify(reportDetails: Map<String, Any>) {
         if (null == reportToEmail) {
             throw RuntimeException("Reporter email needs to be provided")
         }
 
-        val title = reportDetails["title"]
+        val title = reportDetails["title"] as? String ?: "Import report"
 
-        // todo
+        val message = mailSender.createMimeMessage()
+        val helper = MimeMessageHelper(message, true)
+
+        helper.setTo(reportToEmail)
+        helper.setSubject(title)
+        helper.setText(emailTemplateConverter.convert(reportDetails), true)
+
+        mailSender.send(message)
     }
 }
