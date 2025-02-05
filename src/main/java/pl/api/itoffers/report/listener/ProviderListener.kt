@@ -6,6 +6,7 @@ import pl.api.itoffers.provider.FetchDetailsFailedEvent
 import pl.api.itoffers.provider.FetchListFailedEvent
 import pl.api.itoffers.provider.ImportFinishedEvent
 import pl.api.itoffers.provider.ImportStartedEvent
+import pl.api.itoffers.provider.OfferFetchedEvent
 import pl.api.itoffers.report.service.ImportStatistics
 
 @Component
@@ -26,5 +27,9 @@ class ProviderListener (
 
     @EventListener
     fun fetchDetailsFailedEvent(event: FetchDetailsFailedEvent) {
+    }
+
+    @EventListener
+    fun offerFetched(event: OfferFetchedEvent) {
     }
 }
