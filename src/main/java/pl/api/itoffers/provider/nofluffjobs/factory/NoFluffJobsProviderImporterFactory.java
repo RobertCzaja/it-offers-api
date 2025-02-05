@@ -1,6 +1,7 @@
 package pl.api.itoffers.provider.nofluffjobs.factory;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import pl.api.itoffers.offer.application.service.OfferSaver;
 import pl.api.itoffers.offer.application.service.TechnologiesProvider;
@@ -18,9 +19,15 @@ public class NoFluffJobsProviderImporterFactory {
   private final OfferSaver offerSaver;
   private final TechnologiesProvider technologiesProvider;
   private final ImportStatistics importStatistics;
+  private final ApplicationEventPublisher publisher;
 
   public ProviderImporterTemplate create() {
     return new ProviderImporterTemplate(
-        collector, offerDraftProvider, offerSaver, technologiesProvider, importStatistics);
+        collector,
+        offerDraftProvider,
+        offerSaver,
+        technologiesProvider,
+        importStatistics,
+        publisher);
   }
 }

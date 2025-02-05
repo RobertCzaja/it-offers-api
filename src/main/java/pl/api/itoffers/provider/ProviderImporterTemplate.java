@@ -3,6 +3,7 @@ package pl.api.itoffers.provider;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.ApplicationEventPublisher;
 import pl.api.itoffers.offer.application.service.OfferSaver;
 import pl.api.itoffers.offer.application.service.TechnologiesProvider;
 import pl.api.itoffers.report.service.ImportStatistics;
@@ -15,6 +16,7 @@ public class ProviderImporterTemplate implements ProviderImporter {
   private final OfferSaver offerSaver;
   private final TechnologiesProvider technologiesProvider;
   private final ImportStatistics importStatistics;
+  private final ApplicationEventPublisher publisher;
 
   @Override
   public void importOffers(String customTechnology) {
@@ -22,6 +24,8 @@ public class ProviderImporterTemplate implements ProviderImporter {
     var technologies = technologiesProvider.getTechnologies(customTechnology);
     importStatistics.start(scrapingId, technologies);
     importStatistics.provider(scrapingId, providerCollector.providerName());
+    publisher.publishEvent(
+        new ImportStartedEvent(this, scrapingId, technologies, providerCollector.providerName()));
 
     for (var technology : technologies) {
       try {
