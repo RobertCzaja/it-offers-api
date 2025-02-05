@@ -22,8 +22,8 @@ public class ProviderImporterTemplate implements ProviderImporter {
   public void importOffers(String customTechnology) {
     UUID scrapingId = UUID.randomUUID();
     var technologies = technologiesProvider.getTechnologies(customTechnology);
-    importStatistics.start(scrapingId, technologies);
-    importStatistics.provider(scrapingId, providerCollector.providerName());
+    importStatistics.start(scrapingId, technologies); /*todo #69 to remove*/
+    importStatistics.provider(scrapingId, providerCollector.providerName()); /*todo #69 to remove*/
     publisher.publishEvent(
         new ImportStartedEvent(this, scrapingId, technologies, providerCollector.providerName()));
 
@@ -31,7 +31,9 @@ public class ProviderImporterTemplate implements ProviderImporter {
       try {
         providerCollector.collectOffers(scrapingId, technology);
       } catch (Exception e) {
-        log.error("Error on fetching list of {}: {}", technology, e.getMessage());
+        log.error(
+            "Error on fetching list of {}: {}", technology, e.getMessage()); /*todo #69 to remove*/
+        publisher.publishEvent(new FetchListFailedEvent(this, scrapingId));
         continue;
       }
 
@@ -39,6 +41,7 @@ public class ProviderImporterTemplate implements ProviderImporter {
         offerSaver.save(draft);
       }
     }
-    importStatistics.finish(scrapingId);
+    importStatistics.finish(scrapingId); /*todo #69 to remove*/
+    publisher.publishEvent(new ImportFinishedEvent(this, scrapingId));
   }
 }
