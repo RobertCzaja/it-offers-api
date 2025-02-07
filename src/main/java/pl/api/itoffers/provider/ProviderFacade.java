@@ -18,7 +18,7 @@ public class ProviderFacade {
       return justJoinItParameters.getOfferUrl(offer.getSlug());
     }
     if (offer.getOrigin().getProvider().equals(Origin.Provider.NO_FLUFF_JOBS)) {
-      throw ProviderException.notImplementedYet();
+      return noFluffJobsParameters.detailsUrl(offer.getSlug());
     }
     throw ProviderException.unknownProvider(offer.getOrigin().getProvider().name());
   }

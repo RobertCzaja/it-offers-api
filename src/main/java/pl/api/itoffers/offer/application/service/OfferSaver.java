@@ -4,8 +4,10 @@ import java.util.HashSet;
 import java.util.Set;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import pl.api.itoffers.offer.application.exception.DuplicatedOfferException;
+import pl.api.itoffers.offer.application.factory.EventFactory;
 import pl.api.itoffers.offer.application.repository.CategoryRepository;
 import pl.api.itoffers.offer.application.repository.CompanyRepository;
 import pl.api.itoffers.offer.application.repository.OfferRepository;
@@ -30,6 +32,8 @@ public class OfferSaver {
   private final OfferRepository offerRepository;
   private final ClockInterface clock;
   private final ImportStatistics importStatistics;
+  private final EventFactory eventFactory;
+  private final ApplicationEventPublisher publisher;
 
   public void save(OfferDraft draft) {
     try {
@@ -40,7 +44,9 @@ public class OfferSaver {
               draft.categories(),
               draft.salaries(),
               draft.company());
+      publisher.publishEvent(eventFactory.newOfferAddedEvent(offer));
       log.info(
+          /*TODO #69 to remove */
           "[{}][{}] '{}' from {} at {}",
           draft.origin().getProvider().name(),
           offer.getTechnology(),
@@ -50,6 +56,7 @@ public class OfferSaver {
     } catch (DuplicatedOfferException ignored) {
     } catch (Exception e) {
       log.error(
+          /*TODO #69 to remove */
           "Error on saving {} offer ({}) in scrapping: {}",
           draft.origin().getProvider().name(),
           draft.origin().getId(),
@@ -88,7 +95,8 @@ public class OfferSaver {
     companyRepository.save(preparedCompany);
     categoryRepository.saveAll(categoryCollections.toSave());
     offerRepository.save(offer);
-    importStatistics.registerNewOffer(origin.getScrappingId(), offer.getTechnology());
+    importStatistics.registerNewOffer(
+        origin.getScrappingId(), offer.getTechnology()); /* todo #69 to remove */
     return offer;
   }
 
