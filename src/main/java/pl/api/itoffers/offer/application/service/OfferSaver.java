@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
+import pl.api.itoffers.offer.application.event.OfferSavingFailedEvent;
 import pl.api.itoffers.offer.application.exception.DuplicatedOfferException;
 import pl.api.itoffers.offer.application.factory.EventFactory;
 import pl.api.itoffers.offer.application.repository.CategoryRepository;
@@ -55,6 +56,9 @@ public class OfferSaver {
           offer.getPublishedAt());
     } catch (DuplicatedOfferException ignored) {
     } catch (Exception e) {
+      publisher.publishEvent(
+          new OfferSavingFailedEvent(
+              this, draft.origin().getScrappingId(), draft.metadata().technology()));
       log.error(
           /*TODO #69 to remove */
           "Error on saving {} offer ({}) in scrapping: {}",
