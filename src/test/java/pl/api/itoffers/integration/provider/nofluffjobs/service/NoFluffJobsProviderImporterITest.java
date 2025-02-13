@@ -12,6 +12,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import pl.api.itoffers.data.nfj.NoFluffJobsParams;
 import pl.api.itoffers.helper.AbstractITest;
 import pl.api.itoffers.helper.WireMockOrchestrator;
+import pl.api.itoffers.helper.assertions.ReportStatisticsAssert;
 import pl.api.itoffers.helper.provider.ProviderOfferOrchestrator;
 import pl.api.itoffers.integration.offer.helper.OfferTestManager;
 import pl.api.itoffers.integration.offer.helper.OffersAssert;
@@ -28,6 +29,7 @@ public class NoFluffJobsProviderImporterITest extends AbstractITest {
   @Autowired private OfferTestManager offerTestManager;
   @Autowired private ProviderOfferOrchestrator providerOfferOrchestrator;
   @Autowired private NoFluffJobsProviderImporterFactory noFluffJobsProviderImporterFactory;
+  @Autowired private ReportStatisticsAssert reportStatisticsAssert;
   @MockBean private TechnologyRepository technologyRepository;
 
   @BeforeEach
@@ -54,6 +56,10 @@ public class NoFluffJobsProviderImporterITest extends AbstractITest {
         6,
         LocalDateTime.of(2025, 1, 13, 18, 30, 29, 545000000),
         new OffersAssert.ExpectedSalary("b2b", "PLN", 24901, 24901, true));
+    reportStatisticsAssert.expects(
+        "✅ NO_FLUFF_JOBS Import",
+        new ReportStatisticsAssert.ExpectedTechnologyOffers("java", 2, 2),
+        new ReportStatisticsAssert.ExpectedTechnologyOffers("php", 2, 2));
   }
 
   private void setUpMockedNoFluffJobsService() throws IOException {
