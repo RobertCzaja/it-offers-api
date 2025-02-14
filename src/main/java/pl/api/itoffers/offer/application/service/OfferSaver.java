@@ -20,7 +20,6 @@ import pl.api.itoffers.offer.domain.OfferDraft;
 import pl.api.itoffers.offer.domain.OfferMetadata;
 import pl.api.itoffers.offer.domain.Salary;
 import pl.api.itoffers.provider.Origin;
-import pl.api.itoffers.report.service.ImportStatistics;
 import pl.api.itoffers.shared.utils.clock.ClockInterface;
 
 @Service
@@ -32,7 +31,6 @@ public class OfferSaver {
   private final CompanyRepository companyRepository;
   private final OfferRepository offerRepository;
   private final ClockInterface clock;
-  private final ImportStatistics importStatistics;
   private final EventFactory eventFactory;
   private final ApplicationEventPublisher publisher;
 
@@ -99,8 +97,6 @@ public class OfferSaver {
     companyRepository.save(preparedCompany);
     categoryRepository.saveAll(categoryCollections.toSave());
     offerRepository.save(offer);
-    importStatistics.registerNewOffer(
-        origin.getScrappingId(), offer.getTechnology()); /* todo #69 to remove */
     return offer;
   }
 

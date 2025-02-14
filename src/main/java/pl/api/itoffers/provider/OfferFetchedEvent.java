@@ -1,13 +1,11 @@
 package pl.api.itoffers.provider;
 
 import java.util.UUID;
-import lombok.Getter;
 import org.springframework.context.ApplicationEvent;
 
-@Getter
 public class OfferFetchedEvent extends ApplicationEvent {
-  private final UUID scrapingId;
-  private final String technology;
+  public final UUID scrapingId;
+  public final String technology;
 
   public OfferFetchedEvent(Object source, UUID scrapingId, String technology) {
     super(source);

@@ -3,19 +3,18 @@ package pl.api.itoffers.offer.application.event;
 import java.net.URL;
 import java.util.List;
 import java.util.UUID;
-import lombok.Getter;
 import org.springframework.context.ApplicationEvent;
 
-@Getter
+@SuppressWarnings("PMD.DataClass")
 public class NewOfferAddedEvent extends ApplicationEvent {
-  private final UUID scrapingId;
-  private final String technology;
-  private final URL url;
-  private final String title;
-  private final List<String> categories;
-  private final String salaryCurrency;
-  private final Integer salaryFrom;
-  private final Integer salaryTo;
+  public final UUID scrapingId;
+  public final String technology;
+  public final URL url;
+  public final String title;
+  public final List<String> categories;
+  public final String salaryCurrency;
+  public final Integer salaryFrom;
+  public final Integer salaryTo;
 
   public NewOfferAddedEvent(
       Object source,

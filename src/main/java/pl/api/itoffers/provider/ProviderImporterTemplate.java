@@ -6,7 +6,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationEventPublisher;
 import pl.api.itoffers.offer.application.service.OfferSaver;
 import pl.api.itoffers.offer.application.service.TechnologiesProvider;
-import pl.api.itoffers.report.service.ImportStatistics;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -15,15 +14,12 @@ public class ProviderImporterTemplate implements ProviderImporter {
   private final OfferDraftProvider offerDraftProvider;
   private final OfferSaver offerSaver;
   private final TechnologiesProvider technologiesProvider;
-  private final ImportStatistics importStatistics;
   private final ApplicationEventPublisher publisher;
 
   @Override
   public void importOffers(String customTechnology) {
     UUID scrapingId = UUID.randomUUID();
     var technologies = technologiesProvider.getTechnologies(customTechnology);
-    importStatistics.start(scrapingId, technologies); /*todo #69 to remove*/
-    importStatistics.provider(scrapingId, providerCollector.providerName()); /*todo #69 to remove*/
     publisher.publishEvent(
         new ImportStartedEvent(this, scrapingId, technologies, providerCollector.providerName()));
 
@@ -41,7 +37,6 @@ public class ProviderImporterTemplate implements ProviderImporter {
         offerSaver.save(draft);
       }
     }
-    importStatistics.finish(scrapingId); /*todo #69 to remove*/
     publisher.publishEvent(new ImportFinishedEvent(this, scrapingId));
   }
 }

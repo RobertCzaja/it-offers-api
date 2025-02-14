@@ -8,14 +8,15 @@ import pl.api.itoffers.report.service.ImportStatistics
 
 @Component
 class OfferListener (
-    private val ImportStatistics : ImportStatistics
+    private val importStatistics : ImportStatistics
 ) {
     @EventListener
     fun newOfferAddedEvent(event: NewOfferAddedEvent) {
+        importStatistics.registerNewOffer(event.scrapingId, event.technology)
     }
 
     @EventListener
     fun offerSavingFailedEvent(event: OfferSavingFailedEvent) {
-
+        // todo
     }
 }
