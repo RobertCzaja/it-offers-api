@@ -15,8 +15,7 @@ class ProviderListener (
 ) {
     @EventListener
     fun importStarted(event: ImportStartedEvent) {
-        importStatistics.start(event.scrapingId, event.technologies) // todo merge into one
-        importStatistics.provider(event.scrapingId, event.providerName)
+        importStatistics.start(event.scrapingId, event.technologies, event.providerName)
     }
 
     @EventListener

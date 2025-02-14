@@ -14,14 +14,14 @@ open class ImportStatistics (
 ) {
     private val metadata: MutableMap<UUID, ImportMetadata> = mutableMapOf()
 
-    fun start(scrapingId: UUID, technologies: List<String>) {
+    fun start(scrapingId: UUID, technologies: List<String>, providerName: String ) {
         importIsNotInitialized(scrapingId)
         val technologiesStats: MutableMap<String, TechnologyStats> = mutableMapOf()
         technologies.forEach { technology ->
             technologiesStats.put(technology, TechnologyStats(technology))
         }
 
-        metadata[scrapingId] = ImportMetadata(scrapingId, clock.now(), technologiesStats)
+        metadata[scrapingId] = ImportMetadata(scrapingId, clock.now(), technologiesStats, providerName)
     }
 
     fun finish(scrapingId: UUID) {
@@ -31,11 +31,6 @@ open class ImportStatistics (
             log.notify(report)
         }
         metadata.remove(scrapingId)
-    }
-
-    fun provider(scrapingId: UUID, providerName: String) {
-        importIsInitialized(scrapingId)
-        metadata[scrapingId]?.setProvider(providerName)
     }
 
     fun registerFetchedOffer(scrapingId: UUID, technology: String) {

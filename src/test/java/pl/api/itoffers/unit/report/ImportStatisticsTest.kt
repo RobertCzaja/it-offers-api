@@ -23,8 +23,7 @@ class ImportStatisticsTest {
     fun `is able to generate report from gathered statistics`() {
 
         frozenClock.setNow(LocalDateTime.of(2025,2,1,6,0,0,680000000))
-        importStatistics.start(scrapingId, technologies)
-        importStatistics.provider(scrapingId, "NO_FLUFF_JOBS")
+        importStatistics.start(scrapingId, technologies, "NO_FLUFF_JOBS")
         repeat(20) { importStatistics.registerFetchedOffer(scrapingId, "php") }
         repeat(20) { importStatistics.registerFetchedOffer(scrapingId, "java") }
         repeat(20) { importStatistics.registerFetchedOffer(scrapingId, "go") }
@@ -33,16 +32,16 @@ class ImportStatisticsTest {
         repeat(20) { importStatistics.registerNewOffer(scrapingId, "devops") }
         frozenClock.setNow(LocalDateTime.of(2025,2,1,6,0,44,680000000))
         importStatistics.finish(scrapingId)
-        importStatistics.start(scrapingId, technologies)
+        importStatistics.start(scrapingId, technologies, "NO_FLUFF_JOBS")
 
         assertEquals(ImportMetadataResult.getMap(), inMemoryNotifier.reportDetails)
     }
 
     @Test
     fun `cannot create one import twice`() {
-        importStatistics.start(scrapingId, technologies)
+        importStatistics.start(scrapingId, technologies, "NO_FLUFF_JOBS")
         val exception = assertThrows<ImportStatisticsException> {
-            importStatistics.start(scrapingId, technologies)
+            importStatistics.start(scrapingId, technologies, "NO_FLUFF_JOBS")
         }
 
         assertEquals("Import $scrapingId already initialized", exception.message)
@@ -52,15 +51,6 @@ class ImportStatisticsTest {
     fun `cannot finish import when it has not started`() {
         val exception = assertThrows<ImportStatisticsException> {
             importStatistics.finish(scrapingId)
-        }
-
-        assertEquals("Import $scrapingId not initialized", exception.message)
-    }
-
-    @Test
-    fun `cannot set provider when import is not initialized`() {
-        val exception = assertThrows<ImportStatisticsException> {
-            importStatistics.provider(scrapingId, "JUST_JOIN_IT")
         }
 
         assertEquals("Import $scrapingId not initialized", exception.message)

@@ -10,36 +10,11 @@ class ImportMetadata (
     private val scrapingId: UUID,
     private val startedAt: LocalDateTime,
     private val technologiesStats: MutableMap<String, TechnologyStats>,
-    private var providerName: String? = null,
+    private var providerName: String,
 ) {
     companion object {
         const val DATE_FORMAT = "yyyy-MM-dd"
         const val TIME_FORMAT = "HH:mm:ss"
-    }
-
-    @Deprecated("to remove - pass through constructor")
-    fun setProvider(providerName: String) {
-        this.providerName = providerName;
-    }
-
-    @Deprecated("to remove - use the new version")
-    fun finishDeprecated(finishedAt: LocalDateTime): String {
-        val duration = Duration.between(startedAt, finishedAt)
-        var report = buildString {
-            append("Scraping ID: $scrapingId\n")
-            append("Provider: $providerName\n")
-            append("Started at: $startedAt\n")
-            append("Finished at: $finishedAt\n")
-            append("Duration: ${duration.toMinutes()}m ${duration.toSeconds() % 60}s\n")
-            append("\n")
-            append("Technologies:\n")
-        }
-
-        for ((technology, stats) in technologiesStats) {
-            report += "$technology: fetched: ${stats.fetchedOffersCount}, new: ${stats.savedNewOffersCount}\n"
-        }
-
-        return report
     }
 
     fun finish(finishedAt: LocalDateTime): Map<String, Any> {
