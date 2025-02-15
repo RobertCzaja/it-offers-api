@@ -3,6 +3,7 @@ package pl.api.itoffers.unit.report
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import pl.api.itoffers.report.model.ImportMetadata
+import pl.api.itoffers.report.model.TechnologyError
 import pl.api.itoffers.report.model.TechnologyStats
 import java.time.LocalDateTime
 import java.util.*
@@ -24,8 +25,11 @@ class ImportMetadataTest {
         repeat(20) { importMetadata.registerFetchedOffer("devops") }
         repeat(2) { importMetadata.registerNewOffer("java") }
         repeat(20) { importMetadata.registerNewOffer("devops") }
+        importMetadata.registerError("java", TechnologyError("RuntimeException", "Error1"))
+        importMetadata.registerError("java", TechnologyError("RuntimeException", "Error2"))
+
         val report = importMetadata.finish(LocalDateTime.of(2025,2,1,6,0,44,680000000))
 
-        assertEquals(ImportMetadataResult.getMap(), report)
+        assertEquals(ImportMetadataResult.getMapWithErrors(), report)
     }
 }

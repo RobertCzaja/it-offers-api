@@ -6,6 +6,7 @@ import org.junit.jupiter.api.assertThrows
 import pl.api.itoffers.helper.FrozenClock
 import pl.api.itoffers.report.service.ImportStatistics
 import pl.api.itoffers.report.exception.ImportStatisticsException
+import pl.api.itoffers.report.model.TechnologyError
 import pl.api.itoffers.report.service.statisticsNotifier.InMemoryStatisticsNotifier
 import java.time.LocalDateTime
 import java.util.*
@@ -31,10 +32,12 @@ class ImportStatisticsTest {
         repeat(2) { importStatistics.registerNewOffer(scrapingId, "java") }
         repeat(20) { importStatistics.registerNewOffer(scrapingId, "devops") }
         frozenClock.setNow(LocalDateTime.of(2025,2,1,6,0,44,680000000))
+        importStatistics.registerError(scrapingId, "java", "RuntimeException", "Error1")
+        importStatistics.registerError(scrapingId, "java", "RuntimeException", "Error2")
         importStatistics.finish(scrapingId)
         importStatistics.start(scrapingId, technologies, "NO_FLUFF_JOBS")
 
-        assertEquals(ImportMetadataResult.getMap(), inMemoryNotifier.reportDetails)
+        assertEquals(ImportMetadataResult.getMapWithErrors(), inMemoryNotifier.reportDetails)
     }
 
     @Test

@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service
 import pl.api.itoffers.report.exception.ImportStatisticsException
 import pl.api.itoffers.report.model.TechnologyStats
 import pl.api.itoffers.report.model.ImportMetadata
+import pl.api.itoffers.report.model.TechnologyError
 import pl.api.itoffers.shared.utils.clock.ClockInterface
 import java.util.UUID
 
@@ -31,6 +32,11 @@ open class ImportStatistics (
             log.notify(report)
         }
         metadata.remove(scrapingId)
+    }
+
+    fun registerError(scrapingId: UUID, technology: String, exceptionClass: String, exceptionMessage: String) {
+        importIsInitialized(scrapingId)
+        metadata[scrapingId]?.registerError(technology, TechnologyError(exceptionClass, exceptionMessage));
     }
 
     fun registerFetchedOffer(scrapingId: UUID, technology: String) {

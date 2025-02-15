@@ -28,10 +28,22 @@ class ImportMetadata (
             "to" to finishedAt.format(DateTimeFormatter.ofPattern(TIME_FORMAT)),
             "duration" to "${duration.toMinutes()}m ${duration.toSeconds() % 60}s",
             "technologies" to technologiesStats.mapValues {
-                mapOf("fetched" to it.value.fetchedOffersCount, "new" to it.value.savedNewOffersCount)
+                mapOf(
+                    "fetched" to it.value.fetchedOffersCount,
+                    "new" to it.value.savedNewOffersCount,
+                    "errors" to it.value.errors.map { error -> mapOf(
+                        "class" to error.exceptionClass,
+                        "message" to error.exceptionMessage,
+                    ) },
+                )
             }.toMutableMap(),
         )
         return report
+    }
+
+    fun registerError(technology: String, technologyError: TechnologyError) {
+        technologyExists(technology)
+        technologiesStats[technology]?.registerError(technologyError)
     }
 
     fun registerFetchedOffer(technology: String) {
