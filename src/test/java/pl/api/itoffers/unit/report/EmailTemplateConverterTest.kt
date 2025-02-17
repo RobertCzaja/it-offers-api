@@ -9,7 +9,7 @@ class EmailTemplateConverterTest {
 
     @Test
     fun `generates email content based on html template`() {
-        val emailHtmlContent = EmailTemplateConverter(FreeMakerFactory.create()).convert(ImportMetadataResult.getMap())
+        val emailHtmlContent = EmailTemplateConverter(FreeMakerFactory.create()).convert(ImportMetadataResult.getMapWithErrors())
 
         assertTrue(emailHtmlContent.contains("12994bf4-a862-4f3f-8458-df8c3c10d765"))
         assertTrue(emailHtmlContent.contains("2025-02-01"))
