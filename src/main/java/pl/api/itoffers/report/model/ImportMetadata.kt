@@ -22,6 +22,7 @@ class ImportMetadata (
 
         val report = mapOf<String, Any>(
             "title" to "✅ $providerName Import",
+            "hasErrors" to hasErrors(),
             "scrapingId" to scrapingId.toString(),
             "day" to startedAt.format(DateTimeFormatter.ofPattern(DATE_FORMAT)),
             "from" to startedAt.format(DateTimeFormatter.ofPattern(TIME_FORMAT)),
@@ -31,6 +32,7 @@ class ImportMetadata (
                 mapOf(
                     "fetched" to it.value.fetchedOffersCount,
                     "new" to it.value.savedNewOffersCount,
+                    // todo #98 add "hasErrors"
                     "errors" to it.value.errors.map { error -> mapOf(
                         "class" to error.exceptionClass,
                         "message" to error.exceptionMessage,
@@ -54,6 +56,15 @@ class ImportMetadata (
     fun registerNewOffer(technology: String) {
         technologyExists(technology)
         technologiesStats[technology]?.registerNewOffer()
+    }
+
+    private fun hasErrors(): Boolean {
+        for (technologyStat in technologiesStats) {
+            if (technologyStat.value.errors.size > 0) {
+                return true
+            }
+        }
+        return false
     }
 
     private fun technologyExists(technology: String) {

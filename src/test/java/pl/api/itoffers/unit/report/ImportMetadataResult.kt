@@ -5,6 +5,7 @@ object ImportMetadataResult {
     fun getMapWithErrors(): Map<String, Any> {
         return mapOf(
             "title" to "✅ NO_FLUFF_JOBS Import",
+            "hasErrors" to true,
             "scrapingId" to "12994bf4-a862-4f3f-8458-df8c3c10d765",
             "day" to "2025-02-01",
             "from" to "06:00:00",
