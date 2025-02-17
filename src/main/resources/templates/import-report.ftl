@@ -3,6 +3,12 @@
 <body>
 <table style="border:1px solid black;">
     <tr style="border:1px solid black;">
+        <td style="border:1px solid black;">Status</td>
+        <td style="border:1px solid black;">
+            <#if hasErrors>🟥 Error<#else>🟩 Success</#if>
+        </td>
+    </tr>
+    <tr style="border:1px solid black;">
         <td style="border:1px solid black;">Scraping ID</td>
         <td style="border:1px solid black;"><code>${scrapingId}</code></td>
     </tr>
