@@ -20,5 +20,8 @@ class EmailTemplateConverterTest {
         assertTrue(emailHtmlContent.contains("java"))
         assertTrue(emailHtmlContent.contains("go"))
         assertTrue(emailHtmlContent.contains("devops"))
+        assertTrue(emailHtmlContent.contains("RuntimeException"))
+        assertTrue(emailHtmlContent.contains("Error1"))
+        assertTrue(emailHtmlContent.contains("Error2"))
     }
 }

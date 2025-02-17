@@ -35,6 +35,9 @@
         <th style="border:1px solid black;">
             <strong>new</strong>
         </th>
+        <th style="border:1px solid black;">
+            <strong>errors</strong>
+        </th>
     </tr>
     <#list technologies?keys as technology>
         <tr style="border:1px solid black; <#if technologies[technology].new != 0>background-color: limegreen;</#if>">
@@ -46,6 +49,16 @@
             </td>
             <td style="border:1px solid black; min-width: 50px">
                 ${technologies[technology].new}
+            </td>
+            <td style="border:1px solid black; min-width: 300px">
+                <ul style="list-style-type: none; margin-left: -20px">
+                    <#list technologies[technology].errors as error>
+                        <li>
+                            <strong style="color: red;">${error.class}</strong>:
+                            ${error.message}
+                        </li>
+                    </#list>
+                </ul>
             </td>
         </tr>
     </#list>
