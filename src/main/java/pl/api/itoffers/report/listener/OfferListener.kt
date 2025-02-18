@@ -17,6 +17,5 @@ class OfferListener (
 
     @EventListener
     fun offerSavingFailedEvent(event: OfferSavingFailedEvent) {
-        // todo
     }
 }
