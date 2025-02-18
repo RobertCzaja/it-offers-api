@@ -32,7 +32,6 @@ class ImportMetadata (
                 mapOf(
                     "fetched" to it.value.fetchedOffersCount,
                     "new" to it.value.savedNewOffersCount,
-                    // todo #98 add "hasErrors"
                     "errors" to it.value.errors.map { error -> mapOf(
                         "class" to error.exceptionClass,
                         "message" to error.exceptionMessage,
