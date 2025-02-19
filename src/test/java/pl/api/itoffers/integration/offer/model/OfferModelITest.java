@@ -20,6 +20,7 @@ public class OfferModelITest extends AbstractITest {
   private OfferBuilder offerBuilder;
 
   @BeforeEach
+  @Override
   public void setUp() {
     super.setUp();
     this.offerBuilder = offerTestManager.createOfferBuilder();

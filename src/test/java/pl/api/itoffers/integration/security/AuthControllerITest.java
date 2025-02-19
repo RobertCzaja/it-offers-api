@@ -24,6 +24,7 @@ public class AuthControllerITest extends AbstractITest {
   @Autowired private UserRepository userRepository;
 
   @BeforeEach
+  @Override
   public void setUp() {
     userRepository.deleteAll();
     super.setUp();

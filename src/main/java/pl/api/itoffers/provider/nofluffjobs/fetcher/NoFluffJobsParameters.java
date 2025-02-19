@@ -1,11 +1,14 @@
 package pl.api.itoffers.provider.nofluffjobs.fetcher;
 
 import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.text.MessageFormat;
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
+import pl.api.itoffers.provider.ProviderException;
 
 @ConfigurationProperties(prefix = "application.provider.no-fluff-jobs")
 @Component
@@ -21,8 +24,8 @@ public class NoFluffJobsParameters {
 
   public URL listUrl(String technology) {
     try {
-      return new URL(origin + listPath(technology));
-    } catch (MalformedURLException e) {
+      return new URI(origin + listPath(technology)).toURL();
+    } catch (MalformedURLException | URISyntaxException e) {
       throw new RuntimeException(e);
     }
   }
@@ -35,7 +38,7 @@ public class NoFluffJobsParameters {
     try {
       return new URL(origin + detailsPath(slug));
     } catch (MalformedURLException e) {
-      throw new RuntimeException(e);
+      throw ProviderException.couldNotCreateUrl(e);
     }
   }
 }

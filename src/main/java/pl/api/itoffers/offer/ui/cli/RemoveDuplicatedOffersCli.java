@@ -50,15 +50,7 @@ public class RemoveDuplicatedOffersCli {
     }
 
     groupedSameOffers.forEach(
-        (slug, groupedOffers) -> {
-          groupedOffers.sort(
-              new Comparator<Offer>() {
-                @Override
-                public int compare(Offer o1, Offer o2) {
-                  return o1.getPublishedAt().compareTo(o2.getPublishedAt());
-                }
-              });
-        });
+        (slug, groupedOffers) -> groupedOffers.sort(Comparator.comparing(Offer::getPublishedAt)));
 
     int duplicatedOffersCount = 0;
     for (Map.Entry<String, ArrayList<Offer>> groupedOffers : groupedSameOffers.entrySet()) {
@@ -66,8 +58,6 @@ public class RemoveDuplicatedOffersCli {
         duplicatedOffersCount++;
       }
     }
-
-    for (Map.Entry<String, ArrayList<Offer>> groupedOffers : groupedSameOffers.entrySet()) {}
 
     if (params.isMigration()) {
       for (Map.Entry<String, ArrayList<Offer>> groupedOffers : groupedSameOffers.entrySet()) {

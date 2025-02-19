@@ -22,12 +22,12 @@ public class RawDataMatcherTest {
   private static final String ID_3 = UUID.randomUUID().toString();
 
   @Test
-  void couldNotMatchWhenTwoRawDatacollectionHaveDifferentSizes() throws IOException {
+  void couldNotMatchWhenTwoRawDataCollectionHaveDifferentSizes() throws IOException {
     var noFluffJobsModels = NoFluffJobsRawOfferModelsFactory.create(NoFluffJobsParams.A1_PHP);
+    var listOffers = List.of(noFluffJobsModels.list());
+    List<NoFluffJobsRawDetailsOffer> detailsOffers = List.of();
 
-    assertThrows(
-        NoFluffJobsException.class,
-        () -> RawDataMatcher.match(List.of(noFluffJobsModels.list()), List.of()));
+    assertThrows(NoFluffJobsException.class, () -> RawDataMatcher.match(listOffers, detailsOffers));
   }
 
   @Test

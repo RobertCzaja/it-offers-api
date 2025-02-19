@@ -1,7 +1,7 @@
 package pl.api.itoffers.security.ui.controller;
 
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,11 +13,12 @@ import pl.api.itoffers.security.ui.request.AuthorizationRequest;
 import pl.api.itoffers.security.ui.response.AuthResponse;
 
 @RestController
+@RequiredArgsConstructor
 public class AuthController {
 
   public static final String GET_TOKEN_PATH = "/auth";
 
-  @Autowired private AuthorizationService authorizationService;
+  private final AuthorizationService authorizationService;
 
   @PostMapping(AuthController.GET_TOKEN_PATH)
   public ResponseEntity<AuthResponse> auth(@Valid @RequestBody AuthorizationRequest request) {

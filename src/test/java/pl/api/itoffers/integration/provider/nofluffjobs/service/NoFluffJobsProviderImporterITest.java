@@ -33,6 +33,7 @@ public class NoFluffJobsProviderImporterITest extends AbstractITest {
   @MockBean private TechnologyRepository technologyRepository;
 
   @BeforeEach
+  @Override
   public void setUp() {
     super.setUp();
     offerTestManager.clearAll();

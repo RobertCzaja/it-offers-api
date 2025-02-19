@@ -17,5 +17,6 @@ class OfferListener (
 
     @EventListener
     fun offerSavingFailedEvent(event: OfferSavingFailedEvent) {
+        //wip
     }
 }

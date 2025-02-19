@@ -21,6 +21,7 @@ public class NoFluffJobsDetailsProviderITest extends AbstractITest {
   @Autowired private NoFluffJobsParameters parameters;
 
   @BeforeEach
+  @Override
   public void setUp() {
     super.setUp();
     repository.deleteAll();

@@ -8,7 +8,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -20,10 +20,11 @@ import pl.api.itoffers.security.application.service.JwtService;
 
 @Component
 @Order(1)
+@RequiredArgsConstructor
 public class JwtAuthorizationFilter extends OncePerRequestFilter {
 
-  @Autowired private JwtService jwtService;
-  @Autowired private JwtExceptionHandler jwtExceptionHandler;
+  private final JwtService jwtService;
+  private final JwtExceptionHandler jwtExceptionHandler;
 
   @Override
   protected void doFilterInternal(

@@ -1,6 +1,5 @@
 package pl.api.itoffers.integration.offer;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -13,11 +12,6 @@ import pl.api.itoffers.integration.offer.helper.ReportCategoriesEndpointCaller;
 
 public class ReportEndpointValidationITest extends AbstractITest {
   @Autowired private ReportCategoriesEndpointCaller reportCategoriesEndpointCaller;
-
-  @BeforeEach
-  public void setUp() {
-    super.setUp();
-  }
 
   @ParameterizedTest
   @CsvSource(

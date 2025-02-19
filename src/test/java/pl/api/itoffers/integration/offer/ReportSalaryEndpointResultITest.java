@@ -33,6 +33,7 @@ public class ReportSalaryEndpointResultITest extends AbstractITest {
   private OfferBuilder builder;
 
   @BeforeEach
+  @Override
   public void setUp() {
     super.setUp();
     this.builder = offerTestManager.createOfferBuilder();

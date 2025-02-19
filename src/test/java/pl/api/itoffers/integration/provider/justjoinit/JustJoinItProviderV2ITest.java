@@ -29,6 +29,7 @@ public class JustJoinItProviderV2ITest extends AbstractITest {
   private JustJoinItProvider provider;
 
   @BeforeEach
+  @Override
   public void setUp() {
     super.setUp();
     repository.deleteAll();

@@ -21,12 +21,7 @@ class EmailStatisticsNotifier(
     private val reportToEmail: String? = null
 
     override fun notify(reportDetails: Map<String, Any>) {
-        if (null == reportToEmail) {
-            throw RuntimeException("Reporter email needs to be provided")
-        }
-
         val title = reportDetails["title"] as? String ?: "Import report"
-
         val message = mailSender.createMimeMessage()
         val helper = MimeMessageHelper(message, true)
 

@@ -25,12 +25,12 @@ class ProviderListener (
 
     @EventListener
     fun fetchListFailedEvent(event: FetchListFailedEvent) {
-        // todo
+        //wip
     }
 
     @EventListener
     fun fetchDetailsFailedEvent(event: FetchDetailsFailedEvent) {
-        // todo
+        //wip
     }
 
     @EventListener

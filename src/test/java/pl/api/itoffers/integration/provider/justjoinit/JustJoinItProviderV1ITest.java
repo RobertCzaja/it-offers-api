@@ -20,6 +20,7 @@ public class JustJoinItProviderV1ITest extends AbstractITest {
   @MockBean private ImportStatistics importStatistics;
 
   @BeforeEach
+  @Override
   public void setUp() {
     super.setUp();
     repository.deleteAll();

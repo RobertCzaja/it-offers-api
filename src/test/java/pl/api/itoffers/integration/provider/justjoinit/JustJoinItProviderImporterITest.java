@@ -30,6 +30,7 @@ public class JustJoinItProviderImporterITest extends AbstractITest {
   @MockBean private TechnologyRepository technologyRepository;
 
   @BeforeEach
+  @Override
   public void setUp() {
     super.setUp();
     offerTestManager.clearAll();
