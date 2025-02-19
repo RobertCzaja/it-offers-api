@@ -7,9 +7,6 @@ import pl.api.itoffers.offer.application.dto.incoming.DatesRangeFilter;
 import pl.api.itoffers.offer.application.dto.outgoing.OfferDtoDeprecated;
 import pl.api.itoffers.offer.application.repository.OfferReadRepository;
 
-/**
- * @deprecated todo to remove in #59
- */
 @Service
 @RequiredArgsConstructor
 public class ReportSalariesService {
