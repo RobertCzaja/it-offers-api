@@ -3,8 +3,6 @@ package pl.api.itoffers.unit.provider.nofluffjobs.fetcher.list;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Map;
 import org.junit.Before;
 import org.junit.Test;
 import pl.api.itoffers.data.nfj.NoFluffJobsParams;
@@ -27,7 +25,7 @@ public class OffersListFromJsonPayloadExtractorTest {
 
     String listPhpPayload = FileManager.readFile(NoFluffJobsParams.LIST_PHP_JSON_PATH);
 
-    ArrayList<Map<String, Object>> extractedJsonOffers = extractor.extractOffers(listPhpPayload);
+    var extractedJsonOffers = extractor.extractOffers(listPhpPayload);
 
     NfjOffersAssert.expects(extractedJsonOffers, 20);
   }

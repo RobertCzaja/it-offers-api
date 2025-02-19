@@ -1,7 +1,5 @@
 package pl.api.itoffers.provider.nofluffjobs.fetcher.list;
 
-import java.util.ArrayList;
-import java.util.Map;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -17,7 +15,7 @@ public class NoFluffJobsListProvider {
   private final ClockInterface clock;
 
   public void fetch(String technology, UUID scrapingId) {
-    ArrayList<Map<String, Object>> offers = fetcher.fetch(technology);
+    var offers = fetcher.fetch(technology);
     offers.forEach(
         offer ->
             repository.save(

@@ -2,12 +2,12 @@ package pl.api.itoffers.helper.assertions;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 public class NfjOffersAssert {
 
-  public static void expects(ArrayList<Map<String, Object>> nfjOffers, int expectedSize) {
+  public static void expects(List<Map<String, Object>> nfjOffers, int expectedSize) {
     assertThat(nfjOffers).hasSize(expectedSize);
     nfjOffers.forEach(
         (serializedOffer) -> {
