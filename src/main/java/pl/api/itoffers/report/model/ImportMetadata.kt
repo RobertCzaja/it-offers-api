@@ -59,7 +59,7 @@ class ImportMetadata (
 
     private fun hasErrors(): Boolean {
         for (technologyStat in technologiesStats) {
-            if (technologyStat.value.errors.size > 0) {
+            if (technologyStat.value.errors.isNotEmpty()) {
                 return true
             }
         }
