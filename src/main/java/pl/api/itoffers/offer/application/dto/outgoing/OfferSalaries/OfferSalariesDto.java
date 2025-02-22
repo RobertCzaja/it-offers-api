@@ -2,21 +2,16 @@ package pl.api.itoffers.offer.application.dto.outgoing.OfferSalaries;
 
 import java.util.ArrayList;
 import java.util.List;
-import lombok.RequiredArgsConstructor;
-import lombok.Value;
 import pl.api.itoffers.offer.domain.Offer;
 import pl.api.itoffers.offer.domain.Salary;
 
-@Value
-@RequiredArgsConstructor
-public class OfferSalariesDto {
-  Integer amountFrom;
-  Integer amountTo;
-  String currency;
-  String technology;
-  String title;
-  String link;
-
+public record OfferSalariesDto(
+    Integer amountFrom,
+    Integer amountTo,
+    String currency,
+    String technology,
+    String title,
+    String link) {
   public static List<OfferSalariesDto> createFrom(
       Offer offer, String currency, String employmentType) {
     List<OfferSalariesDto> list = new ArrayList<OfferSalariesDto>();

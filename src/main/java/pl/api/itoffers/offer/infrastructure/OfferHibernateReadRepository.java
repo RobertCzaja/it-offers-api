@@ -87,7 +87,7 @@ public class OfferHibernateReadRepository implements OfferReadRepository {
         new Comparator<OfferSalariesDto>() {
           @Override
           public int compare(OfferSalariesDto dto1, OfferSalariesDto dto2) {
-            return dto2.getAmountTo().compareTo(dto1.getAmountTo());
+            return dto2.amountTo().compareTo(dto1.amountTo());
           }
         });
   }
