@@ -18,8 +18,8 @@ public final class RawDataMatcher {
       throw NoFluffJobsException.becauseFetchingResultIsIncompatible("empty collections");
     }
 
-    if (listOffers.size() != detailsOffers.size()) {
-      throw NoFluffJobsException.becauseFetchingResultIsIncompatible("initial collections");
+    if (listOffers.size() < detailsOffers.size()) {
+      throw NoFluffJobsException.becauseFetchingResultIsIncompatible("too much details offers");
     }
 
     var matched = new ArrayList<NoFluffJobsRawOffer>();
@@ -31,10 +31,6 @@ public final class RawDataMatcher {
           break;
         }
       }
-    }
-
-    if (matched.size() != listOffers.size()) {
-      throw NoFluffJobsException.becauseFetchingResultIsIncompatible("could not match each offer");
     }
 
     return matched;

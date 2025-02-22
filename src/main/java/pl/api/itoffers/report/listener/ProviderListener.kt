@@ -38,7 +38,13 @@ class ProviderListener (
 
     @EventListener
     fun fetchDetailsFailedEvent(event: FetchDetailsFailedEvent) {
-        //wip
+        log.error("Error on fetching details offer: {}", event.e.message)
+        importStatistics.registerError(
+            event.scrapingId,
+            event.technology,
+            event.e.javaClass.canonicalName,
+            event.e.message.toString(),
+        )
     }
 
     @EventListener

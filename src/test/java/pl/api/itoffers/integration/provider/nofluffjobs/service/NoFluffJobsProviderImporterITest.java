@@ -90,18 +90,19 @@ public class NoFluffJobsProviderImporterITest extends AbstractITest {
     WireMockOrchestrator.pathWillReturn(
         parameters.listPath("java"), NoFluffJobsParams.B1_E2E_JAVA_LIST);
     WireMockOrchestrator.pathWillReturn(
-        parameters.detailsPath(NoFluffJobsParams.B1_E2E_JAVA_1_SLUG),
-        NoFluffJobsParams.B1_E2E_JAVA_1_DETAILS);
+        parameters.detailsPath(NoFluffJobsParams.B1_E2E_JAVA_1_SLUG), 502);
     WireMockOrchestrator.pathWillReturn(
         parameters.detailsPath(NoFluffJobsParams.B1_E2E_JAVA_2_SLUG),
         NoFluffJobsParams.B1_E2E_JAVA_2_DETAILS);
 
     noFluffJobsProviderImporterFactory.create().importOffers(null);
 
-    offersAssert.expects(2, 16, 2);
+    offersAssert.expects(1, 11, 1);
     reportStatisticsAssert.expectError(
-        "php",
-        "pl.api.itoffers.provider.nofluffjobs.exception.NoFluffJobsException",
-        "On fetching HTML page - java.io.IOException with a message: Server returned HTTP response code: 502 for URL: http://localhost:8080/pl/php?sort=newest");
+        "php", "NoFluffJobsException", "502 for URL: http://localhost:8080/pl/php?sort=newest");
+    reportStatisticsAssert.expectError(
+        "java",
+        "NoFluffJobsException",
+        "502 for URL: http://localhost:8080/pl/job/senior-software-engineer-salon-ops-phorest-remote");
   }
 }

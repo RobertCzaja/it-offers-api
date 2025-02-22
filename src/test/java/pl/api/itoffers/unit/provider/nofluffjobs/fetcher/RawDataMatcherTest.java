@@ -57,7 +57,7 @@ public class RawDataMatcherTest {
   }
 
   @Test
-  void cannotMatchWhenOneElementIsMissing() {
+  void canMatchWhenOneOfferDetailsIsMissing() {
     List<NoFluffJobsRawListOffer> listOfferCollection =
         new ArrayList<>(
             List.of(
@@ -73,6 +73,24 @@ public class RawDataMatcherTest {
                 // there is no details offer with ID_2
                 ));
 
+    var result = RawDataMatcher.match(listOfferCollection, detailsOfferCollection);
+
+    assertThat(result).hasSize(2);
+  }
+
+  @Test
+  void cannotMatchWhenThereIsMoreDetailsOffersThanListOffers() {
+    List<NoFluffJobsRawListOffer> listOfferCollection =
+        new ArrayList<>(
+            List.of(
+                NoFluffJobsRawOfferModelsFactory.createOfferList(UUID.fromString(ID_1)),
+                NoFluffJobsRawOfferModelsFactory.createOfferList(UUID.fromString(ID_2))));
+    List<NoFluffJobsRawDetailsOffer> detailsOfferCollection =
+        new ArrayList<>(
+            List.of(
+                NoFluffJobsRawOfferModelsFactory.createOfferDetails(UUID.fromString(ID_3)),
+                NoFluffJobsRawOfferModelsFactory.createOfferDetails(UUID.fromString(ID_1)),
+                NoFluffJobsRawOfferModelsFactory.createOfferDetails(UUID.fromString(ID_2))));
     assertThrows(
         NoFluffJobsException.class,
         () -> RawDataMatcher.match(listOfferCollection, detailsOfferCollection));

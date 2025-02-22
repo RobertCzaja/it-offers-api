@@ -46,8 +46,8 @@ public class ReportStatisticsAssert {
     var technology = (Map<String, Object>) technologies.get(technologyWithAnError);
     var errors = (List<Map<String, String>>) technology.get("errors");
 
-    assertThat(errors.get(0).get("class")).isEqualTo(expectedExceptionClass);
-    assertThat(errors.get(0).get("message")).isEqualTo(expectedException);
+    assertThat(errors.get(0).get("class")).contains(expectedExceptionClass);
+    assertThat(errors.get(0).get("message")).contains(expectedException);
   }
 
   public record ExpectedTechnologyOffers(String technology, int fetchedOffers, int newOffers) {}

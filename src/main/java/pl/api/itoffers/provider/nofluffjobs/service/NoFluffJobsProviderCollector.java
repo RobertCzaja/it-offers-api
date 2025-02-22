@@ -2,7 +2,6 @@ package pl.api.itoffers.provider.nofluffjobs.service;
 
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import pl.api.itoffers.provider.FetchDetailsFailedEvent;
@@ -14,7 +13,6 @@ import pl.api.itoffers.provider.nofluffjobs.fetcher.list.NoFluffJobsListProvider
 import pl.api.itoffers.provider.nofluffjobs.repository.NoFluffJobsListOfferRepository;
 import pl.api.itoffers.report.service.ImportStatistics;
 
-@Slf4j
 @Service
 @RequiredArgsConstructor
 public class NoFluffJobsProviderCollector implements ProviderCollector {
@@ -38,9 +36,8 @@ public class NoFluffJobsProviderCollector implements ProviderCollector {
                 detailsProvider.fetch(slug, listOffer.getScrapingId(), listOffer.getOfferId());
                 importStatistics.registerFetchedOffer(listOffer.getScrapingId(), technology);
               } catch (NoFluffJobsException e) {
-                publisher.publishEvent(new FetchDetailsFailedEvent(this, scrapingId));
-                log.error(
-                    "Error on fetching details offer: {}", e.getMessage()); /*todo #69 to remove*/
+                publisher.publishEvent(
+                    new FetchDetailsFailedEvent(this, scrapingId, technology, e));
               }
             });
   }
