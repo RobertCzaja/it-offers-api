@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import pl.api.itoffers.offer.application.dto.incoming.CategoriesFilter;
 import pl.api.itoffers.offer.application.dto.incoming.DatesRangeFilter;
 import pl.api.itoffers.offer.application.dto.outgoing.CategoriesStatisticsDto;
-import pl.api.itoffers.offer.application.dto.outgoing.OfferSalaries.OffersSalariesDto;
+import pl.api.itoffers.offer.application.dto.outgoing.offersalaries.OffersSalariesDto;
 import pl.api.itoffers.offer.application.factory.TechnologiesFilterFactory;
 import pl.api.itoffers.offer.application.service.ReportCategoriesService;
 import pl.api.itoffers.offer.application.service.ReportSalariesService;
@@ -35,7 +35,7 @@ public class ReportController {
       @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date dateTo) {
     CategoriesFilter filter = new CategoriesFilter(technologies, dateFrom, dateTo);
 
-    return new ResponseEntity<CategoriesStatisticsDto>(
+    return new ResponseEntity<>(
         reportCategoriesService.computeCategoriesStatistics(
             filter.getTechnologies(), filter.getFrom(), filter.getTo()),
         HttpStatus.OK);
@@ -50,7 +50,7 @@ public class ReportController {
       @RequestParam(required = false) String[] technologies,
       @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date dateFrom,
       @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date dateTo) {
-    return new ResponseEntity<OffersSalariesDto>(
+    return new ResponseEntity<>(
         new OffersSalariesDto(
             reportSalariesService.getMostPaidOffers(
                 currency,

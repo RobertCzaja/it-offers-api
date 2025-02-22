@@ -1,7 +1,7 @@
 package pl.api.itoffers.security.ui.controller;
 
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -15,15 +15,16 @@ import pl.api.itoffers.security.ui.response.UserCreated;
 import pl.api.itoffers.shared.http.exception.ErrorResponse;
 
 @RestController
+@RequiredArgsConstructor
 public class UserController {
 
   public static final String PATH = "/user";
 
-  @Autowired private UserService userService;
+  private final UserService userService;
 
   @PreAuthorize("hasRole('ROLE_ADMIN')")
   @PostMapping(UserController.PATH)
-  public ResponseEntity create(@Valid @RequestBody CreateUserRequest request)
+  public ResponseEntity<Object> create(@Valid @RequestBody CreateUserRequest request)
       throws CouldNotCreateUser {
     try {
       UserCreated response = new UserCreated();

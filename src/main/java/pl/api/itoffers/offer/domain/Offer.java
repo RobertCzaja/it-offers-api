@@ -40,24 +40,6 @@ public class Offer {
   @Getter @NonNull private LocalDateTime publishedAt;
   @Getter private final LocalDateTime createdAt;
 
-  /** Should be removed after Salaries migration */
-  @Deprecated
-  public void setSalaries(Set<Salary> salaries) {
-    this.salary = salaries;
-  }
-
-  /** Should be removed after Salaries migration */
-  @Deprecated
-  public void setPublishedAt(LocalDateTime publishedAt) {
-    this.publishedAt = publishedAt;
-  }
-
-  /** Should be removed after Provider/MongoDB ID migration */
-  @Deprecated
-  public void setOrigin(Origin origin) {
-    this.origin = origin;
-  }
-
   public Set<Salary> getSalaries() {
     return salary;
   }

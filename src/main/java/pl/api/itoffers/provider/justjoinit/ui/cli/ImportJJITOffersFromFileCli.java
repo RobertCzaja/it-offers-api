@@ -18,11 +18,7 @@ import pl.api.itoffers.shared.utils.cli.CliFixParams;
 import pl.api.itoffers.shared.utils.cli.FixReport;
 import pl.api.itoffers.shared.utils.json.JsonNodeMapper;
 
-/**
- * OneUse - remove after usage
- *
- * @deprecated
- */
+/** OneUse */
 @Slf4j
 @ShellComponent
 @Transactional

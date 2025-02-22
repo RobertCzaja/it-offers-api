@@ -53,7 +53,9 @@ public class RawDataMatcherTest {
 
   @Test
   void cannotMatchEmptyOfferList() {
-    assertThrows(NoFluffJobsException.class, () -> RawDataMatcher.match(List.of(), List.of()));
+    List<NoFluffJobsRawListOffer> listOffers = List.of();
+    List<NoFluffJobsRawDetailsOffer> detailsOffers = List.of();
+    assertThrows(NoFluffJobsException.class, () -> RawDataMatcher.match(listOffers, detailsOffers));
   }
 
   @Test

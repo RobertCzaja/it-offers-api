@@ -17,8 +17,8 @@ import pl.api.itoffers.helper.OfferBuilder;
 import pl.api.itoffers.integration.offer.helper.OfferTestManager;
 import pl.api.itoffers.integration.offer.helper.ReportAssert;
 import pl.api.itoffers.integration.offer.helper.ReportSalariesEndpointCaller;
-import pl.api.itoffers.offer.application.dto.outgoing.OfferSalaries.OfferSalariesDto;
-import pl.api.itoffers.offer.application.dto.outgoing.OfferSalaries.OffersSalariesDto;
+import pl.api.itoffers.offer.application.dto.outgoing.offersalaries.OfferSalariesDto;
+import pl.api.itoffers.offer.application.dto.outgoing.offersalaries.OffersSalariesDto;
 import pl.api.itoffers.shared.utils.json.Json;
 
 /**

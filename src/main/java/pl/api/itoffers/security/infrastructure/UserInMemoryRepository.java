@@ -8,6 +8,7 @@ import pl.api.itoffers.security.domain.User;
 import pl.api.itoffers.security.domain.exception.UserNotFound;
 import pl.api.itoffers.security.domain.model.UserEntity;
 import pl.api.itoffers.security.domain.model.UserRole;
+import pl.api.itoffers.shared.exception.NotImplementedYet;
 
 @Repository
 public class UserInMemoryRepository implements UserRepository {
@@ -49,11 +50,11 @@ public class UserInMemoryRepository implements UserRepository {
 
   @Override
   public void save(UserEntity user) {
-    throw new RuntimeException("Not implemented yet");
+    throw new NotImplementedYet();
   }
 
   @Override
   public void deleteAll() {
-    throw new RuntimeException("Not implemented yet");
+    throw new NotImplementedYet();
   }
 }

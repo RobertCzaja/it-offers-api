@@ -32,7 +32,7 @@ public class TechnologiesCategoriesDto {
 
   private List<CategoryDto> recalculatedPercentages(String technology) {
     int totalCategoriesCount = countAllCategories(technology);
-    List<CategoryDto> recalculatedCategories = new ArrayList<CategoryDto>();
+    List<CategoryDto> recalculatedCategories = new ArrayList<>();
 
     for (CategoryDto categoryDto : map.get(technology)) {
       recalculatedCategories.add(categoryDto.withRecalculatedPercentage(totalCategoriesCount));

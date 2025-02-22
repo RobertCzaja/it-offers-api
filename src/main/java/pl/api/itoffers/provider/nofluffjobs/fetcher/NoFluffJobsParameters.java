@@ -26,7 +26,7 @@ public class NoFluffJobsParameters {
     try {
       return new URI(origin + listPath(technology)).toURL();
     } catch (MalformedURLException | URISyntaxException e) {
-      throw new RuntimeException(e);
+      throw ProviderException.couldNotCreateUrl(e);
     }
   }
 

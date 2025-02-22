@@ -1,4 +1,4 @@
-package pl.api.itoffers.offer.application.dto.outgoing.OfferSalaries;
+package pl.api.itoffers.offer.application.dto.outgoing.offersalaries;
 
 import java.util.ArrayList;
 import java.util.List;

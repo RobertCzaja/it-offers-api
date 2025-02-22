@@ -3,6 +3,7 @@ package pl.api.itoffers.provider.justjoinit.factory;
 import java.util.*;
 import org.springframework.stereotype.Service;
 import pl.api.itoffers.offer.domain.Salary;
+import pl.api.itoffers.provider.justjoinit.exception.JustJoinItException;
 import pl.api.itoffers.provider.justjoinit.model.JustJoinItRawOffer;
 
 @Service
@@ -10,10 +11,11 @@ public class SalariesFactory {
 
   public Set<Salary> create(JustJoinItRawOffer rawOffer) {
     var salaries = new HashSet<Salary>();
-    var employmentTypes = (List<LinkedHashMap>) rawOffer.getOffer().get("employmentTypes");
+    var employmentTypes =
+        (List<LinkedHashMap<String, Object>>) rawOffer.getOffer().get("employmentTypes");
 
     if (null == employmentTypes) {
-      throw new RuntimeException("employmentTypes key does not exist");
+      throw new JustJoinItException("employmentTypes key does not exist");
     }
 
     employmentTypes.forEach(employmentType -> salaries.addAll(createSalaries(employmentType)));
@@ -21,7 +23,7 @@ public class SalariesFactory {
     return salaries;
   }
 
-  private Set<Salary> createSalaries(LinkedHashMap employmentType) {
+  private Set<Salary> createSalaries(LinkedHashMap<String, Object> employmentType) {
     var salaries = new HashSet<Salary>();
     var to = (Integer) employmentType.get("to");
     var from = (Integer) employmentType.get("from");

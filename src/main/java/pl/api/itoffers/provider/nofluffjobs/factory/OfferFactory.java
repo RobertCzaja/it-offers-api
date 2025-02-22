@@ -41,7 +41,8 @@ public final class OfferFactory {
 
   public static Company createCompany(NoFluffJobsRawListOffer listOffer) {
 
-    var locations = (List<Map>) ((Map) listOffer.getOffer().get("location")).get("places");
+    var locations =
+        (List<Map<String, Object>>) ((Map) listOffer.getOffer().get("location")).get("places");
     var companyName = (String) listOffer.getOffer().get("name");
     var filtered =
         locations.stream()
@@ -59,14 +60,14 @@ public final class OfferFactory {
   }
 
   public static Set<Category> createCategories(NoFluffJobsRawDetailsOffer detailsOffer) {
-    return ((List<Map>) detailsOffer.getOffer().get("skills"))
+    return ((List<Map<String, Object>>) detailsOffer.getOffer().get("skills"))
         .stream()
             .map(skill -> new Category((String) skill.get("value")))
             .collect(Collectors.toSet());
   }
 
   public static Set<Salary> createSalaries(NoFluffJobsRawListOffer listOffer) {
-    var salary = ((Map) listOffer.getOffer().get("salary"));
+    var salary = ((Map<String, Object>) listOffer.getOffer().get("salary"));
 
     return new HashSet<>(
         Set.of(

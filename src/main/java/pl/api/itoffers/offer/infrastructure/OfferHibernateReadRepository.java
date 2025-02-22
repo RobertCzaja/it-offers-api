@@ -5,12 +5,11 @@ import jakarta.persistence.TypedQuery;
 import jakarta.persistence.criteria.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import pl.api.itoffers.offer.application.dto.outgoing.OfferDto;
-import pl.api.itoffers.offer.application.dto.outgoing.OfferSalaries.OfferSalariesDto;
+import pl.api.itoffers.offer.application.dto.outgoing.offersalaries.OfferSalariesDto;
 import pl.api.itoffers.offer.application.repository.OfferReadRepository;
 import pl.api.itoffers.offer.domain.Offer;
 import pl.api.itoffers.offer.domain.Salary;
@@ -83,12 +82,6 @@ public class OfferHibernateReadRepository implements OfferReadRepository {
   }
 
   private static void sortDesc(List<OfferSalariesDto> offers) {
-    offers.sort(
-        new Comparator<OfferSalariesDto>() {
-          @Override
-          public int compare(OfferSalariesDto dto1, OfferSalariesDto dto2) {
-            return dto2.amountTo().compareTo(dto1.amountTo());
-          }
-        });
+    offers.sort((dto1, dto2) -> dto2.amountTo().compareTo(dto1.amountTo()));
   }
 }

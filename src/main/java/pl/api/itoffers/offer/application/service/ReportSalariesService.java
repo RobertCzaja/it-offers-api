@@ -4,7 +4,7 @@ import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import pl.api.itoffers.offer.application.dto.incoming.DatesRangeFilter;
-import pl.api.itoffers.offer.application.dto.outgoing.OfferSalaries.OfferSalariesDto;
+import pl.api.itoffers.offer.application.dto.outgoing.offersalaries.OfferSalariesDto;
 import pl.api.itoffers.offer.application.repository.OfferReadRepository;
 
 @Service
