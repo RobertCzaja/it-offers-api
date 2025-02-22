@@ -15,7 +15,7 @@ open class ImportStatistics (
 ) {
     private val metadata: MutableMap<UUID, ImportMetadata> = mutableMapOf()
 
-    fun start(scrapingId: UUID, technologies: List<String>, providerName: String ) {
+    fun start(scrapingId: UUID, technologies: List<String>, providerName: String) {
         importIsNotInitialized(scrapingId)
         val technologiesStats: MutableMap<String, TechnologyStats> = mutableMapOf()
         technologies.forEach { technology ->

@@ -14,6 +14,8 @@ import pl.api.itoffers.shared.utils.json.JsonNodeMapper;
 
 public class NoFluffJobsRawOfferModelsFactory {
 
+  public static final UUID SCRAPING_ID = UUID.fromString("f8d7f4d7-b463-4a1a-9446-d2e3eb4a3c3a");
+
   private static final JsonNodeMapper mapper = new JsonNodeMapper();
 
   public record NoFluffJobsRawModels(
@@ -21,19 +23,18 @@ public class NoFluffJobsRawOfferModelsFactory {
 
   public static NoFluffJobsRawModels create(NoFluffJobsParams.JsonOffer jsonOffer)
       throws IOException {
-    var scrapingId = UUID.fromString("f8d7f4d7-b463-4a1a-9446-d2e3eb4a3c3a");
     var offerId = UUID.fromString("2a253bea-c3c7-4873-ab55-aa197b0d8670");
 
     var list =
         new NoFluffJobsRawListOffer(
-            scrapingId,
+            NoFluffJobsRawOfferModelsFactory.SCRAPING_ID,
             offerId,
             "php",
             mapper.mapToHash(FileManager.readFile(jsonOffer.list())),
             LocalDateTime.of(2025, 1, 11, 15, 30, 0));
     var details =
         new NoFluffJobsRawDetailsOffer(
-            scrapingId,
+            NoFluffJobsRawOfferModelsFactory.SCRAPING_ID,
             offerId,
             mapper.mapToHash(FileManager.readFile(jsonOffer.details())),
             LocalDateTime.of(2025, 1, 11, 15, 30, 2));

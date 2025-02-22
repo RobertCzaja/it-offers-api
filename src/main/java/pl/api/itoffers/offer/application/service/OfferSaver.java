@@ -3,7 +3,6 @@ package pl.api.itoffers.offer.application.service;
 import java.util.HashSet;
 import java.util.Set;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import pl.api.itoffers.offer.application.event.OfferSavingFailedEvent;
@@ -24,7 +23,6 @@ import pl.api.itoffers.shared.utils.clock.ClockInterface;
 
 @Service
 @RequiredArgsConstructor
-@Slf4j
 public class OfferSaver {
 
   private final CategoryRepository categoryRepository;
@@ -44,26 +42,16 @@ public class OfferSaver {
               draft.salaries(),
               draft.company());
       publisher.publishEvent(eventFactory.newOfferAddedEvent(offer));
-      log.info(
-          /*TODO #69 to remove */
-          "[{}][{}] '{}' from {} at {}",
-          draft.origin().getProvider().name(),
-          offer.getTechnology(),
-          offer.getTitle(),
-          offer.getCompany().getName(),
-          offer.getPublishedAt());
     } catch (DuplicatedOfferException ignored) {
       // omitting already saved offers
     } catch (Exception e) {
       publisher.publishEvent(
           new OfferSavingFailedEvent(
-              this, draft.origin().getScrappingId(), draft.metadata().technology()));
-      log.error(
-          /*TODO #69 to remove */
-          "Error on saving {} offer ({}) in scrapping: {}",
-          draft.origin().getProvider().name(),
-          draft.origin().getId(),
-          draft.origin().getScrappingId());
+              this,
+              draft.origin().getScrappingId(),
+              draft.metadata().technology(),
+              draft.origin().getId(),
+              e));
     }
   }
 

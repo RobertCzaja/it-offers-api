@@ -4,15 +4,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import pl.api.itoffers.data.nfj.NoFluffJobsParams;
 import pl.api.itoffers.data.nfj.NoFluffJobsRawOfferModelsFactory;
-import pl.api.itoffers.helper.AbstractITest;
-import pl.api.itoffers.helper.OfferBuilder;
-import pl.api.itoffers.helper.OfferMetadataFactory;
-import pl.api.itoffers.helper.OfferSubObjectsFactory;
+import pl.api.itoffers.helper.*;
 import pl.api.itoffers.integration.offer.helper.OfferTestManager;
 import pl.api.itoffers.integration.offer.helper.OffersAssert;
 import pl.api.itoffers.offer.application.repository.CategoryRepository;
@@ -22,6 +20,7 @@ import pl.api.itoffers.offer.application.service.OfferSaver;
 import pl.api.itoffers.offer.domain.Company;
 import pl.api.itoffers.offer.domain.OfferDraft;
 import pl.api.itoffers.provider.nofluffjobs.factory.OfferFactory;
+import pl.api.itoffers.report.service.ImportStatistics;
 
 public class OfferSaverITest extends AbstractITest {
 
@@ -30,6 +29,8 @@ public class OfferSaverITest extends AbstractITest {
   @Autowired private OfferRepository offerRepository;
   @Autowired private CategoryRepository categoryRepository;
   @Autowired private CompanyRepository companyRepository;
+  @Autowired private ImportStatistics importStatistics;
+  private ImportStatisticsInitializer importStatisticsInitializer;
   private OfferBuilder builder;
 
   @BeforeEach
@@ -38,7 +39,13 @@ public class OfferSaverITest extends AbstractITest {
     super.setUp();
     this.builder = offerTestManager.createOfferBuilder();
     this.builder.notGenerateEntityIdsBecauseTheseShouldBeGeneratedByJPA();
+    this.importStatisticsInitializer = new ImportStatisticsInitializer(importStatistics);
     offerTestManager.clearAll();
+  }
+
+  @AfterEach
+  public void afterEach() {
+    this.importStatisticsInitializer.finish(NoFluffJobsRawOfferModelsFactory.SCRAPING_ID);
   }
 
   @Test
@@ -50,8 +57,10 @@ public class OfferSaverITest extends AbstractITest {
     var categories = OfferFactory.createCategories(noFluffJobsModels.details());
     var salaries = OfferFactory.createSalaries(noFluffJobsModels.list());
     var company = OfferFactory.createCompany(noFluffJobsModels.list());
+    var offerDraft = new OfferDraft(origin, offerMetadata, categories, salaries, company);
+    importStatisticsInitializer.initialize(offerDraft);
 
-    offerSaver.save(new OfferDraft(origin, offerMetadata, categories, salaries, company));
+    offerSaver.save(offerDraft);
 
     var offers = offerRepository.findAll();
     assertThat(offers).hasSize(1);
@@ -79,6 +88,7 @@ public class OfferSaverITest extends AbstractITest {
     var salaries = OfferFactory.createSalaries(noFluffJobsModels.list());
     var company = OfferFactory.createCompany(noFluffJobsModels.list());
     var draft = new OfferDraft(origin, offerMetadata, categories, salaries, company);
+    importStatisticsInitializer.initialize(draft);
 
     offerSaver.save(draft);
     offerSaver.save(draft);
@@ -93,14 +103,16 @@ public class OfferSaverITest extends AbstractITest {
   public void shouldNotSaveDuplicatedCompany() throws IOException {
     var noFluffJobsModels = NoFluffJobsRawOfferModelsFactory.create(NoFluffJobsParams.A1_PHP);
     var categories = OfferFactory.createCategories(noFluffJobsModels.details());
-
-    offerSaver.save(
+    var offerDraft =
         new OfferDraft(
             OfferSubObjectsFactory.createOrigin("100001"),
             OfferMetadataFactory.create("title1"),
             categories,
             OfferSubObjectsFactory.createSalaries(),
-            OfferSubObjectsFactory.createCompany()));
+            OfferSubObjectsFactory.createCompany());
+    importStatisticsInitializer.initialize(offerDraft);
+
+    offerSaver.save(offerDraft);
     offerSaver.save(
         new OfferDraft(
             OfferSubObjectsFactory.createOrigin("100002"),
@@ -121,14 +133,17 @@ public class OfferSaverITest extends AbstractITest {
 
   @Test
   public void shouldSaveCompanyWithNoAddress() throws IOException {
-    offerSaver.save(
+    var offerDraft =
         new OfferDraft(
             OfferSubObjectsFactory.createOrigin("100001"),
             OfferMetadataFactory.create("title1"),
             OfferFactory.createCategories(
                 NoFluffJobsRawOfferModelsFactory.create(NoFluffJobsParams.A1_PHP).details()),
             OfferSubObjectsFactory.createSalaries(),
-            Company.createWithNoAddress("a")));
+            Company.createWithNoAddress("a"));
+    importStatisticsInitializer.initialize(offerDraft);
+
+    offerSaver.save(offerDraft);
 
     var offer = offerRepository.findAll().get(0);
     assertThat(offer.getCompany().getName()).isEqualTo("a");

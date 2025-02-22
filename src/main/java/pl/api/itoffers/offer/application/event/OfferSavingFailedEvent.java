@@ -1,17 +1,21 @@
 package pl.api.itoffers.offer.application.event;
 
 import java.util.UUID;
-import lombok.Getter;
 import org.springframework.context.ApplicationEvent;
 
-@Getter
+@SuppressWarnings("PMD.DataClass")
 public class OfferSavingFailedEvent extends ApplicationEvent {
-  private UUID scrapingId;
-  private String technology;
+  public UUID scrapingId;
+  public String technology;
+  public String originId;
+  public Exception e;
 
-  public OfferSavingFailedEvent(Object source, UUID scrapingId, String technology) {
+  public OfferSavingFailedEvent(
+      Object source, UUID scrapingId, String technology, String originId, Exception e) {
     super(source);
     this.scrapingId = scrapingId;
     this.technology = technology;
+    this.originId = originId;
+    this.e = e;
   }
 }
