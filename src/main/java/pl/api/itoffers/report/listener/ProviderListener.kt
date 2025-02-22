@@ -1,18 +1,20 @@
 package pl.api.itoffers.report.listener
 
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 import org.springframework.context.event.EventListener
 import org.springframework.stereotype.Component
-import pl.api.itoffers.provider.FetchDetailsFailedEvent
-import pl.api.itoffers.provider.FetchListFailedEvent
-import pl.api.itoffers.provider.ImportFinishedEvent
-import pl.api.itoffers.provider.ImportStartedEvent
-import pl.api.itoffers.provider.OfferFetchedEvent
+import pl.api.itoffers.provider.*
 import pl.api.itoffers.report.service.ImportStatistics
 
 @Component
 class ProviderListener (
     private val importStatistics : ImportStatistics,
 ) {
+    companion object {
+        private val log: Logger = LoggerFactory.getLogger(this::class.java)
+    }
+
     @EventListener
     fun importStarted(event: ImportStartedEvent) {
         importStatistics.start(event.scrapingId, event.technologies, event.providerName)
@@ -25,7 +27,13 @@ class ProviderListener (
 
     @EventListener
     fun fetchListFailedEvent(event: FetchListFailedEvent) {
-        //wip
+        log.error("Error on fetching list of {}: {}", event.technology, event.e.message)
+        importStatistics.registerError(
+            event.scrapingId,
+            event.technology,
+            event.e.javaClass.canonicalName,
+            event.e.message.toString(),
+        )
     }
 
     @EventListener

@@ -2,12 +2,10 @@ package pl.api.itoffers.provider;
 
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationEventPublisher;
 import pl.api.itoffers.offer.application.service.OfferSaver;
 import pl.api.itoffers.offer.application.service.TechnologiesProvider;
 
-@Slf4j
 @RequiredArgsConstructor
 public class ProviderImporterTemplate implements ProviderImporter {
   private final ProviderCollector providerCollector;
@@ -27,9 +25,7 @@ public class ProviderImporterTemplate implements ProviderImporter {
       try {
         providerCollector.collectOffers(scrapingId, technology);
       } catch (Exception e) {
-        log.error(
-            "Error on fetching list of {}: {}", technology, e.getMessage()); /*todo #69 to remove*/
-        publisher.publishEvent(new FetchListFailedEvent(this, scrapingId));
+        publisher.publishEvent(new FetchListFailedEvent(this, scrapingId, technology, e));
         continue;
       }
 

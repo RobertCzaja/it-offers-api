@@ -99,5 +99,9 @@ public class NoFluffJobsProviderImporterITest extends AbstractITest {
     noFluffJobsProviderImporterFactory.create().importOffers(null);
 
     offersAssert.expects(2, 16, 2);
+    reportStatisticsAssert.expectError(
+        "php",
+        "pl.api.itoffers.provider.nofluffjobs.exception.NoFluffJobsException",
+        "On fetching HTML page - java.io.IOException with a message: Server returned HTTP response code: 502 for URL: http://localhost:8080/pl/php?sort=newest");
   }
 }
