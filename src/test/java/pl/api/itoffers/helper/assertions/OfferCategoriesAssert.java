@@ -15,23 +15,23 @@ public class OfferCategoriesAssert {
   }
 
   public static void hasNoResults(CategoriesStatisticsDto dto) {
-    assertThat(dto.getResult().getList()).isEmpty();
+    assertThat(dto.getResult().getMap()).isEmpty();
   }
 
   public static void hasTechnology(String technologyName, CategoriesStatisticsDto dto) {
-    assertThat(dto.getResult().getList().get(technologyName)).isNotNull();
+    assertThat(dto.getResult().getMap().get(technologyName)).isNotNull();
   }
 
   public static void hasNotTechnology(String technologyName, CategoriesStatisticsDto dto) {
-    assertThat(dto.getResult().getList().get(technologyName)).isNull();
+    assertThat(dto.getResult().getMap().get(technologyName)).isNull();
   }
 
   public static void hasExactCategories(
       String technologyName, CategoriesStatisticsDto dto, ExpectedCategories expectedCategories) {
-    assertThat(dto.getResult().getList().get(technologyName).size())
+    assertThat(dto.getResult().getMap().get(technologyName).size())
         .isEqualTo(expectedCategories.categories.size());
     for (int i = 0; i <= (expectedCategories.categories.size() - 1); i++) {
-      CategoryDto categoryDto = dto.getResult().getList().get(technologyName).get(i);
+      CategoryDto categoryDto = dto.getResult().getMap().get(technologyName).get(i);
       List expectedCategory = expectedCategories.categories.get(i);
       assertThat(categoryDto.getCategoryName()).isEqualTo(expectedCategory.get(0));
       assertThat(categoryDto.getPercentage()).isEqualTo(expectedCategory.get(1));

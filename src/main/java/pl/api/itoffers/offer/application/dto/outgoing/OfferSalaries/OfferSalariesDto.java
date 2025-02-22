@@ -14,7 +14,7 @@ public record OfferSalariesDto(
     String link) {
   public static List<OfferSalariesDto> createFrom(
       Offer offer, String currency, String employmentType) {
-    List<OfferSalariesDto> list = new ArrayList<OfferSalariesDto>();
+    var list = new ArrayList<OfferSalariesDto>();
     for (Salary salary : offer.getSalaries()) {
       if (salary.getAmount().getCurrency().equalsIgnoreCase(currency)
           && salary.getEmploymentType().equalsIgnoreCase(employmentType)) {

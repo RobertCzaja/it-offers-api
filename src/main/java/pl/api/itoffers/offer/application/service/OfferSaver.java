@@ -53,6 +53,7 @@ public class OfferSaver {
           offer.getCompany().getName(),
           offer.getPublishedAt());
     } catch (DuplicatedOfferException ignored) {
+      // omitting already saved offers
     } catch (Exception e) {
       publisher.publishEvent(
           new OfferSavingFailedEvent(

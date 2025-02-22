@@ -6,9 +6,6 @@ import pl.api.itoffers.offer.application.dto.outgoing.OfferDto;
 import pl.api.itoffers.offer.application.dto.outgoing.OfferSalaries.OfferSalariesDto;
 
 public interface OfferReadRepository {
-  /**
-   * @deprecated todo to remove in #59
-   */
   List<OfferSalariesDto> getBySalary(
       int amountTo,
       String currency,

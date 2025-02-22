@@ -6,41 +6,27 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import pl.api.itoffers.offer.application.factory.TechnologiesCategoriesDtoFactory;
-import pl.api.itoffers.offer.application.service.ReportCategoriesService;
 import pl.api.itoffers.offer.domain.Offer;
 
-/**
- * TODO needs to be fully applied to class
- *
- * @see ReportCategoriesService
- */
 @Data
 @RequiredArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PRIVATE, force = true)
 public class TechnologiesCategoriesDto {
-  private final Map<String, List<CategoryDto>> list; /* TODO change name to map */
+  private final Map<String, List<CategoryDto>> map;
 
   public void add(Offer offer) {
-    list.put(offer.getTechnology(), TechnologiesCategoriesDtoFactory.create(offer.getCategories()));
+    map.put(offer.getTechnology(), TechnologiesCategoriesDtoFactory.create(offer.getCategories()));
   }
 
   public void sort() {
-    for (String technology : list.keySet()) {
+    for (String technology : map.keySet()) {
       List<CategoryDto> recalculated = recalculatedPercentages(technology);
 
       recalculated.sort(
-          new Comparator<CategoryDto>() {
-            @Override
-            public int compare(CategoryDto dto1, CategoryDto dto2) {
-              int countCompare = dto2.getCount().compareTo(dto1.getCount());
+          Comparator.comparing(CategoryDto::getCount, Comparator.reverseOrder())
+              .thenComparing(CategoryDto::getCategoryName));
 
-              return countCompare == 0
-                  ? dto1.getCategoryName().compareTo(dto2.getCategoryName())
-                  : countCompare;
-            }
-          });
-
-      list.put(technology, recalculated);
+      map.put(technology, recalculated);
     }
   }
 
@@ -48,14 +34,14 @@ public class TechnologiesCategoriesDto {
     int totalCategoriesCount = countAllCategories(technology);
     List<CategoryDto> recalculatedCategories = new ArrayList<CategoryDto>();
 
-    for (CategoryDto categoryDto : list.get(technology)) {
+    for (CategoryDto categoryDto : map.get(technology)) {
       recalculatedCategories.add(categoryDto.withRecalculatedPercentage(totalCategoriesCount));
     }
     return recalculatedCategories;
   }
 
   private int countAllCategories(String technology) {
-    List<CategoryDto> technologyCategories = list.get(technology);
+    List<CategoryDto> technologyCategories = map.get(technology);
     int totalCategoriesCount = 0;
     for (CategoryDto categoryDto : technologyCategories) {
       totalCategoriesCount += categoryDto.getCount();
