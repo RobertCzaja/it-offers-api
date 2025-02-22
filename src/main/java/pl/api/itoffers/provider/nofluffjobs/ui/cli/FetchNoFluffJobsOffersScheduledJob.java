@@ -12,7 +12,7 @@ import pl.api.itoffers.provider.nofluffjobs.factory.NoFluffJobsProviderImporterF
 public class FetchNoFluffJobsOffersScheduledJob {
   private final NoFluffJobsProviderImporterFactory importerFactory;
 
-  @Scheduled(cron = "0 0 */6 * * *")
+  @Scheduled(cron = "0 5 9 * * *")
   public void fetchNoFluffJobsOffers() {
     importerFactory.create().importOffers(null);
   }
