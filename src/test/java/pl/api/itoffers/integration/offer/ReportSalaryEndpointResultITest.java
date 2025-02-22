@@ -17,8 +17,8 @@ import pl.api.itoffers.helper.OfferBuilder;
 import pl.api.itoffers.integration.offer.helper.OfferTestManager;
 import pl.api.itoffers.integration.offer.helper.ReportAssert;
 import pl.api.itoffers.integration.offer.helper.ReportSalariesEndpointCaller;
-import pl.api.itoffers.offer.application.dto.outgoing.OfferDtoDeprecated;
-import pl.api.itoffers.offer.application.dto.outgoing.OffersDtoDeprecated;
+import pl.api.itoffers.offer.application.dto.outgoing.OfferSalaries.OfferSalariesDto;
+import pl.api.itoffers.offer.application.dto.outgoing.OfferSalaries.OffersSalariesDto;
 import pl.api.itoffers.shared.utils.json.Json;
 
 /**
@@ -27,7 +27,7 @@ import pl.api.itoffers.shared.utils.json.Json;
 @AutoConfigureJsonTesters
 public class ReportSalaryEndpointResultITest extends AbstractITest {
 
-  @Autowired private JacksonTester<OffersDtoDeprecated> jsonResultAttempt;
+  @Autowired private JacksonTester<OffersSalariesDto> jsonResultAttempt;
   @Autowired private ReportSalariesEndpointCaller caller;
   @Autowired private OfferTestManager offerTestManager;
   private OfferBuilder builder;
@@ -51,7 +51,7 @@ public class ReportSalaryEndpointResultITest extends AbstractITest {
     this.builder.plainJob("java").pln(21500, 26000).usd(14000, 20100).save();
     this.builder.plainJob("java").usd(22000, 23000).save();
 
-    HttpEntity<OffersDtoDeprecated> result = caller.makeRequest(20000, null, null, null);
+    HttpEntity<OffersSalariesDto> result = caller.makeRequest(20000, null, null, null);
 
     assertThat(result.getBody().getList()).hasSize(4);
     assertThat(Json.convertToString(result.getBody()))
@@ -76,9 +76,9 @@ public class ReportSalaryEndpointResultITest extends AbstractITest {
     this.builder.plainJob("php").pln(15000, 18000).save();
     this.builder.plainJob("java").pln(17000, 19000).save();
 
-    HttpEntity<OffersDtoDeprecated> result = caller.makeRequest(null, List.of("php"), null, null);
+    HttpEntity<OffersSalariesDto> result = caller.makeRequest(null, List.of("php"), null, null);
 
-    OffersDtoDeprecated expected = new OffersDtoDeprecated(List.of(createOffer(15000, 18000)));
+    OffersSalariesDto expected = new OffersSalariesDto(List.of(createOffer(15000, 18000)));
     assertThat(Json.convertToString(result.getBody()))
         .isEqualTo(jsonResultAttempt.write(expected).getJson());
   }
@@ -90,17 +90,17 @@ public class ReportSalaryEndpointResultITest extends AbstractITest {
     this.builder.plainJob("php").pln(17000, 20000).at("01-03").save();
     this.builder.plainJob("php").pln(18000, 21000).at("01-04").save();
 
-    HttpEntity<OffersDtoDeprecated> result =
+    HttpEntity<OffersSalariesDto> result =
         caller.makeRequest(null, null, "2024-01-02", "2024-01-03");
 
-    OffersDtoDeprecated expected =
-        new OffersDtoDeprecated(List.of(createOffer(17000, 20000), createOffer(16000, 19000)));
+    OffersSalariesDto expected =
+        new OffersSalariesDto(List.of(createOffer(17000, 20000), createOffer(16000, 19000)));
     assertThat(Json.convertToString(result.getBody()))
         .isEqualTo(jsonResultAttempt.write(expected).getJson());
   }
 
-  private static OfferDtoDeprecated createOffer(int from, int to) {
-    return new OfferDtoDeprecated(
+  private static OfferSalariesDto createOffer(int from, int to) {
+    return new OfferSalariesDto(
         from,
         to,
         "PLN",

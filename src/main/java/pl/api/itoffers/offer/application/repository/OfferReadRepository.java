@@ -3,13 +3,13 @@ package pl.api.itoffers.offer.application.repository;
 import java.time.LocalDateTime;
 import java.util.List;
 import pl.api.itoffers.offer.application.dto.outgoing.OfferDto;
-import pl.api.itoffers.offer.application.dto.outgoing.OfferDtoDeprecated;
+import pl.api.itoffers.offer.application.dto.outgoing.OfferSalaries.OfferSalariesDto;
 
 public interface OfferReadRepository {
   /**
    * @deprecated todo to remove in #59
    */
-  List<OfferDtoDeprecated> getBySalary(
+  List<OfferSalariesDto> getBySalary(
       int amountTo,
       String currency,
       String employmentType,

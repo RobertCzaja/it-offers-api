@@ -4,7 +4,7 @@ import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import pl.api.itoffers.offer.application.dto.incoming.DatesRangeFilter;
-import pl.api.itoffers.offer.application.dto.outgoing.OfferDtoDeprecated;
+import pl.api.itoffers.offer.application.dto.outgoing.OfferSalaries.OfferSalariesDto;
 import pl.api.itoffers.offer.application.repository.OfferReadRepository;
 
 @Service
@@ -13,7 +13,7 @@ public class ReportSalariesService {
 
   private final OfferReadRepository offerReadRepository;
 
-  public List<OfferDtoDeprecated> getMostPaidOffers(
+  public List<OfferSalariesDto> getMostPaidOffers(
       String currency,
       String employmentType,
       Integer amountTo,

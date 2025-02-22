@@ -10,7 +10,7 @@ import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import pl.api.itoffers.offer.application.dto.outgoing.OfferDto;
-import pl.api.itoffers.offer.application.dto.outgoing.OfferDtoDeprecated;
+import pl.api.itoffers.offer.application.dto.outgoing.OfferSalaries.OfferSalariesDto;
 import pl.api.itoffers.offer.application.repository.OfferReadRepository;
 import pl.api.itoffers.offer.domain.Offer;
 import pl.api.itoffers.offer.domain.Salary;
@@ -23,7 +23,7 @@ public class OfferHibernateReadRepository implements OfferReadRepository {
   private final EntityManager em;
   private final ProviderFacade providerFacade;
 
-  public List<OfferDtoDeprecated> getBySalary(
+  public List<OfferSalariesDto> getBySalary(
       int amountTo,
       String currency,
       String employmentType,
@@ -50,9 +50,9 @@ public class OfferHibernateReadRepository implements OfferReadRepository {
     TypedQuery<Offer> typedQuery = em.createQuery(query);
     List<Offer> offers = typedQuery.getResultList();
 
-    List<OfferDtoDeprecated> dtos = new ArrayList<>();
+    List<OfferSalariesDto> dtos = new ArrayList<>();
     offers.forEach(
-        offer -> dtos.addAll(OfferDtoDeprecated.createFrom(offer, currency, employmentType)));
+        offer -> dtos.addAll(OfferSalariesDto.createFrom(offer, currency, employmentType)));
     sortDesc(dtos);
     return dtos;
   }
@@ -82,11 +82,11 @@ public class OfferHibernateReadRepository implements OfferReadRepository {
     return offersDto;
   }
 
-  private static void sortDesc(List<OfferDtoDeprecated> offers) {
+  private static void sortDesc(List<OfferSalariesDto> offers) {
     offers.sort(
-        new Comparator<OfferDtoDeprecated>() {
+        new Comparator<OfferSalariesDto>() {
           @Override
-          public int compare(OfferDtoDeprecated dto1, OfferDtoDeprecated dto2) {
+          public int compare(OfferSalariesDto dto1, OfferSalariesDto dto2) {
             return dto2.getAmountTo().compareTo(dto1.getAmountTo());
           }
         });

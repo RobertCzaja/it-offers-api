@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.util.UriComponentsBuilder;
 import pl.api.itoffers.helper.ApiAuthorizationHelper;
 import pl.api.itoffers.helper.AuthorizationCredentials;
-import pl.api.itoffers.offer.application.dto.outgoing.OffersDtoDeprecated;
+import pl.api.itoffers.offer.application.dto.outgoing.OfferSalaries.OffersSalariesDto;
 import pl.api.itoffers.offer.ui.controller.ReportController;
 
 /**
@@ -27,13 +27,13 @@ public class ReportSalariesEndpointCaller {
   @Autowired private TestRestTemplate template;
   @Autowired private ApiAuthorizationHelper apiAuthorizationHelper;
 
-  public ResponseEntity<OffersDtoDeprecated> makeRequest(
+  public ResponseEntity<OffersSalariesDto> makeRequest(
       Integer amountTo, List<String> technologies, String dateFrom, String dateTo) {
     return template.exchange(
         createUri(amountTo, technologies, dateFrom, dateTo),
         HttpMethod.GET,
         new HttpEntity<>(apiAuthorizationHelper.getHeaders(AuthorizationCredentials.ADMIN)),
-        OffersDtoDeprecated.class);
+        OffersSalariesDto.class);
   }
 
   public ResponseEntity<String> makeRequestAsUser() {
