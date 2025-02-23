@@ -10,6 +10,10 @@
 4. Add to IntelliJ IDEA Application runner active profile `dev` 
 5. Install IntelliJ IDEA plugins:
    * WireMock
+6. To use `ci` command: set up the alias in 
+   * `nano ~/.zshrc`
+   * add at the end of the file: `alias ci="/Path/to/Project/it-offers/ci.sh"` 
+   * set up the changes: `source ~/.zshrc`
 
 ## Static Analysis/tests tools 
 * `mvn spotless:apply`
