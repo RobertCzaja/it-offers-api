@@ -10,15 +10,6 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
-    - name: Start MongoDB
-      uses: supercharge/mongodb-github-action@1.11.0
-      with:
-        mongodb-version: '6.0'
-        mongodb-replica-set: test-rs
-        mongodb-username: admin
-        mongodb-password: admin
-        mongodb-db: it-offers-integration-tests
-
     - name: Set up JDK 17
       uses: actions/setup-java@v4
       with:
