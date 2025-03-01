@@ -10,6 +10,7 @@ import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
+import org.testcontainers.containers.MongoDBContainer;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
@@ -22,6 +23,7 @@ public abstract class AbstractITest {
   @LocalServerPort private Integer port;
 
   public static PostgreSQLContainer<?> postgres;
+  public static MongoDBContainer mongo;
 
   static {
     postgres =
@@ -29,11 +31,13 @@ public abstract class AbstractITest {
             .withUsername("admin")
             .withPassword("admin")
             .withDatabaseName("it-offers");
+    mongo = new MongoDBContainer("mongo:6.0");
   }
 
   @BeforeAll
   public static void beforeAll() {
     postgres.start();
+    mongo.start();
   }
 
   @BeforeEach
@@ -46,5 +50,6 @@ public abstract class AbstractITest {
     registry.add("spring.datasource.username", postgres::getUsername);
     registry.add("spring.datasource.password", postgres::getPassword);
     registry.add("spring.datasource.url", postgres::getJdbcUrl);
+    registry.add("spring.data.mongodb.uri", mongo::getReplicaSetUrl);
   }
 }

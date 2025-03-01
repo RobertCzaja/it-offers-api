@@ -1,7 +1,7 @@
 spring:
   data:
     mongodb:
-      uri: ${MONGO_DB_URI}/it-offers-integration-tests
+      uri: mongodb://localhost:27017/it-offers-integration-tests
   jpa:
     show-sql: false
     hibernate:
