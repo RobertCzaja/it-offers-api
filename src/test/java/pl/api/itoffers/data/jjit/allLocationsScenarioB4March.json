@@ -1,0 +1,216 @@
+{
+  "state": {
+    "mutations": [],
+    "queries": [
+      {
+        "state": {
+          "data": {
+            "counts": {
+              "6": 1202
+            }
+          },
+          "dataUpdateCount": 1,
+          "dataUpdatedAt": 1743657307282,
+          "error": null,
+          "errorUpdateCount": 0,
+          "errorUpdatedAt": 0,
+          "fetchFailureCount": 0,
+          "fetchFailureReason": null,
+          "fetchMeta": null,
+          "isInvalidated": false,
+          "status": "success",
+          "fetchStatus": "idle"
+        },
+        "queryKey": [
+          "SUBCATEGORIES_COUNT",
+          {
+            "categoryId": 6,
+            "searchParams": {
+              "categories": [
+                6
+              ],
+              "sort": {
+                "sortBy": "published",
+                "orderBy": "DESC"
+              },
+              "currency": "pln"
+            }
+          }
+        ],
+        "queryHash": "[\"SUBCATEGORIES_COUNT\",{\"categoryId\":6,\"searchParams\":{\"categories\":[6],\"currency\":\"pln\",\"sort\":{\"orderBy\":\"DESC\",\"sortBy\":\"published\"}}}]"
+      },
+      {
+        "state": {
+          "data": {
+            "count": 1202
+          },
+          "dataUpdateCount": 1,
+          "dataUpdatedAt": 1743657307284,
+          "error": null,
+          "errorUpdateCount": 0,
+          "errorUpdatedAt": 0,
+          "fetchFailureCount": 0,
+          "fetchFailureReason": null,
+          "fetchMeta": null,
+          "isInvalidated": false,
+          "status": "success",
+          "fetchStatus": "idle"
+        },
+        "queryKey": [
+          "OFFERS_COUNT",
+          {
+            "countAllBoardOffers": false,
+            "filters": {
+              "categories": [
+                6
+              ]
+            }
+          }
+        ],
+        "queryHash": "[\"OFFERS_COUNT\",{\"countAllBoardOffers\":false,\"filters\":{\"categories\":[6]}}]"
+      },
+      {
+        "state": {
+          "data": {
+            "pages": [
+              {
+                "data": [
+                  {
+                    "guid": "618c4497-03e4-4de5-9156-7493a44e6200",
+                    "slug": "n-ix-middle-java-fullstack-engineer-krakow-java",
+                    "title": "Middle Java FullStack Engineer",
+                    "requiredSkills": [
+                      "JavaScript",
+                      "Java",
+                      "Oracle"
+                    ],
+                    "niceToHaveSkills": null,
+                    "workplaceType": "remote",
+                    "workingTime": "full_time",
+                    "experienceLevel": "mid",
+                    "employmentTypes": [
+                      {
+                        "from": 4300,
+                        "to": 4700,
+                        "currency": "usd",
+                        "type": "b2b",
+                        "unit": "month",
+                        "gross": false,
+                        "fromChf": 3777.5715,
+                        "fromEur": 3949.1415,
+                        "fromGbp": 3297.842,
+                        "fromPln": 16650.1719,
+                        "fromUsd": 4300,
+                        "toChf": 4128.9735,
+                        "toEur": 4316.5035,
+                        "toGbp": 3604.618,
+                        "toPln": 18199.0251,
+                        "toUsd": 4700
+                      }
+                    ],
+                    "categoryId": 6,
+                    "multilocation": [
+                      {
+                        "city": "Warszawa",
+                        "slug": "n-ix-middle-java-fullstack-engineer-warszawa-java",
+                        "street": "-",
+                        "latitude": 52.2296756,
+                        "longitude": 21.0122287
+                      },
+                      {
+                        "city": "Gdańsk",
+                        "slug": "n-ix-middle-java-fullstack-engineer-gdansk-java",
+                        "street": "-",
+                        "latitude": 54.3520252,
+                        "longitude": 18.6466384
+                      },
+                      {
+                        "city": "Poznań",
+                        "slug": "n-ix-middle-java-fullstack-engineer-poznan-java",
+                        "street": "-",
+                        "latitude": 52.4056786,
+                        "longitude": 16.9312766
+                      },
+                      {
+                        "city": "Kraków",
+                        "slug": "n-ix-middle-java-fullstack-engineer-krakow-java",
+                        "street": "Zabłocie 43A",
+                        "latitude": 50.0490744,
+                        "longitude": 19.9665063
+                      },
+                      {
+                        "city": "Wrocław",
+                        "slug": "n-ix-middle-java-fullstack-engineer-wroclaw-java",
+                        "street": "-",
+                        "latitude": 51.1092948,
+                        "longitude": 17.0386019
+                      }
+                    ],
+                    "city": "Kraków",
+                    "street": "Zabłocie 43A",
+                    "latitude": 50.0490744,
+                    "longitude": 19.9665063,
+                    "remoteInterview": true,
+                    "companyName": "N-iX",
+                    "companyLogoThumbUrl": "https://imgproxy.justjoinit.tech/0fXsSlE4wQiqdozeu8eACDZ9SQLRwnQ4Re5HR03-WMw/h:200/w:200/plain/https://imgproxy.justjoinit.tech/ReZztNiMSyLpQuFvNaj-08M_xcU2ipqEZoEvO_kfHx8/h:200/w:200/plain/https://public.justjoin.it/companies/logos/original/a066f3df4076f45b6aa70fb74a48e1f3a361829d.png",
+                    "publishedAt": "2025-04-01T20:00:32.377Z",
+                    "openToHireUkrainians": true,
+                    "languages": [
+                      {
+                        "code": "en",
+                        "level": "b2"
+                      }
+                    ]
+                  }
+                ],
+                "meta": {
+                  "page": 1,
+                  "totalItems": 502,
+                  "totalPages": 6,
+                  "prevPage": null,
+                  "nextPage": 2
+                }
+              }
+            ],
+            "pageParams": [
+              1
+            ]
+          },
+          "dataUpdateCount": 0,
+          "dataUpdatedAt": 1743657307315,
+          "error": null,
+          "errorUpdateCount": 0,
+          "errorUpdatedAt": 0,
+          "fetchFailureCount": 0,
+          "fetchFailureReason": null,
+          "fetchMeta": null,
+          "isInvalidated": false,
+          "status": "success",
+          "fetchStatus": "idle"
+        },
+        "queryKey": [
+          "OFFERS",
+          {
+            "categories": "$2a",
+            "sort": {
+              "sortBy": "published",
+              "orderBy": "DESC"
+            },
+            "page": 1,
+            "salaryCurrencies": "pln"
+          }
+        ],
+        "queryHash": "[\"OFFERS\",{\"categories\":[6],\"page\":1,\"salaryCurrencies\":\"pln\",\"sort\":{\"orderBy\":\"DESC\",\"sortBy\":\"published\"}}]"
+      }
+    ]
+  },
+  "children": [
+    "$",
+    "$L2b",
+    null,
+    {
+      "tenant": "JJIT",
+      "theme": "standard"
+    }
+  ]
+}

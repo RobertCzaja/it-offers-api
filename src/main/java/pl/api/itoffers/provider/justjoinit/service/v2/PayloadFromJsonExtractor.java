@@ -36,10 +36,12 @@ public class PayloadFromJsonExtractor {
 
       do {
         JsonNode queryNode = queriesNodes.next();
-        if (queryNode.get(KEY_STATE).isObject()) {
-          Iterator<JsonNode> offerNodes =
-              queryNode.get(KEY_STATE).path("data").path("pages").get(0).path("data").elements();
-          return payloadMapper.mapToList(offerNodes);
+
+        try {
+          return payloadMapper.mapToList(
+              queryNode.get(KEY_STATE).path("data").path("pages").get(0).path("data").elements());
+        } catch (NullPointerException e) {
+          /*do nothing, allows to move to the next iteration*/
         }
       } while (queriesNodes.hasNext());
 

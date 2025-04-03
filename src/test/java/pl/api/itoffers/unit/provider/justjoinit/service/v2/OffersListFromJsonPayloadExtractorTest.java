@@ -58,4 +58,15 @@ public class OffersListFromJsonPayloadExtractorTest {
     assertThrows(JustJoinItException.class, () -> payloadFromJsonExtractor.extractPayload(""));
     assertThrows(JustJoinItException.class, () -> payloadFromJsonExtractor.extractPayload(null));
   }
+
+  @Test
+  public void testShouldCorrectlyExtractPayloadWhenOffersAreInTheLastStateQueriesObject()
+      throws IOException {
+    String jjitJson =
+        FileManager.readFile(JustJoinItParams.ALL_LOCATIONS_PAYLOAD_B4_MARCH_PATH_JSON);
+
+    var offers = payloadFromJsonExtractor.extractPayload(jjitJson);
+
+    JjitOffersAssert.expectsSize(1, offers);
+  }
 }
